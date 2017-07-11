@@ -35,7 +35,14 @@
 #include <utils/Mutex.h>
 
 // Camera dependencies
-#include "hardware/power.h"
+#include <android/hardware/power/1.0/IPower.h>
+
+using namespace android;
+using ::android::hardware::power::V1_0::IPower;
+using ::android::hardware::power::V1_0::PowerHint;
+using ::android::hardware::Return;
+using ::android::hardware::Void;
+using ::android::sp;
 
 typedef enum {
     ALL_CORES_ONLINE = 0x7FE,
@@ -65,8 +72,8 @@ public:
     int32_t lock_acq_timed(int32_t timer_val);
     int32_t lock_rel_timed();
     bool    isTimerReset();
-    void    powerHintInternal(power_hint_t hint, bool enable);
-    void    powerHint(power_hint_t hint, bool enable);
+    void    powerHintInternal(PowerHint hint, bool enable);
+    void    powerHint(PowerHint hint, bool enable);
     bool    isPerfLockTimedAcquired() { return (0 <= mPerfLockHandleTimed); }
 
 private:
@@ -79,13 +86,13 @@ private:
     Mutex           mLock;
     int32_t         mPerfLockHandle;        // Performance lock library handle
     int32_t         mPerfLockHandleTimed;   // Performance lock library handle
-    power_module_t *m_pPowerModule;         // power module Handle
-    power_hint_t    mCurrentPowerHint;
+    sp<IPower>      mPowerHal;
+    PowerHint       mCurrentPowerHint;
     bool            mCurrentPowerHintEnable;
     uint32_t        mTimerSet;
     uint32_t        mPerfLockTimeout;
     nsecs_t         mStartTimeofLock;
-    List<power_hint_t> mActivePowerHints;   // Active/enabled power hints list
+    List<PowerHint> mActivePowerHints;   // Active/enabled power hints list
 };
 
 }; // namespace qcamera

@@ -109,14 +109,15 @@ void QCameraPerfLock::lock_init()
 
     // Clear the list of active power hints
     mActivePowerHints.clear();
-    mCurrentPowerHint       = static_cast<power_hint_t>(0);
+    mCurrentPowerHint       = static_cast<PowerHint>(0);
     mCurrentPowerHintEnable = false;
 
     property_get("persist.camera.perflock.enable", value, "1");
     mPerfLockEnable = atoi(value);
 #ifdef HAS_MULTIMEDIA_HINTS
-    if (hw_get_module(POWER_HARDWARE_MODULE_ID, (const hw_module_t **)&m_pPowerModule)) {
-        LOGE("%s module not found", POWER_HARDWARE_MODULE_ID);
+    mPowerHal = IPower::getService();
+    if (mPowerHal == nullptr) {
+        ALOGE("Couldn't load PowerHAL module");
     }
 #endif
 
@@ -467,15 +468,11 @@ int32_t QCameraPerfLock::lock_rel()
  * RETURN     : void
  *
  *==========================================================================*/
-void QCameraPerfLock::powerHintInternal(power_hint_t hint, bool enable)
+void QCameraPerfLock::powerHintInternal(PowerHint hint, bool enable)
 {
 #ifdef HAS_MULTIMEDIA_HINTS
-    if (m_pPowerModule != NULL) {
-        if (enable == true) {
-            m_pPowerModule->powerHint(m_pPowerModule, hint, (void *)"state=1");
-        } else {
-            m_pPowerModule->powerHint(m_pPowerModule, hint, (void *)"state=0");
-        }
+    if (mPowerHal != nullptr && !mPowerHal->powerHint(hint, enable).isOk()) {
+        LOGE("Send powerhint to PowerHal failed");
     }
 #endif
 }
@@ -492,7 +489,7 @@ void QCameraPerfLock::powerHintInternal(power_hint_t hint, bool enable)
  * RETURN     : void
  *
  *==========================================================================*/
-void QCameraPerfLock::powerHint(power_hint_t hint, bool enable)
+void QCameraPerfLock::powerHint(PowerHint hint, bool enable)
 {
 #ifdef HAS_MULTIMEDIA_HINTS
     if (enable == true) {
@@ -511,7 +508,7 @@ void QCameraPerfLock::powerHint(power_hint_t hint, bool enable)
         }
     } else {
         // Remove the power hint from the list
-        for (List<power_hint_t>::iterator it = mActivePowerHints.begin();
+        for (List<PowerHint>::iterator it = mActivePowerHints.begin();
                 it != mActivePowerHints.end(); ++it) {
             if (*it == hint) {
                 if (it != mActivePowerHints.begin()) {
@@ -535,7 +532,7 @@ void QCameraPerfLock::powerHint(power_hint_t hint, bool enable)
                 mCurrentPowerHintEnable = true;
                 powerHintInternal(mCurrentPowerHint, true);
             } else {
-                mCurrentPowerHint       = static_cast<power_hint_t>(0);
+                mCurrentPowerHint       = static_cast<PowerHint>(0);
                 mCurrentPowerHintEnable = false;
             }
         }

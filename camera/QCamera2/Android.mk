@@ -112,8 +112,10 @@ LOCAL_C_INCLUDES += \
 LOCAL_SHARED_LIBRARIES := liblog libhardware libutils libcutils libdl libsync
 LOCAL_SHARED_LIBRARIES += libmmcamera_interface libmmjpeg_interface libui libcamera_metadata
 LOCAL_SHARED_LIBRARIES += libqdMetaData libqservice libbinder
+LOCAL_SHARED_LIBRARIES += libhidlbase libhwbinder
+LOCAL_SHARED_LIBRARIES += android.hardware.power@1.0
 ifeq ($(USE_DISPLAY_SERVICE),true)
-LOCAL_SHARED_LIBRARIES += android.frameworks.displayservice@1.0 libhidlbase libhidltransport
+LOCAL_SHARED_LIBRARIES += android.frameworks.displayservice@1.0 libhidltransport
 else
 LOCAL_SHARED_LIBRARIES += libgui
 endif
