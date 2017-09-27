@@ -11,6 +11,7 @@ LOCAL_SRC_FILES := \
         util/QCameraPerf.cpp \
         util/QCameraQueue.cpp \
         util/QCameraCommon.cpp \
+        util/QCameraDisplay.cpp \
         QCamera2Hal.cpp \
         QCamera2Factory.cpp
 
