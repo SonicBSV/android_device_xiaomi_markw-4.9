@@ -20,9 +20,10 @@ package com.lineageos.settings.device;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceManager;
+import android.support.v7.preference.PreferenceViewHolder;
 import android.database.ContentObserver;
-import android.preference.SeekBarDialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.SeekBar;
@@ -33,7 +34,7 @@ import android.os.Vibrator;
 
 import java.util.List;
 
-public class VibratorStrengthPreference extends SeekBarDialogPreference implements
+public class VibratorStrengthPreference extends Preference implements
         SeekBar.OnSeekBarChangeListener {
 
     private SeekBar mSeekBar;
@@ -57,23 +58,18 @@ public class VibratorStrengthPreference extends SeekBarDialogPreference implemen
         offset = mMaxValue / 100f;
 
         mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        setDialogLayoutResource(R.layout.preference_dialog_vibrator_strength);
+        setLayoutResource(R.layout.preference_seek_bar);
     }
 
     @Override
-    protected void showDialog(Bundle state) {
-        super.showDialog(state);
-    }
-
-    @Override
-    protected void onBindDialogView(View view) {
-        super.onBindDialogView(view);
+    public void onBindViewHolder(PreferenceViewHolder holder) {
+        super.onBindViewHolder(holder);
 
         mOldStrength = Integer.parseInt(getValue(getContext()));
-        mSeekBar = getSeekBar(view);
+        mSeekBar = (SeekBar) holder.findViewById(R.id.seekbar);
         mSeekBar.setMax(mMaxValue - mMinValue);
         mSeekBar.setProgress(mOldStrength - mMinValue);
-        mValueText = (TextView) view.findViewById(R.id.current_value);
+        mValueText = (TextView) holder.findViewById(R.id.current_value);
         mValueText.setText(Integer.toString(Math.round(mOldStrength / offset)) + "%");
         mSeekBar.setOnSeekBarChangeListener(this);
     }
@@ -86,8 +82,14 @@ public class VibratorStrengthPreference extends SeekBarDialogPreference implemen
         return Utils.getFileValue(FILE_LEVEL, "2700");
     }
 
-    private void setValue(String newValue) {
+    private void setValue(String newValue, boolean withFeedback) {
         Utils.writeValue(FILE_LEVEL, newValue);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        editor.putString(DeviceSettings.KEY_VIBSTRENGTH, newValue);
+        editor.commit();
+	    if (withFeedback) {
+            mVibrator.vibrate(testVibrationPattern, -1);
+        }
     }
 
     public static void restore(Context context) {
@@ -95,13 +97,13 @@ public class VibratorStrengthPreference extends SeekBarDialogPreference implemen
             return;
         }
 
-        String storedValue = PreferenceManager.getDefaultSharedPreferences(context).getString(DeviceSettings.KEY_VIBSTRENGTH, "2700"); 
+        String storedValue = PreferenceManager.getDefaultSharedPreferences(context).getString(DeviceSettings.KEY_VIBSTRENGTH, "2700");
         Utils.writeValue(FILE_LEVEL, storedValue);
     }
 
     public void onProgressChanged(SeekBar seekBar, int progress,
             boolean fromTouch) {
-        setValue(String.valueOf(progress + mMinValue));
+        setValue(String.valueOf(progress + mMinValue), true);
         mValueText.setText(Integer.toString(Math.round((progress + mMinValue) / offset)) + "%");
     }
 
@@ -110,28 +112,7 @@ public class VibratorStrengthPreference extends SeekBarDialogPreference implemen
     }
 
     public void onStopTrackingTouch(SeekBar seekBar) {
-        if (mVibrator.hasVibrator())
-            mVibrator.vibrate(testVibrationPattern, -1);
-    }
-
-    @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        super.onDialogClosed(positiveResult);
-
-        if (positiveResult) {
-            final int value = mSeekBar.getProgress() + mMinValue;
-            setValue(String.valueOf(value));
-            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-            editor.putString(DeviceSettings.KEY_VIBSTRENGTH, String.valueOf(value));
-            editor.commit();
-        } else {
-            restoreOldState();
-        }
-        mVibrator.cancel();
-    }
-
-    private void restoreOldState() {
-        setValue(String.valueOf(mOldStrength));
+        // NA
     }
 }
 

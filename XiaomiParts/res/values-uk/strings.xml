@@ -17,13 +17,10 @@
     <string name="app_name">Xiaomi</string>
     <string name="advanced_settings">Налаштування пристрою</string>
     <string name="category_vibrator">Вібрація</string>
-    <string name="vib_strength_title_head">Сила</string>
-    <string name="vib_strength_summary_head">Встановити силу вібрації</string>
+    <string name="vib_strength_title_head">Сила вібрації</string>
     <string name="category_torch">Ліхтарик</string>
     <string name="yellow_torch_brightness_title_head">Максимальна яскравість жовтого світлодіода</string>
-    <string name="yellow_torch_brightness_summary_head">Встановити максимальну яскравість жовтого світлодіода</string>
     <string name="white_torch_brightness_title_head">Максимальна яскравість білого світлодіода</string>
-    <string name="white_torch_brightness_summary_head">Встановити максимальну яскравість білого світлодіода</string>
     <string name="touchscreen_title">Сенсорна панель</string>
     <string name="glove_mode_title">Режим \"У рукавичках\"</string>
     <string name="glove_mode_summary">Підвищує чутливість до торкань (може вплинути на витрату батареї)</string>

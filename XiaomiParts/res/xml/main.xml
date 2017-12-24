@@ -18,20 +18,17 @@
         android:title="@string/category_vibrator">
         <com.lineageos.settings.device.VibratorStrengthPreference
             android:key="vib_strength"
-            android:title="@string/vib_strength_title_head"
-            android:summary="@string/vib_strength_summary_head" />
+            android:title="@string/vib_strength_title_head" />
     </PreferenceCategory>
 
     <PreferenceCategory
         android:title="@string/category_torch">
         <com.lineageos.settings.device.YellowTorchBrightnessPreference
             android:key="yellow_torch_brightness"
-            android:title="@string/yellow_torch_brightness_title_head"
-            android:summary="@string/yellow_torch_brightness_summary_head" />
+            android:title="@string/yellow_torch_brightness_title_head" />
         <com.lineageos.settings.device.WhiteTorchBrightnessPreference
             android:key="white_torch_brightness"
-            android:title="@string/white_torch_brightness_title_head"
-            android:summary="@string/white_torch_brightness_summary_head" />
+            android:title="@string/white_torch_brightness_title_head" />
     </PreferenceCategory>
 
     <PreferenceCategory

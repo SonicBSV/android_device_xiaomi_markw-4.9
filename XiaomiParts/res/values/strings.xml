@@ -18,13 +18,10 @@
     <string name="advanced_settings">XiaomiParts</string>
     <string name="advanced_settings_summary">Vibrator and Torch</string>
     <string name="category_vibrator">Vibrator</string>
-    <string name="vib_strength_title_head">Strength</string>
-    <string name="vib_strength_summary_head">Define the strength of the vibrator</string>
+    <string name="vib_strength_title_head">Strength of the vibrator</string>
     <string name="category_torch">Torch</string>
     <string name="yellow_torch_brightness_title_head">Yellow led maximum brightness</string>
-    <string name="yellow_torch_brightness_summary_head">Define the maximum brightness of the yellow led</string>
     <string name="white_torch_brightness_title_head">White led maximum brightness</string>
-    <string name="white_torch_brightness_summary_head">Define the maximum brightness of the white led</string>
     <string name="touchscreen_title">Touchscreen</string>
     <string name="glove_mode_title">Glove Mode</string>
     <string name="glove_mode_summary">Increase touch sensitivity (May decrease battery life)</string>
