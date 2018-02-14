@@ -24,4 +24,21 @@
     <string name="touchscreen_title">Сенсорна панель</string>
     <string name="glove_mode_title">Режим \"У рукавичках\"</string>
     <string name="glove_mode_summary">Підвищує чутливість до торкань (може вплинути на витрату батареї)</string>
+    <string name="graphics_title">Графіка</string>
+    <string name="kcal_title">Колір екрану</string>
+    <string name="kcal_summary">Калібровка кольору екрану за допомогою KCAL</string>
+    <string name="kcal_enabled_title">Увімкнути KCAL</string>
+    <string name="kcal_enabled_summary">Увімкнути калібровку екрану за допомогою KCAL</string>
+    <string name="kcal_red">Червоний</string>
+    <string name="kcal_green">Зелений</string>
+    <string name="kcal_blue">Синій</string>
+    <string name="kcal_saturation">Насиченість</string>
+    <string name="kcal_contrast">Контраст</string>
+    <string name="kcal_value">Значення</string>
+    <string name="kcal_hue">Тон</string>
+    <string name="kcal_invert_title">Інвертувати</string>
+    <string name="kcal_invert_summary">Інвертувати всі кольори екрану</string>
+    <string name="kcal_greyscale_title">Відтенки сірого</string>
+    <string name="kcal_greyscale_summary">Повністю вимкнути насиченість</string>
+    <string name="menu_reset">Скинути</string>
 </resources>

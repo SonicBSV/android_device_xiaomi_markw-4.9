@@ -24,4 +24,21 @@
     <string name="touchscreen_title">Сенсорная панель</string>
     <string name="glove_mode_title">Режим «В перчатках»</string>
     <string name="glove_mode_summary">Повышает чувствительность к касаниям (может повлиять на расход батареи)</string>
+    <string name="graphics_title">Графика</string>
+    <string name="kcal_title">Цвет экрана</string>
+    <string name="kcal_summary">Калибровка цвета экрана с помощью KCAL</string>
+    <string name="kcal_enabled_title">Включить KCAL</string>
+    <string name="kcal_enabled_summary">Включить калибровку экрана с помощью KCAL</string>
+    <string name="kcal_red">Красный</string>
+    <string name="kcal_green">Зеленый</string>
+    <string name="kcal_blue">Синий</string>
+    <string name="kcal_saturation">Насыщенность</string>
+    <string name="kcal_contrast">Контраст</string>
+    <string name="kcal_value">Значение</string>
+    <string name="kcal_hue">Тон</string>
+    <string name="kcal_invert_title">Инвертировать</string>
+    <string name="kcal_invert_summary">Инвертировать все цвета экрана</string>
+    <string name="kcal_greyscale_title">Оттенки серого</string>
+    <string name="kcal_greyscale_summary">Полностью отключить насыщенность</string>
+    <string name="menu_reset">Сбросить</string>
 </resources>

@@ -32,6 +32,15 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/graphics_title">
+        <PreferenceScreen
+            android:key="kcal"
+            android:fragment="com.lineageos.settings.device.DisplayCalibration"
+            android:summary="@string/kcal_summary"
+            android:title="@string/kcal_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/touchscreen_title">
         <SwitchPreference
             android:key="glove_mode"

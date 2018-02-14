@@ -25,4 +25,21 @@
     <string name="touchscreen_title">Touchscreen</string>
     <string name="glove_mode_title">Glove Mode</string>
     <string name="glove_mode_summary">Increase touch sensitivity (May decrease battery life)</string>
+    <string name="graphics_title">Graphics</string>
+    <string name="kcal_title">Display color</string>
+    <string name="kcal_summary">Display color calibration using KCAL</string>
+    <string name="kcal_enabled_title">Enable KCAL</string>
+    <string name="kcal_enabled_summary">Turn on display calibration using KCAL</string>
+    <string name="kcal_red">Red</string>
+    <string name="kcal_green">Green</string>
+    <string name="kcal_blue">Blue</string>
+    <string name="kcal_saturation">Saturation</string>
+    <string name="kcal_contrast">Constrast</string>
+    <string name="kcal_value">Value</string>
+    <string name="kcal_hue">Hue</string>
+    <string name="kcal_invert_title">Invert</string>
+    <string name="kcal_invert_summary">Invert all screen colors</string>
+    <string name="kcal_greyscale_title">Greyscale</string>
+    <string name="kcal_greyscale_summary">Fully disable saturation</string>
+    <string name="menu_reset">Reset</string>
 </resources>
