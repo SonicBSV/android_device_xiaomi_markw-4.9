@@ -21,6 +21,7 @@
             android:title="@string/vib_strength_title_head"
             android:summary="@string/vib_strength_summary_head" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:title="@string/category_torch">
         <com.lineageos.settings.device.YellowTorchBrightnessPreference
@@ -32,4 +33,16 @@
             android:title="@string/white_torch_brightness_title_head"
             android:summary="@string/white_torch_brightness_summary_head" />
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/touchscreen_title">
+        <SwitchPreference
+            android:key="glove_mode"
+            android:title="@string/glove_mode_title"
+            android:summary="@string/glove_mode_summary"
+            android:icon="@null"
+            android:paddingLeft="0dp"
+            android:persistent="false" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

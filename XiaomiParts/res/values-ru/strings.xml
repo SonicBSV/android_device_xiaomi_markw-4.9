@@ -24,4 +24,7 @@
     <string name="yellow_torch_brightness_summary_head">Установить максимальную яркость желтого светодиода</string>
     <string name="white_torch_brightness_title_head">Максимальная яркость белого светодиода</string>
     <string name="white_torch_brightness_summary_head">Установить максимальную яркость белого светодиода</string>
+    <string name="touchscreen_title">Сенсорная панель</string>
+    <string name="glove_mode_title">Режим «В перчатках»</string>
+    <string name="glove_mode_summary">Повышает чувствительность к касаниям (может повлиять на расход батареи)</string>
 </resources>

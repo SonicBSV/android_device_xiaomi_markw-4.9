@@ -25,4 +25,7 @@
     <string name="yellow_torch_brightness_summary_head">Define the maximum brightness of the yellow led</string>
     <string name="white_torch_brightness_title_head">White led maximum brightness</string>
     <string name="white_torch_brightness_summary_head">Define the maximum brightness of the white led</string>
+    <string name="touchscreen_title">Touchscreen</string>
+    <string name="glove_mode_title">Glove Mode</string>
+    <string name="glove_mode_summary">Increase touch sensitivity (May decrease battery life)</string>
 </resources>
