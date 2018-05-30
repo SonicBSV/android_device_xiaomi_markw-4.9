@@ -1987,13 +1987,6 @@ int QCamera2HardwareInterface::openCamera()
     }
     LOGH("mBootToMonoTimestampOffset = %lld", mBootToMonoTimestampOffset);
 
-#ifdef USE_DISPLAY_SERVICE
-         if(!mCameraDisplay->startVsync(TRUE))
-         {
-             LOGE("Error: Cannot start vsync (still continue)");
-         }
-#endif //USE_DISPLAY_SERVICE
-
     return NO_ERROR;
 
 error_exit3:
@@ -2273,10 +2266,6 @@ int QCamera2HardwareInterface::closeCamera()
         LOGD("Failed to release flash for camera id: %d",
                 mCameraId);
     }
-
-#ifdef USE_DISPLAY_SERVICE
-        mCameraDisplay->startVsync(FALSE);
-#endif //Use_DISPLAY_SERVICE
 
     LOGI("[KPI Perf]: X PROFILE_CLOSE_CAMERA camera id %d, rc: %d",
          mCameraId, rc);
@@ -3455,6 +3444,12 @@ int QCamera2HardwareInterface::startPreview()
 
     m_perfLock.lock_acq();
 
+#ifdef USE_DISPLAY_SERVICE
+    if(!mCameraDisplay->startVsync(TRUE)) {
+        LOGE("Error: Cannot start vsync (still continue)");
+    }
+#endif //USE_DISPLAY_SERVICE
+
     updateThermalLevel((void *)&mThermalLevel);
 
     setDisplayFrameSkip();
@@ -3553,6 +3548,9 @@ int QCamera2HardwareInterface::stopPreview()
 #endif
     // delete all channels from preparePreview
     unpreparePreview();
+#ifdef USE_DISPLAY_SERVICE
+    mCameraDisplay->startVsync(FALSE);
+#endif //Use_DISPLAY_SERVICE
 
     m_perfLock.lock_rel();
 
