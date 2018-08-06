@@ -10,7 +10,6 @@ LOCAL_SRC_FILES := \
         util/QCameraFlash.cpp \
         util/QCameraPerf.cpp \
         util/QCameraQueue.cpp \
-        util/QCameraDisplay.cpp \
         util/QCameraCommon.cpp \
         QCamera2Hal.cpp \
         QCamera2Factory.cpp
@@ -58,7 +57,7 @@ endif
 
 #USE_DISPLAY_SERVICE from Android O onwards
 #to receive vsync event from display
-ifeq ($(filter OMR1 O 8.1.0, $(PLATFORM_VERSION)), )
+ifeq ($(call is-platform-sdk-version-at-least,26),true)
 USE_DISPLAY_SERVICE := true
 LOCAL_CFLAGS += -DUSE_DISPLAY_SERVICE
 LOCAL_CFLAGS += -std=c++11 -std=gnu++1y
