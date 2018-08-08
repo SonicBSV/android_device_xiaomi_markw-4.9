@@ -3702,7 +3702,7 @@ int QCamera2HardwareInterface::startRecording()
 
     if (rc == NO_ERROR) {
         // Set power Hint for video encoding
-        m_perfLock.powerHint(POWER_HINT_VIDEO_ENCODE, true);
+        m_perfLock.powerHint(PowerHint::VIDEO_ENCODE, true);
     }
 
     LOGI("X rc = %d", rc);
@@ -3731,7 +3731,7 @@ int QCamera2HardwareInterface::stopRecording()
     int rc = stopChannel(QCAMERA_CH_TYPE_VIDEO);
 
     // Disable power hint for video encoding
-    m_perfLock.powerHint(POWER_HINT_VIDEO_ENCODE, false);
+    m_perfLock.powerHint(PowerHint::VIDEO_ENCODE, false);
     LOGI("X rc = %d", rc);
     return rc;
 }
