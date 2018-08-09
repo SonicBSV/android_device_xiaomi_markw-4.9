@@ -15,3 +15,7 @@ type keylayout_file, file_type, vendor_file_type;
 
 # led:torch_0/max_brightness
 type sysfs_torch, fs_type, sysfs_type;
+
+# Touchscreen
+type proc_touchpanel, fs_type, sysfs_type, proc_type;
+

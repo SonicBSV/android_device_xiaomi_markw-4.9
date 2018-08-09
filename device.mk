@@ -258,6 +258,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.opengles.version=196610 \
     ro.sf.lcd_density=440 
 
+# XiaomiParts
+PRODUCT_PACKAGES += \
+    XiaomiParts
+
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-impl \

@@ -27,13 +27,11 @@
 # Lights
 /sys/class/leds(/.*)?							u:object_r:sysfs_leds:s0
 /sys/devices/soc/78b6000\.i2c/i2c-2/2-[0-9a-f]+/leds(/.*)?		u:object_r:sysfs_leds:s0
+/sys/devices/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/disable_keys            u:object_r:proc_touchpanel:s0
+/sys/devices/soc/leds-qpnp-[0-9]+/leds(/.*)?				u:object_r:sysfs_leds:s0
+/sys/devices/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/enable_dt2w		u:object_r:proc_touchpanel:s0
+/sys/devices/soc/qpnp-flash-led-25/leds/led:torch_0/max_brightness          u:object_r:sysfs_torch:s0
+/sys/devices/soc/qpnp-flash-led-25/leds/led:torch_1/max_brightness          u:object_r:sysfs_torch:s0
+/sys/class/timed_output/vibrator/vtg_level            u:object_r:sysfs_vibrator:s0
 
-# Shell Script
-/(vendor|system/vendor)/bin/init\.goodix\.sh    u:object_r:init_fingerprint_exec:s0
 
-# Sysfs files
-/sys/devices/soc/qpnp-flash-led-24/leds/led:torch_0/max_brightness	u:object_r:sysfs_torch:s0
-/sys/devices/soc/qpnp-flash-led-24/leds/led:torch_1/max_brightness	u:object_r:sysfs_torch:s0
-/sys/audio_amplifier/enable						u:object_r:sysfs:s0
-/proc/gesture/onoff							u:object_r:proc:s0
-/firmware/verinfo/ver_info.txt						u:object_r:vfat:s0
