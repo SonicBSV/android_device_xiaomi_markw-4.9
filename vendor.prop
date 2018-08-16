@@ -68,7 +68,6 @@ persist.camera.gyro.disable=0
 persist.camera.isp.clock.optmz=0 
 persist.camera.stats.test=5 
 vidc.enc.dcvs.extra-buff-count=2
-persist.camera.is_type=2
 
 # CNE/DPM
 persist.cne.feature=1 
@@ -110,6 +109,11 @@ ro.build.shutdown_timeout=0
 # SdcardFs
 ro.sys.sdcardfs=true
 
+# IMS
+persist.dbg.volte_avail_ovr=1
+persist.dbg.vt_avail_ovr=1
+persist.radio.aosp_usr_pref_sel=true
+
 # Media
 av.debug.disable.pers.cache=1 
 media.aac_51_output_enabled=true 
@@ -133,6 +137,7 @@ persist.hwc.enable_vds=1
 persist.data.netmgrd.qos.enable=true 
 ro.use_data_netmgrd=true 
 persist.data.mode=concurrent
+persist.data.iwlan.enable=true
 
 # Perf
 ro.sys.fw.dex2oat_thread_count=4 
@@ -153,54 +158,40 @@ ro.vendor.qti.sys.fw.trim_enable_memory=2147483648
 
 #system props for time-services
 persist.timed.enable=true
+persist.delta_time.enable=true
 
 # USB
 persist.service.adb.enable=1 
 persist.service.debuggable=1 
 persist.sys.usb.config=mtp,adb
 
-# IMS
-service.qti.ims.enabled=1
-#persist.radio.ims.cmcc=true
-#persist.radio.calls.on.ims=true
-#persist.radio.jbims=1
-#persist.radio.VT_ENABLE=1
-#persist.radio.VT_HYBRID_ENABLE=1
-persist.radio.schd.cache=3500
-#persist.dbg.ims_volte_enable=1
-#persist.dbg.volte_avail_ovr=1
-#persist.dbg.vt_avail_ovr=1
-#persist.radio.videopause.mode=1
-persist.data.iwlan.enable=true
-persist.vendor.qti.telephony.vt_cam_interface=1
-
-# RIL
+# Radio
 DEVICE_PROVISIONED=1
-ro.telephony.default_network=20,20
 rild.libpath=/vendor/lib64/libril-qc-qmi-1.so
-rild.libargs=-d /dev/smd0
-persist.rild.nitz_plmn=
-persist.rild.nitz_long_ons_0=
-persist.rild.nitz_long_ons_1=
-persist.rild.nitz_long_ons_2=
-persist.rild.nitz_long_ons_3=
-persist.rild.nitz_short_ons_0=
-persist.rild.nitz_short_ons_1=
-persist.rild.nitz_short_ons_2=
-persist.rild.nitz_short_ons_3=
+ril.subscription.types=NV,RUIM
+ro.telephony.call_ring.multiple=false
+ro.telephony.default_cdma_sub=0
+ro.telephony.default_network=20,20
+persist.data.qmi.adb_logmask=0
+persist.radio.apm_sim_not_pwdn=1
+persist.radio.force_on_dc=true
 persist.radio.multisim.config=dsds
-persist.vendor.radio.apm_sim_not_pwdn=1
+persist.radio.redir_party_num=1
 persist.vendor.radio.custom_ecc=1
+persist.vendor.radio.ignore_dom_time=10
+persist.vendor.radio.data_ltd_sys_ind=1
+persist.vendor.radio.data_con_rprt=1
 persist.vendor.radio.rat_on=combine
 persist.vendor.radio.sib16_support=1
 ril.ecclist=000,08,100,101,102,110,112,118,119,120,122,911,999
-ril.subscription.types=NV,RUIM
-telephony.lteOnCdmaDevice=1
 
 #Set ims sip user agent
 ro.build.software.version=Android8.1.0
 ro.fota.oem=Xiaomi
 ro.product.model=Redmi 4
+
+# USB
+persist.sys.usb.config.extra=none
 
 # WIFI
 wifi.interface=wlan0
