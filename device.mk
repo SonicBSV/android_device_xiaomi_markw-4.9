@@ -134,6 +134,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     camera.msm8953 \
     libmm-qcamera \
+    Snap \
     GoogleCameraMod
 
 PRODUCT_PACKAGES += \

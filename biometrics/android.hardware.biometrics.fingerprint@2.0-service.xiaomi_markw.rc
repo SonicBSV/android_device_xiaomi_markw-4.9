@@ -3,8 +3,6 @@ service fps_hal /vendor/bin/hw/android.hardware.biometrics.fingerprint@2.0-servi
     # in /data. As a workaround, postpone startup until later in boot once
     # /data is mounted.
     class late_start
-    socket fpce stream 0666 system system
     user system
     group system sdcard_rw input
-    system system
     disabled
