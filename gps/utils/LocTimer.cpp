@@ -34,7 +34,6 @@
 #include <loc_timer.h>
 #include <sys/timerfd.h>
 #include <sys/epoll.h>
-#include <unistd.h>
 #include <LocTimer.h>
 #include <LocHeap.h>
 #include <LocThread.h>
