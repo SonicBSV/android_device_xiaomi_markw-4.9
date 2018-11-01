@@ -42,4 +42,16 @@
     <string name="kcal_greyscale_title">Greyscale</string>
     <string name="kcal_greyscale_summary">Fully disable saturation</string>
     <string name="menu_reset">Reset</string>
+    <string name="presets_list_title">Load KCAL preset</string>
+    <string name="default_values">Default</string>
+    <string name="version_1">Version 1</string>
+    <string name="version_2">Version 2</string>
+    <string name="version_3">Version 3</string>
+    <string name="triluminous">Triluminous</string>
+    <string name="deep_black_and_white">Deep Black and White</string>
+    <string name="deep_natural">Deep Natural</string>
+    <string name="cool_amoled">Cool Amoled</string>
+    <string name="extreme_amoled">Extreme Amoled</string>
+    <string name="warm_amoled">Warm Amoled</string>
+    <string name="hybrid_mamba">Hybrid Mamba</string>
 </resources>

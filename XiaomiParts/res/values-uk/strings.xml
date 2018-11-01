@@ -41,4 +41,16 @@
     <string name="kcal_greyscale_title">Відтенки сірого</string>
     <string name="kcal_greyscale_summary">Повністю вимкнути насиченість</string>
     <string name="menu_reset">Скинути</string>
+    <string name="presets_list_title">Застосувати профіль KCAL</string>
+    <string name="default_values">За замовчуванням</string>
+    <string name="version_1">Версія 1</string>
+    <string name="version_2">Версія 2</string>
+    <string name="version_3">Версія 3</string>
+    <string name="triluminous">Triluminous</string>
+    <string name="deep_black_and_white">Насичений чорний і білий</string>
+    <string name="deep_natural">Насичений природній</string>
+    <string name="cool_amoled">Холодний Amoled</string>
+    <string name="extreme_amoled">Екстримальний Amoled</string>
+    <string name="warm_amoled">Теплий Amoled</string>
+    <string name="hybrid_mamba">Гібридний Мамба</string>
 </resources>

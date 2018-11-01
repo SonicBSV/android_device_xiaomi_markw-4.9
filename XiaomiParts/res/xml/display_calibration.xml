@@ -109,4 +109,12 @@
         android:icon="@null"
         android:paddingLeft="0dp"
         android:persistent="false"/>
+    <ListPreference
+        android:key="presets_list"
+        android:title="@string/presets_list_title"
+        android:summary="%s"
+        android:entries="@array/presets_entries"
+        android:entryValues="@array/presets_values"
+        android:dependency="kcal_enabled"
+        android:defaultValue="0"/>
 </PreferenceScreen>

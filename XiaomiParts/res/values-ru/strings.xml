@@ -41,4 +41,16 @@
     <string name="kcal_greyscale_title">Оттенки серого</string>
     <string name="kcal_greyscale_summary">Полностью отключить насыщенность</string>
     <string name="menu_reset">Сбросить</string>
+    <string name="presets_list_title">Применить профиль KCAL</string>
+    <string name="default_values">По умолчанию</string>
+    <string name="version_1">Версия 1</string>
+    <string name="version_2">Версия 2</string>
+    <string name="version_3">Версия 3</string>
+    <string name="triluminous">Triluminous</string>
+    <string name="deep_black_and_white">Насыщенный черный и белый</string>
+    <string name="deep_natural">Насыщенный естественный</string>
+    <string name="cool_amoled">Холодный Amoled</string>
+    <string name="extreme_amoled">Екстримальный Amoled</string>
+    <string name="warm_amoled">Теплый Amoled</string>
+    <string name="hybrid_mamba">Гибридный Мамба</string>
 </resources>

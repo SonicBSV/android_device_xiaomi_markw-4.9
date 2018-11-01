@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="presets_entries">
+        <item>@string/default_values</item>
+        <item>@string/version_1</item>
+        <item>@string/version_2</item>
+        <item>@string/version_3</item>
+        <item>@string/triluminous</item>
+        <item>@string/deep_black_and_white</item>
+        <item>@string/deep_natural</item>
+        <item>@string/cool_amoled</item>
+        <item>@string/extreme_amoled</item>
+        <item>@string/warm_amoled</item>
+        <item>@string/hybrid_mamba</item>
+    </string-array>
+
+    <string-array name="presets_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+</resources>
