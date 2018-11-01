@@ -17,69 +17,40 @@
 */
 package com.lineageos.settings.device;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceViewHolder;
-import android.database.ContentObserver;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.os.Bundle;
-import android.util.Log;
 
 import java.util.List;
 
-public class YellowTorchBrightnessPreference extends Preference implements
-        SeekBar.OnSeekBarChangeListener {
+public class YellowTorchBrightnessPreference extends ProperSeekBarPreference {
 
-    private SeekBar mSeekBar;
-    private int mOldBrightness;
-    private int mMinValue;
-    private int mMaxValue;
-    private float offset;
-    private TextView mValueText;
+    private static int mMinVal = 0;
+    private static int mMaxVal = 200;
+    private static int mDefVal = mMaxVal;
 
     private static final String FILE_BRIGHTNESS = "/sys/devices/soc/qpnp-flash-led-25/leds/led:torch_1/max_brightness";
 
     public YellowTorchBrightnessPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mMinValue = 0;
-        mMaxValue = 200;
-        offset = mMaxValue / 100f;
 
-        setLayoutResource(R.layout.preference_seek_bar);
-    }
+        mInterval = 10;
+        mShowSign = false;
+        mUnits = "";
+        mContinuousUpdates = false;
+        mMinValue = mMinVal;
+        mMaxValue = mMaxVal;
+        mDefaultValueExists = true;
+        mDefaultValue = mDefVal;
+        mValue = Integer.parseInt(loadValue());
 
-    @Override
-    public void onBindViewHolder(PreferenceViewHolder holder) {
-        super.onBindViewHolder(holder);
-
-        mOldBrightness = Integer.parseInt(getValue(getContext()));
-        mSeekBar = (SeekBar) holder.findViewById(R.id.seekbar);
-        mSeekBar.setMax(mMaxValue - mMinValue);
-        mSeekBar.setProgress(mOldBrightness - mMinValue);
-        mValueText = (TextView) holder.findViewById(R.id.current_value);
-        mValueText.setText(Integer.toString(Math.round(mOldBrightness / offset)) + "%");
-        mSeekBar.setOnSeekBarChangeListener(this);
+        setPersistent(false);
     }
 
     public static boolean isSupported() {
         return Utils.fileWritable(FILE_BRIGHTNESS);
-    }
-
-    public static String getValue(Context context) {
-        return Utils.getFileValue(FILE_BRIGHTNESS, "200");
-    }
-
-    private void setValue(String newValue) {
-        Utils.writeValue(FILE_BRIGHTNESS, newValue);
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-        editor.putString(DeviceSettings.KEY_YELLOW_TORCH_BRIGHTNESS, newValue);
-        editor.commit();
     }
 
     public static void restore(Context context) {
@@ -87,22 +58,24 @@ public class YellowTorchBrightnessPreference extends Preference implements
             return;
         }
 
-        String storedValue = PreferenceManager.getDefaultSharedPreferences(context).getString(DeviceSettings.KEY_YELLOW_TORCH_BRIGHTNESS, "200");
+        String storedValue = PreferenceManager.getDefaultSharedPreferences(context).getString(DeviceSettings.KEY_YELLOW_TORCH_BRIGHTNESS, String.valueOf(mDefVal));
         Utils.writeValue(FILE_BRIGHTNESS, storedValue);
     }
 
-    public void onProgressChanged(SeekBar seekBar, int progress,
-            boolean fromTouch) {
-        setValue(String.valueOf(progress + mMinValue));
-        mValueText.setText(Integer.toString(Math.round((progress + mMinValue) / offset)) + "%");
+    public static String loadValue() {
+        return Utils.getFileValue(FILE_BRIGHTNESS, String.valueOf(mDefVal));
     }
 
-    public void onStartTrackingTouch(SeekBar seekBar) {
-        // NA
+    private void saveValue(String newValue) {
+        Utils.writeValue(FILE_BRIGHTNESS, newValue);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+        editor.putString(DeviceSettings.KEY_YELLOW_TORCH_BRIGHTNESS, newValue);
+        editor.commit();
     }
 
-    public void onStopTrackingTouch(SeekBar seekBar) {
-        // NA
+    @Override
+    protected void changeValue(int newValue) {
+        saveValue(String.valueOf(newValue));
     }
 }
 

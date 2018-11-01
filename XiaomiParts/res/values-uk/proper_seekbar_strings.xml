@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <string name="proper_seekbar_value">Значення: <xliff:g id="v">%s</xliff:g></string>
+  <string name="proper_seekbar_default_value">за замовчуванням</string>
+  <string name="proper_seekbar_default_value_to_set">Значення за замовчуванням: <xliff:g id="v">%s</xliff:g>\nДовгий тап для встановлення</string>
+  <string name="proper_seekbar_default_value_is_set">Значення за замовчуванням встановлено</string>
+</resources>
