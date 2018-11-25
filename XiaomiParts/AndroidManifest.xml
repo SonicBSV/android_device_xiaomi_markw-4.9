@@ -13,14 +13,16 @@
         android:targetSdkVersion="26" />
     <application
         android:label="@string/advanced_settings"
+        android:icon="@drawable/launcher"
         android:theme="@style/AppTheme"
         android:supportsRtl="true" >
         <activity
             android:name="com.lineageos.settings.device.DeviceSettingsActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/advanced_settings" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
