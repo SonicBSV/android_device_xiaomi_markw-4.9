@@ -147,16 +147,16 @@ void gsi_check()
 
     product = GetProperty("ro.product.device", "");
 
-    // override device specific props for GSI & P DP*
-    if ((product == "phhgsi_arm64_a") || (product == "marlin")) {
+    // override device specific props for GSI *
+    if ((product == "phhgsi_arm64_a")) {
         property_override("ro.product.model", "Redmi 4");
         property_override("ro.product.brand", "Xiaomi");
         property_override("ro.product.name", "markw");
         property_override("ro.product.device", "markw");
         property_override("ro.product.manufacturer", "Xiaomi");
         property_override("ro.build.product", "markw");
-        property_override("ro.build.description", "markw-user 6.0.1 MMB29M V9.2.3.0.MBEMIEK release-keys");
-        property_override("ro.build.fingerprint", "Xiaomi/markw/markw:6.0.1/MMB29M/V9.2.3.0.MBEMIEK:user/release-keys");
+        property_override("ro.build.description", "markw-user 6.0.1 MMB29M V9.6.2.0.MBECNFD release-keys");
+        property_override("ro.build.fingerprint", "Xiaomi/markw/markw:6.0.1/MMB29M/V9.6.2.0.MBECNFD:user/release-keys");
     }
 }
 
