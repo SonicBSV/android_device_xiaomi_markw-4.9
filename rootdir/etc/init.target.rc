@@ -95,52 +95,10 @@ service qcamerasvr /vendor/bin/mm-qcamera-daemon
     group camera system inet input graphics
     setenv LD_PRELOAD "libshim_c.so"
 
-## Allow usb charging to be disabled peristently
-#on property:persist.usb.chgdisabled=1
-#    write /sys/class/power_supply/battery/charging_enabled 0
-#
-#on property:persist.usb.chgdisabled=0
-#    write /sys/class/power_supply/battery/charging_enabled 1
-#
-#service qrngd /system/bin/qrngd -f
-#   class main
-#   user root
-#   group root
-#
-#service qrngp /system/bin/qrngp
-#    class main
-#    user root
-#    group root
-#    oneshot
-#    disabled
-#
-#on property:sys.boot_completed=1
-#    start qrngp
-#
-	# Set idle GPU to 133 Mhz
-	write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 6
-    
-	# Set cpu-boost    
-	write /sys/module/cpu_boost/parameters/input_boost_freq "0:1036800"
-	write /sys/module/cpu_boost/parameters/input_boost_ms 1500
-	
-	# enable force fast charge
-	write /sys/kernel/fast_charge/force_fast_charge 1
-
 service qseecomd /vendor/bin/qseecomd
    class core
    user root
    group root
-
-# add PcbaConfigSet
-service PcbaConfigSet /system/vendor/bin/PcbaConfigSet
-    class core
-    oneshot
-
-#service aostlmd /system/bin/aostlmd
-#   class late_start
-#   user system
-#   group system net_raw
 
 service perfd /system/vendor/bin/perfd
    class main
@@ -174,32 +132,15 @@ service hbtp /vendor/bin/hbtp_daemon
     group system
     disabled
 
-service audiod /vendor/bin/audiod
-   class late_start
-   user system
-   group system
-
 on boot
     start rmt_storage
-#    insmod /system/lib/modules/adsprpc.ko
-#
+
     write /dev/cpuset/top-app/boost/cpus 4-7
     write /dev/cpuset/top-app/cpus 0-7
     write /dev/cpuset/foreground/boost/cpus 0-6
     write /dev/cpuset/foreground/cpus 0-6
     write /dev/cpuset/background/cpus 0-1
     write /dev/cpuset/system-background/cpus 0-3
-#
-# access permission for secure touch
-#    chmod 0660 /sys/devices/soc.0/78b7000.i2c/i2c-3/3-0020/input/input0/secure_touch_enable
-#    chmod 0440 /sys/devices/soc.0/78b7000.i2c/i2c-3/3-0020/input/input0/secure_touch
-#    chmod 0660 /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/secure_touch_enable
-#    chmod 0440 /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/secure_touch
-#    chown system drmrpc /sys/devices/soc.0/78b7000.i2c/i2c-3/3-0020/input/input0/secure_touch_enable
-#    chown system drmrpc /sys/devices/soc.0/78b7000.i2c/i2c-3/3-0020/input/input0/secure_touch
-#    chown system drmrpc /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/secure_touch_enable
-#    chown system drmrpc /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/secure_touch
-#    chown system system /sys/kernel/hbtp/display_pwr
 
 # Add a cpuset for the camera daemon
 # We want all cores for camera
@@ -305,13 +246,6 @@ on charger
     # hq log
     setprop debug.charger.on 1
 
-
-service dts_configurator /system/vendor/bin/dts_configurator
-    class late_start
-    user system
-    group media audio
-    oneshot
-
 service dtseagleservice /system/vendor/bin/dts_eagle_service
     class late_start
     user system
@@ -353,11 +287,6 @@ service energy-awareness /system/vendor/bin/energy-awareness
     user root
     group system
     oneshot
-
-service mdtpd /system/vendor/bin/mdtpd
-    class late_start
-    user root
-    group system radio drmrpc
 
 # add for huaqin ftm test
 service redledon /system/vendor/bin/factory_bin r 1
@@ -459,13 +388,6 @@ service getxiaomisn /system/vendor/bin/getsn_xiaomi
     class core
     oneshot
 
-## added by Devine for ap diag begin
-service hwdiag /system/bin/hwdiag
-    class core
-    user root
-    seclabel u:r:hwdiag:s0
-## added by Devine for ap diag end
-
 #add for runintest --start
 service systemcommand /system/bin/systemcommand
     user root
@@ -545,12 +467,6 @@ service  stoptcpdumplog /system/bin/getlog -p
     oneshot
     seclabel u:r:logoem:s0
 
-service  getpersistlog /system/bin/getpersistlog
-    class main
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
-
 on property:persist.sys.debug.gettcpdump=1
     restart gettcpdumplog
 on property:persist.sys.debug.gettcpdump=0
@@ -570,9 +486,6 @@ on property:persist.sys.debug.getalllog=0
 on property:sys.screentimeout=1
     start screentimeout
 # for factory current test --end
-on boot
-    write /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/fw_name PR1702898-s3528t_00260005_00380008.img
-    write /sys/devices/soc.0/78b8000.i2c/i2c-4/4-0020/input/input0/update_fw 1
 
 on boot
     #hqlog
