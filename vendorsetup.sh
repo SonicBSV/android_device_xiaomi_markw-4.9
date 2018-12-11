@@ -14,5 +14,5 @@
 # limitations under the License.
 #
 
-add_lunch_combo aosp_markw-userdebug
-add_lunch_combo aosp_markw-user
+add_lunch_combo dot_markw-userdebug
+add_lunch_combo dot_markw-user
