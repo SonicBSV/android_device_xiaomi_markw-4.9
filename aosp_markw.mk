@@ -1,6 +1,5 @@
 #
-# Copyright (C) 2016 The CyanogenMod Project
-#               2017 The LineageOS Project
+# Copyright (C) 2018 The LineageOS Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,31 +14,36 @@
 # limitations under the License.
 #
 
-# Inherit from markw device
-$(call inherit-product, device/xiaomi/markw/full_markw.mk)
+# Release name
+PRODUCT_RELEASE_NAME := markw
 
-# Inherit some common AOSP stuff.
-$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
+# Inherit build target
+$(call inherit-product, build/target/product/embedded.mk)
 
-# Boot animation
-TARGET_SCREEN_WIDTH := 1080
-TARGET_SCREEN_HEIGHT := 1920
-TARGET_ARCH := arm64
-TARGET_DENSITY := xxhdpi
-TARGET_BOOT_ANIMATION_RES := 1080
-TARGET_GAPPS_ARCH := arm64
+# Inherit from those products. Most specific first
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
+# Inherit some common Dot OS stuff
+$(call inherit-product, vendor/dot/config/common.mk)
+
+# Inherit from whyred device
+$(call inherit-product, device/xiaomi/markw/device.mk)
 
 # Device identifier. This must come after all inclusions
-PRODUCT_NAME := aosp_markw
-BOARD_VENDOR := Xiaomi
+PRODUCT_NAME := dot_markw
 PRODUCT_DEVICE := markw
+PRODUCT_MANUFACTURER := Xiaomi
+PRODUCT_BRAND := Xiaomi
+PRODUCT_FULL_TREBLE_OVERRIDE := true
 
+TARGET_VENDOR_PRODUCT_NAME := markw
+TARGET_VENDOR_DEVICE_NAME := markw
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
-
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRIVATE_BUILD_DESC="markw-user 6.0.1 MMB29M V9.6.2.0.MBECNFD release-keys" \
     TARGET_DEVICE="markw" \
-    DEVICE_MAINTAINERS="SonicBSV"
+    DEVICE_MAINTAINERS="DarkAngelGR"
     
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
 BUILD_FINGERPRINT := Xiaomi/markw/markw:6.0.1/MMB29M/V9.6.2.0.MBECNFD:user/release-keys
