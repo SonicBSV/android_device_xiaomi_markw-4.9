@@ -1,0 +1,2 @@
+allow hal_audio_default sysfs:file { open read write };
+allow hal_audio_default sysfs:dir { read open };

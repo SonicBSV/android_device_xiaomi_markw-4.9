@@ -1,0 +1,29 @@
+# Power saving profile
+on property:fku.perf.profile=0
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 1036800
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
+    write /sys/class/devfreq/soc\:qcom,cpubw/governor bw_hwmon
+    write /sys/module/cpu_boost/parameters/input_boost_freq "0:1036800"
+    write /sys/module/cpu_boost/parameters/input_boost_ms 1500
+    write /sys/class/leds/lcd-backlight/max_brightness 100
+    write /sys/class/kgsl/kgsl-3d0/max_pwrlevel 3
+
+# Balance (FK defaults)
+on property:fku.perf.profile=1
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 2016000
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor msm-adreno-tz
+    write /sys/class/devfreq/soc\:qcom,cpubw/governor bw_hwmon
+    write /sys/module/cpu_boost/parameters/input_boost_freq "0:1036800"
+    write /sys/module/cpu_boost/parameters/input_boost_ms 750
+    write /sys/class/leds/lcd-backlight/max_brightness 255
+    write /sys/class/kgsl/kgsl-3d0/max_pwrlevel 0
+
+# Performance
+on property:fku.perf.profile=2
+    write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq 2016000
+    write /sys/class/kgsl/kgsl-3d0/devfreq/governor performance
+    write /sys/class/devfreq/soc\:qcom,cpubw/governor performance
+    write /sys/module/cpu_boost/parameters/input_boost_freq "0:1804800"
+    write /sys/module/cpu_boost/parameters/input_boost_ms 2000
+    write /sys/class/leds/lcd-backlight/max_brightness 255
+    write /sys/class/kgsl/kgsl-3d0/max_pwrlevel 0
