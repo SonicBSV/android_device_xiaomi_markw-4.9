@@ -99,6 +99,7 @@ ro.fm.transmitter=true
 
 #property to enable user to access Google WFD settings
 persist.debug.wfd.enable=1
+persist.sys.wfd.virtual=0
 #property to enable VDS WFD solution
 persist.hwc.enable_vds=1
 
