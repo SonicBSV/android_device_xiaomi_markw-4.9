@@ -89,7 +89,7 @@ function 8953_sched_dcvs_hmp()
     # spill load is set to 100% by default in the kernel
     echo 3 > /proc/sys/kernel/sched_spill_nr_run
     # Apply inter-cluster load balancer restrictions
-    echo 0 > /proc/sys/kernel/sched_restrict_cluster_spill
+    echo 1 > /proc/sys/kernel/sched_restrict_cluster_spill
     # set sync wakee policy tunable
     echo 1 > /proc/sys/kernel/sched_prefer_sync_wakee_to_waker
 
@@ -1793,12 +1793,8 @@ case "$target" in
                 done
 
                 # SMP scheduler
-                echo 100 > /proc/sys/kernel/sched_upmigrate
-                echo 100 > /proc/sys/kernel/sched_downmigrate
-
-                #HQ D1s-706 add for touch boost start
-                echo 0:1401600 1:1401600 2:1401600 3:1401600 4:1401600 5:1401600 6:1401600 7:1401600 > /sys/module/cpu_boost/parameters/input_boost_freq
-                #HQ D1s-706 add for touch boost end
+                echo 85 > /proc/sys/kernel/sched_upmigrate
+                echo 85 > /proc/sys/kernel/sched_downmigrate
 
                 #HQ D1s-706 add for touch boost start
                 echo 0:1401600 1:1401600 2:1401600 3:1401600 4:1401600 5:1401600 6:1401600 7:1401600 > /sys/module/cpu_boost/parameters/input_boost_freq
@@ -2396,8 +2392,11 @@ case "$target" in
             echo 20 > /proc/sys/kernel/sched_small_wakee_task_load
 
             # cpuset settings
-            echo 0-3 > /dev/cpuset/background/cpus
-            echo 0-3 > /dev/cpuset/system-background/cpus
+            echo 0-7 > /dev/cpuset/top-app/cpus
+            echo 4-7 > /dev/cpuset/foreground/boost/cpus
+            echo 0-2,4-7 > /dev/cpuset/foreground/cpus
+            echo 0-1 > /dev/cpuset/background/cpus
+            echo 0-4 > /dev/cpuset/system-background/cpus
 
             # disable thermal bcl hotplug to switch governor
             echo 0 > /sys/module/msm_thermal/core_control/enabled
