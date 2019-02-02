@@ -2,9 +2,9 @@ package com.lineageos.settings.device;
 
 public class KcalPresets {
 
-    public static final String[] red = {"256", "225", "250", "240", "255", "250", "250", "236", "255", "253", "226"};
-    public static final String[] green = {"256", "245", "250", "240", "250", "250", "250", "248", "255", "246", "215"};
-    public static final String[] blue = {"256", "255", "235", "240", "251", "255", "255", "255", "255", "243", "255"};
+    public static final String[] red = {"256", "225", "250", "240", "256", "250", "250", "236", "256", "253", "226"};
+    public static final String[] green = {"256", "245", "250", "240", "250", "250", "250", "248", "256", "246", "215"};
+    public static final String[] blue = {"256", "256", "235", "240", "251", "256", "256", "256", "256", "243", "256"};
     public static final String[] satIntensity = {"255", "264", "251", "257", "290", "284", "257", "274", "289", "274", "264"};
     public static final String[] scrHue = {"0", "0", "1520", "0", "1526", "0", "0", "0", "0", "0", "10"};
     public static final String[] scrValue = {"255", "255", "240", "255", "264", "245", "245", "251", "242", "251", "247"};
