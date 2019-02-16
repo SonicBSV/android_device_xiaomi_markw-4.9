@@ -38,7 +38,7 @@
     <string name="kcal_hue">Тон</string>
     <string name="kcal_invert_title">Інвертувати</string>
     <string name="kcal_invert_summary">Інвертувати всі кольори екрану</string>
-    <string name="kcal_greyscale_title">Відтенки сірого</string>
+    <string name="kcal_greyscale_title">Відтінки сірого</string>
     <string name="kcal_greyscale_summary">Повністю вимкнути насиченість</string>
     <string name="menu_reset">Скинути</string>
     <string name="presets_list_title">Застосувати профіль KCAL</string>
