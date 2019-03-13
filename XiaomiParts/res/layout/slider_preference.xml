@@ -20,7 +20,7 @@
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd">
     <TextView
-        android:id="@+android:id/title"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
@@ -28,10 +28,10 @@
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceListItem" />
     <TextView
-        android:id="@+android:id/summary"
+        android:id="@+id/summary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@android:id/title"
+        android:layout_below="@id/title"
         android:fadingEdge="horizontal"
         android:textAppearance="?android:attr/textAppearanceSmall" />
     <RelativeLayout
