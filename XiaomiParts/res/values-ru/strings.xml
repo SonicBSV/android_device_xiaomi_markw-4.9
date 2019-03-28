@@ -16,6 +16,7 @@
 <resources>
     <string name="app_name">Xiaomi</string>
     <string name="advanced_settings">Настройки устройства</string>
+    <string name="advanced_settings_summary">Вибрация и фонарик</string>
     <string name="category_vibrator">Вибрация</string>
     <string name="vib_strength_title_head">Сила вибрации</string>
     <string name="category_torch">Фонарик</string>
