@@ -93,14 +93,6 @@
         app:min_value="0"
         app:default_value="0"/>
     <SwitchPreference
-        android:key="kcal_invert"
-        android:title="@string/kcal_invert_title"
-        android:summary="@string/kcal_invert_summary"
-        android:dependency="kcal_enabled"
-        android:icon="@null"
-        android:paddingLeft="0dp"
-        android:persistent="false"/>
-    <SwitchPreference
         android:key="kcal_greyscale"
         android:title="@string/kcal_greyscale_title"
         android:summary="@string/kcal_greyscale_summary"
