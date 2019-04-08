@@ -138,11 +138,6 @@
     <!-- Whether the display blanks itself when going from a doze to a non-doze state -->
     <bool name="config_displayBlanksAfterDoze">true</bool>
 
-    <!-- Screen brightness used to dim the screen when the user activity
-         timeout expires.  May be less than the minimum allowed brightness setting
-         that can be set by the user. -->
-    <integer name="config_screenBrightnessDim">6</integer>
-
     <!-- Default screen brightness setting.
          Must be in the range specified by minimum and maximum. -->
     <integer name="config_screenBrightnessSettingDefault">128</integer>
@@ -156,8 +151,8 @@
          when adapting to brighter or darker environments.  This parameter controls how quickly
          brightness changes occur in response to an observed change in light level that exceeds the
          hysteresis threshold. -->
-    <integer name="config_autoBrightnessBrighteningLightDebounce">1600</integer>
-    <integer name="config_autoBrightnessDarkeningLightDebounce">3200</integer>
+    <integer name="config_autoBrightnessBrighteningLightDebounce">2000</integer>
+    <integer name="config_autoBrightnessDarkeningLightDebounce">4000</integer>
 
     <!-- Configure mobile network MTU. The standard default is set here but each carrier
          may have a specific value set in an overlay config.xml file. 
@@ -503,6 +498,11 @@
         <item>"/system/framework/boot.vdex"</item>
         <item>"/system/framework/arm64/boot-core-libart.oat"</item>
         <item>"/system/framework/boot-core-libart.vdex"</item>
+        <item>"/system/framework/arm64/boot-WfdCommon.oat"</item>
+        <item>"/system/framework/boot-WfdCommon.vdex"</item>
+        <item>"/system/priv-app/SystemUI/oat/arm64/SystemUI.vdex"</item>
+        <item>"/system/priv-app/SystemUI/oat/arm64/SystemUI.odex"</item>
+        <item>"/system/lib64/libsurfaceflinger.so"</item>
     </string-array>
 
     <!-- Flag indicating whether round icons should be parsed from the application manifest. -->
@@ -510,8 +510,30 @@
 
     <!-- Should the pinner service pin the Camera application? -->
     <bool name="config_pinnerCameraApp">true</bool>
-    
-    <!-- Whether or not swipe up gesture's opt-in setting is available on this device -->
-    <bool name="config_swipe_up_gesture_setting_available">true</bool>
+
+<!-- Default value for proximity check on screen wake
+         NOTE ! - Enable for devices that have a fast response proximity sensor (ideally < 300ms)
+    -->
+    <bool name="config_proximityCheckOnWake">false</bool>
+    <integer name="config_proximityCheckTimeout">250</integer>
+
+    <bool name="config_proximityCheckOnWakeEnabledByDefault">false</bool>
+
+    <bool name="config_button_brightness_support">false</bool>
+    <integer name="config_button_brightness_default">0</integer>
+
+    <!-- Hardware keys present on the device with the ability to wake, stored as a bit field.
+         This integer should equal the sum of the corresponding value for each
+         of the following keys present:
+             1 - Home
+             2 - Back
+             4 - Menu
+             8 - Assistant (search)
+            16 - App switch
+            32 - Camera
+            64 - Volume rocker
+         For example, a device with Home, Back and Menu keys would set this
+         config to 7. -->
+    <integer name="config_deviceHardwareWakeKeys">64</integer>
 
 </resources>

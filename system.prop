@@ -37,7 +37,7 @@ debug.sf.recomputecrop=0
 sdm.debug.disable_skip_validate=1
 
 #Property to enable display default color mode
-vendor.display.enable_default_color_mode=0
+vendor.display.enable_default_color_mode=1
 
 # Display Properties as per treble compliance
 vendor.gralloc.enable_fb_ubwc=1
@@ -65,6 +65,12 @@ vendor.mm.enable.qcom_parser=1048575
 ro.vendor.use_data_netmgrd=true
 persist.data.netmgrd.qos.enable=true
 persist.vendor.data.mode=concurrent
+
+#persist.vendor.data.profile_update
+persist.vendor.data.profile_update=true
+
+#persist.vendor.radio.prefer_spn
+persist.vendor.radio.prefer_spn=1
 
 #system props for time-services
 persist.timed.enable=true
@@ -94,12 +100,8 @@ persist.fuse_sdcard=true
 # Perf
 ro.sys.fw.dex2oat_thread_count=8
 
-#System property for FM transmitter
-ro.fm.transmitter=true
-
 #property to enable user to access Google WFD settings
 persist.debug.wfd.enable=1
-persist.sys.wfd.virtual=0
 #property to enable VDS WFD solution
 persist.hwc.enable_vds=1
 
@@ -151,24 +153,6 @@ persist.gps.qc_nlp_in_use=1
 persist.loc.nlp_name=com.qualcomm.location
 ro.gps.agps_provider=1
 
-#HWUI properties
-ro.hwui.texture_cache_size=72
-ro.hwui.layer_cache_size=48
-ro.hwui.r_buffer_cache_size=8
-ro.hwui.path_cache_size=32
-ro.hwui.gradient_cache_size=1
-ro.hwui.drop_shadow_cache_size=6
-ro.hwui.texture_cache_flushrate=0.4
-ro.hwui.text_small_cache_width=1024
-ro.hwui.text_small_cache_height=1024
-ro.hwui.text_large_cache_width=2048
-ro.hwui.text_large_cache_height=1024
-
-#Enable B service adj transition by default
-ro.vendor.qti.sys.fw.bservice_enable=true
-ro.vendor.qti.sys.fw.bservice_limit=5
-ro.vendor.qti.sys.fw.bservice_age=5000
-
 #Memperf properties
 ro.memperf.lib=libmemperf.so
 ro.memperf.enable=false
@@ -195,23 +179,23 @@ ro.cutoff_voltage_mv=3400
 ro.emmc_size=16GB
 
 #force HAL1 for below packages
-vendor.camera.hal1.packagelist=com.skype.raider,com.google.android.talk
-
-#Enable FR27607-RIL to send ONLINE cmd in bootup
-#persist.radio.poweron_opt=1
+vendor.camera.hal1.packagelist=com.skype.raider,com.google.android.talk,com.whatsapp
 
 #low power mode for camera
 vendor.camera.lowpower.record.enable=1
 
+#Other cam param
+media.camera.ts.monotonic=1 
+persist.vendor.camera.isp.clock.optmz=0 
+persist.vendor.camera.stats.test=5 
+persist.vendor.qti.telephony.vt_cam_interface=1
+
 #HAL3
-persist.camera.HAL3.enabled=1
+persist.vendor.camera.HAL3.enabled=1
 
 #properties for limiting preview size in camera
 persist.vendor.camera.display.umax=1920x1080
 persist.vendor.camera.display.lmax=1280x720
-
-#expose aux camera for below packages
-vendor.camera.aux.packagelist=org.codeaurora.snapcam
 
 #Set ims sip user agent
 ro.build.software.version=Android9.0.0

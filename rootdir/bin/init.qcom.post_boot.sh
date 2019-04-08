@@ -1877,15 +1877,6 @@ case "$target" in
                     echo -n enable > $mode
                 done
 
-            # Sound control (decrease / increase volume)
-            # -1 => 255
-            # headphone_gain: -10(246)/20
-            # speaker_gain: -10(246)/20
-            # mic_gain: -10(246)/20
-            # echo "0 0" > /sys/kernel/sound_control/headphone_gain
-            echo 0 > /sys/kernel/sound_control/speaker_gain
-            # echo 0 > /sys/kernel/sound_control/mic_gain
-
             # configure governor settings for little cluster
             echo 1 > /sys/devices/system/cpu/cpu0/online
             echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor

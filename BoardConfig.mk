@@ -42,7 +42,7 @@ TARGET_USES_64_BIT_BINDER := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78af000
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci firmware_class.path=/vendor/firmware_mnt/image earlycon=msm_hsl_uart,0x78af000
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE :=  2048
@@ -52,12 +52,12 @@ BOARD_MKBOOTIMG_ARGS := --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --tags_offset $
 TARGET_KERNEL_ARCH := arm64
 #TARGET_KERNEL_CONFIG := franco_markw_defconfig
 #TARGET_KERNEL_SOURCE := kernel/xiaomi/msm8953
-TARGET_KERNEL_CONFIG := franco_markw_defconfig
+TARGET_KERNEL_CONFIG := markw_defconfig
 TARGET_KERNEL_SOURCE := kernel/xiaomi/markw
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 
 # ANT+
-#BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
+BOARD_ANT_WIRELESS_DEVICE := "vfs-prerelease"
 
 # Audio
 AUDIO_FEATURE_ENABLED_ANC_HEADSET := true
@@ -93,7 +93,6 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Bluetooth
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(DEVICE_PATH)/bluetooth
-BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_QCOM := true
 QCOM_BT_USE_BTNV := true
 
@@ -104,7 +103,7 @@ TARGET_USES_QTI_CAMERA_DEVICE := true
 TARGET_TS_MAKEUP := true
 
 # disabel ir for kernel headers
-BOARD_GLOBAL_CFLAGS += -DCONFIG_MSMB_WITHOUT_IR
+#BOARD_GLOBAL_CFLAGS += -DCONFIG_MSMB_WITHOUT_IR
 
 # Charger
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
@@ -113,15 +112,15 @@ BOARD_CHARGER_ENABLE_SUSPEND := true
 # CNE / DPM
 BOARD_USES_QCNE := true
 
-# Dexpreopt
+# Enable dexpreopt to speed boot time
 ifeq ($(HOST_OS),linux)
   ifneq ($(TARGET_BUILD_VARIANT),eng)
-    ifeq ($(WITH_DEXPREOPT),)
-      WITH_DEXPREOPT := true
-    endif
+    WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := false
   endif
 endif
-WITH_DEXPREOPT_BOOT_IMG_ONLY ?= true
+
+# DRM
+TARGET_ENABLE_MEDIADRM_64 := true
 
 # Display
 BOARD_USES_ADRENO := true
@@ -134,7 +133,6 @@ TARGET_USES_GRALLOC1 := true
 TARGET_USES_ION := true
 TARGET_USES_NEW_ION_API :=true
 TARGET_USES_OVERLAY := true
-TARGET_USES_QCOM_DISPLAY_BSP := true
 USE_OPENGL_RENDERER := true
 
 MAX_EGL_CACHE_KEY_SIZE := 12*1024
@@ -152,9 +150,9 @@ NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 TARGET_HW_DISK_ENCRYPTION := true
 
 #FM
-BOARD_HAVE_QCOM_FM := true
-TARGET_QCOM_NO_FM_FIRMWARE := true
-BOARD_HAVE_FM_RADIO := true
+#BOARD_HAVE_QCOM_FM := true
+#TARGET_QCOM_NO_FM_FIRMWARE := true
+#BOARD_HAVE_FM_RADIO := true
 
 # GPS
 #TARGET_NO_RPC := true
@@ -176,7 +174,7 @@ TARGET_EXFAT_DRIVER := sdfat
 # HIDL
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE   := $(DEVICE_PATH)/compatibility_matrix.xml
-#DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(DEVICE_PATH)/vendor_framework_compatibility_matrix.xml
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(DEVICE_PATH)/vendor_framework_compatibility_matrix.xml
 DEVICE_FRAMEWORK_MANIFEST_FILE := $(DEVICE_PATH)/framework_manifest.xml
 
 # Init
@@ -237,6 +235,9 @@ PRODUCT_VENDOR_MOVE_ENABLED := true
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 PRODUCT_SHIPPING_API_LEVEL := 23
+
+# Security patch level
+VENDOR_SECURITY_PATCH := 2019-03-05
 
 # Wi-Fi
 BOARD_USES_CAF_WLAN_HAL := true
