@@ -116,6 +116,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     ro.adb.secure=0
 
+# AdvancedControls
+PRODUCT_PACKAGES += \
+    AdvancedControls
+
 # Haters gonna hate..
 PRODUCT_CHARACTERISTICS := nosdcard
 
@@ -217,8 +221,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     camera.msm8953 \
     libmm-qcamera \
-    GoogleCameraMod \
-    Snap
+    GoogleCameraMod 
 
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
@@ -542,7 +545,7 @@ PRODUCT_BOOT_JARS += \
     WfdCommon
 
 # XiaomiParts
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     XiaomiParts
 
 # Inherit proprietary files

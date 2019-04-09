@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:padding="15dip">
+
+    <TextView
+        android:id="@+id/current_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:gravity="center" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dip"
+        android:layout_below="@+id/current_value" />
+
+    <RelativeLayout
+        android:id="@+id/single_step_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dip"
+        android:layout_below="@+id/seekBar">
+
+        <Button
+            android:id="@+id/minus_one"
+            android:text="@string/minus_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:textSize="20sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <Button
+            android:id="@+id/restore_default"
+            android:text="@string/restore_default"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+        <Button
+            android:id="@+id/plus_one"
+            android:text="@string/plus_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:textSize="20sp"
+            android:background="?android:attr/selectableItemBackground" />
+
+    </RelativeLayout>
+</RelativeLayout>

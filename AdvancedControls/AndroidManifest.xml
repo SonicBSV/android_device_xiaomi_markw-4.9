@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thht.settings.device"
+    android:sharedUserId="android.uid.system" >
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.INJECT_EVENTS" />
+
+    <uses-sdk
+        android:minSdkVersion="27"
+        android:targetSdkVersion="27" />
+    <application
+        android:label="@string/advanced_settings"
+        android:icon="@drawable/ic_launcher_advc"
+        android:theme="@style/AppTheme"
+        android:supportsRtl="true"
+        android:configChanges="orientation|keyboardHidden|screenSize"
+        android:persistent="true">
+        <activity
+            android:name="com.thht.settings.device.DeviceSettings"
+            android:exported="true"
+            android:label="@string/advanced_settings" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <receiver android:name="com.thht.settings.device.Startup"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="100">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.thht.settings.device.RestoreService"
+            android:enabled="true"
+            android:exported="true">
+		</service>
+        <service 
+            android:name="com.thht.settings.device.dirac.AudioEnhancerService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+    </application>
+</manifest>
