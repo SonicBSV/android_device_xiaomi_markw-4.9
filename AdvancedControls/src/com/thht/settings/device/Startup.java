@@ -35,8 +35,9 @@ public class Startup extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent bootintent) {
 
-        // start restore service for vibrator, torch
+        // start restore service for kcal, vibrator, torch
         Boolean shouldRestore = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(StaticMembers.KEY_RESTORE_ON_BOOT, false);
+        final Boolean shouldRestorePreset = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(StaticMembers.KEY_KCAL_PRESETS, false);
         final Boolean shouldFixSlowWakeup = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(StaticMembers.KEY_SLOW_WAKEUP_FIX, false);
         Log.e(TAG, Boolean.toString(shouldRestore));
         if (bootintent.getAction().equals("android.intent.action.BOOT_COMPLETED") && shouldRestore) {
@@ -44,6 +45,7 @@ public class Startup extends BroadcastReceiver {
                 @Override
                 public void run() {
                     Intent in = new Intent(context, RestoreService.class);
+                    in.putExtra(StaticMembers.KEY_KCAL_PRESETS, shouldRestorePreset);
                     in.putExtra(StaticMembers.KEY_SLOW_WAKEUP_FIX, shouldFixSlowWakeup);
                     context.startService(in);
                 }

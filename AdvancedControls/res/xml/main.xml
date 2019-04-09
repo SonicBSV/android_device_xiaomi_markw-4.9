@@ -65,4 +65,56 @@
             android:summary="@string/white_torch_brightness_summary_head" />
     </PreferenceCategory>
 
+    <!-- Kcal presets -->
+    <PreferenceCategory
+        android:title="@string/category_kcal_presets"
+        android:key="key_category_kcal_presets">
+        <SwitchPreference
+            android:key="key_kcal_presets"
+            android:title="@string/kcal_presets_title" />
+        <ListPreference
+            android:key="key_kcal_presets_list"
+            android:title="@string/presets_list_title"
+            android:entries="@array/presets_entries"
+            android:entryValues="@array/presets_values"
+            android:defaultValue="0"
+            android:summary="%s" />
+    </PreferenceCategory>
+
+    <!-- Kcal RGB -->
+    <PreferenceCategory
+        android:title="@string/category_screen_color"
+        android:key="key_category_screen_color">
+        <Preference
+            android:key="key_kcal_rgb_red"
+            android:title="@string/rgb_red" />
+        <Preference
+            android:key="key_kcal_rgb_green"
+            android:title="@string/rgb_green" />
+        <Preference
+            android:key="key_kcal_rgb_blue"
+            android:title="@string/rgb_blue" />
+    </PreferenceCategory>
+
+    <!-- Kcal Extras -->
+    <PreferenceCategory
+        android:title="@string/category_kcal_extras"
+        android:key="key_category_kcal_extras">
+        <Preference
+            android:key="key_kcal_rgb_min"
+            android:title="@string/rgb_min" />
+        <Preference
+            android:key="key_kcal_sat_intensity"
+            android:title="@string/sat_intensity" />
+        <Preference
+            android:key="key_kcal_scr_hue"
+            android:title="@string/scr_hue" />
+        <Preference
+            android:key="key_kcal_scr_val"
+            android:title="@string/scr_val" />
+        <Preference
+            android:key="key_kcal_scr_cont"
+            android:title="@string/scr_cont" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
