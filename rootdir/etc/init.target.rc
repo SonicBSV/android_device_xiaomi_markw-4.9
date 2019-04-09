@@ -75,15 +75,6 @@ on post-fs-data
     mkdir /data/misc/dts 0770 media audio
     mkdir /data/vendor/tloc 0700 system drmrpc
 
-    
-# Vibrator
-    chown system system /sys/class/timed_output/vibrator/vtg_level
-    chown system system /sys/class/timed_output/vibrator/vtg_max
-    chown system system /sys/class/timed_output/vibrator/vtg_min
-    chmod 0644 /sys/class/timed_output/vibrator/vtg_level
-    chmod 0644 /sys/class/timed_output/vibrator/vtg_max
-    chmod 0644 /sys/class/timed_output/vibrator/vtg_min
-
    # Add a cpuset for the camera daemon
    # We want all cores for camera
     mkdir /dev/cpuset/camera-daemon
