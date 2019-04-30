@@ -33,8 +33,9 @@
 /sys/devices/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/disable_keys            u:object_r:proc_touchpanel:s0
 /sys/devices/soc/leds-qpnp-[0-9]+/leds(/.*)?				u:object_r:sysfs_leds:s0
 /sys/devices/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/enable_dt2w		u:object_r:proc_touchpanel:s0
-/sys/devices/soc/qpnp-flash-led-25/leds/led:torch_0/max_brightness          u:object_r:sysfs_torch:s0
-/sys/devices/soc/qpnp-flash-led-25/leds/led:torch_1/max_brightness          u:object_r:sysfs_torch:s0
 /sys/class/timed_output/vibrator/vtg_level            u:object_r:sysfs_vibrator:s0
 
+#Torch/Flashlight LEDs control
+/sys/devices/soc/qpnp-flash-led-24/leds/led:torch_0/max_brightness          u:object_r:sysfs_torch:s0
+/sys/devices/soc/qpnp-flash-led-24/leds/led:torch_1/max_brightness          u:object_r:sysfs_torch:s0
 

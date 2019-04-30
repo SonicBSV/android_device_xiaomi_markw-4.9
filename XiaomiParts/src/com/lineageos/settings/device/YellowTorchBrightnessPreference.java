@@ -31,7 +31,7 @@ public class YellowTorchBrightnessPreference extends ProperSeekBarPreference {
     private static int mMaxVal = 200;
     private static int mDefVal = mMaxVal;
 
-    private static final String FILE_BRIGHTNESS = "/sys/devices/soc/qpnp-flash-led-25/leds/led:torch_1/max_brightness";
+    private static final String FILE_BRIGHTNESS = "/sys/devices/soc/qpnp-flash-led-24/leds/led:torch_1/max_brightness";
 
     public YellowTorchBrightnessPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
