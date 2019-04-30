@@ -1,9 +1,7 @@
-LOCAL_PATH := $(call my-dir)
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := GoogleCameraMod
 LOCAL_MODULE_TAGS := optional
-LOCAL_SRC_FILES := prebuild/GoogleCamera.apk
+LOCAL_SRC_FILES := GoogleCameraMod/GoogleCamera_5.2.025-Minimal-Beta-Final_test2.apk
 LOCAL_CERTIFICATE := PRESIGNED
 LOCAL_MODULE_CLASS := APPS
 LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)

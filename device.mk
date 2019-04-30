@@ -95,6 +95,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.schd.cache=3500 \
     sys.vendor.shutdown.waittime=500 \
     ro.build.shutdown_timeout=0 \
+    ro.com.google.clientidbase=android-xiaomi \
+    ro.com.google.clientidbase.ms=android-xiaomi-rev2 \
     ro.frp.pst=/dev/block/bootdevice/by-name/config \
     persist.radio.multisim.config=dsds \
     persist.vendor.qcomsysd.enabled=1 \
@@ -102,15 +104,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.dbg.volte_avail_ovr=1 \
     persist.dbg.vt_avail_ovr=1 \
     persist.dbg.wfc_avail_ovr=1 \
-    persist.vendor.qcomsysd.enabled=1  
+    persist.vendor.qcomsysd.enabled=1
 
 # Additional native libraries
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
-
-# Add an extra 10% saturation to display colors
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.sf.color_saturation=1.1
 
 # ADB Debug
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
@@ -302,7 +300,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/etc/izat.conf:$(TARGET_COPY_OUT_VENDOR)/etc/izat.conf \
     $(LOCAL_PATH)/gps/etc/lowi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/lowi.conf \
     $(LOCAL_PATH)/gps/etc/sap.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sap.conf \
-    $(LOCAL_PATH)/configs/GNSS.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/GNSS.cfg \
+    $(LOCAL_PATH)/gps/etc/GNSS.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/GNSS.cfg \
     $(LOCAL_PATH)/gps/etc/xtwifi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/xtwifi.conf
 
 # Healthd
@@ -468,8 +466,7 @@ PRODUCT_PACKAGES += \
     telephony-ext 
 
 PRODUCT_BOOT_JARS += \
-    telephony-ext \
-    qti-telephony-common
+    telephony-ext 
 
 # TextClassifier
 PRODUCT_PACKAGES += \

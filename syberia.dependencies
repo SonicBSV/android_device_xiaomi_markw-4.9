@@ -1,0 +1,17 @@
+[
+ {
+   "repository" : "syberia-project/platform_hardware_qcom_audio",
+   "target_path": "hardware/qcom/audio-caf/msm8996",
+   "branch"     : "9.0-caf-8996"
+ },
+ {
+   "repository" : "syberia-project/platform_hardware_qcom_display",
+   "target_path": "hardware/qcom/display-caf/msm8996",
+   "branch"     : "9.0-caf-8996"
+ },
+ {
+   "repository" : "syberia-project/platform_hardware_qcom_media",
+   "target_path": "hardware/qcom/media-caf/msm8996",
+   "branch"     : "9.0-caf-8996"
+ }
+]
