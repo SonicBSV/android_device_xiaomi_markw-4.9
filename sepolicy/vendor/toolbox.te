@@ -1,0 +1,4 @@
+allow toolbox system_prop:property_service { set };
+allow toolbox init:fifo_file { write read getattr };
+allow toolbox property_socket:sock_file write;
+allow toolbox init:unix_stream_socket connectto;

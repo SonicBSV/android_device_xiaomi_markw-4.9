@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2014-2017 The OmniROM Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <string name="app_name">Xiaomi</string>
+    <string name="advanced_settings">Настройки устройства</string>
+    <string name="category_vibrator">Вибрация</string>
+    <string name="vib_strength_title_head">Сила</string>
+    <string name="vib_strength_summary_head">Установить силу вибрации</string>
+    <string name="category_torch">Фонарик</string>
+    <string name="yellow_torch_brightness_title_head">Максимальная яркость желтого светодиода</string>
+    <string name="yellow_torch_brightness_summary_head">Установить максимальную яркость желтого светодиода</string>
+    <string name="white_torch_brightness_title_head">Максимальная яркость белого светодиода</string>
+    <string name="white_torch_brightness_summary_head">Установить максимальную яркость белого светодиода</string>
+</resources>

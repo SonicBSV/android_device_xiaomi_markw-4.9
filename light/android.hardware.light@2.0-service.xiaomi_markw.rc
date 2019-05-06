@@ -1,0 +1,34 @@
+on init
+    # RGB lights
+    chown system system /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/blue/brightness
+    chown system system /sys/class/leds/green/brightness
+    chmod 660 /sys/class/leds/red/brightness
+    chmod 660 /sys/class/leds/blue/brightness
+    chmod 660 /sys/class/leds/green/brightness
+
+    chown system system /sys/class/leds/red/max_brightness
+    chown system system /sys/class/leds/blue/max_brightness
+    chown system system /sys/class/leds/green/max_brightness
+    chmod 660 /sys/class/leds/red/max_brightness
+    chmod 660 /sys/class/leds/blue/max_brightness
+    chmod 660 /sys/class/leds/green/max_brightness
+
+    chown system system /sys/class/leds/red/blink
+    chown system system /sys/class/leds/blue/blink
+    chown system system /sys/class/leds/green/blink
+    chmod 660 /sys/class/leds/red/blink
+    chmod 660 /sys/class/leds/blue/blink
+    chmod 660 /sys/class/leds/green/blink
+
+    chown system system /sys/class/leds/red/led_time
+    chown system system /sys/class/leds/blue/led_time
+    chown system system /sys/class/leds/green/led_time
+    chmod 660 /sys/class/leds/red/led_time
+    chmod 660 /sys/class/leds/green/led_time
+    chmod 660 /sys/class/leds/blue/led_time
+
+service vendor.light-hal-2-0 /vendor/bin/hw/android.hardware.light@2.0-service.xiaomi_markw
+    class hal
+    user system
+    group system
