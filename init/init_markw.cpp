@@ -126,8 +126,8 @@ void gsi_check()
         property_override("ro.product.device", "markw");
         property_override("ro.product.manufacturer", "Xiaomi");
         property_override("ro.build.product", "markw");
-        property_override("ro.build.description", "markw-user 6.0.1 MMB29M V9.6.2.0.MBECNFD release-keys");
-        property_override("ro.build.fingerprint", "Xiaomi/markw/markw:6.0.1/MMB29M/V9.6.2.0.MBECNFD:user/release-keys");
+        property_override("ro.build.description", "markw-user 6.0.1 MMB29M V10.2.1.0.MBEMIXM release-keys");
+        property_override("ro.build.fingerprint", "Xiaomi/markw/markw:6.0.1/MMB29M/V10.2.1.0.MBEMIXM:user/release-keys");
     }
 }
 
