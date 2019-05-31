@@ -211,12 +211,15 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libbt-vendor
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:system/etc/bluetooth/bt_profile.conf \
+    $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:system/etc/bluetooth/interop_database.conf 
+
 # Camera
 PRODUCT_PACKAGES += \
     camera.msm8953 \
     libmm-qcamera \
-    Snap \
-    GoogleCameraMod 
+    Snap
 
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
@@ -266,6 +269,10 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
+
+# Enable all system restart_level to relative
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.vendor.ssr.restart_level=ALL_ENABLE
 
 # Face detection extension
 PRODUCT_PACKAGES += \
@@ -357,6 +364,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.xiaomi_markw
 
+# LiveDisplay
+PRODUCT_PACKAGES += \
+    vendor.lineage.livedisplay@2.0-service-sdm
+
 # IRQ
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf
@@ -436,6 +447,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.radio@1.2 \
     android.hardware.radio.config@1.0 \
+    android.hardware.radio.deprecated@1.0 \
     android.hardware.secure_element@1.0 \
     librmnetctl \
     libprotobuf-cpp-full \
