@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2019 The Evolution X Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Buttons - Enable navbar (used by Settings and device parts app) -->
+    <string name="disable_navkeys_title">Активировать панель навигации</string>
+    <string name="disable_navkeys_summary">Включить экранную панель навигации и отключить аппаратные кнопки</string>
+
+    <!-- Pocket Lock -->
+    <string name="pocket_lock_message_long_press">Нажмите и удерживайте кнопку питания, чтобы разблокировать</string>
+
+    <!-- LiveDisplay strings -->
+    <string name="live_display_title" translatable="false">LiveDisplay</string>
+    <string name="live_display_auto">Автоматически</string>
+    <string name="live_display_auto_summary">Автоматическая настройка цветовой температуры экрана после заката и восхода солнца</string>
+    <string name="live_display_off">Выкл.</string>
+    <string name="live_display_off_summary">Отключить все настройки</string>
+    <string name="live_display_day">День</string>
+    <string name="live_display_day_summary">Использовать только настройки дня</string>
+    <string name="live_display_night">Ночь</string>
+    <string name="live_display_night_summary">Использовать только ночные настройки</string>
+    <string name="live_display_outdoor">На улице (яркое солнце)</string>
+    <string name="live_display_outdoor_summary">Использовать только внешние параметры</string>
+    <string name="live_display_hint">LiveDisplay может помочь уменьшить напряжение глаз и помочь вам спать по ночам. Нажмите здесь, чтобы попробовать!</string>
+    <string name="accessibility_quick_settings_live_display_off">LiveDisplay выключен.</string>
+    <string name="accessibility_quick_settings_live_display_auto">LiveDisplay: автоматический режим.</string>
+    <string name="accessibility_quick_settings_live_display_day">LiveDisplay: дневной режим.</string>
+    <string name="accessibility_quick_settings_live_display_night">LiveDisplay: ночной режим.</string>
+    <string name="accessibility_quick_settings_live_display_outdoor">LiveDisplay: открытый режим.</string>
+    <string name="accessibility_quick_settings_live_display_changed_off">LiveDisplay отключен.</string>
+    <string name="accessibility_quick_settings_live_display_changed_auto">LiveDisplay изменен на автоматический режим.</string>
+    <string name="accessibility_quick_settings_live_display_changed_day">LiveDisplay изменен на дневной режим.</string>
+    <string name="accessibility_quick_settings_live_display_changed_night">LiveDisplay переведен в ночной режим.</string>
+    <string name="accessibility_quick_settings_live_display_changed_outdoor">LiveDisplay изменен на открытый режим.</string>
+
+    <!-- Advanced reboot -->
+	<string name="reboot_to_recovery_title" translatable="false">Рекавери</string>
+    <string name="reboot_to_recovery_message" translatable="false">Перезагрузка в Рекавери</string>
+    <string name="reboot_to_bootloader_title" translatable="false">Загрузчик</string>
+    <string name="reboot_to_bootloader_message" translatable="false">Перезагрузка в загрузчик</string>
+    <string name="reboot_title">Перезагрузка</string>
+    <string name="reboot_message">Перезагрузка системы</string>
+
+</resources>
