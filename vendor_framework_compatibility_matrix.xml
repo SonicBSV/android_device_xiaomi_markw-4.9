@@ -38,6 +38,22 @@
         </interface>
     </hal>
     <hal format="hidl" optional="true">
+        <name>com.qualcomm.qti.bluetooth_audio</name>
+        <version>1.0</version>
+        <interface>
+            <name>IBluetoothAudio</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>com.qualcomm.qti.dpm.api</name>
+        <version>1.0</version>
+        <interface>
+            <name>IdpmQmi</name>
+            <instance>dpmQmiService</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
         <name>vendor.lineage.power</name>
         <version>1.0</version>
         <interface>
@@ -50,6 +66,14 @@
         <version>1.0</version>
         <interface>
             <name>IConsumerIr</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.qti.hardware.soter</name>
+        <version>1.0</version>
+        <interface>
+            <name>ISoter</name>
             <instance>default</instance>
         </interface>
     </hal>
@@ -324,6 +348,19 @@
         <version>2.0</version>
         <interface>
             <name>ISupplicantVendor</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
+    <hal format="hidl" optional="true">
+        <name>vendor.lineage.livedisplay</name>
+        <transport>hwbinder</transport>
+        <version>2.0</version>
+        <interface>
+            <name>IDisplayModes</name>
+            <instance>default</instance>
+        </interface>
+        <interface>
+            <name>IPictureAdjustment</name>
             <instance>default</instance>
         </interface>
     </hal>
