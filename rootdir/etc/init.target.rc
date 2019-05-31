@@ -69,8 +69,8 @@ on post-fs-data
     mkdir /data/tombstones/lpass 0771 system system
     mkdir /data/tombstones/wcnss 0771 system system
     mkdir /data/tombstones/dsps 0771 system system
-    mkdir /mnt/vendor/persist/data/sfs 0700 system system
-    mkdir /mnt/vendor/persist/data/tz 0700 system system
+    mkdir /persist/data/sfs 0700 system system
+    mkdir /persist/data/tz 0700 system system
     mkdir /mnt/vendor/persist/qti_fp 0700 system system
     mkdir /data/misc/dts 0770 media audio
     mkdir /data/vendor/tloc 0700 system drmrpc
@@ -140,23 +140,25 @@ on boot
     chmod 0660 /dev/cpuset/camera-daemon/tasks
 
     ####Regionalization config and prop files####
-    chmod 0644 /mnt/vendor/persist/speccfg/spec
-    chmod 0644 /mnt/vendor/persist/speccfg/devicetype
-    chmod 0644 /mnt/vendor/persist/speccfg/mbnversion
-    chmod 0644 /mnt/vendor/persist/speccfg/.not_triggered
-    chmod 0644 /mnt/vendor/persist/speccfg/vendor_ro.prop
-    chmod 0644 /mnt/vendor/persist/speccfg/vendor_persist.prop
-    chmod 0644 /mnt/vendor/persist/speccfg/submask
-    chmod 0644 /mnt/vendor/persist/speccfg/partition
-    chmod 0644 /mnt/vendor/persist/spkr_calibration.bin
-    chown system system /mnt/vendor/persist/speccfg/spec
-    chown system system /mnt/vendor/persist/speccfg/devicetype
-    chown system system /mnt/vendor/persist/speccfg/mbnversion
-    chown system system /mnt/vendor/persist/speccfg/.not_triggered
-    chown system system /mnt/vendor/persist/speccfg/vendor_ro.prop
-    chown system system /mnt/vendor/persist/speccfg/vendor_persist.prop
-    chown system system /mnt/vendor/persist/speccfg/submask
-    chown system system /mnt/vendor/persist/speccfg/partition
+    chmod 0644 /persist/speccfg/spec
+    chmod 0644 /persist/speccfg/devicetype
+    chmod 0644 /persist/speccfg/mbnversion
+    chmod 0644 /persist/speccfg/.not_triggered
+    chmod 0644 /persist/speccfg/vendor_ro.prop
+    chmod 0644 /persist/speccfg/vendor_persist.prop
+    chmod 0644 /persist/speccfg/submask
+    chmod 0644 /persist/speccfg/partition
+    chown system system /persist/speccfg/spec
+    chown system system /persist/speccfg/devicetype
+    chown system system /persist/speccfg/mbnversion
+    chown system system /persist/speccfg/.not_triggered
+    chown system system /persist/speccfg/vendor_ro.prop
+    chown system system /persist/speccfg/vendor_persist.prop
+    chown system system /persist/speccfg/submask
+    chown system system /persist/speccfg/partition
+
+# access permission for wlan
+    chown system system /mnt/vendor/persist/WCNSS_qcom_wlan_nv.bin
 
 #USB controller configuration
     setprop vendor.usb.rndis.func.name "rndis"
@@ -206,12 +208,24 @@ service vendor.imsrcsservice /vendor/bin/imsrcsd
 on property:vendor.ims.DATA_DAEMON_STATUS=1
     restart vendor.ims_rtp_daemon
 
+service cnss_diag /vendor/bin/cnss_diag -q -f -t HELIUM
+   class main
+   user system
+   group system wifi inet sdcard_rw media_rw diag
+   oneshot
+
+service energy-awareness /vendor/bin/energy-awareness
+    class main
+    user system
+    group system
+    oneshot
+
 service ppd /vendor/bin/mm-pp-dpps
     class late_start
-    user system
-    group system graphics
-    socket pps stream 0660 system system
     disabled
+    user system
+    socket pps stream 0660 system system
+    group system graphics
 
 on property:init.svc.surfaceflinger=stopped
     stop ppd

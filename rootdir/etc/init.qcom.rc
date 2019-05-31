@@ -136,10 +136,10 @@ on boot
     mkdir /dev/socket/qmux_gps 0770 gps gps
     chmod 2770 /dev/socket/qmux_gps
 
-    mkdir /mnt/vendor/persist/drm 0770 system system
-    mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
-    mkdir /mnt/vendor/persist/misc 0770 system system
-    mkdir /mnt/vendor/persist/alarm 0770 system system
+    mkdir /persist/drm 0770 system system
+    mkdir /persist/bluetooth 0770 bluetooth bluetooth
+    mkdir /persist/misc 0770 system system
+    mkdir /persist/alarm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
     restorecon_recursive /mnt/vendor/persist
 
@@ -254,7 +254,7 @@ on boot
     chown system system /sys/class/sensors/apds9930-proximity/poll_delay
 
     # Create directory used for display
-    mkdir /mnt/vendor/persist/display 0770 system graphics
+    mkdir /persist/display 0770 system graphics
 
     # Create vpp directory
     mkdir /mnt/vendor/persist/vpp 0770 media media
@@ -371,9 +371,10 @@ on post-fs-data
 
     # Mounting of persist is moved to 'on emmc-fs' and 'on fs' sections
     # We chown/chmod /persist again so because mount is run as root + defaults
-    chown root system /mnt/vendor/persist
-    chmod 0771 /mnt/vendor/persist
-    chown system system /mnt/vendor/persist/WCNSS_qcom_wlan_nv.bin
+    chown root system /persist
+    chmod 0771 /persist
+    chown system system /persist/WCNSS_qcom_wlan_nv.bin
+    chown system system /persist/WCNSS_qcom_wlan_nv_overseas.bin
     chmod 0664 /sys/devices/platform/msm_sdcc.1/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.2/polling
     chmod 0664 /sys/devices/platform/msm_sdcc.3/polling
@@ -422,7 +423,7 @@ on post-fs-data
     rm /data/vendor/perfd/default_values
 
     #Create IOP  deamon related dirs
-    mkdir /data/vendor/iop 0770 root system
+    mkdir /data/vendor/iop 0700 root system
 
     # Mark the copy complete flag to not completed
     write /data/vendor/radio/copy_complete 0
@@ -492,17 +493,17 @@ on property:ro.vendor.iocgrp.config=1
     write /dev/blkio/blkio.weight 1000
     write /dev/blkio/bg/blkio.weight 100
 
-on property:persist.sys.ssr.enable_debug=*
-    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.sys.ssr.enable_debug}
+on property:persist.vendor.sys.ssr.enable_debug=*
+    write /sys/module/subsystem_restart/parameters/enable_debug ${persist.vendor.sys.ssr.enable_debug}
 
-on property:persist.sys.mba_boot_timeout=*
-    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.sys.mba_boot_timeout}
+on property:persist.vendor.sys.mba_boot_timeout=*
+    write /sys/module/pil_msa/parameters/pbl_mba_boot_timeout_ms ${persist.vendor.sys.mba_boot_timeout}
 
-on property:persist.sys.modem_auth_timeout=*
-    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.sys.modem_auth_timeout}
+on property:persist.vendor.sys.modem_auth_timeout=*
+    write /sys/module/pil_msa/parameters/modem_auth_timeout_ms ${persist.vendor.sys.modem_auth_timeout}
 
-on property:persist.sys.pil_proxy_timeout=*
-    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.sys.pil_proxy_timeout}
+on property:persist.vendor.sys.pil_proxy_timeout=*
+    write /sys/module/peripheral_loader/parameters/proxy_timeout_ms ${persist.vendor.sys.pil_proxy_timeout}
 
 on property:persist.vendor.ssr.restart_level=*
     start vendor.ssr_setup
@@ -579,6 +580,10 @@ service vendor.cnd /vendor/bin/cnd
     user system
     group system wifi inet radio wakelock net_admin
 
+service dpmQmiMgr /vendor/bin/dpmQmiMgr
+    class main
+    user system
+    group system
 
 service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
@@ -594,6 +599,40 @@ service vendor.rmt_storage /vendor/bin/rmt_storage
 service vendor.tftp_server /vendor/bin/tftp_server
    class core
    user root
+
+on property:vendor.wc_transport.start_hci=true
+    start vendor.start_hci_filter
+
+on property:vendor.wc_transport.start_hci=false
+    stop vendor.start_hci_filter
+
+service vendor.start_hci_filter /vendor/bin/wcnss_filter
+    class late_start
+    user bluetooth
+    group bluetooth diag system wakelock
+    seclabel u:r:bluetooth:s0
+    disabled
+
+service vendor.bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
+    class late_start
+    user bluetooth
+    group bluetooth net_bt_admin inet
+    disabled
+    oneshot
+
+service vendor.btsnoop /system/bin/btsnoop
+   user bluetooth
+   group bluetooth net_bt_admin sdcard_rw sdcard_r media_rw
+   class late_start
+   disabled
+   oneshot
+
+service vendor.bt_logger /system/bin/bt_logger
+   user bluetooth
+   group bluetooth net_bt_admin sdcard_rw sdcard_r media_rw
+   class late_start
+   disabled
+   oneshot
 
 service ftmd /system/bin/logwrapper /vendor/bin/ftmdaemon
     class late_start
@@ -613,6 +652,12 @@ service vendor.netmgrd /vendor/bin/netmgrd
     class main
     disabled
 
+service vendor.ipacm-diag /vendor/bin/ipacm-diag
+    class main
+    user radio
+    socket ipacm_log_file dgram 660 radio radio
+    group radio diag oem_2901
+    disabled
 
 service vendor.ipacm /vendor/bin/ipacm
     class main
@@ -671,14 +716,22 @@ on property:persist.vendor.data.perf_ko_load=1
 on property:persist.vendor.data.perf_ko_load=0
     exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -r -d /vendor/lib/modules rmnet_perf
 
-#service cnss-daemon /vendor/bin/cnss-daemon -n -l
-#    class late_start
-#    user system
-#    group system inet net_admin wifi
-#    capabilities NET_ADMIN
+# Data Migration
+service vendor.move_wifi_data /system/bin/move_wifi_data.sh
+    class main
+    user  wifi
+    group wifi
+    disabled
+    oneshot
 
-#on property:sys.powerctl=*
-#    stop cnss-daemon
+service cnss-daemon /vendor/bin/cnss-daemon -n -l
+    class late_start
+    user system
+    group system inet net_admin wifi
+    capabilities NET_ADMIN
+
+on property:sys.powerctl=*
+    stop cnss-daemon
 
 service dhcpcd_bt-pan /system/bin/dhcpcd -BKLG
     class late_start
@@ -876,6 +929,12 @@ service power_off_alarm /vendor/bin/power_off_alarm
     disabled
     oneshot
 
+service vendor.move_time_data /system/bin/move_time_data.sh
+    class main
+    user system
+    group system
+    disabled
+    oneshot
 
 #Make MTU adjusting to D1S-3381 by zhangwei8
 write /proc/sys/net/ipv4/tcp_mtu_probing 1
