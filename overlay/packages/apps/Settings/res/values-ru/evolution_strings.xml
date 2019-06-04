@@ -324,4 +324,37 @@
     <string name="selinux_status_permissive">Разрешающий</string>
     <string name="selinux_status_enforcing">Принудительный</string>
 
+    <!-- Expanded desktop -->
+    <string name="expanded_desktop_pref_title">Расширенный рабочий стол</string>
+    <string name="expanded_hide_nothing">Ничего не скрывать</string>
+    <string name="expanded_hide_status">Скрыть строку состояния</string>
+    <string name="expanded_hide_navigation">Скрыть панель навигации</string>
+    <string name="expanded_hide_both">Скрыть оба</string>
+    <string name="expanded_nothing_to_show">Чтобы добавить настраиваемую конфигурацию расширенного состояния для приложения, установите «Включено для всех» в положение «Выкл.»</string>
+    <string name="expanded_desktop_state">Расширенное состояние</string>
+    <string name="expanded_enabled_for_all">Включено для всех</string>
+    <string name="expanded_user_configurable">Пользовательские настройки</string>
+    <string name="expanded_desktop_style">Расширенный стиль рабочего стола</string>
+    <string name="expanded_desktop_style_description">Выберите расширенный стиль рабочего стола по умолчанию</string>
+    <string name="expanded_desktop_title">Расширенные возможности рабочего стола</string>
+
+    <!-- Doze on Charge -->
+    <string name="doze_on_charge_title">Показать при зарядке</string>
+    <string name="doze_on_charge_summary">Пробудить экран при зарядке</string>
+
+    <!-- Fingerprint unlock keystore -->
+    <string name="fp_unlock_keystore_title">Разблокировка отпечатком пальца</string>
+    <string name="fp_unlock_keystore_summary">Разблокируйте с помощью отпечатка пальца даже после перезагрузки без PIN-кода / пароля / шаблона \ Примечание: Используйте на свой страх и риск!</string>
+
+    <!-- Aggressive battery -->
+    <string name="aggressive_battery_title">Агрессивная батарея</string>
+    <string name="aggressive_battery_summary">Более строгая экономия батареи</string>
+    <string name="aggressive_battery_warning_text">Это функции энергосбережения. Они могут создавать помехи службам, предназначенным для работы в режиме ожидания, например навигационным приложениям. Вы можете включить эти приложения в белый список в настройках батареи приложения.</string>
+    <string name="aggressive_idle_title">Агрессивный холостой ход</string>
+    <string name="aggressive_idle_summary">Чаще входить в режим ожидания и меньше пробуждаться</string>
+    <string name="aggressive_standby_title">Агрессивный режим ожидания</string>
+    <string name="aggressive_standby_summary">Запретить приложениям запускаться в фоне</string>
+    <string name="aggressive_battery_saver_title">Автоматическое включение экономии заряда батареи</string> 
+    <string name="aggressive_battery_saver_summary">Включить агрессивную батарею автоматически при использовании экономии заряда батареи</string>
+
 </resources>
