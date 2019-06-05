@@ -318,34 +318,34 @@
     <string name="audio_panel_view_position_title">Звуковая панель слева</string>
 	
     <!-- Network traffic Settings -->
-    <string name="traffic_title">Индикаторы трафика</string>
-    <string name="traffic_summary">Показать сетевую активность в статус баре</string>
+    <string name="traffic_title">Индикатор трафика</string>
+    <string name="traffic_summary">Показать сетевую активность в строке состояния</string>
     <string name="traffic_category">Сетевой трафик</string>
     <string name="network_traffic_state_title">Отображение сетевого трафика</string>
     <string name="network_traffic_autohide">Авто-скрытие</string>
     <string name="network_traffic_autohide_summary">Скрыть мониторинг трафика, когда нет активности</string>
-    <string name="network_traffic_autohide_threshold_title">Порог автоматического скрытия (кбит/c)сетевой активности</string>
+    <string name="network_traffic_autohide_threshold_title">Порог автоматического скрытия сетевой активности (КБ/с)</string>
     <string name="network_traffic_hidearrow">Скрыть стрелки</string>
     <string name="network_traffic_hidearrow_summary">Скрыть стрелки индикатора сетевого трафика</string>
     <string name="network_traffic_state_summary">Показать скорость скачивания и загрузки сети</string>
     <string name="network_traffic_location_title">Размещение индикатора трафика</string>
-    <string name="network_traffic_location_summary">Поместите индикатор в строку состояния или в расширенный заголовок (рекомендуется для дисплеев с вырезами)</string>
-    <string name="network_traffic_statusbar">Статус бар</string>
+    <string name="network_traffic_location_summary">Поместить индикатор в строку состояния или в расширенный заголовок (рекомендуется для дисплеев с вырезами)</string>
+    <string name="network_traffic_statusbar">Строка состояния</string>
     <string name="network_traffic_header">Расширенный заголовок</string>
 
     <!-- Bottom navigation gestures -->
-    <string name="gesture_interface_title">Жест</string>
+    <string name="gesture_interface_title">Жесты</string>
     <string name="use_bottom_gesture_title">Жесты навигации</string>
-    <string name="use_bottom_gesture_summary">Используйте жест свайп вверх для навигации</string>
-    <string name="gesture_swipe_length_title">Swipe trigger height</string>
-    <string name="gesture_swipe_length_summary">Heigth from bottom to trigger swipe</string>
-    <string name="gesture_action_timeout_title">Swipe trigger timeout</string>
+    <string name="use_bottom_gesture_summary">Использовать нижние жесты для навигации</string>
+    <string name="gesture_swipe_length_title">Высота триггера прокрутки</string>
+    <string name="gesture_swipe_length_summary">Высота снизу для запуска пролистывания</string>
+    <string name="gesture_action_timeout_title">Тайм-аут триггера смахивания</string>
     <string name="gesture_action_timeout_summary">Тайм-аут до начала действия жеста</string>
 
     <!-- QS panel tuner -->
-    <string name="qs_panel_tuner_category_title">QS panel tuner</string>
-    <string name="show_secure_title">Show security footer</string>
-    <string name="show_info_header_title">Show information header</string>
+    <string name="qs_panel_tuner_category_title">Тюнер панели быстрых настроек</string>
+    <string name="show_secure_title">Показать нижний футер безопасности</string>
+    <string name="show_info_header_title">Показать заголовок информации</string>
 
     <string name="profile_choose_app">Выберите приложение</string>
     <string name="dialog_delete_title">Удалить</string>
@@ -358,13 +358,13 @@
     <string name="summary_dashboard_conditions_disabled">Условия панели инструментов отключены</string> 
 
     <!-- Dashboard suggestions -->
-    <string name="dashboard_suggestions_title">Предложения панели инструментов</string> 
+    <string name="dashboard_suggestions_title">Предложения для панели инструментов</string> 
     <string name="summary_dashboard_suggestions_enabled">Предложения панели инструментов включены</string> 
     <string name="summary_dashboard_suggestions_disabled">Предложения панели инструментов отключены</string> 
 
     <!-- Lockscreen cover art filter -->
-    <string name="lockscreen_cover_filter_title">Фильтр обложек альбомов на экране блокировки</string>
-    <string name="lockscreen_cover_filter_none">ничего</string>
+    <string name="lockscreen_cover_filter_title">Фильтр обложки альбома блокировки экрана</string>
+    <string name="lockscreen_cover_filter_none">Нет</string>
     <string name="lockscreen_cover_filter_grayscale">Оттенки серого</string>
     <string name="lockscreen_cover_filter_tint">Тонированный акцент</string>
     <string name="lockscreen_cover_filter_blur">Размытие</string>
@@ -374,5 +374,25 @@
     <string name="evolution_logo_title">Логотип Evolution X 2.0</string>
     <string name="evolution_logo_summary">Пусть все знают, что вы используете Evolution X 2.0, когда они видят ваш экран</string>
     <string name="status_bar_logo_style_title">Индивидуальный стиль логотипа</string>
+
+    <!-- QuickSettings Panel Transparency -->
+    <string name="qs_panel_alpha_title">Непрозрачность</string>
+
+    <!-- Hide On Lockscreen -->
+    <string name="hide_lockscreen_status_bar_title">Скрыть строку состояния</string>
+    <string name="hide_lockscreen_status_bar_summary">Коснитесь строки состояния, чтобы переключить видимость значков в шторке</string>
+
+    <!-- Rounded corners -->
+    <string name="corners_category">Углы</string>
+    <string name="corner_radius">Радиус закругленного угла</string>
+    <string name="content_padding">Угловой отступ</string>
+    <string name="corner_fwvals">Используйте базовые значения</string>
+    <string name="corner_fwvals_summary">Полезно, если устройство на самом деле имеет закругленные углы</string>
+
+    <!-- Lockscreen items -->
+    <string name="lockscreen_clock_title">Виджет часов</string>
+    <string name="lockscreen_clock_summary">Показать виджет часов на экране блокировки</string>
+    <string name="lockscreen_info_title">Предметы под часами</string>
+    <string name="lockscreen_info_summary">Показать дату, погоду, будильник и дзен на экране блокировки</string>
 
 </resources>
