@@ -84,7 +84,7 @@
     <string name="powermenu_torch">Фонарик</string>
 
     <!-- Power plug events -->
-    <string name="wake_when_plugged_or_unplugged_title">Пробуждение при зарядки</string>
+    <string name="wake_when_plugged_or_unplugged_title">Пробуждение при зарядке</string>
     <string name="wake_when_plugged_or_unplugged_summary">Включение экрана при подключении или отключении источника питания</string>
 
     <!-- Bluetooth battery status --> 
@@ -92,8 +92,8 @@
     <string name="bluetooth_battery_summary">Отображать состояние батареи для подключенного bluetooth устройства, если доступно</string>
 
     <!-- Heads up options -->
-    <string name="less_boring_heads_up_title">Сделать заголовки менее раздражающими</string>
-    <string name="less_boring_heads_up_summary">Показать заголовки только для номеронабирателя или приложения обмена сообщениями, если они не на переднем плане</string>
+    <string name="less_boring_heads_up_title">Сделать уведомления менее раздражающими</string>
+    <string name="less_boring_heads_up_summary">Показывать уведомления только для номеронабирателя или приложения обмена сообщениями, если они не на переднем плане</string>
 
     <!-- Brightness slider tweaks -->
     <string name="brightness_slider_title">Настройка слайдера яркости</string>
@@ -222,29 +222,29 @@
 	
     <!-- Heads up -->
     <string name="heads_up_title">Включить</string>
-    <string name="heads_up_summary_enabled">Заголовки уведомлений включены</string>
-    <string name="heads_up_summary_disabled">Заголовки уведомлений отключены</string>
-    <string name="heads_up_time_out_title">Тайм-аут</string>
-    <string name="heads_up_time_out_summary">Peeking notifications will show for <xliff:g id="number">%d</xliff:g> seconds</string>
+    <string name="heads_up_summary_enabled">Всплывающие уведомления включены</string>
+    <string name="heads_up_summary_disabled">Всплывающие уведомления отключены</string>
+    <string name="heads_up_time_out_title">Время ожидания</string>
+    <string name="heads_up_time_out_summary">Уведомления будут отображаться в течение <xliff:g id="number">%d</xliff:g> seconds</string>
     <string name="heads_up_time_out_2sec">2 секунды</string>
     <string name="heads_up_time_out_4sec">4 секунды</string>
     <string name="heads_up_time_out_5sec">5 секунд</string>
     <string name="heads_up_time_out_6sec">6 секунд</string>
     <string name="heads_up_time_out_8sec">8 секунд</string>
     <string name="heads_up_time_out_10sec">10 секунд</string>
-    <string name="heads_up_snooze_title">Таймер повтора</string>
-    <string name="heads_up_snooze_summary_one_minute">Проведите пальцем вверх по уведомлению, чтобы просмотреть заголовок приложения на 1 минуту.</string>
-    <string name="heads_up_snooze_summary">Проведите пальцем вверх по уведомлению, чтобы просмотреть заголовок приложения на <xliff:g id="number">%d</xliff:g> минут(ы)</string>
-    <string name="heads_up_snooze_disabled_summary">Таймер повтора отключен</string>
-    <string name="heads_up_snooze_1min">1 секунд</string>
-    <string name="heads_up_snooze_5min">5 секунд</string>
-    <string name="heads_up_snooze_10min">10 секунд</string>
-    <string name="heads_up_snooze_15min">15 секунд</string>
-    <string name="heads_up_snooze_20min">20 секунд</string>
+    <string name="heads_up_snooze_title">Время повтора</string>
+    <string name="heads_up_snooze_summary_one_minute">Смахнув уведомление вверх оно отложится на 1 минуту.</string>
+    <string name="heads_up_snooze_summary">Смахнув уведомление вверх оно отложится на <xliff:g id="number">%d</xliff:g> minutes</string>
+    <string name="heads_up_snooze_disabled_summary">Время повтора отключено</string>
+    <string name="heads_up_snooze_1min">1 минута</string>
+    <string name="heads_up_snooze_5min">5 минут</string>
+    <string name="heads_up_snooze_10min">10 минут</string>
+    <string name="heads_up_snooze_15min">15 минут</string>
+    <string name="heads_up_snooze_20min">20 минут</string>
     <string name="add_heads_up_package">Добавить приложение</string>
-    <string name="add_heads_up_stoplist_summary">Отключить заголовки уведомлений в этих приложениях</string>
-    <string name="add_heads_up_blacklist_summary">Отключить заголовки из этих приложений</string>
-    <string name="heads_up_stoplist_title">Стоп лист</string>
+    <string name="add_heads_up_stoplist_summary">Отключить уведомления в этих приложениях</string>
+    <string name="add_heads_up_blacklist_summary">Отключить уведомления от этих приложений</string>
+    <string name="heads_up_stoplist_title">Белый список</string>
     <string name="heads_up_blacklist_title">Чёрный список</string>
 
     <!-- QuickSettings haptic feedback -->
