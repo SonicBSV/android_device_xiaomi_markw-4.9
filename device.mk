@@ -441,7 +441,7 @@ PRODUCT_PACKAGES += \
     libebtc
 
 # QMI
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     libjson
 
 PRODUCT_COPY_FILES += \
