@@ -150,7 +150,7 @@ ro.vendor.qti.core_ctl_max_cpu=4
 
 #GPS
 persist.gps.qc_nlp_in_use=1
-#persist.loc.nlp_name=com.qualcomm.location
+persist.loc.nlp_name=com.qualcomm.location
 ro.gps.agps_provider=1
 
 #Memperf properties
