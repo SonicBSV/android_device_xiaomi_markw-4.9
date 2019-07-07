@@ -39,7 +39,7 @@
     </EncoderProfile>
 
     <EncoderProfile quality="high" fileFormat="mp4" duration="30">
-      <Video codec="hevc"
+      <Video codec="h264"
              bitRate="42000000"
              width="3840"
              height="2160"
@@ -117,7 +117,7 @@
     </EncoderProfile>
 
     <EncoderProfile quality="720p" fileFormat="mp4" duration="30">
-      <Video codec="hevc"
+      <Video codec="h264"
              bitRate="18000000"
              width="1280"
              height="720"
@@ -129,7 +129,7 @@
      </EncoderProfile>
 
      <EncoderProfile quality="1080p" fileFormat="mp4" duration="30">
-      <Video codec="hevc"
+      <Video codec="h264"
              bitRate="33000000"
              width="1920"
              height="1080"
@@ -141,7 +141,7 @@
     </EncoderProfile>
 
     <EncoderProfile quality="2160p" fileFormat="mp4" duration="30">
-      <Video codec="hevc"
+      <Video codec="h264"
              bitRate="42000000"
              width="3840"
              height="2160"
