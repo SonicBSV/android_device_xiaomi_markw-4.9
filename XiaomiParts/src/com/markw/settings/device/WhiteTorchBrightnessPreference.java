@@ -42,7 +42,7 @@ public class WhiteTorchBrightnessPreference extends SeekBarDialogPreference impl
     private float offset;
     private TextView mValueText;
 
-    private static final String FILE_BRIGHTNESS = "/sys/devices/soc/qpnp-flash-led-24/leds/led:torch_0/max_brightness";
+    private static final String FILE_BRIGHTNESS = "/sys/class/leds/led:torch_0/max_brightness";
 
     public WhiteTorchBrightnessPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
