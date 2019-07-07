@@ -122,7 +122,13 @@ PRODUCT_COPY_FILES += \
 
 # ADB Debug
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
-    ro.adb.secure=0
+    ro.adb.secure=0 \
+    ro.secure=0 \
+    ro.debuggable=1 \
+    persist.logd.logpersistd=logcatd \
+    persist.service.adb.enable=1 \
+    persist.sys.usb.config=adb \
+    ro.logd.size.stats=16M
 
 # Haters gonna hate..
 PRODUCT_CHARACTERISTICS := nosdcard
@@ -147,6 +153,10 @@ PRODUCT_PACKAGES += \
     libqcomvoiceprocessing \
     libqcomvoiceprocessingdescriptors \
     libwebrtc_audio_preprocessing \
+    libaudioroute \
+    tinycap \
+    tinyplay \
+    tinypcminfo \
     tinymix
 
 PRODUCT_PACKAGES += \
@@ -219,7 +229,7 @@ PRODUCT_PACKAGES += \
     android.hardware.automotive.vehicle@2.0-manager-lib
 
 # Bluetooth
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     libbt-vendor
 
 PRODUCT_COPY_FILES += \
@@ -255,6 +265,9 @@ PRODUCT_PACKAGES += \
     libqdMetaData.system \
     libdisplayconfig \
     libhwc2on1adapter \
+    libhwc2onfbadapter \
+    libgui_vendor:32 \
+    libvulkan \
     liboverlay \
     libgenlock \
     libtinyxml 
@@ -273,11 +286,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=440 
 
 # DRM
-PRODUCT_PACKAGES += \
-    android.hardware.drm@1.0-impl \
-    android.hardware.drm@1.0-service \
-    android.hardware.drm@1.1-service.clearkey
-
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
 
@@ -327,9 +335,10 @@ PRODUCT_PACKAGES += \
 
 # HIDL
 PRODUCT_PACKAGES += \
-    android.hidl.base@1.0 \
+    android.hidl.base@1.0_vendor \
     android.hidl.base@1.0_system \
-    android.hidl.manager@1.0 \
+    android.hidl.base@1.0-java \
+    android.hidl.manager@1.0_system:32 \
     android.hidl.manager@1.0-java
 
 # Ramdisk
@@ -343,6 +352,7 @@ PRODUCT_PACKAGES += \
     init.goodix.sh \
     init.qti.fm.sh \
     init.qti.ims.sh \
+    init.qcom.factory.rc \
     fstab.qcom \
     init.msm.usb.configfs.rc \
     init.qti.fm.rc \
@@ -460,7 +470,6 @@ PRODUCT_PACKAGES += \
     android.hardware.radio.config@1.0 \
     android.hardware.radio.deprecated@1.0 \
     android.hardware.secure_element@1.0 \
-    librmnetctl \
     libprotobuf-cpp-full \
     libprotobuf-cpp-full-rtti \
     libxml2
@@ -478,10 +487,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/hals.conf 
-
-# SPN
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/spn-conf.xml:system/etc/spn-conf.xml
 
 # Telephony
 PRODUCT_PACKAGES += \
