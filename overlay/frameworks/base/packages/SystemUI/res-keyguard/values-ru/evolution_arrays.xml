@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2019 AOSiP
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<!-- Formatting note: terminate all comments with a period, to avoid breaking
+     the documentation output. To suppress comment lines from the documentation
+     output, insert an eat-comment element after the comment lines.
+-->
+
+<resources>
+    <string-array name="type_clock_hours">
+        <item>Двенадцать</item>
+        <item>Один</item>
+        <item>Два</item>
+        <item>Три</item>
+        <item>Четыре</item>
+        <item>Пять</item>
+        <item>Шесть</item>
+        <item>Семь</item>
+        <item>Восемь</item>
+        <item>Девять</item>
+        <item>Десять</item>
+        <item>Одиннадцать</item>
+    </string-array>
+    <string-array name="type_clock_minutes">
+        <item>Ноль Ноль</item>
+        <item>Ноль Одна</item>
+        <item>Ноль Две</item>
+        <item>Ноль Три</item>
+        <item>Ноль Четыре</item>
+        <item>Ноль Пять</item>
+        <item>Ноль Шесть</item>
+        <item>Ноль Семь</item>
+        <item>Ноль Восемь</item>
+        <item>Ноль Девять</item>
+        <item>Десять</item>
+        <item>Одиннадцать</item>
+        <item>Двенадцать</item>
+        <item>Тринадцать</item>
+        <item>Четырнадцать</item>
+        <item>Пятнадцать</item>
+        <item>Шестнадцать</item>
+        <item>Семьнадцать</item>
+        <item>Восемьнадцать</item>
+        <item>Девятнадцать</item>
+        <item>Двадцать</item>
+        <item>"Двадцать Одна"</item>
+        <item>"Двадцать Две"</item>
+        <item>"Двадцать Три"</item>
+        <item>"Двадцать Четыре"</item>
+        <item>"Двадцать Пять"</item>
+        <item>"Двадцать Шесть"</item>
+        <item>"Двадцать Семь"</item>
+        <item>"Двадцать Восемь"</item>
+        <item>"Двадцать Девять"</item>
+        <item>Тридцать</item>
+        <item>"Тридцать Одна"</item>
+        <item>"Тридцать Две"</item>
+        <item>"Тридцать Три"</item>
+        <item>"Тридцать Четыре"</item>
+        <item>"Тридцать Пять"</item>
+        <item>"Тридцать Шесть"</item>
+        <item>"Тридцать Семь"</item>
+        <item>"Тридцать Восемь"</item>
+        <item>"Тридцать Девять"</item>
+        <item>Сорок</item>
+        <item>"Сорок Одна"</item>
+        <item>"Сорок Две"</item>
+        <item>"Сорок Три"</item>
+        <item>"Сорок Четыре"</item>
+        <item>"Сорок Пять"</item>
+        <item>"Сорок Шесть"</item>
+        <item>"Сорок Семь"</item>
+        <item>"Сорок Восемь"</item>
+        <item>"Сорок Девять"</item>
+        <item>Пятьдесят</item>
+        <item>"Пятьдесят Одна"</item>
+        <item>"Пятьдесят Две"</item>
+        <item>"Пятьдесят Три"</item>
+        <item>"Пятьдесят Четыре"</item>
+        <item>"Пятьдесят Пять"</item>
+        <item>"Пятьдесят Шесть"</item>
+        <item>"Пятьдесят Семь"</item>
+        <item>"Пятьдесят Восемь"</item>
+        <item>"Пятьдесят Девять"</item>
+    </string-array>
+</resources>
