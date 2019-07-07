@@ -31,9 +31,14 @@
 # Shell Script
 /(vendor|system/vendor)/bin/init\.goodix\.sh    u:object_r:init_fingerprint_exec:s0
 
+# Kcal
+/sys/devices/platform/kcal_ctrl.0(/.*)?					u:object_r:sysfs_kcal:s0
+
+# Sound Control
+/sys/kernel/sound_control(/.*)?						u:object_r:sysfs_sound_control:s0
+
 # Sysfs files
-/sys/devices/soc/qpnp-flash-led-24/leds/led:torch_0/max_brightness	u:object_r:sysfs_torch:s0
-/sys/devices/soc/qpnp-flash-led-24/leds/led:torch_1/max_brightness	u:object_r:sysfs_torch:s0
-/sys/audio_amplifier/enable						u:object_r:sysfs:s0
-/proc/gesture/onoff							u:object_r:proc:s0
-/firmware/verinfo/ver_info.txt						u:object_r:vfat:s0
+/sys/devices/soc/qpnp-flash-led-[0-9]+/leds/led:torch_[0-9]+/max_brightness	u:object_r:sysfs_torch:s0
+/sys/audio_amplifier/enable							u:object_r:sysfs:s0
+/proc/gesture/onoff								u:object_r:proc:s0
+/firmware/verinfo/ver_info.txt							u:object_r:vfat:s0
