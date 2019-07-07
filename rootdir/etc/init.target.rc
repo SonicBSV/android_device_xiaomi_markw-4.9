@@ -119,6 +119,15 @@ service thermal-engine /vendor/bin/thermal-engine
    socket thermal-send-rule stream 0660 system system
    group root
 
+service time_daemon /vendor/bin/time_daemon
+   class late_start
+   user root
+   group root
+
+service audiod /vendor/bin/audiod
+   class late_start
+   user system
+   group system
 
 on boot
     start rmt_storage

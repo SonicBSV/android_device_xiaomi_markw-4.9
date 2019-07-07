@@ -28,6 +28,7 @@
 import /vendor/etc/init/hw/init.qcom.usb.rc
 import /vendor/etc/init/hw/init.msm.usb.configfs.rc
 import /vendor/etc/init/hw/init.target.rc
+import /vendor/etc/init/hw/init.qcom.factory.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -82,7 +83,7 @@ on early-boot
     chown system system /persist/sensors/sensors_settings
     chown system system /persist/sensors/registry/config
     chmod 0664 /persist/sensors/sensors_settings
-    
+
     chown system system /mnt/vendor/persist/sensors
     chown system system /mnt/vendor/persist/sensors/sns.reg
     chown system system /mnt/vendor/persist/sensors/sensors_list.txt
@@ -405,7 +406,7 @@ on post-fs-data
     mkdir /dev/socket/location 0770 gps gps
     mkdir /dev/socket/location/mq 0770 gps gps
     mkdir /dev/socket/location/xtra 0770 gps gps
-    
+
     #Create directory from IMS services
     mkdir /data/shared 0755
     chown system system /data/shared
@@ -419,7 +420,7 @@ on post-fs-data
     setprop vold.post_fs_data_done 1
 
     #Create a folder for SRS to be able to create a usercfg file
-    mkdir /data/data/media 0770 media media
+    #mkdir /data/data/media 0770 media media
 
     #Create FM dir for patchdownloader
     mkdir /data/vendor/fm 0770 system system
@@ -466,8 +467,14 @@ on post-fs-data
     write /sys/block/dm-0/queue/read_ahead_kb 2048
     write /sys/block/dm-1/queue/read_ahead_kb 2048
 
-    #Create FTM_AP dir for factory test
-    mkdir /data/FTM_AP 0775 system system
+    # Create vpp directory
+    mkdir /data/vendor/vpp 0770 media media
+
+    #Create dir for TUI
+    mkdir /data/vendor/tui 0600 system drmrpc
+
+    #Start move time data to /data/vendor once post-fs-data done
+    start vendor.move_time_data
 
 on property:vendor.hw.fm.init=*
     write /sys/module/radio_iris_transport/parameters/fmsmd_set ${vendor.hw.fm.init}
@@ -679,11 +686,17 @@ service vendor.dataqti /vendor/bin/qti
     group radio oem_2901 diag usb net_admin
     disabled
 
+service vendor.dataadpl /system/vendor/bin/adpl
+    class main
+    user radio
+    group radio oem_2901 diag usb net_admin
+    disabled
 
 service vendor.sensors.qti /vendor/bin/sensors.qti
     class core
-    user root
-    group root
+    user system
+    group system
+    disabled
 
 on property:ro.vendor.use_data_netmgrd=false
     # netmgr not supported on specific target
@@ -750,6 +763,18 @@ service iprenew_bt-pan /system/bin/dhcpcd -n
     class late_start
     disabled
     oneshot
+
+service ssgqmigd /vendor/bin/ssgqmigd
+    class late_start
+    user radio
+    group radio gps system
+    socket ssgqmig seqpacket 0660 radio inet
+
+service ssgtzd /vendor/bin/ssgtzd
+    class late_start
+    user system
+    group system
+    socket ssgtzd stream 0660 system inet
 
 service mlid /vendor/bin/mlid
     class late_start
