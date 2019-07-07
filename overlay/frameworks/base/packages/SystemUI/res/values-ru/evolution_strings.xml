@@ -154,6 +154,6 @@
     <string name="heads_up_snooze_message"><xliff:g id="string">%s</xliff:g> - Просмотр дремлящих уведомлений для <xliff:g id="number">%d</xliff:g> минут.</string>
     
     <!-- Volume panel QS tile -->
-    <string name="quick_settings_volume_panel_label">Звуковая панель</string>
+    <string name="quick_settings_volume_panel_label">Панель громкости</string>
 
 </resources>
