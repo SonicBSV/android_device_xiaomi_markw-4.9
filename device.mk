@@ -99,22 +99,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.radio.sib16_support=1 \
     persist.vendor.radio.custom_ecc=1 \
     persist.vendor.radio.rat_on=combine \
-    persist.vendor.radio.data_ltd_sys_ind=1 \
-    persist.vendor.radio.data_con_rprt=1 \
-    persist.vendor.radio.calls.on.ims=1 \
     persist.radio.schd.cache=3500 \
     sys.vendor.shutdown.waittime=500 \
     ro.build.shutdown_timeout=0 \
     ro.com.google.clientidbase=android-xiaomi \
     ro.com.google.clientidbase.ms=android-xiaomi-rev2 \
     ro.frp.pst=/dev/block/bootdevice/by-name/config \
-    persist.radio.multisim.config=dsds \
-    persist.vendor.qcomsysd.enabled=1 \
-    persist.dbg.ims_volte_enable=1 \
-    persist.dbg.volte_avail_ovr=1 \
-    persist.dbg.vt_avail_ovr=1 \
-    persist.dbg.wfc_avail_ovr=1 \
-    persist.vendor.qcomsysd.enabled=1
+    persist.radio.multisim.config=dsds 
 
 # Additional native libraries
 PRODUCT_COPY_FILES += \
@@ -286,6 +277,11 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=440 
 
 # DRM
+PRODUCT_PACKAGES += \
+    android.hardware.drm@1.0-service \
+    android.hardware.drm@1.1-service.clearkey \
+    android.hardware.drm@1.0-impl
+
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
 
@@ -326,7 +322,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/etc/izat.conf:$(TARGET_COPY_OUT_VENDOR)/etc/izat.conf \
     $(LOCAL_PATH)/gps/etc/lowi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/lowi.conf \
     $(LOCAL_PATH)/gps/etc/sap.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sap.conf \
-    $(LOCAL_PATH)/gps/etc/GNSS.cfg:$(TARGET_COPY_OUT_VENDOR)/etc/GNSS.cfg \
     $(LOCAL_PATH)/gps/etc/xtwifi.conf:$(TARGET_COPY_OUT_VENDOR)/etc/xtwifi.conf
 
 # Healthd
