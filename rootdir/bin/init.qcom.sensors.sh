@@ -32,8 +32,8 @@
 start_sensors()
 {
     sscrpcd_status=`getprop init.svc.vendor.sensors`
-    chmod -h 664 /mnt/vendor/persist/sensors/sensors_settings
-    chown -h -R system.system /mnt/vendor/persist/sensors
+    chmod -h 664 /persist/sensors/sensors_settings
+    chown -h -R system.system /persist/sensors
     start vendor.sensors.qti
 
     # Only for SLPI

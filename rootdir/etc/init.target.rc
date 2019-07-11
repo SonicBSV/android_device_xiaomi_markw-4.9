@@ -204,6 +204,9 @@ service vendor.imsdatadaemon /vendor/bin/imsdatadaemon
 on property:vendor.ims.QMI_DAEMON_STATUS=1
     start vendor.imsdatadaemon
 
+service vendor.pd_mapper /vendor/bin/pd-mapper
+    class core
+
 service vendor.ims_rtp_daemon /vendor/bin/ims_rtp_daemon
    class main
    user system
