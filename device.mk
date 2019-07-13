@@ -299,11 +299,16 @@ PRODUCT_PACKAGES += \
 
 # FM
 PRODUCT_PACKAGES += \
-    FMRadio \
-    libfmjni
+    FM2 \
+    libqcomfm_jni \
+    qcom.fmradio
 
 PRODUCT_PACKAGES += \
     android.hardware.broadcastradio@1.0-impl
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.hw.fm.init=0 \
+vendor.fm.a2dp.conc.disabled=false
 
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
