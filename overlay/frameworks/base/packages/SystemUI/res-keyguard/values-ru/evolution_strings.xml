@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Skeleton string format for displaying the date with number. -->
+    <string name="abbrev_wday_day_no_year">eeeedd</string>
+
+    <!-- Skeleton string format for displaying the date. -->
+    <string name="abbrev_wday_no_year">eeee</string>
+
+    <!-- Skeleton string format for displaying the day of the month. -->
+    <string name="abbrev_wday_month_no_year">MMMMd</string>
+
+    <!-- Q clock strings -->
+    <plurals name="type_clock_header">
+        <item quantity="other"><annotation name="color">Сейчас</annotation>"
+^1
+^2"</item>
+        <item quantity="one"><annotation name="color">Сейчас</annotation>"
+^1
+^2"</item>
+        <item quantity="few"><annotation name="color">Сейчас</annotation>"
+^1
+^2"</item>
+     </plurals>
+
+</resources>
