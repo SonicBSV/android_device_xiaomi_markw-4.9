@@ -120,14 +120,14 @@ void gsi_check()
     // override device specific props for GSI
     if ((product == "phhgsi_arm64_a")) {
         property_override("ro.build.tags", "release-keys");
-        property_override("ro.product.model", "Redmi 4");
+        property_override("ro.product.model", "Redmi 4 Prime");
         property_override("ro.product.brand", "Xiaomi");
         property_override("ro.product.name", "markw");
         property_override("ro.product.device", "markw");
         property_override("ro.product.manufacturer", "Xiaomi");
         property_override("ro.build.product", "markw");
-        property_override("ro.build.description", "markw-user 6.0.1 MMB29M V10.2.1.0.MBEMIXM release-keys");
-        property_override("ro.build.fingerprint", "Xiaomi/markw/markw:6.0.1/MMB29M/V10.2.1.0.MBEMIXM:user/release-keys");
+        property_override("ro.build.description", "walleye-user 9 PQ3A.190505.001 5373320 release-keys");
+        property_override("ro.build.fingerprint", "google/walleye/walleye:9/PQ3A.190505.001/5373320:user/release-keys");
     }
 }
 

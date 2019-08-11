@@ -200,7 +200,7 @@ persist.vendor.camera.display.lmax=1280x720
 #Set ims sip user agent
 ro.build.software.version=Android9.0.0
 ro.fota.oem=Xiaomi
-ro.product.model=Redmi 4
+ro.product.model=Redmi 4 Prime
 
 # system props for the cne module
 persist.cne.feature=1
