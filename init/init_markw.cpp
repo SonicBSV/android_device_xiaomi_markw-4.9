@@ -111,30 +111,9 @@ void check_ram()
    }
 }
 
-void gsi_check()
-{
-    std::string product;
-
-    product = GetProperty("ro.product.device", "");
-
-    // override device specific props for GSI
-    if ((product == "phhgsi_arm64_a")) {
-        property_override("ro.build.tags", "release-keys");
-        property_override("ro.product.model", "Redmi 4 Prime");
-        property_override("ro.product.brand", "Xiaomi");
-        property_override("ro.product.name", "markw");
-        property_override("ro.product.device", "markw");
-        property_override("ro.product.manufacturer", "Xiaomi");
-        property_override("ro.build.product", "markw");
-        property_override("ro.build.description", "walleye-user 9 PQ3A.190505.001 5373320 release-keys");
-        property_override("ro.build.fingerprint", "google/walleye/walleye:9/PQ3A.190505.001/5373320:user/release-keys");
-    }
-}
-
 void vendor_load_properties()
 {
     check_ram();
-    gsi_check();
 
     property_set("dalvik.vm.heapstartsize", heapstartsize);
     property_set("dalvik.vm.heapgrowthlimit", heapgrowthlimit);
