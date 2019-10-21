@@ -18,7 +18,7 @@
 
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
-#define BTM_DEF_LOCAL_NAME   "Redmi 4"
+#define BTM_DEF_LOCAL_NAME   "Redmi 4 Prime"
 
 #include <cutils/properties.h>
 #include <string.h>
