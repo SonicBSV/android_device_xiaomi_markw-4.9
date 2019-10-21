@@ -131,6 +131,9 @@ vendor.vidc.dec.downscalar_height=1088
 # system prop for UBWC
 vendor.video.disable.ubwc=1
 
+# Create zram disk
+ro.vendor.qti.config.zram=true
+
 # disable PQ feature by default
 vendor.vidc.enc.disable.pq=true
 
