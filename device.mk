@@ -122,13 +122,7 @@ PRODUCT_PACKAGES += \
     audio_amplifier.msm8953 \
     audio.r_submix.default \
     audio.usb.default \
-    libqcompostprocbundle \
-    libaudio-resampler \
-    libqcomvisualizer \
-    libqcomvoiceprocessing \
     libqcomvoiceprocessingdescriptors \
-    libwebrtc_audio_preprocessing \
-    libaudioroute \
     tinycap \
     tinyplay \
     tinypcminfo \
@@ -204,9 +198,6 @@ PRODUCT_PACKAGES += \
     android.hardware.automotive.vehicle@2.0-manager-lib
 
 # Bluetooth
-#PRODUCT_PACKAGES += \
-    libbt-vendor
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/bt_profile.conf:system/etc/bluetooth/bt_profile.conf \
     $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:system/etc/bluetooth/interop_database.conf 
@@ -232,27 +223,14 @@ PRODUCT_PACKAGES += \
 
 # Display
 PRODUCT_PACKAGES += \
-    gralloc.msm8953 \
-    hwcomposer.msm8953 \
-    memtrack.msm8953 \
-    libqdMetaData \
-    libqdMetaData.system \
-    libdisplayconfig \
-    libhwc2on1adapter \
-    libhwc2onfbadapter \
-    libgui_vendor:32 \
     libvulkan \
     liboverlay \
-    libgenlock \
-    libtinyxml 
+    libgenlock 
 
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
-    android.hardware.graphics.mapper@2.0-impl \
-    android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.composer@2.1-service \
-    android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service 
 
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -261,9 +239,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # DRM
 PRODUCT_PACKAGES += \
-    android.hardware.drm@1.0-service \
-    android.hardware.drm@1.1-service.clearkey \
-    android.hardware.drm@1.0-impl
+    android.hardware.drm@1.1-service.clearkey
 
 PRODUCT_PROPERTY_OVERRIDES += \
     drm.service.enabled=true
@@ -271,10 +247,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Enable all system restart_level to relative
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.ssr.restart_level=ALL_ENABLE
-
-# Face detection extension
-PRODUCT_PACKAGES += \
-    org.codeaurora.camera
 
 # Fingerprint
 PRODUCT_PACKAGES += \
@@ -291,17 +263,11 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.hw.fm.init=0 \
-    vendor.fm.a2dp.conc.disabled=false
-
-# Gatekeeper HAL
-PRODUCT_PACKAGES += \
-    android.hardware.gatekeeper@1.0-impl \
-    android.hardware.gatekeeper@1.0-service 
+    vendor.fm.a2dp.conc.disabled=false 
 
 # GPS
 PRODUCT_PACKAGES += \
-    libcurl \
-    libsensorndkbridge
+    libcurl
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/etc/apdr.conf:$(TARGET_COPY_OUT_VENDOR)/etc/apdr.conf \
@@ -318,11 +284,9 @@ PRODUCT_PACKAGES += \
 
 # HIDL
 PRODUCT_PACKAGES += \
-    android.hidl.base@1.0_vendor \
+    android.hidl.base@1.0 \
     android.hidl.base@1.0_system \
-    android.hidl.base@1.0-java \
-    android.hidl.manager@1.0_system:32 \
-    android.hidl.manager@1.0-java
+    android.hidl.manager@1.0_system:32
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -353,10 +317,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/uinput-fpc.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/uinput-fpc.kl 
 
 # Keymaster
-PRODUCT_PACKAGES += \
-    android.hardware.keymaster@3.0-impl \
-    android.hardware.keymaster@3.0-service
-
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
 
@@ -377,21 +337,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf
 
 # Media
-PRODUCT_PACKAGES += \
-    libc2dcolorconvert \
-    libextmedia_jni \
-    libmm-omxcore \
-    libOmxAacEnc \
-    libOmxAmrEnc \
-    libOmxCore \
-    libOmxEvrcEnc \
-    libOmxG711Enc \
-    libOmxQcelp13Enc \
-    libOmxVdec \
-    libOmxVenc \
-    libstagefrighthw \
-    libstagefright_soft_flacdec 
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
     $(LOCAL_PATH)/configs/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml \
@@ -404,11 +349,9 @@ PRODUCT_COPY_FILES += \
 
 # Media Extensions
 PRODUCT_PACKAGES += \
-    libavenhancements \
     libavmediaserviceextensions \
     libmediametrics \
     libregistermsext \
-    libhypv_intercept \
     mediametrics
 
 # NET
@@ -424,9 +367,6 @@ PRODUCT_PACKAGES += \
     libebtc
 
 # QMI
-#PRODUCT_PACKAGES += \
-    libjson
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sec_config:$(TARGET_COPY_OUT_VENDOR)/etc/sec_config
 
@@ -441,11 +381,8 @@ PRODUCT_PACKAGES += \
     android.hardware.power@1.1-service-qti
     
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/powerhint.xml:system/etc/powerhint.xml \
+    $(LOCAL_PATH)/configs/powerhint.xml:system/etc/powerhint.xml
 
-# RenderScript HAL
-PRODUCT_PACKAGES += \
-    android.hardware.renderscript@1.0-impl
 
 # RIL
 PRODUCT_PACKAGES += \
@@ -465,7 +402,6 @@ PRODUCT_COPY_FILES += \
 
 # Sensors
 PRODUCT_PACKAGES += \
-    android.hardware.sensors@1.0-impl \
     android.hardware.sensors@1.0-service 
 
 PRODUCT_COPY_FILES += \
@@ -498,7 +434,6 @@ PRODUCT_PACKAGES += \
 
 # Thermal
 PRODUCT_PACKAGES += \
-    android.hardware.thermal@1.0-impl \
     android.hardware.thermal@1.0-service 
 
 # USB HAL
@@ -513,7 +448,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Vibrator
 PRODUCT_PACKAGES += \
-    android.hardware.vibrator@1.0-impl \
     android.hardware.vibrator@1.0-service
 
 # VNDK-SP
@@ -542,6 +476,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:system/etc/hostapd/hostapd.deny \
     $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf
 
+# Wallpapers
+PRODUCT_PACKAGES += \
+    WallpapersBReel2018
+
 # Wfd
 PRODUCT_PACKAGES += \
     libnl
@@ -549,10 +487,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     WfdCommon
 
-# XiaomiParts
+# Xiaomi
 PRODUCT_PACKAGES += \
-    XiaomiParts
+    XiaomiParts \
+    XiaomiDoze
 
 # Inherit proprietary files
 $(call inherit-product-if-exists, vendor/xiaomi/markw/markw-vendor.mk)
-$(call inherit-product, vendor/xiaomi/msm8953-common/msm8953-common-vendor.mk)
