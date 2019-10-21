@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2019, The Linux Foundation. All rights reserved.
+# Copyright (c) 2014-2015, 2018, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -88,12 +88,21 @@ on post-fs-data
 mkdir /data/vendor/camera 0770 camera camera
 mkdir /data/misc/camera 0770 camera camera
 
-# Start camera server as daemon
-service qcamerasvr /vendor/bin/mm-qcamera-daemon
+#start camera server as daemon
+service qcamerasvr /system/vendor/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
     setenv LD_PRELOAD "libshim_c.so"
+
+on init
+    write /dev/stune/foreground/schedtune.sched_boost_no_override 1
+    write /dev/stune/top-app/schedtune.sched_boost_no_override 1
+    write /dev/stune/schedtune.colocate 0
+    write /dev/stune/background/schedtune.colocate 0
+    write /dev/stune/foreground/schedtune.colocate 0
+    write /dev/stune/top-app/schedtune.colocate 1
+    write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
 
 # Allow usb charging to be disabled peristently
 on property:persist.usb.chgdisabled=1
@@ -110,7 +119,7 @@ service vendor.qseecomd /vendor/bin/qseecomd
    user root
    group root
 
-service thermal-engine /vendor/bin/thermal-engine
+service thermal-engine /system/vendor/bin/thermal-engine
    class main
    user root
    socket thermal-send-client stream 0666 system system
@@ -119,15 +128,10 @@ service thermal-engine /vendor/bin/thermal-engine
    socket thermal-send-rule stream 0660 system system
    group root
 
-service time_daemon /vendor/bin/time_daemon
+service time_daemon /system/vendor/bin/time_daemon
    class late_start
    user root
    group root
-
-service audiod /vendor/bin/audiod
-   class late_start
-   user system
-   group system
 
 on boot
     start rmt_storage
@@ -175,26 +179,21 @@ on boot
     setprop vendor.usb.rmnet.inst.name "rmnet_bam_dmux"
     setprop vendor.usb.dpl.inst.name "dpl_bam_dmux"
 
-    # init.qcom.sensors.sh
-    chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
-    chown system system /mnt/vendor/persist/sensors
-    start vendor.sensors.qti
-
-service wcnss-service /vendor/bin/wcnss_service
+service wcnss-service /system/vendor/bin/wcnss_service
     class main
     user system
     group system wifi radio
     oneshot
 
-## imsqmidaemon starts with root and UID will be downgraded to SYSTEM.
-service vendor.imsqmidaemon /vendor/bin/imsqmidaemon
+## imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
+service vendor.imsqmidaemon /system/vendor/bin/imsqmidaemon
     class main
     user system
     socket ims_qmid stream 0660 system radio
     group radio log diag
 
 # imsdatadaemon starts with root and UID will be downgraded to SYSTEM.
-service vendor.imsdatadaemon /vendor/bin/imsdatadaemon
+service vendor.imsdatadaemon /system/vendor/bin/imsdatadaemon
     class main
     user system
     socket ims_datad stream 0660 system radio
@@ -204,15 +203,12 @@ service vendor.imsdatadaemon /vendor/bin/imsdatadaemon
 on property:vendor.ims.QMI_DAEMON_STATUS=1
     start vendor.imsdatadaemon
 
-service vendor.pd_mapper /vendor/bin/pd-mapper
-    class core
-
-service vendor.ims_rtp_daemon /vendor/bin/ims_rtp_daemon
+service vendor.ims_rtp_daemon /system/vendor/bin/ims_rtp_daemon
    class main
    user system
    group radio diag inet log
 
-service vendor.imsrcsservice /vendor/bin/imsrcsd
+service vendor.imsrcsservice /system/vendor/bin/imsrcsd
    class main
    user system
    group radio diag inet log wakelock
@@ -220,19 +216,8 @@ service vendor.imsrcsservice /vendor/bin/imsrcsd
 on property:vendor.ims.DATA_DAEMON_STATUS=1
     restart vendor.ims_rtp_daemon
 
-service cnss_diag /vendor/bin/cnss_diag -q -f -t HELIUM
-   class main
-   user system
-   group system wifi inet sdcard_rw media_rw diag
-   oneshot
 
-service energy-awareness /vendor/bin/energy-awareness
-    class main
-    user system
-    group system
-    oneshot
-
-service ppd /vendor/bin/mm-pp-dpps
+service ppd /system/vendor/bin/mm-pp-dpps
     class late_start
     disabled
     user system
@@ -265,32 +250,39 @@ on charger
     mount ext4 /dev/block/bootdevice/by-name/system /system ro barrier=1
     start vendor.hvdcp_opti
 
-service adsprpcd /vendor/bin/adsprpcd
+service adsprpcd /system/vendor/bin/adsprpcd
     class main
     user media
     group media
 
-service vendor.hvdcp_opti /vendor/bin/hvdcp_opti
+service vendor.hvdcp_opti /system/vendor/bin/hvdcp_opti
    class main
    user root
    group system wakelock
 
-service vendor.per_mgr /vendor/bin/pm-service
+service per_mgr /system/vendor/bin/pm-service
     class core
     user system
     group system net_raw
 
-service vendor.per_proxy /vendor/bin/pm-proxy
+service per_proxy /system/vendor/bin/pm-proxy
     class core
     user system
     group system
     disabled
 
-on property:init.svc.vendor.per_mgr=running
-    start vendor.per_proxy
+on property:init.svc.per_mgr=running
+    start per_proxy
 
 on property:sys.shutdown.requested=*
-    stop vendor.per_proxy
+    stop per_proxy
+
+service energy-awareness /system/vendor/bin/energy-awareness
+    class main
+    user root
+    group system
+    oneshot
+
 
 on boot
     #Ignore modem crash 

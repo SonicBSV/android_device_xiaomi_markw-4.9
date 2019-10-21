@@ -65,6 +65,8 @@ on factory-fs && property:ro.bootmode=ffbm-01
 # which cause the diag/Wwan/modem port all be lost in qmmi mode. Details:
 # UsbDeviceManager.java---->getDefaultFunctions and trySetEnabledFunctions
 on property:persist.vendor.usb.config=*
+    setprop persist.sys.usb.ffbm-00.func ${persist.vendor.usb.config}
+    setprop persist.sys.usb.ffbm-01.func ${persist.vendor.usb.config}
     setprop persist.sys.usb.ffbm-02.func ${persist.vendor.usb.config}
 
 on mmi && property:ro.bootmode=ffbm-00
@@ -111,14 +113,17 @@ on ffbm
     # specified in the previous mount_all command on the fs stage.
     # With /system mounted and properties form /system + /factory available,
     # some services can be started.
+    # open the late-fs for hal process
     trigger late-fs
+    trigger load_system_props_action
+
 
     # Now we can mount /data. File encryption requires keymaster to decrypt
     # /data, which in turn can only be loaded when system properties are present.
     trigger post-fs-data
 
     # Now we can start zygote for devices with file based encryption
-    trigger zygote-start
+    # trigger zygote-start
 
     # Load persist properties and override properties (if enabled) from /data.
     trigger load_persist_props_action
@@ -172,7 +177,7 @@ service vendor.audio_tc229 /vendor/bin/mm-audio-ftm -tc 229
     disabled
     oneshot
 
-service vendor.audio_tc230 /vendor/bin/mm-audio-ftm -tc 230
+service vendor.audio_tc330 /vendor/bin/mm-audio-ftm -tc 230
     user audio
     group audio
     disabled

@@ -231,8 +231,7 @@ function configure_zram_parameters() {
     # Zram disk - 75% for Go devices.
     # For 512MB Go device, size = 384MB, set same for Non-Go.
     # For 1GB Go device, size = 768MB, set same for Non-Go.
-    # For 2GB and 3GB Non-Go device, size = 1GB
-    # For 4GB and 6GB Non-Go device, size = 2GB
+    # For >=2GB Non-Go device, size = 1GB
     # And enable lz4 zram compression for Go targets.
 
     if [ "$low_ram" == "true" ]; then
@@ -244,10 +243,9 @@ function configure_zram_parameters() {
             echo 402653184 > /sys/block/zram0/disksize
         elif [ $MemTotal -le 1048576 ]; then
             echo 805306368 > /sys/block/zram0/disksize
-        elif [ $MemTotal -le 3145728 ]; then
+        else
+            # Set Zram disk size=1GB for >=2GB Non-Go targets.
             echo 1073741824 > /sys/block/zram0/disksize
-        elif [ $MemTotal -le 6291456 ]; then
-            echo 2147483648 > /sys/block/zram0/disksize
         fi
         mkswap /dev/block/zram0
         swapon /dev/block/zram0 -p 32758
@@ -2385,7 +2383,7 @@ case "$target" in
             echo 4-7 > /dev/cpuset/foreground/boost/cpus
             echo 0-2,4-7 > /dev/cpuset/foreground/cpus
             echo 0-1 > /dev/cpuset/background/cpus
-            echo 0-2 > /dev/cpuset/system-background/cpus
+            echo 0-4 > /dev/cpuset/system-background/cpus
 
             # disable thermal bcl hotplug to switch governor
             echo 0 > /sys/module/msm_thermal/core_control/enabled
@@ -2453,12 +2451,6 @@ case "$target" in
 
             # re-enable thermal and BCL hotplug
             echo 1 > /sys/module/msm_thermal/core_control/enabled
-
-            #Add-begin-HMI_M6100_A01-422,lijiang@longcheer.com,2018-10-12
-            #Enable input boost configuration
-            echo "0:1401600" > /sys/module/cpu_boost/parameters/input_boost_freq
-            echo 40 > /sys/module/cpu_boost/parameters/input_boost_ms
-            #Add-end-HMI_M6100_A01-422
 
             # Set Memory parameters
             configure_memory_parameters
