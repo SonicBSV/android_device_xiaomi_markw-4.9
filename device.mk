@@ -3,15 +3,7 @@ $(call inherit-product, vendor/xiaomi/markw/markw-vendor.mk)
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay 
-
-# ARCore
-TARGET_INCLUDE_STOCK_ARCORE := true
-PRODUCT_PACKAGES += \
-    Playground
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/android.hardware.camera.ar.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.ar.xml
+    $(LOCAL_PATH)/overlay
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
