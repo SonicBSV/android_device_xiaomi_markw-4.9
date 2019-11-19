@@ -1,21 +1,17 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
+$(call inherit-product, vendor/xiaomi/markw/markw-vendor.mk)
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay 
 
-#PRODUCT_ENFORCE_RRO_TARGETS := \
-    framework-res
-
 # ARCore
 TARGET_INCLUDE_STOCK_ARCORE := true
+PRODUCT_PACKAGES += \
+    Playground
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/android.hardware.camera.ar.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.camera.ar.xml
-
-# AR Stickers
-PRODUCT_PACKAGES += \
-    Playground
 
 # Boot animation
 TARGET_SCREEN_HEIGHT := 1920
@@ -62,11 +58,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.aware.xml:system/etc/permissions/android.hardware.wifi.aware.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
     frameworks/native/data/etc/android.software.print.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.print.xml 
-
-# whitelisted app
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml \
-    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
 
 # Additional native libraries
 PRODUCT_COPY_FILES += \
@@ -149,21 +140,30 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.ir@1.0-service.xiaomi_markw
 
-# Display
+# Device specific packages
 PRODUCT_PACKAGES += \
-    libvulkan \
-    liboverlay \
-    libgenlock 
+    XiaomiParts \
+    XiaomiDoze
 
+# Display
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-service \
-    android.hardware.memtrack@1.0-service
+    android.hardware.memtrack@1.0-service \
+    liboverlay \
+    libvulkan \
+    libgenlock 
 
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm@1.1-service.clearkey
+
+# Ebtables
+PRODUCT_PACKAGES += \
+    ebtables \
+    ethertypes \
+    libebtc
 
 # Fingerprint
 PRODUCT_PACKAGES += \
@@ -171,12 +171,10 @@ PRODUCT_PACKAGES += \
 
 # FM
 PRODUCT_PACKAGES += \
-    FM2 \
+    android.hardware.broadcastradio@1.0-impl \
     libqcomfm_jni \
-    qcom.fmradio
-
-PRODUCT_PACKAGES += \
-    android.hardware.broadcastradio@1.0-impl
+    qcom.fmradio \
+    FM2
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -201,25 +199,9 @@ PRODUCT_PACKAGES += \
     android.hidl.base@1.0_system \
     android.hidl.manager@1.0_system:32
 
-# Ramdisk
-PRODUCT_PACKAGES += \
-    init.class_main.sh \
-    init.qcom.post_boot.sh \
-    init.qcom.sensors.sh \
-    init.qcom.sh \
-    init.qcom.usb.sh \
-    init.qcom.wifi.sh \
-    init.goodix.sh \
-    init.qti.fm.sh \
-    init.qti.ims.sh \
-    init.qcom.factory.rc \
-    fstab.qcom \
-    init.msm.usb.configfs.rc \
-    init.qti.fm.rc \
-    init.qcom.rc \
-    init.qcom.usb.rc \
-    init.target.rc \
-    ueventd.qcom.rc
+# IRQ
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf
 
 # Keylayout
 PRODUCT_COPY_FILES += \
@@ -245,10 +227,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vendor.lineage.livedisplay@2.0-service-sdm
 
-# IRQ
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/msm_irqbalance.conf:$(TARGET_COPY_OUT_VENDOR)/etc/msm_irqbalance.conf
-
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
@@ -267,21 +245,11 @@ PRODUCT_PACKAGES += \
     libregistermsext \
     mediametrics
 
-# NET
+# Netd
 PRODUCT_PACKAGES += \
     android.system.net.netd@1.0 \
     netutils-wrapper-1.0 \
-    libandroid_net 
-
-# IPv6
-PRODUCT_PACKAGES += \
-    ebtables \
-    ethertypes \
-    libebtc
-
-# QMI
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/sec_config:$(TARGET_COPY_OUT_VENDOR)/etc/sec_config
+    libandroid_net
 
 # Perf configuration
 PRODUCT_COPY_FILES += \
@@ -298,6 +266,30 @@ PRODUCT_COPY_FILES += \
 
 # Properties
 -include $(LOCAL_PATH)/prop.mk
+
+# QMI
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/sec_config:$(TARGET_COPY_OUT_VENDOR)/etc/sec_config
+
+# Ramdisk
+PRODUCT_PACKAGES += \
+    init.class_main.sh \
+    init.qcom.post_boot.sh \
+    init.qcom.sensors.sh \
+    init.qcom.sh \
+    init.qcom.usb.sh \
+    init.qcom.wifi.sh \
+    init.goodix.sh \
+    init.qti.fm.sh \
+    init.qti.ims.sh \
+    init.qcom.factory.rc \
+    fstab.qcom \
+    init.msm.usb.configfs.rc \
+    init.qti.fm.rc \
+    init.qcom.rc \
+    init.qcom.usb.rc \
+    init.target.rc \
+    ueventd.qcom.rc
 
 # RIL
 PRODUCT_PACKAGES += \
@@ -332,20 +324,7 @@ PRODUCT_BOOT_JARS += \
 
 # TextClassifier
 PRODUCT_PACKAGES += \
-    textclassifier.bundle1 \
-    textclassifier.ar.model \
-    textclassifier.de.model \
-    textclassifier.en.model \
-    textclassifier.es.model \
-    textclassifier.fr.model \
-    textclassifier.it.model \
-    textclassifier.nl.model \
-    textclassifier.pl.model \
-    textclassifier.pt.model \
-    textclassifier.ru.model \
-    textclassifier.tr.model \
-    textclassifier.zh.model \
-    textclassifier.zh-Hant.model
+    textclassifier.bundle1
 
 # Thermal
 PRODUCT_PACKAGES += \
@@ -359,7 +338,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.vibrator@1.0-service
 
-# VNDK-SP
+# VNDK
 PRODUCT_PACKAGES += \
     vndk-sp
 
@@ -389,17 +368,14 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     WallpapersBReel2018
 
-# Wfd
+# WFD
 PRODUCT_PACKAGES += \
     libnl
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
 
-# Xiaomi
-PRODUCT_PACKAGES += \
-    XiaomiParts \
-    XiaomiDoze
-
-# Inherit proprietary files
-$(call inherit-product-if-exists, vendor/xiaomi/markw/markw-vendor.mk)
+# Whitelisted app
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
