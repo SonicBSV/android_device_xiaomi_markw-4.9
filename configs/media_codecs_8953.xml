@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright (C) 2013 The Android Open Source Project
-     Copyright (C) 2015-2019 The Linux Foundation. All rights reserved.
+     Copyright (C) 2015-2017 The Linux Foundation. All rights reserved.
      Not a contribution.
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -122,13 +122,10 @@ Only the three quirks included above are recognized at this point:
 -->
 
 <MediaCodecs>
-    <Include href="media_codecs_google_audio.xml" />
+    <Include href="media_codecs_vendor_audio.xml" />
     <Include href="media_codecs_google_telephony.xml" />
     <Settings>
         <Setting name="max-video-encoder-input-buffers" value="11" />
-    </Settings>
-    <Settings>
-        <Variant name="slow-cpu" enabled="true" />
     </Settings>
     <Encoders>
         <!-- Video Hardware  -->
@@ -396,7 +393,6 @@ Only the three quirks included above are recognized at this point:
             <Limit name="concurrent-instances" max="2" />
             <Limit name="performance-point-1920x1088" value="30" />
         </MediaCodec>
-        <MediaCodec name="OMX.google.opus.decoder" type="audio/opus" update="true" rank="100"/>
     </Decoders>
     <Include href="media_codecs_google_video.xml" />
 </MediaCodecs>
