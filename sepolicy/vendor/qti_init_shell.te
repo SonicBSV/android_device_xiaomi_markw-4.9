@@ -1,0 +1,10 @@
+allow qti_init_shell bluetooth_data_file:file r_file_perms;
+allow qti_init_shell hci_attach_dev:chr_file rw_file_perms;
+allow qti_init_shell proc:file setattr;
+allow qti_init_shell vfat:file { read open getattr };
+allow qti_init_shell sysfs:dir write;
+allow qti_init_shell sysfs:file write;
+allow qti_init_shell sysfs_devices_system_cpu:dir write;
+allow qti_init_shell vfat:dir search;
+allow qti_init_shell sysfs_kgsl:file write;
+allow qti_init_shell proc_dirty_ratio:file { write open };
