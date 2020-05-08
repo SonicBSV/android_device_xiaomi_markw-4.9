@@ -27,6 +27,120 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+target=`getprop ro.board.platform`
+low_ram=`getprop ro.config.low_ram`
+if [ -f /sys/devices/soc0/soc_id ]; then
+    platformid=`cat /sys/devices/soc0/soc_id`
+else
+    platformid=`cat /sys/devices/system/soc/soc0/id`
+fi
+
+start_battery_monitor()
+{
+	if ls /sys/bus/spmi/devices/qpnp-bms-*/fcc_data ; then
+		chown -h root.system /sys/module/pm8921_bms/parameters/*
+		chown -h root.system /sys/module/qpnp_bms/parameters/*
+		chown -h root.system /sys/bus/spmi/devices/qpnp-bms-*/fcc_data
+		chown -h root.system /sys/bus/spmi/devices/qpnp-bms-*/fcc_temp
+		chown -h root.system /sys/bus/spmi/devices/qpnp-bms-*/fcc_chgcyl
+		chmod 0660 /sys/module/qpnp_bms/parameters/*
+		chmod 0660 /sys/module/pm8921_bms/parameters/*
+		mkdir -p /data/bms
+		chown -h root.system /data/bms
+		chmod 0770 /data/bms
+		start battery_monitor
+	fi
+}
+
+start_charger_monitor()
+{
+	if ls /sys/module/qpnp_charger/parameters/charger_monitor; then
+		chown -h root.system /sys/module/qpnp_charger/parameters/*
+		chown -h root.system /sys/class/power_supply/battery/input_current_max
+		chown -h root.system /sys/class/power_supply/battery/input_current_trim
+		chown -h root.system /sys/class/power_supply/battery/input_current_settled
+		chown -h root.system /sys/class/power_supply/battery/voltage_min
+		chmod 0664 /sys/class/power_supply/battery/input_current_max
+		chmod 0664 /sys/class/power_supply/battery/input_current_trim
+		chmod 0664 /sys/class/power_supply/battery/input_current_settled
+		chmod 0664 /sys/class/power_supply/battery/voltage_min
+		chmod 0664 /sys/module/qpnp_charger/parameters/charger_monitor
+		start charger_monitor
+	fi
+}
+
+start_vm_bms()
+{
+	if [ -e /dev/vm_bms ]; then
+		chown -h root.system /sys/class/power_supply/bms/current_now
+		chown -h root.system /sys/class/power_supply/bms/voltage_ocv
+		chmod 0664 /sys/class/power_supply/bms/current_now
+		chmod 0664 /sys/class/power_supply/bms/voltage_ocv
+		start vm_bms
+	fi
+}
+
+start_msm_irqbalance_8939()
+{
+	if [ -f /vendor/bin/msm_irqbalance ]; then
+		case "$platformid" in
+		    "239" | "293" | "294" | "295" | "304" | "338" | "313" | "353" | "354")
+			start vendor.msm_irqbalance;;
+		    "349" | "350" )
+			start vendor.msm_irqbal_lb;;
+		esac
+	fi
+}
+
+# Set shared touchpanel nodes ownership (these are proc_symlinks to the real sysfs nodes)
+chown -LR system.system /proc/touchpanel
+
+baseband=`getprop ro.baseband`
+echo 1 > /proc/sys/net/ipv6/conf/default/accept_ra_defrtr
+
+case "$baseband" in
+        "svlte2a")
+        start bridgemgrd
+        ;;
+esac
+
+case "$target" in
+
+    "msm8953")
+	start_msm_irqbalance_8939
+        if [ -f /sys/devices/soc0/soc_id ]; then
+            soc_id=`cat /sys/devices/soc0/soc_id`
+        else
+            soc_id=`cat /sys/devices/system/soc/soc0/id`
+        fi
+
+        if [ -f /sys/devices/soc0/hw_platform ]; then
+             hw_platform=`cat /sys/devices/soc0/hw_platform`
+        else
+             hw_platform=`cat /sys/devices/system/soc/soc0/hw_platform`
+        fi
+             product_device=`getprop ro.product.device`
+        case "$soc_id" in
+             "293" | "304" | "338" | "351" | "349" | "350" )
+                  case "$hw_platform" in
+                       "Surf")
+                                    setprop qemu.hw.mainkeys 1
+                                    ;;
+                       "MTP")
+                                    setprop qemu.hw.mainkeys 1
+                                    ;;
+                       "RCM")
+                                    setprop qemu.hw.mainkeys 1
+                                    ;;
+                  esac
+                  ;;
+       esac
+        ;;
+esac
+
+# Set shared touchpanel nodes ownership (these are proc_symlinks to the real sysfs nodes)
+chown -LR system.system /proc/gesture/onoff
+
 #
 # Make modem config folder and copy firmware config to that folder for RIL
 #
