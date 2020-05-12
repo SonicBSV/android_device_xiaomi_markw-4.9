@@ -131,7 +131,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
     $(LOCAL_PATH)/audio/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
-    $(LOCAL_PATH)/audio/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio/audio_policy_configuration.xml \
     $(LOCAL_PATH)/audio/audio_tuning_mixer.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer.txt \
     $(LOCAL_PATH)/audio/mixer_paths_mtp.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_mtp.xml \
     $(LOCAL_PATH)/audio/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
@@ -158,7 +157,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.vendor.audio.fluence.voicecall=true \
     persist.vendor.audio.fluence.voicerec=false \
     persist.vendor.audio.hw.binder.size_kbyte=1024 \
-    persist.vendor.btstack.enable.splita2dp=false \
     persist.vendor.audio.speaker.prot.enable=false \
     ro.vendor.audio.sdk.fluencetype=fluence \
     ro.vendor.audio.sdk.ssr=false \
@@ -172,7 +170,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.offload.multiple.enabled=false \
     vendor.audio.offload.passthrough=false \
     vendor.audio.offload.track.enable=false \
-    vendor.audio.dolby.ds2.enabled=false \
+    vendor.audio.dolby.ds2.enabled=true \
     vendor.audio.dolby.ds2.hardbypass=false \
     vendor.audio.parser.ip.buffer.size=262144 \
     vendor.audio.playback.mch.downsample=true \
@@ -202,6 +200,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.qcom.bluetooth.soc=pronto \
     bluetooth.hfp.client=1 \
+    persist.vendor.btstack.enable.splita2dp=false \
     persist.vendor.qcom.bluetooth.enable.splita2dp=false \
     persist.vendor.btstack.enable.splita2dp=false \
     ro.vendor.bluetooth.wipower=false
@@ -229,9 +228,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.camera.hal1.packagelist2=com.facebook.katana,com.instagram.android,com.snapchat.android \
     camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
     camera.hal1.packagelist2=com.facebook.katana,com.instagram.android,com.snapchat.android \
+    vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera \
+    vendor.camera.aux.packagelist2=com.android.systemui \
     camera.lowpower.record.enable=1 \
     media.camera.ts.monotonic=1 \
-    persist.camera.gyro.disable=0 \
     persist.camera.isp.clock.optmz=0 \
     persist.camera.stats.test=5 \
     persist.vendor.qti.telephony.vt_cam_interface=1 \
@@ -357,7 +357,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     debug.gralloc.enable_fb_ubwc=1 \
     debug.sf.recomputecrop=0 \
     sdm.debug.disable_skip_validate=1 \
-    vendor.display.enable_default_color_mode=1 \
+    vendor.display.enable_default_color_mode=0 \
     vendor.gralloc.enable_fb_ubwc=1 \
     vendor.display.disable_skip_validate=1
 
@@ -472,6 +472,7 @@ PRODUCT_COPY_FILES += \
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+    $(LOCAL_PATH)/configs/media_codecs_dolby_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_dolby_audio.xml \
     $(LOCAL_PATH)/configs/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml \
     $(LOCAL_PATH)/configs/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
     $(LOCAL_PATH)/configs/media_codecs_vendor_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_vendor_audio.xml \
@@ -532,10 +533,18 @@ PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
     persist.vendor.qcomsysd.enabled=1 \
     ro.ct.device.model=XMP-2016060 \
+    ro.config.safe_vol_default=8 \
+    ro.config.alarm_vol_default=3 \
+    ro.product.band=Redmi \
     persist.debug.coresight.config=stm-events \
     persist.console.silent.config=1 \
     ro.vendor.qti.am.reschedule_service=true \
     ro.cutoff_voltage_mv=3400 \
+    persist.fuse_sdcard=true \
+    persist.mm.sta.enable=0 \
+    ro.vendor.qti.sys.fw.bservice_enable=true \
+    ro.vendor.qti.sys.fw.bservice_limit=5 \
+    ro.vendor.qti.sys.fw.bservice_age=5000 \
     ro.emmc_size=16GB
 
 # Netmgrd
@@ -595,6 +604,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml 
 
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.extension_library=libqti-perfd-client.so \
     ro.sys.fw.dex2oat_thread_count=4 \
     ro.vendor.gt_library=libqti-gt.so \
     ro.vendor.at_library=libqti-at.so \
@@ -658,8 +668,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
     ro.telephony.call_ring.multiple=false \
     ro.telephony.default_network=20,20 \
-    vendor.service.qti.ims.enabled=1 \
-    telephony.lteOnCdmaDevice=1
+    telephony.lteOnCdmaDevice=1 \
+    ro.com.android.dataroaming=false \
+    vendor.service.qti.ims.enabled=1
 
 # QMI
 PRODUCT_PACKAGES += \
@@ -668,10 +679,6 @@ PRODUCT_PACKAGES += \
     libqti_vndfwk_detect.vendor \
     libvndfwk_detect_jni.qti.vendor \
     libjson
-
-# SdcardFs
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sys.sdcardfs=true
 
 # Seccomp policy
 PRODUCT_COPY_FILES += \

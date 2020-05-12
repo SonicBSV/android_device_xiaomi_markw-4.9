@@ -1,6 +1,9 @@
 # Block devices
 /dev/block/mmcblk0p26				u:object_r:persist_block_device:s0
 
+# Dolby
+/(vendor|system/vendor)/bin/hw/vendor\.dolby\.hardware\.dms@1\.0-service                     u:object_r:hal_dms_default_exec:s0
+
 # Fpc Fingerprint
 /data/fpc(/.*)?					u:object_r:fpc_data_file:s0
 /dev/socket/fpce(/.*)?				u:object_r:fpce_socket:s0

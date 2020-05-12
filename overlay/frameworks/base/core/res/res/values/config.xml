@@ -573,7 +573,7 @@
     <!-- Package name providing fused location support. Used only when
          config_enableFusedLocationOverlay is false. -->
     <string name="config_fusedLocationProviderPackageName" translatable="false">com.android.location.fused</string>
-    
+       
     <!-- Allow automatic adjusting of the screen brightness while dozing in low power state. -->
     <bool name="config_allowAutoBrightnessWhileDozing">true</bool>
     
@@ -583,5 +583,58 @@
          Otherwise, the device may fail to wake out of suspend reliably.
          The default is false. -->
     <bool name="config_suspendWhenScreenOffDueToProximity">true</bool>
+
+    <!-- True if the firmware supports Wi-Fi link probing -->
+    <bool name="config_wifi_link_probing_supported">true</bool>
+
+	<!-- Boolean indicating whether 802.11r Fast BSS Transition is enabled on this platform -->
+    <bool translatable="false" name="config_wifi_fast_bss_transition_enabled">true</bool>  
+
+    <!-- Boolean indicating whether or not to revert to default country code when cellular
+    radio is unable to find any MCC information to infer wifi country code from -->
+    <bool translatable="false" name="config_wifi_revert_country_code_on_cellular_loss">false</bool>  
+
+    <!-- Whether to artificially interpret all signal strengths as
+         one bar higher than they actually are -->
+    <bool name="config_inflateSignalStrength">true</bool>
+
+    <!-- Flashlight on power button -->
+    <integer name="config_flashlightProximityTimeout">-1</integer>
+
+    <!-- Whether device has dash charging support -->
+    <bool name="config_hasDashCharger">true</bool>
+
+    <!-- Specifies whether to decouple the auto-suspend state of the device from the display on/off state. -->
+    <bool name="config_powerDecoupleAutoSuspendModeFromDisplay">true</bool>
+
+    <!-- IWLAN data service package name to bind to by default. If none is specified in an overlay, an
+         empty string is passed in -->
+    <string name="config_wlan_data_service_package">vendor.qti.iwlan</string>
+
+    <!-- IWLAN network service package name to bind to by default. If none is specified in an overlay, an
+         empty string is passed in -->
+    <string name="config_wlan_network_service_package">vendor.qti.iwlan</string>
+
+    <!-- Telephony qualified networks service package name to bind to by default. -->
+    <string name="config_qualified_networks_service_package">vendor.qti.iwlan</string>
+
+    <!-- Enable dual LTE capability support-->
+    <bool name="config_dual_LTE_capability">true</bool>
+
+    <!-- Indicate whether closing the lid causes the device to go to sleep and opening
+         it causes the device to wake up.
+         The default is false. -->
+    <bool name="config_lidControlsSleep">false</bool>
+
+    <!-- True if the device supports Sustained Performance Mode-->
+     <bool name="config_sustainedPerformanceModeSupported">false</bool>
+
+    <!-- Whether the Unprocessed audio source supports the required frequency range and level -->
+    <bool name="config_supportAudioSourceUnprocessed">true</bool>
+
+    <!-- The list of components which should be automatically disabled for a specific device. -->
+    <string-array name="config_deviceDisabledComponents" translatable="false">
+        <item>com.google.android.gms/com.google.android.gms.nearby.messages.service.NearbyMessagesService</item>
+    </string-array>
 
 </resources>
