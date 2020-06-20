@@ -128,9 +128,9 @@ Only the three quirks included above are recognized at this point:
     <Settings>
         <Setting name="max-video-encoder-input-buffers" value="11" />
     </Settings>
-    <Settings>
+    <!-- Settings>
         <Variant name="slow-cpu" enabled="true" />
-    </Settings>
+    </Settings -->
     <Encoders>
         <!-- Video Hardware  -->
         <MediaCodec name="OMX.qcom.video.encoder.hevc" type="video/hevc" >
@@ -399,5 +399,4 @@ Only the three quirks included above are recognized at this point:
         </MediaCodec>
     </Decoders>
     <Include href="media_codecs_google_video.xml" />
-    <Include href="media_codecs_dolby_audio.xml" />
 </MediaCodecs>

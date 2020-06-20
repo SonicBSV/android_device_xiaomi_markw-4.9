@@ -160,14 +160,6 @@
         </interface>
     </hal>
     <hal format="hidl" optional="true">
-        <name>vendor.dolby.hardware.dms</name>
-        <version>1.0</version>
-        <interface>
-            <name>IDms</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
-    <hal format="hidl" optional="true">
         <name>vendor.qti.esepowermanager</name>
         <version>1.0</version>
         <interface>
@@ -217,14 +209,14 @@
             <instance>default</instance>
         </interface>
     </hal>
-    <hal format="hidl" optional="true">
+    <!-- <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.btconfigstore</name>
         <version>1.0</version>
         <interface>
             <name>IBTConfigStore</name>
             <instance>default</instance>
         </interface>
-    </hal>
+    </hal> -->
     <hal format="hidl" optional="true">
         <name>vendor.qti.hardware.cacert</name>
         <version>1.0</version>

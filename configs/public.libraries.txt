@@ -7,3 +7,5 @@ liblistenjni.so
 liblistensoundmodel2.so
 libOpenCL.so
 libnpu.so
+libhta_hexagon_runtime.so
+unnhal-acc-hta.so

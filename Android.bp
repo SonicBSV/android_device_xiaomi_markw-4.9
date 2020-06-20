@@ -20,7 +20,6 @@ subdirs = [
     "light",
     "consumerir",
     "power",
-    "wifi_offload",
 ]
 
 hidl_package_root {
