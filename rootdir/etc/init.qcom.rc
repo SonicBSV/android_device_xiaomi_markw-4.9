@@ -135,6 +135,12 @@ on boot
     chown bluetooth net_bt /sys/class/rfkill/rfkill0/device/extldo
     chmod 0660 /sys/class/rfkill/rfkill0/device/extldo
 
+    # Audio gain permissions
+    chown system system /sys/kernel/sound_control/headphone_gain
+    chown system system /sys/kernel/sound_control/mic_gain
+    chmod 0660 /sys/kernel/sound_control/headphone_gain
+    chmod 0660 /sys/kernel/sound_control/mic_gain
+
     # Vibrator permissions
     chown root system /sys/devices/virtual/timed_output/vibrator/vtg_level
     chmod 0660 /sys/devices/virtual/timed_output/vibrator/vtg_level
@@ -434,8 +440,8 @@ on post-fs-data
     #Make MTU adjusting to D1S
     write /proc/sys/net/ipv4/tcp_mtu_probing 1
 
-on property:hw.fm.init=*
-    write /sys/module/radio_iris_transport/parameters/fmsmd_set ${hw.fm.init}
+on property:vendor.hw.fm.init=*
+    write /sys/module/radio_iris_transport/parameters/fmsmd_set ${vendor.hw.fm.init}
 
 service vendor.ssr_setup /system/vendor/bin/ssr_setup
     oneshot
@@ -719,6 +725,7 @@ service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /system/vendor/etc/m
     disabled
 
 on charger
+    setprop persist.sys.usb.config mass_storage
     load_system_props
     start qcom-post-boot
 

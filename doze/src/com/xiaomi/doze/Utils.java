@@ -15,15 +15,16 @@
  * limitations under the License.
  */
 
-package com.arrowos.settings.doze;
+package com.xiaomi.doze;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.UserHandle;
-import android.support.v7.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
+
+import androidx.preference.PreferenceManager;
 
 import static android.provider.Settings.Secure.DOZE_ENABLED;
 

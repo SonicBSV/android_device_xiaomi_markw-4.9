@@ -21,8 +21,3 @@ subdirs = [
     "consumerir",
     "power",
 ]
-
-hidl_package_root {
-    name: "vendor.lineage",
-    path: "device/xiaomi/markw",
-}

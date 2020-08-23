@@ -85,9 +85,9 @@ service qcamerasvr /system/vendor/bin/mm-qcamera-daemon
     user camera
     group camera system inet input graphics
     setenv LD_PRELOAD "libshim_c.so"
- 
+
 on property:void.decrypt=trigger_restart_framework
-    restart camera-provider-2-4   
+    restart camera-provider-2-4
     
 on init
     write /sys/module/qpnp_rtc/parameters/poweron_alarm 1

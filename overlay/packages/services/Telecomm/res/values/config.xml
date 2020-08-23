@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2014 The Android Open Source Project
+<!-- Copyright (C) 2015 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,15 +14,11 @@
      limitations under the License.
 -->
 
-<!-- Telecomm resources that may need to be customized for different hardware or product
-    builds. -->
+<!-- Telecomm resources that may need to be customized
+     for different hardware or product builds. -->
 <resources>
-    <!-- Determines if the current device should allow emergency numbers to be logged in the
-         call log. Some carriers require that emergency calls *not* be logged, presumably to
-         avoid the risk of accidental redialing from the call log UI.
-         The default is false. -->
-    <bool name="allow_emergency_numbers_in_call_log">true</bool>
 
     <!-- Flag indicating if the tty is enabled -->
     <bool name="tty_enabled">true</bool>
+
 </resources>

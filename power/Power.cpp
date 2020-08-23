@@ -1,6 +1,5 @@
 /*
  * Copyright (c) 2019, The Linux Foundation. All rights reserved.
- * Copyright (C) 2017-2019 The LineageOS Project
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,15 +27,14 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#define LOG_TAG "android.hardware.power@1.2-service-qti"
+#define LOG_TAG "QTI PowerHAL"
 
-// #define LOG_NDEBUG 0
-
+#include <android/log.h>
+#include <utils/Log.h>
 #include "Power.h"
-#include <android-base/file.h>
-#include <log/log.h>
 #include "power-common.h"
-#include "power-feature.h"
+
+#define TAP_TO_WAKE_NODE "/proc/gesture/onoff"
 
 namespace android {
 namespace hardware {
@@ -44,44 +42,76 @@ namespace power {
 namespace V1_2 {
 namespace implementation {
 
-using ::android::hardware::hidl_vec;
-using ::android::hardware::Return;
-using ::android::hardware::Void;
 using ::android::hardware::power::V1_0::Feature;
 using ::android::hardware::power::V1_0::PowerHint;
 using ::android::hardware::power::V1_0::PowerStatePlatformSleepState;
 using ::android::hardware::power::V1_0::Status;
 using ::android::hardware::power::V1_1::PowerStateSubsystem;
+using ::android::hardware::hidl_vec;
+using ::android::hardware::Return;
+using ::android::hardware::Void;
 
 Power::Power() {
     power_init();
 }
 
 Return<void> Power::setInteractive(bool interactive) {
-    set_interactive(interactive ? 1 : 0);
+    set_interactive(interactive ? 1:0);
     return Void();
 }
 
 Return<void> Power::powerHint(PowerHint_1_0 hint, int32_t data) {
+
     power_hint(static_cast<power_hint_t>(hint), data ? (&data) : NULL);
     return Void();
 }
 
-Return<void> Power::setFeature(Feature feature, bool activate) {
-    switch (feature) {
-#ifdef TAP_TO_WAKE_NODE
-        case Feature::POWER_FEATURE_DOUBLE_TAP_TO_WAKE:
-            ::android::base::WriteStringToFile(activate ? "1" : "0", TAP_TO_WAKE_NODE, true);
-            break;
-#endif
-        default:
-            break;
+/*
+ * sysfs_write - Write string to sysfs path
+ *
+ * \param path - Path to the sysfs file
+ * \param s    - String to write
+ * \return Returns success (true) or failure (false)
+ */
+bool sysfs_write(const char *path, const char *s)
+{
+    char buf[80];
+    int len;
+    int fd = open(path, O_WRONLY);
+    bool ret = true;
+
+    if (fd < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        ALOGE("Error opening %s: %s\n", path, buf);
+        return false;
     }
-    set_device_specific_feature(static_cast<feature_t>(feature), activate ? 1 : 0);
+
+    len = write(fd, s, strlen(s));
+    if (len < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        ALOGE("Error writing to %s: %s\n", path, buf);
+
+        ret = false;
+    }
+
+    close(fd);
+
+    return ret;
+}
+
+Return<void> Power::setFeature(Feature feature, bool activate)
+{
+    if (feature == Feature::POWER_FEATURE_DOUBLE_TAP_TO_WAKE) {
+
+			bool NO_OLD;
+            NO_OLD = sysfs_write(TAP_TO_WAKE_NODE, activate ? "1" : "0");
+    }
+
     return Void();
 }
 
 Return<void> Power::getPlatformLowPowerStats(getPlatformLowPowerStats_cb _hidl_cb) {
+
     hidl_vec<PowerStatePlatformSleepState> states;
     states.resize(0);
 
@@ -90,6 +120,7 @@ Return<void> Power::getPlatformLowPowerStats(getPlatformLowPowerStats_cb _hidl_c
 }
 
 Return<void> Power::getSubsystemLowPowerStats(getSubsystemLowPowerStats_cb _hidl_cb) {
+
     hidl_vec<PowerStateSubsystem> subsystems;
 
     _hidl_cb(subsystems, Status::SUCCESS);
@@ -97,41 +128,13 @@ Return<void> Power::getSubsystemLowPowerStats(getSubsystemLowPowerStats_cb _hidl
 }
 
 Return<void> Power::powerHintAsync(PowerHint_1_0 hint, int32_t data) {
+
     return powerHint(hint, data);
 }
 
 Return<void> Power::powerHintAsync_1_2(PowerHint_1_2 hint, int32_t data) {
-    return powerHint(static_cast<PowerHint_1_0>(hint), data);
-}
 
-Return<int32_t> Power::getFeature(LineageFeature feature) {
-    if (feature == LineageFeature::SUPPORTED_PROFILES) {
-        return get_number_of_profiles();
-    }
-    return -1;
-}
-
-status_t Power::registerAsSystemService() {
-    status_t ret = 0;
-
-    ret = IPower::registerAsService();
-    if (ret != 0) {
-        ALOGE("Failed to register IPower (%d)", ret);
-        goto fail;
-    } else {
-        ALOGI("Successfully registered IPower");
-    }
-
-    ret = ILineagePower::registerAsService();
-    if (ret != 0) {
-        ALOGE("Failed to register ILineagePower (%d)", ret);
-        goto fail;
-    } else {
-        ALOGI("Successfully registered ILineagePower");
-    }
-
-fail:
-    return ret;
+    return powerHint(static_cast<PowerHint_1_0> (hint), data);
 }
 
 }  // namespace implementation

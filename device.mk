@@ -68,18 +68,19 @@ PRODUCT_COPY_FILES += \
 
 # whitelisted app
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml \
-    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:system/etc/permissions/privapp-permissions-qti.xml
+    $(LOCAL_PATH)/configs/qti_whitelist.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/qti_whitelist.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions-qti.xml \
+    $(LOCAL_PATH)/configs/privapp-permissions-android.xml:$(TARGET_COPY_OUT_SYSTEM)/product/etc/permissions/privapp-permissions-android.xml
 
 # Additional native libraries
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/public.libraries.txt:$(TARGET_COPY_OUT_VENDOR)/etc/public.libraries.txt
 
 # ADB Debug
-PRODUCT_PROPERTY_OVERRIDES += \
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     persist.logd.logpersistd=logcatd \
     persist.service.adb.enable=1 \
-    persist.sys.usb.config=adb \
+    persist.sys.usb.config=mtp,adb \
     ro.adb.secure=0 \
     ro.secure=0 \
     ro.debuggable=1 
@@ -150,7 +151,9 @@ PRODUCT_COPY_FILES += \
 
 # XML Audio configuration files
 PRODUCT_COPY_FILES += \
+     $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_in_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_in_audio_policy_configuration.xml \
      $(TOPDIR)frameworks/av/services/audiopolicy/config/a2dp_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_audio_policy_configuration.xml \
+     $(TOPDIR)frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration.xml \
      $(TOPDIR)frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
      $(TOPDIR)frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
      $(TOPDIR)frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
@@ -189,7 +192,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.tunnel.encode=false \
     vendor.audio.use.sw.alac.decoder=true \
     vendor.audio.use.sw.ape.decoder=true \
-    vendor.audio_hal.period_size=192 \
+    vendor.audio_hal.period_size=240 \
     vendor.voice.conc.fallbackpath=deep-buffer \
     vendor.voice.path.for.pcm.voip=true \
     vendor.voice.playback.conc.disabled=true \
@@ -210,11 +213,11 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.qcom.bluetooth.soc=pronto \
-    ro.bluetooth.library_name=libbluetooth_qti.so \
     bluetooth.hfp.client=1 \
     persist.vendor.btstack.enable.splita2dp=false \
     persist.vendor.qcom.bluetooth.enable.splita2dp=false \
     persist.vendor.btstack.enable.splita2dp=false \
+    persist.vendor.bluetooth.modem_nv_support=true \
     ro.vendor.bluetooth.wipower=false
 
 # Camera
@@ -231,7 +234,7 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.5 \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
-    camera.device@3.2-impl 
+    camera.device@3.2-impl
 
 PRODUCT_PROPERTY_OVERRIDES += \
     camera.display.lmax=1280x720 \
@@ -281,6 +284,7 @@ PRODUCT_PACKAGES += \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
     android.hardware.renderscript@1.0-impl \
+    vendor.display.config@1.1 \
     gralloc.msm8953 \
     hwcomposer.msm8953 \
     memtrack.msm8953 \
@@ -431,6 +435,12 @@ PRODUCT_PACKAGES += \
     qti_telephony_hidl_wrapper.xml \
     qti-telephony-utils \
     qti_telephony_utils.xml
+    
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.ims.disableADBLogs=1 \
+    persist.ims.disableDebugLogs=1 \
+    persist.ims.disableQXDMLogs=1 \
+    persist.ims.disableIMSLogs=1
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml
@@ -518,7 +528,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     media.settings.xml=/vendor/etc/media_profiles_vendor.xml \
     av.debug.disable.pers.cache=1 \
     ro.config.media_vol_default=10 \
-    vendor.mm.enable.qcom_parser=1048575 \
+    vendor.mm.enable.qcom_parser=37748735 \
     debug.stagefright.omx_default_rank.sw-audio=1 \
     debug.stagefright.omx_default_rank=0 \
     vendor.vidc.enc.disable_bframes=1 \
@@ -640,7 +650,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.2-service-qti \
+    android.hardware.power@1.2-service.markw \
     android.hardware.power.stats@1.0-service.mock
     
 PRODUCT_COPY_FILES += \

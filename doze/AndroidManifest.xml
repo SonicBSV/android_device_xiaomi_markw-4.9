@@ -16,7 +16,7 @@
      limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.arrowos.settings.doze"
+    package="com.xiaomi.doze"
     android:versionCode="1"
     android:versionName="1.0"
     android:sharedUserId="android.uid.system">
@@ -28,7 +28,7 @@
 
     <uses-sdk
         android:minSdkVersion="24"
-        android:targetSdkVersion="29"/>
+        android:targetSdkVersion="24" />
 
     <application
         android:label="@string/device_settings_app_name"
@@ -49,10 +49,6 @@
             android:name=".DozeSettingsActivity"
             android:label="@string/ambient_display_title"
             android:theme="@style/Theme.Main">
-            <intent-filter>
-                <action android:name="org.lineageos.settings.device.DOZE_SETTINGS" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
     </application>

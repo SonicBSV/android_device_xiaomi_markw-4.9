@@ -1,5 +1,4 @@
-/*
- * Copyright (c) 2019, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2016, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -25,57 +24,25 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
  */
 
-#define LOG_TAG "android.hardware.power@1.2-service.markw"
+#ifndef __POWERHINTPARSER__
+#define __POWERHINTPARSER__
 
-#include <android/log.h>
-#include <hidl/HidlTransportSupport.h>
-#include <hardware/power.h>
-#include "Power.h"
+#define POWERHINT_XML      "/vendor/etc/powerhint.xml"
+#define MAX_HINT 6
+#define MAX_PARAM 30
 
-using android::sp;
-using android::status_t;
-using android::OK;
+typedef struct perflock_param_t {
+    int type;
+    int numParams;
+    int paramList[MAX_PARAM];//static limit on number of hints - 15
+}perflock_param_t;
 
-// libhwbinder:
-using android::hardware::configureRpcThreadpool;
-using android::hardware::joinRpcThreadpool;
+static perflock_param_t powerhint[MAX_HINT];
 
-// Generated HIDL files
-using android::hardware::power::V1_2::IPower;
-using android::hardware::power::V1_2::implementation::Power;
+int parsePowerhintXML();
+int *getPowerhint(int, int*);
 
-int main() {
-
-    status_t status;
-    android::sp<IPower> service = nullptr;
-
-    ALOGI("Power HAL Service markw 1.2 is starting.");
-
-    service = new Power();
-    if (service == nullptr) {
-        ALOGE("Can not create an instance of Power HAL interface.");
-
-        goto shutdown;
-    }
-
-    configureRpcThreadpool(1, true /*callerWillJoin*/);
-
-    status = service->registerAsService();
-    if (status != OK) {
-        ALOGE("Could not register service for Power HAL(%d).", status);
-        goto shutdown;
-    }
-
-    ALOGI("Power Service is ready");
-    joinRpcThreadpool();
-    //Should not pass this line
-
-shutdown:
-    // In normal operation, we don't expect the thread pool to exit
-
-    ALOGE("Power Service is shutting down");
-    return 1;
-}
-
+#endif /* __POWERHINTPARSER__ */

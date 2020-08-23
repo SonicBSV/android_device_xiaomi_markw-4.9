@@ -200,9 +200,7 @@ BOARD_ROOT_EXTRA_SYMLINKS := \
 TARGET_PER_MGR_ENABLED := true
 
 # Power
-TARGET_TAP_TO_WAKE_NODE := "/proc/gesture/onoff"
-TARGET_HAS_LEGACY_POWER_STATS := true
-TARGET_HAS_NO_WLAN_STATS := true
+TARGET_USES_INTERACTION_BOOST := true
 
 # RIL
 TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
@@ -217,10 +215,10 @@ TARGET_USE_SDCLANG := true
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.recovery.qcom
 
 # SELinux
-include device/qcom/sepolicy-legacy-um/sepolicy.mk
+include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_VERS := 29.0
+BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
-BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 SELINUX_IGNORE_NEVERALLOWS := true
 
 # Telephony
