@@ -33,5 +33,9 @@
     
     <privapp-permissions package="com.google.android.apps.turbo">
         <permission name="android.permission.DUMP"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.android.permissioncontroller">
+        <permission name="android.permission.CLEAR_APP_CACHE"/>
     </privapp-permissions> 
 </permissions>
