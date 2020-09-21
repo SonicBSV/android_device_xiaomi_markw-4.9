@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.arrowos.settings.doze;
+package com.xiaomi.doze;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

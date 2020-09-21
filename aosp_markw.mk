@@ -5,6 +5,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
 
 # Inherit from markw device
 TARGET_GAPPS_ARCH := arm64
+IS_PHONE := true
 $(call inherit-product, vendor/aosp/config/common_full_phone.mk)
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
 

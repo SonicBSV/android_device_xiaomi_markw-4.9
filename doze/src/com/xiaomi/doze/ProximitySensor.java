@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.arrowos.settings.doze;
+package com.xiaomi.doze;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -50,7 +50,7 @@ public class ProximitySensor implements SensorEventListener {
     public ProximitySensor(Context context) {
         mContext = context;
         mSensorManager = mContext.getSystemService(SensorManager.class);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
+        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY, false);
         mExecutorService = Executors.newSingleThreadExecutor();
     }
 

@@ -11,12 +11,21 @@
      limitations under the License.
 -->
 
-<resources>
-    <!-- Defines the location of the fingerprint sensor on the device
-         0 = back
-         1 = front
-         2 = left side
-         3 = right side
-    -->
-    <integer name="config_fingerprintSensorLocation">0</integer>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+  <!-- Device specific doze package -->
+  <string name="config_customDozePackage">com.xiaomi.doze/com.xiaomi.doze.DozeSettingsActivity</string>
+
+  <!-- Defines the location of the fingerprint sensor on the device
+       0 = back
+       1 = front
+       2 = left side
+       3 = right side
+  -->
+  <integer name="config_fingerprintSensorLocation">0</integer>
+
+  <!-- Battery Health -->
+  <string name="config_batDesCap">/sys/class/power_supply/bms/charge_full</string>
+  <string name="config_batCurCap">/sys/class/power_supply/bms/charge_now_raw</string>
+  <string name="config_batChargeCycle">/sys/class/power_supply/bms/cycle_count</string>
+
 </resources>
