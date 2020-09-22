@@ -1,0 +1,1 @@
+allow mediadrmserver mediadrmserver_service:service_manager add;

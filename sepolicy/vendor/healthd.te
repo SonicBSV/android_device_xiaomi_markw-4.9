@@ -1,0 +1,1 @@
+allow healthd sysfs:file { read open getattr };

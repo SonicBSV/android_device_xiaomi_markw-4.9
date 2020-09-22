@@ -1,0 +1,6 @@
+allow untrusted_app_25 proc_stat:file { getattr open read };
+allow untrusted_app_25 proc_zoneinfo:file { getattr open read };
+
+allow untrusted_app_25 sysfs_graphics:file { getattr open read };
+allow untrusted_app_25 sysfs_kgsl:file { getattr open read };
+allow untrusted_app_25 sysfs_vadc_dev:dir search;

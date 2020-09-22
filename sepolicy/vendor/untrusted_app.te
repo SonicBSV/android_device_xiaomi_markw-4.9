@@ -1,0 +1,6 @@
+allow untrusted_app keylayout_file:dir search;
+get_prop(untrusted_app, camera_prop);
+get_prop(untrusted_app_25, camera_prop);
+
+allow untrusted_app overlay_service:service_manager find;
+allow untrusted_app proc_stat:file { getattr open read };
