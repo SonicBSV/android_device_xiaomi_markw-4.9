@@ -5,6 +5,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
 
 # Inherit from markw device
 IS_PHONE := true
+TARGET_FACE_UNLOCK_SUPPORTED := true
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
 
