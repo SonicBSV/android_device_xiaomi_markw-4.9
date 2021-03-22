@@ -93,11 +93,11 @@ if [ "$(getprop persist.vendor.usb.config)" == "" -a \
 			    fi
 		      ;;
 	              "msm8953")
-                          build_type=`getprop ro.build.type`
-                          if [ "$build_type" == "userdebug" ]; then
-                              setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
-                          fi
-		          #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
+                              if [ "$(getprop ro.build.type)" = "user" -a $(getprop ro.debuggable) == "0" ] ; then
+                                 setprop persist.vendor.usb.config none
+                              else
+                                 setprop persist.vendor.usb.config adb
+			      fi
 		      ;;
 	              "msm8998" | "sdm660" | "apq8098_latv")
 		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
@@ -183,7 +183,13 @@ if [ "$diag_extra" == "" ]; then
 fi
 
 # enable rps cpus on msm8937 target
-setprop vendor.usb.rps_mask 0
+provider_test=`getprop ro.cust.test`
+if [ "$provider_test" == "ct" ]; then
+	setprop vendor.usb.rps_mask 10
+else
+	setprop vendor.usb.rps_mask 0
+fi
+
 case "$soc_id" in
 	"294" | "295" | "353" | "354")
 		setprop vendor.usb.rps_mask 40

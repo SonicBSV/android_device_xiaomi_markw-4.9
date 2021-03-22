@@ -2068,9 +2068,6 @@ case "$target" in
             echo 1 > /sys/devices/system/cpu/cpu6/online
             echo 1 > /sys/devices/system/cpu/cpu7/online
 
-            # Enable headphones & microphone gain
-            echo '15 15 4294967265' > /sys/kernel/sound_control/headphone_gain
-
             # Enable low power modes
             echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
 
