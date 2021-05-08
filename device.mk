@@ -16,6 +16,7 @@
 
 $(call inherit-product, vendor/xiaomi/markw/markw-vendor.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
+$(call inherit-product, vendor/xiaomi/markw/google/google.mk)
 
 TARGET_BOARD_PLATFORM := msm8953
 TARGET_BOARD_SUFFIX := _64
@@ -106,7 +107,6 @@ PRODUCT_PACKAGES += \
     android.hardware.audio.effect@7.0-impl:32 \
     android.hardware.audio.service \
     android.hardware.bluetooth.audio-impl:32 \
-    android.hardware.soundtrigger@2.1-impl:32 \
     audio.bluetooth.default \
     audio.primary.msm8953:32 \
     audio.r_submix.default \
