@@ -8,7 +8,6 @@
     <!-- Category Title -->
     <string name="display_title">Display</string>
     <string name="vibration_title">Vibration Controller</string>
-    <string name="torch_title">Torch</string>
     <string name="audio_title">Audio</string>
 
     <!-- Audio amplification -->

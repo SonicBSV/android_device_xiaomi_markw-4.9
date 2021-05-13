@@ -37,6 +37,9 @@ VNDK_SP_LIBRARIES := \
     libutilscallstack
 
 EXTRA_VENDOR_LIBRARIES := \
+    libstagefright_softomx \
+    libstagefright_omx \
+    android.hidl.base@1.0 \
     libqti_vndfwk_detect \
     libvndfwk_detect_jni.qti \
     libbinder \
