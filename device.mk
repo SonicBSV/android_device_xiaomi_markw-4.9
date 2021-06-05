@@ -136,7 +136,6 @@ PRODUCT_PACKAGES += \
     audio.r_submix.default \
     audio.usb.default \
     audio.primary.msm8953 \
-    audio_amplifier.msm8953 \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
@@ -158,7 +157,8 @@ PRODUCT_PACKAGES += \
     libexthwplugin \
     libssrec \
     libbatterylistener
-    
+
+#    audio_amplifier.msm8953 \    
 
 # Audio mixer
 PRODUCT_COPY_FILES += \
@@ -351,6 +351,7 @@ PRODUCT_PACKAGES += \
     libgenlock
 
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sf.lcd_density=440 \
     ro.hardware.vulkan=adreno \
     ro.hardware.egl=adreno \
     ro.opengles.version=196610 \
@@ -489,7 +490,7 @@ PRODUCT_PACKAGES += \
 
 # Keylayout
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keylayout/ft5x06_ts.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/ft5x06_ts.kl \
+    $(LOCAL_PATH)/keylayout/fts_ts.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/fts_ts.kl \
     $(LOCAL_PATH)/keylayout/gf3208.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gf3208.kl \
     $(LOCAL_PATH)/keylayout/msm8953-snd-card-mtp_Button_Jack.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/msm8953-snd-card-mtp_Button_Jack.kl \
     $(LOCAL_PATH)/keylayout/uinput-fpc.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/uinput-fpc.kl 
@@ -767,8 +768,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Vibrator
 PRODUCT_PACKAGES += \
-    android.hardware.vibrator@1.0-impl \
-    android.hardware.vibrator@1.0-service
+    vendor.qti.hardware.vibrator.service
 
 # VNDK
 PRODUCT_PACKAGES += \
