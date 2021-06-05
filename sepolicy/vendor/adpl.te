@@ -1,0 +1,10 @@
+init_daemon_domain(adpl)
+
+set_prop(adpl, ctl_stop_prop)
+
+allow adpl self:qipcrtr_socket create_socket_perms_no_ioctl;
+allow adpl adpl_dpm_uds_socket:sock_file write;
+
+r_dir_file(adpl, sysfs_esoc)
+r_dir_file(adpl, sysfs_msm_subsys)
+r_dir_file(adpl, sysfs_soc)

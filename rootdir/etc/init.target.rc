@@ -92,7 +92,7 @@ service qcamerasvr /system/vendor/bin/mm-qcamera-daemon
     class late_start
     user camera
     group camera system inet input graphics
-    setenv LD_PRELOAD "libshim_c.so"
+    setenv LD_PRELOAD "libshims_camera.so"
 
 on property:void.decrypt=trigger_restart_framework
     restart camera-provider-2-4
@@ -146,13 +146,11 @@ on boot
     chown system system /mnt/vendor/persist/WCNSS_qcom_wlan_nv.bin
 
 #USB controller configuration
-    write /sys/module/g_android/parameters/mtp_tx_req_len 131072
-    write /sys/module/g_android/parameters/mtp_rx_req_len 131072
-    write /sys/class/android_usb/android0/f_rndis_qc/rndis_transports BAM2BAM_IPA
-    setprop vendor.usb.rndis.func.name "rndis_bam"
+    setprop vendor.usb.rndis.func.name "rndis"
     setprop vendor.usb.rmnet.func.name "rmnet_bam"
-    setprop vendor.usb.rmnet.inst.name "rmnet"
-    setprop vendor.usb.dpl.inst.name "dpl"
+    setprop vendor.usb.rmnet.inst.name "rmnet_bam_dmux"
+    setprop vendor.usb.dpl.inst.name "dpl_bam_dmux"
+    setprop vendor.usb.qdss.inst.name "qdss"
 
 service wcnss-service /system/vendor/bin/wcnss_service
     class main

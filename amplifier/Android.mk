@@ -9,6 +9,7 @@ LOCAL_C_INCLUDES += \
 	external/tinyalsa/include \
 	external/tinycompress/include \
 	system/media/audio_route/include \
+	system/media/audio_utils/include \
 
 LOCAL_CFLAGS := -Wno-unused-parameter
 LOCAL_HEADER_LIBRARIES := generated_kernel_headers

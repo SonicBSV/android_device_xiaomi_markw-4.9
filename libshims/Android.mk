@@ -21,41 +21,11 @@ LOCAL_SRC_FILES := \
     bionic/bionic_time_conversions.cpp \
     bionic/pthread_cond.cpp
 LOCAL_SHARED_LIBRARIES := libc
-LOCAL_MODULE := libshim_c
+LOCAL_MODULE := libshims_camera
 LOCAL_VENDOR_MODULE := true
 LOCAL_CXX_STL := none
 LOCAL_SANITIZE := never
 LOCAL_MODULE_TAGS := optional
 LOCAL_32_BIT_ONLY := true
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-include $(BUILD_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_SRC_FILES := \
-    android/looper.cpp \
-    android/sensor.cpp
-LOCAL_SHARED_LIBRARIES := libutils
-LOCAL_MODULE := libshim_android
-LOCAL_VENDOR_MODULE := true
-LOCAL_MODULE_TAGS := optional
-LOCAL_32_BIT_ONLY := true
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-include $(BUILD_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_SRC_FILES := \
-    binder/PermissionCache.cpp
-LOCAL_MODULE := libshim_binder
-LOCAL_MODULE_TAGS := optional
-LOCAL_MULTILIB := 64
-LOCAL_MODULE_PATH_64 := $(TARGET_OUT_VENDOR)/lib64
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-include $(BUILD_SHARED_LIBRARY)
-
-include $(CLEAR_VARS)
-LOCAL_SHARED_LIBRARIES := libgui_vendor
-LOCAL_MODULE := libwui
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_VENDOR_MODULE := true
 include $(BUILD_SHARED_LIBRARY)
