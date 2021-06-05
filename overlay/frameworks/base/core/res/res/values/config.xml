@@ -375,6 +375,9 @@
     <!-- Boolean indicating whether the wifi chipset has background scan support -->
     <bool translatable="false" name="config_wifi_background_scan_support">true</bool>
 
+    <!-- Wifi driver supports batched scan -->
+    <bool translatable="false" name="config_wifi_batched_scan_supported">true</bool>
+
     <!-- When true use the linux /dev/input/event subsystem to detect the switch changes
          on the headphone/microphone jack. When false use the older uevent framework. -->
     <bool name="config_useDevInputEventForAudioJack">true</bool>
@@ -539,30 +542,6 @@
     <!--  Define Google play service package for FRP-->
     <string name="config_persistentDataPackageName" translatable="false">com.google.android.gms</string>
 
-    <!-- List of files pinned by the Pinner Service with the apex boot image -->
-    <string-array name="config_apexBootImagePinnerServiceFiles">
-        <item>/system/framework/framework.jar</item>
-        <item>/system/framework/services.jar</item>
-        <item>/system/framework/arm64/apex.oat</item>
-        <item>/system/framework/arm64/apex-core-libart.oat</item>
-        <item>/apex/com.android.runtime/javalib/core-oj.jar</item>
-        <item>/apex/com.android.runtime/javalib/core-libart.jar</item>
-        <item>/apex/com.android.media/javalib/updatable-media.jar</item>
-    </string-array>
-
-    <!-- Default list of files pinned by the Pinner Service -->
-    <string-array name="config_defaultPinnerServiceFiles">
-        <item>/system/framework/arm64/boot-framework.oat</item>
-        <item>/system/framework/framework.jar</item>
-        <item>/system/framework/oat/arm64/services.odex</item>
-        <item>/system/framework/services.jar</item>
-        <item>/system/framework/arm64/boot.oat</item>
-        <item>/system/framework/arm64/boot-core-libart.oat</item>
-        <item>/apex/com.android.runtime/javalib/core-oj.jar</item>
-        <item>/apex/com.android.runtime/javalib/core-libart.jar</item>
-        <item>/apex/com.android.media/javalib/updatable-media.jar</item>
-    </string-array>
-
     <!-- Keep chosen default camera app pinned in memory for faster launching -->
     <bool name="config_pinnerCameraApp">true</bool>
 
@@ -589,6 +568,12 @@
          Otherwise, the device may fail to wake out of suspend reliably.
          The default is false. -->
     <bool name="config_suspendWhenScreenOffDueToProximity">true</bool>
+
+    <!-- True if the firmware supports connected MAC randomization -->
+    <bool name="config_wifi_connected_mac_randomization_supported">true</bool>
+
+    <!-- True if the firmware supports Wi-Fi link probing -->
+    <bool name="config_wifi_link_probing_supported">true</bool>
 
     <!-- Whether to artificially interpret all signal strengths as
          one bar higher than they actually are -->
@@ -649,12 +634,26 @@
 
     <!-- Whether or not to use intelligent profiles -->
     <bool name="config_intelligent_performance_profile">true</bool>
-    
-    <!-- Whether notify fingerprint client of successful cancelled authentication -->
-    <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool>
+
+    <!-- Initially set all to balanced with persist.spectrum.profile=0
+    For example if you want to change performance profile from balanced to performance (in my case performance profile is persist.spectrum.profile=1 )
+    then set <string name="config_performance_profile" translatable="false">1</string>, override these config via device tree.
+    -->
+    <string name="config_balanced_profile" translatable="false">0</string>
+    <string name="config_performance_profile" translatable="false">1</string>
+    <string name="config_powersave_profile" translatable="false">2</string>
+    <string name="config_screen_off_profile" translatable="false">2</string>
 
     <!-- Wired/BT headset focus mode -->
     <bool name="config_deviceRingtoneFocusMode">true</bool>
+
+    <!-- The component name for the default system attention service.
+         This service must be trusted, as it can be activated without explicit consent of the user.
+         See android.attention.AttentionManagerService -->
+    <string name="config_defaultAttentionService" translatable="false">com.google.android.as</string>
+    
+    <!-- Whether notify fingerprint client of successful cancelled authentication -->
+    <bool name="config_notifyClientOnFingerprintCancelSuccess">true</bool>
 
     <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
     <bool name="config_cleanupUnusedFingerprints">false</bool>
@@ -676,6 +675,12 @@
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">true</bool>
 
+    <!-- The list of vendor package signatures that should also be considered
+         platform signatures, specifically for use on devices with a vendor partition. -->
+    <string-array name="config_vendorPlatformSignatures">
+        <item>308203e5308202cda003020102020900ca7f2ef3e2f1842e300d06092a864886f70d0101050500308188310b300906035504061302434e3112301006035504080c094775616e67646f6e673111300f06035504070c085368656e7a68656e3110300e060355040a0c074f6e65506c7573310b3009060355040b0c0253573110300e06035504030c074f6e65506c75733121301f06092a864886f70d01090116126f6e65706c7573406f6e65706c75732e636e301e170d3135303530373037323332335a170d3432303932323037323332335a308188310b300906035504061302434e3112301006035504080c094775616e67646f6e673111300f06035504070c085368656e7a68656e3110300e060355040a0c074f6e65506c7573310b3009060355040b0c0253573110300e06035504030c074f6e65506c75733121301f06092a864886f70d01090116126f6e65706c7573406f6e65706c75732e636e30820122300d06092a864886f70d01010105000382010f003082010a0282010100ce24d23c2044f698476fe8f79388fa901520142424b58d10a5656a27bf1fa5ca4e381d8bc5773f29271e892bf25b06357c0cab9a06a93beb3c9eced9928c938f2829fbc63bc045dcfac0660f747dfe325ed5a8c7b785ccca472bc51afa823c1c0d8dd088aa8ef3ead6053f0020fee55b6c450b0c90f9a19f8f60808d1e0eb24309216f39bccb58991c4c1656aed444a5a0652e84587ae44e7c60101190d8d0d92a37407fc6da5432a8f20fe6414cf0ce2257edf76a7d2eb34d0d31e183867b552030beaf8e6e7ade37668d87c2bd52b8c29d3d30437058a31003f3dbbe8943db602feb71c7af51388234a0ea713a9fdd17ebc89463ff1065ee970edd3969d4110203010001a350304e301d0603551d0e04160414e24ca18e47f2c07476f9d37ce0d85a9f2fdf4456301f0603551d23041830168014e24ca18e47f2c07476f9d37ce0d85a9f2fdf4456300c0603551d13040530030101ff300d06092a864886f70d01010505000382010100a682431bd6bd9d99dc267686842fe3e2d6979798ec565314dcbede7b921ba78e210e9682dc72c07c09b0882b65df2a366007f3e4a594d0a85d04644b8e0f3e13cf16f2e764716625fe8dcf93e3936d496a86d0cc4c0aa2f7d46d904eec834c604dd1c5ad2fd1ad599d6ab3375f36382303685edca5078e931977679a4f4c8a532294fd7dbc0c55ffb33e3aa064b628b8083def2ad60ba0abf8a777d69e38fe18bc2e4c63e94d05c2081b947b7caf919f272157ba90ea83a306fd2941c1d6380cc55abf7983125d4d60ac1463bdbf9baf41a6fef117b37d03d086cf754f4f3ef3b5cb054f5d2f26115b221818c785b3de1be552bb1decdf4f3d373bdd5022d150</item>
+    </string-array>
+
     <!-- Hardware keys present on the device, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
          of the following keys present:
@@ -689,4 +694,17 @@
          For example, a device with Home, Back and Menu keys would set this
          config to 7. -->
     <integer name="config_deviceHardwareKeys">71</integer>
+    
+    <!-- Enable face auth when swiping security view  
+         for popup cameras-->
+    <bool name="config_faceAuthOnSecurityView">true</bool>
+    
+    <!-- Use only if devices have variable intensity support for haptics-->
+    <bool name="config_vibration_supports_multiple_intensities">true</bool>
+    
+    <!-- The component name, flattened to a string, for the default autofill service
+         to  enabled for an user. This service must be trusted, as it can be activated
+         without explicit consent of the user. If no autofill service with the
+          specified name exists on the device, autofill will be disabled by default. -->
+    <string name="config_defaultAutofillService" translatable="false">com.google.android.gms/.autofill.service.AutofillService</string>
 </resources>

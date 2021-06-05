@@ -17,7 +17,7 @@ cc_library_static {
     name: "libinit_markw",
     recovery_available: true,
     srcs: ["init_markw.cpp"],
-    whole_static_libs: ["libbase","libselinux"],
+    whole_static_libs: ["libbase"],
     include_dirs: [
         "system/core/base/include",
         "system/core/init"

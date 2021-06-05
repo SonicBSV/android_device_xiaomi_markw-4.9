@@ -22,23 +22,18 @@
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
 
-#pragma push_macro("PROPERTY_VALUE_MAX")
-
-#include <cutils/properties.h>
-#include <string.h>
-
-#include "osi/include/osi.h"
-
-#define BTM_DEF_LOCAL_NAME "Redmi 4 Prime"
-// Disables read remote device feature
-#define BTM_WBS_INCLUDED   TRUE
-#define BTIF_HF_WBS_PREFERRED   TRUE
+#define BTM_DEF_LOCAL_NAME   "Redmi 4 Prime"
+#define MAX_ACL_CONNECTIONS    16
+#define MAX_L2CAP_CHANNELS    32
 #define BLE_VND_INCLUDED   TRUE
-// Skips conn update at conn completion
-#define BT_CLEAN_TURN_ON_DISABLED TRUE
-// Increasing SEPs to 12 from 6 to support SHO/MCast i.e. two streams per codec
-#define AVDT_NUM_SEPS 12
+#define GATT_MAX_PHY_CHANNEL  10
 
-#pragma pop_macro("PROPERTY_VALUE_MAX")
+// Wide-band speech support
+#define BTIF_HF_WBS_PREFERRED TRUE
 
-#endif
+/* Disable enhanced sco commands */
+#define BTM_SCO_ENHANCED_SYNC_ENABLED FALSE
+
+#define AVDT_NUM_SEPS 35
+
+#endif /* _BDROID_BUILDCFG_H */

@@ -30,7 +30,10 @@
 #include <android-base/file.h>
 #include <android-base/properties.h>
 #include <android-base/strings.h>
-#include <android-base/logging.h>
+
+#include <fstream>
+#include <sys/sysinfo.h>
+#include <unistd.h>
 
 #include <sys/sysinfo.h>
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
@@ -40,9 +43,9 @@
 #include "vendor_init.h"
 
 using android::base::GetProperty;
+using android::base::SetProperty;
 using android::base::ReadFileToString;
 using android::base::Trim;
-using android::init::property_set;
 
 static void init_alarm_boot_properties()
 {
@@ -67,13 +70,13 @@ static void init_alarm_boot_properties()
          * 8 -> KPDPWR_N pin toggled (power key pressed)
          */
         if (Trim(boot_reason) == "3" || reboot_reason == "true")
-            property_set("ro.alarm_boot", "true");
+            SetProperty("ro.alarm_boot", "true");
         else
-            property_set("ro.alarm_boot", "false");
+            SetProperty("ro.alarm_boot", "false");
     }
 }
 
 void vendor_load_properties()
 {
-  init_alarm_boot_properties();
+    init_alarm_boot_properties();
 }

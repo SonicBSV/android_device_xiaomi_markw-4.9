@@ -274,13 +274,15 @@
 18:4294967295:1001:3004
 /* Allow RCS service to communicate to IMS QMI Priv Svc*/
 77:4294967295:1001:3003
+/* Allow RCS service to access QMI-IMSS service */
+18:4294967295:1001:3003
 /* Allow SSGQMIGD to communicate to SSGCCS service*/
 76:4294967295:1001
 /* Allow cnd to accquire netbind */
 18:4294967295:1000:3003
 /* Allow QMID service to aquire net_raw permission */
 3:4294967295:1001:1021:3004
-2:4294967295:1000:1001:3004
+2:4294967295:1000:1001:1002:3004
 42:4294967295:1001:3004
 18:4294967295:1001:3004
 9:4294967295:1001:3004

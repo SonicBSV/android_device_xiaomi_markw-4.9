@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<permissions>
+    <!-- Additional permissions on top of privapp-permissions-platform.xml -->
+  
+    <privapp-permissions package="com.android.wallpaper">
+        <permission name="android.permission.CHANGE_OVERLAY_PACKAGES"/>
+        <permission name="android.permission.SET_WALLPAPER_COMPONENT"/>
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+        <permission name="android.permission.RESET_BATTERY_STATS"/>
+    </privapp-permissions>  
+    
+    <privapp-permissions package="com.android.phone">
+        <permission name="android.permission.START_ACTIVITIES_FROM_BACKGROUND"/>
+    </privapp-permissions>  
+    
+    <privapp-permissions package="com.android.launcher3">
+        <permission name="android.permission.FORCE_STOP_PACKAGES"/>
+    </privapp-permissions> 
+    
+    <privapp-permissions package="com.google.android.apps.wellbeing">
+        <permission name="android.permission.SET_WALLPAPER_COMPONENT"/>
+        <permission name="android.permission.WRITE_DREAM_STATE"/>
+        <permission name="android.permission.MODIFY_QUIET_MODE"/>
+        <permission name="android.permission.READ_WALLPAPER_INTERNAL"/>
+        <permission name="android.permission.READ_DREAM_STATE"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.google.android.apps.turbo">
+        <permission name="android.permission.DUMP"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.android.permissioncontroller">
+        <permission name="android.permission.CLEAR_APP_CACHE"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.facebook.system">
+        <permission name="android.permission.REAL_GET_TASKS"/>
+        <permission name="android.permission.INSTALL_PACKAGES"/>
+        <permission name="android.permission.DELETE_PACKAGES"/>
+        <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.facebook.services">
+        <permission name="android.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST"/>
+    </privapp-permissions>
+
+    <allow-in-power-save package="com.facebook.services" />
+
+    <allow-in-power-save-except-idle package="com.facebook.appmanager"/>
+    
+    <privapp-permissions package="com.android.emergency">
+        <permission name="android.permission.MANAGE_USERS"/>
+        <permission name="android.permission.WRITE_SECURE_SETTINGS"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.android.server.telecom">
+        <permission name="android.permission.SERIAL_PORT"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.android.systemui">
+        <permission name="android.permission.MANAGE_DEBUGGING"/>
+        <permission name="android.permission.CONTROL_VPN" />
+        <permission name="android.permission.START_TASKS_FROM_RECENTS" />
+        <permission name="android.permission.STATUS_BAR" />
+        <permission name="android.permission.GET_APP_OPS_STATS" />
+        <permission name="android.permission.CONTROL_KEYGUARD_SECURE_NOTIFICATIONS" />
+        <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+        <permission name="android.permission.USE_RESERVED_DISK" />
+        <permission name="android.permission.CONNECTIVITY_INTERNAL" />
+        <permission name="android.permission.CONTROL_REMOTE_APP_TRANSITION_ANIMATIONS" />
+        <permission name="android.permission.WRITE_MEDIA_STORAGE" />
+        <permission name="android.permission.CONTROL_DISPLAY_COLOR_TRANSFORMS" />
+        <permission name="android.permission.READ_DREAM_STATE" />
+        <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" />
+        <permission name="android.permission.MODIFY_PHONE_STATE" />
+        <permission name="android.permission.CHANGE_OVERLAY_PACKAGES" />
+        <permission name="android.permission.MEDIA_CONTENT_CONTROL" />
+        <permission name="android.permission.STOP_APP_SWITCHES" />
+        <permission name="android.permission.TETHER_PRIVILEGED" />
+        <permission name="android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS" />
+        <permission name="android.permission.MASTER_CLEAR" />
+        <permission name="android.permission.BLUETOOTH_PRIVILEGED" />
+        <permission name="android.permission.RECEIVE_MEDIA_RESOURCE_USAGE" />
+        <permission name="android.permission.BATTERY_STATS" />
+        <permission name="android.permission.MANAGE_USB" />
+        <permission name="android.permission.REAL_GET_TASKS" />
+        <permission name="android.permission.CHANGE_DEVICE_IDLE_TEMP_WHITELIST" />
+        <permission name="android.permission.WATCH_APPOPS" />
+        <permission name="android.permission.WRITE_DREAM_STATE" />
+        <permission name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME" />
+        <permission name="android.permission.OVERRIDE_WIFI_CONFIG" />
+        <permission name="android.permission.WRITE_SECURE_SETTINGS" />
+        <permission name="android.permission.MANAGE_USERS" />
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+        <permission name="android.permission.READ_NETWORK_USAGE_HISTORY" />
+        <permission name="android.permission.START_ACTIVITIES_FROM_BACKGROUND" />
+        <permission name="android.permission.MODIFY_DAY_NIGHT_MODE" />
+        <permission name="android.permission.DUMP" />
+        <permission name="android.permission.UPDATE_APP_OPS_STATS" />
+        <permission name="android.permission.INTERACT_ACROSS_USERS" />
+        <permission name="android.permission.REBOOT"/>
+        <permission name="android.permission.CHANGE_CONFIGURATION"/>
+        <permission name="android.permission.RECOVERY"/>
+        <permission name="android.permission.SHUTDOWN" />
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.android.cellbroadcastreceiver">
+        <permission name="android.permission.STATUS_BAR"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.android.settings">
+        <permission name="android.permission.RESET_BATTERY_STATS"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.qualcomm.qti.callenhancement">
+        <permission name="android.permission.REGISTER_SIM_SUBSCRIPTION"/>
+        <permission name="android.permission.WRITE_EMBEDDED_SUBSCRIPTIONS"/>
+        <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
+        <permission name="android.permission.SUBSTITUTE_NOTIFICATION_APP_NAME"/>
+        <permission name="android.permission.BIND_CARRIER_SERVICES"/>
+        <permission name="android.permission.STATUS_BAR"/>
+        <permission name="android.permission.BIND_CARRIER_MESSAGING_SERVICE"/>
+        <permission name="android.permission.ACCESS_NOTIFICATIONS"/>
+        <permission name="android.permission.READ_PRECISE_PHONE_STATE"/>
+    </privapp-permissions> 
+</permissions>

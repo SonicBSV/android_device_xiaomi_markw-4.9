@@ -123,7 +123,18 @@ It allows additional grants on top of privapp-permissions-platform.xml
         <permission name="android.permission.STATUS_BAR"/>
     </privapp-permissions>
     
-    <privapp-permissions package="com.google.android.gms">
-        <permission name="android.permission.WRITE_DEVICE_CONFIG" />
+    <privapp-permissions package="com.facebook.system">
+        <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+	    <permission name="android.permission.DELETE_PACKAGES"/>
+	    <permission name="android.permission.INSTALL_PACKAGES"/>
+	    <permission name="android.permission.REAL_GET_TASKS"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="com.android.phone">
+        <permission name="android.permission.START_ACTIVITIES_FROM_BACKGROUND"/>
+    </privapp-permissions>
+
+    <privapp-permissions package="ru.yandex.searchplugin">
+        <permission name="android.permission.PACKAGE_USAGE_STATS"/>
     </privapp-permissions>
 </permissions>
