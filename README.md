@@ -38,4 +38,4 @@ Als/ps | Yes (Liteon LTR55X)
 LED | Yes (Awinic AW2013)
 Release Date | November 2016
 
-![Xiaomi Redmi 4 Prime](http://xiaominews.ru/wp-content/uploads/2017/05/maxresdefault-2.jpg "Xiaomi Redmi 4 Prime")
+![Xiaomi Redmi 4 Prime](https://i.cdn.nrholding.net/36093393/2000/2000 "Xiaomi Redmi 4 Prime")
