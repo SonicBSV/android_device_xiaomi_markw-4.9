@@ -1,7 +1,9 @@
-
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE:=true
+PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
+SHIPPING_API_LEVEL :=28
 
-#PRODUCT_ENFORCE_RRO_TARGETS := *
+PRODUCT_ENFORCE_RRO_TARGETS := *
+PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += $(LOCAL_PATH)/overlay-lineage/lineage-sdk
 
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
@@ -206,11 +208,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:system/etc/bluetooth/interop_database.conf 
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    vendor.qcom.bluetooth.soc=pronto \
-    bluetooth.hfp.client=1 \
-    persist.vendor.btstack.enable.splita2dp=false \
+    vendor.qcom.bluetooth.soc=smd \
+    persist.vendor.qcom.bluetooth.soc=smd \
     persist.vendor.qcom.bluetooth.enable.splita2dp=false \
-    persist.vendor.btstack.enable.splita2dp=false \
     persist.vendor.bluetooth.modem_nv_support=true \
     ro.vendor.bluetooth.wipower=false
 
@@ -231,29 +231,16 @@ PRODUCT_PACKAGES += \
     camera.device@3.2-impl 
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    camera.display.lmax=1280x720 \
-    camera.display.umax=1920x1080 \
-    vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
-    vendor.camera.hal1.packagelist2=com.facebook.katana,com.instagram.android,com.snapchat.android \
-    camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
-    camera.hal1.packagelist2=com.facebook.katana,com.instagram.android,com.snapchat.android \
-    vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera \
-    vendor.camera.aux.packagelist2=com.android.systemui \
-    camera.lowpower.record.enable=1 \
-    media.camera.ts.monotonic=1 \
+    vendor.vidc.disable.split.mode=1 \
     persist.camera.isp.clock.optmz=0 \
+    media.camera.ts.monotonic=1 \
     persist.camera.stats.test=5 \
-    persist.vendor.qti.telephony.vt_cam_interface=1 \
-    vidc.enc.dcvs.extra-buff-count=2
+    persist.vendor.qti.telephony.vt_cam_interface=1
 
 # Charger from ASUS
 PRODUCT_PACKAGES += \
     custom_charger \
     custom_charger_res_images
-
-# CNE
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.vendor.cne.feature=1
 
 # Codec2 modules
 PRODUCT_PACKAGES += \
@@ -296,7 +283,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.hardware.vulkan=adreno \
     ro.hardware.egl=adreno \
     ro.opengles.version=196610 \
-    ro.qualcomm.cabl=0 \
     dalvik.vm.heapminfree=4m \
     dalvik.vm.heapstartsize=16m \
     dalvik.vm.heapgrowthlimit=192m \
@@ -326,10 +312,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1
 
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.qfp=false \
-    ro.fingerprint.cleanup.unused=false
-
 # FM
 PRODUCT_PACKAGES += \
     FM2 \
@@ -350,25 +332,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-service \
     android.hardware.gatekeeper@1.0-impl
-
-# Graphics
-PRODUCT_PROPERTY_OVERRIDES += \
-    debug.sf.enable_hwc_vds=1 \
-    debug.sf.hw=0 \
-    debug.sf.latch_unsignaled=1 \
-    debug.egl.hw=0 \
-    persist.hwc.mdpcomp.enable=true \
-    debug.mdpcomp.logs=0 \
-    dalvik.vm.heapsize=36m \
-    dev.pm.dyn_samplingrate=1 \
-    persist.demo.hdmirotationlock=false \
-    debug.enable.sglscale=1 \
-    debug.gralloc.enable_fb_ubwc=1 \
-    debug.sf.recomputecrop=0 \
-    sdm.debug.disable_skip_validate=1 \
-    vendor.display.enable_default_color_mode=0 \
-    vendor.gralloc.enable_fb_ubwc=1 \
-    vendor.display.disable_skip_validate=1
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -471,11 +434,15 @@ PRODUCT_COPY_FILES += \
 
 # Libshims
 PRODUCT_PACKAGES += \
-    libshim_c
+    libshims_camera
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.xiaomi_markw
+    lights.msm8953
+
+PRODUCT_PACKAGES += \
+    android.hardware.light@2.0-impl \
+    android.hardware.light@2.0-service
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
@@ -497,21 +464,8 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_video_le.xml
  
 PRODUCT_PROPERTY_OVERRIDES += \
-    media.msm8956hw=0 \
-    mm.enable.smoothstreaming=true \
-    mmp.enable.3g2=true \
-    media.aac_51_output_enabled=true \
-    av.debug.disable.pers.cache=1 \
-    ro.config.media_vol_default=10 \
-    vendor.mm.enable.qcom_parser=37748735 \
     debug.stagefright.omx_default_rank.sw-audio=1 \
-    debug.stagefright.omx_default_rank=0 \
-    vendor.vidc.enc.disable_bframes=1 \
-    vendor.vidc.disable.split.mode=1 \
-    vendor.vidc.dec.downscalar_width=1920 \
-    vendor.vidc.dec.downscalar_height=1088 \
-    vendor.video.disable.ubwc=1 \
-    vendor.vidc.enc.disable.pq=true
+    debug.stagefright.omx_default_rank=0
  
 # Media Extensions
 PRODUCT_PACKAGES += \
@@ -534,26 +488,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
-    persist.vendor.qcomsysd.enabled=1 \
-    ro.ct.device.model=XMP-2016060 \
-    ro.config.safe_vol_default=8 \
-    ro.config.alarm_vol_default=3 \
-    ro.product.band=Redmi \
-    persist.debug.coresight.config=stm-events \
-    persist.console.silent.config=1 \
-    ro.vendor.qti.am.reschedule_service=true \
-    ro.cutoff_voltage_mv=3400 \
-    persist.fuse_sdcard=true \
-    persist.mm.sta.enable=0 \
-    ro.vendor.qti.sys.fw.bservice_enable=true \
-    ro.vendor.qti.sys.fw.bservice_limit=5 \
-    ro.vendor.qti.sys.fw.bservice_age=5000 \
-    ro.emmc_size=16GB
-
-# Netmgrd
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.use_data_netmgrd=true \
-    persist.vendor.data.mode=concurrent
+    persist.vendor.qcomsysd.enabled=1
 
 # NET
 PRODUCT_PACKAGES += \
@@ -612,17 +547,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/targetresourceconfigs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/perf/targetresourceconfigs.xml 
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.vendor.extension_library=libqti-perfd-client.so \
-    ro.sys.fw.dex2oat_thread_count=4 \
-    ro.vendor.gt_library=libqti-gt.so \
-    ro.vendor.at_library=libqti-at.so \
-    ro.memperf.lib=libmemperf.so \
-    ro.memperf.enable=false \
-    ro.vendor.qti.sys.fw.use_trim_settings=true \
-    ro.vendor.qti.sys.fw.empty_app_percent=50 \
-    ro.vendor.qti.sys.fw.trim_empty_percent=100 \
-    ro.vendor.qti.sys.fw.trim_cache_percent=100 \
-    ro.vendor.qti.sys.fw.trim_enable_memory=2147483648
+    ro.vendor.extension_library=libqti-perfd-client.so
     
 # Power
 PRODUCT_PACKAGES += \
@@ -678,7 +603,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.default_network=20,20 \
     telephony.lteOnCdmaDevice=1 \
     ro.com.android.dataroaming=false \
-    vendor.service.qti.ims.enabled=1
+    vendor.service.qti.ims.enabled=1 \
+    ril.ecclist=000,08,100,101,102,110,112,118,119,120,122,911,999
 
 # QMI
 PRODUCT_PACKAGES += \
@@ -726,8 +652,7 @@ PRODUCT_PACKAGES += \
 
 # Shutdown
 PRODUCT_PROPERTY_OVERRIDES += \
-    sys.vendor.shutdown.waittime=500 \
-    ro.build.shutdown_timeout=0
+    sys.vendor.shutdown.waittime=500
 
 # Telephony
 PRODUCT_PACKAGES += \
@@ -758,10 +683,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.thermal@2.0-service.mock
 
-# Time Services
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.timed.enable=true
-
 # Touchscreen
 PRODUCT_PACKAGES += \
     libtinyxml2
@@ -784,7 +705,8 @@ PRODUCT_PACKAGES += \
 
 # VNDK-SP
 PRODUCT_PACKAGES += \
-    vndk-sp
+    libstdc++.vendor \
+    vndk_package
 
 # VR
 PRODUCT_PACKAGES += \
@@ -795,7 +717,6 @@ PRODUCT_PACKAGES += \
 # Wifi
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service \
-    android.hardware.wifi@1.3 \
     libcld80211 \
     libqsap_sdk \
     libwpa_client \
@@ -824,10 +745,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_BOOT_JARS += \
     WfdCommon
-
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.debug.wfd.enable=1 \
-    persist.hwc.enable_vds=1
 
 # Xiaomi
 PRODUCT_PACKAGES += \

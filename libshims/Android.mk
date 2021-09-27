@@ -21,7 +21,7 @@ LOCAL_SRC_FILES := \
     bionic/bionic_time_conversions.cpp \
     bionic/pthread_cond.cpp
 LOCAL_SHARED_LIBRARIES := libc
-LOCAL_MODULE := libshim_c
+LOCAL_MODULE := libshims_camera
 LOCAL_VENDOR_MODULE := true
 LOCAL_CXX_STL := none
 LOCAL_SANITIZE := never

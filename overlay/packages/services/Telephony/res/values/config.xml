@@ -25,6 +25,14 @@
     <!-- Flag indicating if hac is enabled -->
     <bool name="hac_enabled">true</bool>
 
+    <!-- Flag indicating if dtmf tone type is enabled -->
+    <bool name="dtmf_type_enabled">true</bool>
+
+    <!-- Determine whether calls to mute the microphone in PhoneUtils
+         are routed through the android.media.AudioManager class (true) or through
+         the com.android.internal.telephony.Phone interface (false). -->
+    <bool name="send_mic_mute_to_AudioManager">true</bool>
+
     <!-- Show Preferred Network Type options in No SIM case -->
     <bool name="config_no_sim_display_network_modes">true</bool>
 
@@ -39,7 +47,4 @@
          ignored and manual operator selection will always be available. See
          CPHS4_2.WW6, CPHS B.4.7.1 for more information -->
     <bool name="csp_enabled">true</bool>
-    
-    <!-- Package name for the call-based number verification app -->
-    <string name="platform_number_verification_package" translatable="false">com.google.android.gms</string>
 </resources>

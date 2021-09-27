@@ -33,5 +33,16 @@
     
     <privapp-permissions package="com.google.android.apps.turbo">
         <permission name="android.permission.DUMP"/>
+    </privapp-permissions>
+    
+    <privapp-permissions package="com.google.android.gms">
+        <permission name="android.permission.REMOTE_DISPLAY_PROVIDER" />
+        <permission name="android.permission.CONTROL_KEYGUARD_SECURE_NOTIFICATIONS" />
+        <permission name="android.permission.WRITE_DEVICE_CONFIG" />
+        <permission name="android.permission.RESET_PASSWORD" />
+        <permission name="android.permission.MODIFY_DAY_NIGHT_MODE" />
+        <permission name="android.permission.SUBSTITUTE_SHARE_TARGET_APP_NAME_AND_ICON" />
+        <permission name="android.permission.LOCK_DEVICE" />
+        <permission name="android.permission.START_ACTIVITIES_FROM_BACKGROUND" />
     </privapp-permissions> 
 </permissions>

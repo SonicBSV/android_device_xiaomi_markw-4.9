@@ -93,11 +93,11 @@ if [ "$(getprop persist.vendor.usb.config)" == "" -a \
 			    fi
 		      ;;
 	              "msm8953")
-                              if [ "$(getprop ro.build.type)" = "user" -a $(getprop ro.debuggable) == "0" ] ; then
-                                 setprop persist.vendor.usb.config none
-                              else
-                                 setprop persist.vendor.usb.config adb
-			      fi
+                          build_type=`getprop ro.build.type`
+                          if [ "$build_type" == "userdebug" ]; then
+                              setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
+                          fi
+		          #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
 		      ;;
 	              "msm8998" | "sdm660" | "apq8098_latv")
 		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb

@@ -26,8 +26,6 @@ public class DeviceSettings extends PreferenceFragment implements
 
     private static final String AMBIENT_DISPLAY = "ambient_display_gestures";
 
-    public static final String PREF_KEY_FPS_INFO = "fps_info";
-
     public static final  String PREF_HEADPHONE_GAIN = "headphone_gain";
     public static final  String PREF_MICROPHONE_GAIN = "microphone_gain";
     public static final  String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
@@ -45,10 +43,6 @@ public class DeviceSettings extends PreferenceFragment implements
         microphone_gain.setOnPreferenceChangeListener(this);
 
         PreferenceCategory displayCategory = (PreferenceCategory) findPreference(CATEGORY_DISPLAY);
-
-        SwitchPreference fpsInfo = (SwitchPreference) findPreference(PREF_KEY_FPS_INFO);
-        fpsInfo.setChecked(prefs.getBoolean(PREF_KEY_FPS_INFO, false));
-        fpsInfo.setOnPreferenceChangeListener(this);
 
         Preference ambientDisplay = findPreference(AMBIENT_DISPLAY);
         ambientDisplay.setOnPreferenceClickListener(preference -> {
@@ -68,16 +62,6 @@ public class DeviceSettings extends PreferenceFragment implements
 
             case PREF_MICROPHONE_GAIN:
                 FileUtils.setValue(MICROPHONE_GAIN_PATH, (int) value);
-                break;
-
-            case PREF_KEY_FPS_INFO:
-                boolean enabled = (Boolean) value;
-                Intent fpsinfo = new Intent(this.getContext(), FPSInfoService.class);
-                if (enabled) {
-                    this.getContext().startService(fpsinfo);
-                } else {
-                    this.getContext().stopService(fpsinfo);
-                }
                 break;
 
             default:
