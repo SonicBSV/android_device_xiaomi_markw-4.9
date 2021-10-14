@@ -1442,7 +1442,6 @@ int QCamera3HardwareInterface::configureStreamsPerfLocked(
     LOGD("mOpMode: %d", mOpMode);
 
     mCurrentSceneMode = 0;
-    m_fwAeMode = ANDROID_CONTROL_AE_MODE_ON;
 
     /* first invalidate all the steams in the mStreamList
      * if they appear again, they will be validated */
@@ -4650,9 +4649,6 @@ no_error:
 
     if (meta.exists(ANDROID_CONTROL_AE_MODE)) {
           pendingRequest.fwkAeMode = (uint8_t)meta.find(ANDROID_CONTROL_AE_MODE).data.u8[0];
-          m_fwAeMode = pendingRequest.fwkAeMode;
-    } else {
-          pendingRequest.fwkAeMode = m_fwAeMode;
     }
 
     //extract CAC info
