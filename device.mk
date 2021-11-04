@@ -208,8 +208,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/bluetooth/interop_database.conf:system/etc/bluetooth/interop_database.conf 
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    vendor.qcom.bluetooth.soc=smd \
-    persist.vendor.qcom.bluetooth.soc=smd \
+    vendor.qcom.bluetooth.soc=pronto \
+    persist.vendor.qcom.bluetooth.soc=pronto \
     persist.vendor.qcom.bluetooth.enable.splita2dp=false \
     persist.vendor.bluetooth.modem_nv_support=true \
     ro.vendor.bluetooth.wipower=false
@@ -311,6 +311,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Fingerprint
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.qfp=false \
+    ro.fingerprint.cleanup.unused=false
 
 # FM
 PRODUCT_PACKAGES += \
@@ -431,10 +435,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
-
-# Libshims
-PRODUCT_PACKAGES += \
-    libshims_camera
 
 # Lights
 PRODUCT_PACKAGES += \
