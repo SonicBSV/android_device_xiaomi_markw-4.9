@@ -1,4 +1,4 @@
-/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2015-2019, The Linux Foundation. All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are
@@ -121,92 +121,6 @@ void* QCameraDisplay::vsyncThreadCamera(void * data)
     }
     return NULL;
 }
-#else //USER_DISPLAY_SERVICE
-//initializing static
-QCameraDisplay*
-QCameraDisplay::mCameraDisplay = NULL;
-
-/*===========================================================================
- * FUNCTION   : onRegistration
- *
- * DESCRIPTION: DisplayService registered notification callback from hwservice.
- *              Calling init to get display service.
- *
- * PARAMETERS :
- *   @fqName  : fully-qualified instance name (UNUSED).
- *   @name    : string by which display service is registerd.
- *   @preexisting: If true, this means the registration was
- *                 pre-existing at the time this IServiceNotification
- *                 object is itself registered. Otherwise, this means
- *                 onRegistration is triggered by a newly registered
- *                 service.
- *
- * RETURN     : void.Just to fullfill the type requirement of thread function.
- *==========================================================================*/
-Return<void>
-QCameraDisplay::ServiceRegisterNotification::onRegistration(const hidl_string & /*fqName*/,
-                                                                  const hidl_string & /*name*/,
-                                                                  bool /*preexisting*/)
-{
-    if(mCameraDisplay->mDisplayService != nullptr)
-    {
-        return Return<void>();
-    }
-
-    LOGD("Display service is available, get the interface");
-    mCameraDisplay->init();
-
-    return Return<void>();
-}
-
-/*===========================================================================
- * FUNCTION   : instance
- *
- * DESCRIPTION: create singleton instance of QCameraDisplay
- *
- * PARAMETERS : none
- *
- * RETURN     : pointer to QCameraDisplay
- *==========================================================================*/
-QCameraDisplay*
-QCameraDisplay::instance()
-{
-    if(mCameraDisplay == NULL)
-    {
-        mCameraDisplay = new QCameraDisplay();
-        mCameraDisplay->mRegistrationCB = new ServiceRegisterNotification();
-        IDisplayService::registerForNotifications("", mCameraDisplay->mRegistrationCB);
-    }
-    return mCameraDisplay;
-}
-
-/*===========================================================================
- * FUNCTION   : serviceDied
- *
- * DESCRIPTION: Display service death recipient. Clear all variables.
- *
- * PARAMETERS : uint64_t & IBase refrence of dead serivce (unused).
- *
- * RETURN     : none
- *==========================================================================*/
-void
-QCameraDisplay::DeathRecipient::serviceDied(uint64_t /*cookie*/,
-                                const wp<android::hidl::base::V1_0::IBase>& /*who*/)
-{
-    if(mCameraDisplay && mCameraDisplay->m_bInitDone)
-    {
-        mCameraDisplay->m_bInitDone = false;
-        mCameraDisplay->m_bSyncing = false;
-        mCameraDisplay->mDisplayEventReceiver.clear();
-        mCameraDisplay->mDisplayService.clear();
-        mCameraDisplay->mDisplayEventCallback.clear();
-        mCameraDisplay->mDeathRecipient.clear();
-        mCameraDisplay->mDeathRecipient = nullptr;
-        mCameraDisplay->mDisplayEventCallback = nullptr;
-        mCameraDisplay->mDisplayEventReceiver = nullptr;
-        mCameraDisplay->mDisplayService = nullptr;
-    }
-}
 #endif //USE_DISPLAY_SERVICE
 
 /*===========================================================================
@@ -238,8 +152,6 @@ QCameraDisplay::QCameraDisplay()
 #ifdef USE_DISPLAY_SERVICE
     mDisplayService = nullptr;
     mDisplayEventReceiver = nullptr;
-    mDeathRecipient = nullptr;
-    mDisplayEventCallback = nullptr;
 #else //USE_DISPLAY_SERVICE
     int rc = NO_ERROR;
 
@@ -294,17 +206,7 @@ QCameraDisplay::QCameraDisplay()
  *==========================================================================*/
 QCameraDisplay::~QCameraDisplay()
 {
-#ifdef USE_DISPLAY_SERVICE
-    if(mDisplayEventReceiver != nullptr)
-    {
-        mDisplayEventReceiver->close();
-    }
-    mDisplayEventCallback.clear();
-    mDeathRecipient.clear();
-    mDisplayEventReceiver.clear();
-    mDisplayService.clear();
-    mRegistrationCB.clear();
-#else
+#ifndef USE_DISPLAY_SERVICE
     mThreadExit = 1;
     if (mVsyncThreadCameraHandle != 0) {
         pthread_join(mVsyncThreadCameraHandle, NULL);
@@ -343,17 +245,6 @@ QCameraDisplay::init()
       return;
     }
 
-    if(mDisplayEventCallback == nullptr)
-    {
-        mDisplayEventCallback = new DisplayEventCallback();
-    }
-
-    if(mDeathRecipient == nullptr)
-    {
-        mDeathRecipient = new DeathRecipient();
-    }
-
-    mDisplayService->linkToDeath(mDeathRecipient,0);
     m_bInitDone = true;
 
 }
@@ -378,15 +269,14 @@ QCameraDisplay::startVsync(bool bStart)
 
     if(bStart)
     {
-         /*setting callbacks*/
-         Return<Status> retVal = mDisplayEventReceiver->init(mDisplayEventCallback);
-         if(!retVal.isOk() || (Status::SUCCESS != static_cast<Status>(retVal)) )
-         {
-             LOGE("Failed to register display vsync callback");
-             return false;
-         }
-        /*send callback for each vsync event*/
-        retVal = mDisplayEventReceiver->setVsyncRate(1);
+        Return<Status> retVal = mDisplayEventReceiver->init(this /*setting callbacks*/ );
+        if(!retVal.isOk() || (Status::SUCCESS != static_cast<Status>(retVal)) )
+        {
+            LOGE("Failed to register display vsync callback");
+            return false;
+        }
+
+        retVal = mDisplayEventReceiver->setVsyncRate(1 /*send callback after this many events*/);
         if(!retVal.isOk() || (Status::SUCCESS != static_cast<Status>(retVal)) )
         {
             LOGE("Failed to start vsync events");
@@ -395,18 +285,10 @@ QCameraDisplay::startVsync(bool bStart)
     }
     else
     {
-        /*disabling sending callback for vsync event*/
-        Return<Status> retVal = mDisplayEventReceiver->setVsyncRate(0);
+        Return<Status> retVal = mDisplayEventReceiver->setVsyncRate(0 /*send callback after this many events*/);
         if(!retVal.isOk() || (Status::SUCCESS != static_cast<Status>(retVal)) )
         {
             LOGE("Failed to stop vsync events");
-            return false;
-        }
-        /*Disable callbacks*/
-        retVal = mDisplayEventReceiver->close();
-        if(!retVal.isOk() || (Status::SUCCESS != static_cast<Status>(retVal)))
-        {
-            LOGE("Failed to disable vsync callback");
             return false;
         }
     }

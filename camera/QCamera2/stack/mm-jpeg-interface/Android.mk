@@ -13,6 +13,8 @@ LOCAL_CFLAGS += -Wall -Wextra -Werror -Wno-unused-parameter
 
 LOCAL_HEADER_LIBRARIES += generated_kernel_headers
 
+LIB2D_ROTATION=false
+
 LOCAL_C_INCLUDES += \
     $(LOCAL_PATH)/inc \
     $(LOCAL_PATH)/../common \
@@ -20,6 +22,12 @@ LOCAL_C_INCLUDES += \
     $(LOCAL_PATH)/../../.. \
     $(LOCAL_PATH)/../../../mm-image-codec/qexif \
     $(LOCAL_PATH)/../../../mm-image-codec/qomx_core
+
+ifeq ($(strip $(LIB2D_ROTATION)),true)
+    LOCAL_C_INCLUDES += $(LOCAL_PATH)/../mm-lib2d-interface/inc
+    LOCAL_CFLAGS += -DLIB2D_ROTATION_ENABLE
+endif
+
 
 ifeq ($(strip $(TARGET_USES_ION)),true)
     LOCAL_CFLAGS += -DUSE_ION

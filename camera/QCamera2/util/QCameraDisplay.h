@@ -1,4 +1,4 @@
-/* Copyright (c) 2015-2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -37,7 +37,6 @@
 #include <android/frameworks/displayservice/1.0/IDisplayService.h>
 #include <android/frameworks/displayservice/1.0/IEventCallback.h>
 #include <android/frameworks/displayservice/1.0/IDisplayEventReceiver.h>
-#include <android/hidl/manager/1.0/IServiceNotification.h>
 #include <android/looper.h>
 #include <utils/Looper.h>
 
@@ -45,11 +44,8 @@ using ::android::frameworks::displayservice::V1_0::IDisplayEventReceiver;
 using ::android::frameworks::displayservice::V1_0::IDisplayService;
 using ::android::frameworks::displayservice::V1_0::IEventCallback;
 using ::android::frameworks::displayservice::V1_0::Status;
-using ::android::hardware::hidl_death_recipient;
 using ::android::hardware::Return;
 using ::android::hardware::Void;
-using ::android::hardware::hidl_string;
-using ::android::wp;
 using ::android::sp;
 #else //USE_DISPLAY_SERVICE
 #include <utils/Timers.h>
@@ -58,10 +54,14 @@ using ::android::sp;
 
 namespace qcamera {
 
-#define CAMERA_NUM_VSYNC_INTERVAL_HISTORY  6
+#define CAMERA_NUM_VSYNC_INTERVAL_HISTORY  8
 #define NSEC_PER_MSEC 1000000LLU
 
+#ifdef USE_DISPLAY_SERVICE
+class QCameraDisplay : public IEventCallback {
+#else //USE_DISPLAY_SERVICE
 class QCameraDisplay {
+#endif //USE_DISPLAY_SERVICE
 
 public:
     QCameraDisplay();
@@ -71,31 +71,18 @@ public:
     void        init();
     bool        isInited() { return m_bInitDone; }
     bool        isSyncing() {return m_bSyncing; }
-    bool        startVsync(bool start);
-    static QCameraDisplay* instance();
 
-class DisplayEventCallback : public IEventCallback {
+    bool        startVsync(bool start);
+
     Return<void> onVsync(uint64_t timestamp, uint32_t count) override {
         ALOGV("onVsync: timestamp=%llu count=%d", timestamp, count);
-        QCameraDisplay::instance()->computeAverageVsyncInterval(timestamp);
+        computeAverageVsyncInterval(timestamp);
         return Void();
     }
     Return<void> onHotplug(uint64_t timestamp, bool connected) override {
         ALOGV("onHotplug: timestamp=%llu connected=%s", timestamp, connected ? "true" : "false");
         return Void();
     }
-};
-
-class DeathRecipient : virtual public hidl_death_recipient {
-    virtual void serviceDied(uint64_t cookie, const wp<android::hidl::base::V1_0::IBase>& who) override;
-};
-
-class ServiceRegisterNotification :
-                virtual public android::hidl::manager::V1_0::IServiceNotification {
-    virtual Return<void> onRegistration(const hidl_string& fqName,
-                                              const hidl_string& name,
-                                              bool preexisting) override;
-};
 
 #else //USE_DISPLAY_SERVICE
     static int   vsyncEventReceiverCamera(int fd, int events, void* data);
@@ -126,10 +113,6 @@ private:
     bool     m_bSyncing;
     sp<IDisplayEventReceiver> mDisplayEventReceiver;
     sp<IDisplayService> mDisplayService;
-    sp<DeathRecipient> mDeathRecipient;
-    sp<DisplayEventCallback> mDisplayEventCallback;
-    sp<ServiceRegisterNotification> mRegistrationCB;
-    static QCameraDisplay *mCameraDisplay;
 #else //USE_DISPLAY_SERVICE
     pthread_t mVsyncThreadCameraHandle;
     uint32_t  mThreadExit;
