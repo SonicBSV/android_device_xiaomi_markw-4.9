@@ -45,7 +45,7 @@
 #include "QCamera3Channel.h"
 #include "QCamera3HWI.h"
 #include "QCameraTrace.h"
-
+#include "QCameraFormat.h"
 extern "C" {
 #include "mm_camera_dbg.h"
 }
