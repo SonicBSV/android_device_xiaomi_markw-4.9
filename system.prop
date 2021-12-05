@@ -126,9 +126,9 @@ ro.cutoff_voltage_mv=3400
 ro.emmc_size=16GB
 
 #force HAL1 for below packages
-vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile
+vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk
 vendor.camera.hal1.packagelist2=com.facebook.katana,com.instagram.android,com.snapchat.android
-camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile
+camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk
 camera.hal1.packagelist2=com.facebook.katana,com.instagram.android,com.snapchat.android
 
 #low power mode for camera
