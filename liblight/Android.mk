@@ -1,5 +1,4 @@
-# Copyright (C) 2013-2016, The CyanogenMod Project
-# Copyright (C) 2018, The LineageOS Project
+# Copyright (C) 2008 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,19 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_PATH := $(call my-dir)
-
+LOCAL_PATH:= $(call my-dir)
+# HAL module implemenation stored in
+# hw/<COPYPIX_HARDWARE_MODULE_ID>.<ro.board.platform>.so
 include $(CLEAR_VARS)
-LOCAL_SRC_FILES := \
-    bionic/bionic_futex.cpp \
-    bionic/bionic_time_conversions.cpp \
-    bionic/pthread_cond.cpp
-LOCAL_SHARED_LIBRARIES := libc
-LOCAL_MODULE := libshim_c
-LOCAL_VENDOR_MODULE := true
-LOCAL_CXX_STL := none
-LOCAL_SANITIZE := never
+
+
+LOCAL_SRC_FILES := lights.c
+LOCAL_MODULE_RELATIVE_PATH := hw
+LOCAL_SHARED_LIBRARIES := liblog
+LOCAL_HEADER_LIBRARIES := libhardware_headers
+LOCAL_CFLAGS := -DLOG_TAG=\"qdlights\"
+LOCAL_CLANG  := true
+LOCAL_MODULE := lights.$(TARGET_BOARD_PLATFORM)
 LOCAL_MODULE_TAGS := optional
-LOCAL_32_BIT_ONLY := true
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_VENDOR_MODULE := true
+
 include $(BUILD_SHARED_LIBRARY)

@@ -115,6 +115,15 @@ typedef enum {
     QCAMERA_DATA_SNAPSHOT_CALLBACK
 } qcamera_callback_type_m;
 
+/* meta data type and value in CameraMetaDataCallback */
+typedef enum {
+    CAMERA_META_DATA_ASD = 0x001, //ASD data
+    CAMERA_META_DATA_FD = 0x002, //FD/FP data
+    CAMERA_META_DATA_HDR = 0x003, //Auto HDR data
+    /*Add new data type after this, since 4 is being used in APP*/
+    CAMERA_META_DATA_DUAL = 0x004 //Dual camera data
+} qcamera_metadatacallback_type_m;;
+
 typedef void (*camera_release_callback)(void *user_data,
                                         void *cookie,
                                         int32_t cb_status);
@@ -168,7 +177,9 @@ public:
     static void releaseNotifications(void *data, void *user_data);
     static bool matchSnapshotNotifications(void *data, void *user_data);
     static bool matchPreviewNotifications(void *data, void *user_data);
+    static bool matchTimestampNotifications(void *data, void *user_data);
     virtual int32_t flushPreviewNotifications();
+    virtual int32_t flushVideoNotifications();
 private:
 
     camera_notify_callback         mNotifyCb;
@@ -183,9 +194,6 @@ private:
     QCameraCmdThread mProcTh;
     bool             mActive;
 };
-
-class QCameraDisplay;
-
 class QCamera2HardwareInterface : public QCameraAllocator,
         public QCameraThermalCallback, public QCameraAdjustFPS
 {
@@ -258,6 +266,8 @@ public:
             void);
     int32_t setRelatedCamSyncInfo(
             cam_sync_related_sensors_event_info_t* info);
+    bool isFrameSyncEnabled(void);
+    int32_t setFrameSyncEnabled(bool enable);
     int32_t setMpoComposition(bool enable);
     bool getMpoComposition(void);
     bool getRecordingHintValue(void);
@@ -278,14 +288,14 @@ public:
     virtual QCameraHeapMemory *allocateMiscBuf(cam_stream_info_t *streamInfo);
     virtual QCameraMemory *allocateStreamUserBuf(cam_stream_info_t *streamInfo);
     virtual void waitForDeferredAlloc(cam_stream_type_t stream_type);
-
+    static uint32_t sessionId[MM_CAMERA_MAX_NUM_SENSORS];
     // Implementation of QCameraThermalCallback
     virtual int thermalEvtHandle(qcamera_thermal_level_enum_t *level,
             void *userdata, void *data);
 
     virtual int recalcFPSRange(int &minFPS, int &maxFPS,
             const float &minVideoFPS, const float &maxVideoFPS,
-            cam_fps_range_t &adjustedRange);
+            cam_fps_range_t &adjustedRange, bool bRecordingHint);
 
     friend class QCameraStateMachine;
     friend class QCameraPostProcessor;
@@ -357,7 +367,8 @@ private:
             const int minFPSi, const int maxFPSi,
             const float &minVideoFPS, const float &maxVideoFPS,
             cam_fps_range_t &adjustedRange,
-            enum msm_vfe_frame_skip_pattern &skipPattern);
+            enum msm_vfe_frame_skip_pattern &skipPattern,
+            bool bRecordingHint);
     int updateThermalLevel(void *level);
 
     // update entris to set parameters and check if restart is needed
@@ -394,6 +405,7 @@ private:
     int32_t processASDUpdate(cam_asd_decision_t asd_decision);
     int32_t processJpegNotify(qcamera_jpeg_evt_payload_t *jpeg_job);
     int32_t processHDRData(cam_asd_hdr_scene_data_t hdr_scene);
+    int32_t processDualCameraUpdate(cam_reprocess_info_t repro_info);
     int32_t processRetroAECUnlock();
     int32_t processZSLCaptureDone();
     int32_t processSceneData(cam_scene_mode_type scene);
@@ -638,6 +650,8 @@ private:
     bool mIs3ALocked;
     bool mPrepSnapRun;
     int32_t mZoomLevel;
+    int32_t mStride;
+    int32_t mScanline;
     // Flag to indicate whether preview restart needed (for dual camera mode)
     bool mPreviewRestartNeeded;
 
@@ -649,6 +663,7 @@ private:
     int mPLastFrameCount;
     nsecs_t mPLastFpsTime;
     double mPFps;
+    bool mLowLightConfigured;
     uint8_t mInstantAecFrameCount;
 
     //eztune variables for communication with eztune server at backend
@@ -762,7 +777,7 @@ private:
 #endif
     QCameraMemory *mMetadataMem;
 
-    uint32_t mNextJobId;
+    uint32_t sNextJobId;
 
     //Gralloc memory details
     pthread_mutex_t mGrallocLock;
@@ -775,7 +790,7 @@ private:
     uint32_t mSurfaceStridePadding;
 
     //QCamera Display Object
-    QCameraDisplay* mCameraDisplay;
+    //QCameraDisplay mCameraDisplay;
 
     bool m_bNeedRestart;
     Mutex mMapLock;
@@ -790,6 +805,7 @@ private:
     uint32_t mFrameSkipEnd;
     //The offset between BOOTTIME and MONOTONIC timestamps
     nsecs_t mBootToMonoTimestampOffset;
+    bool bDepthAFCallbacks;
 };
 
 }; // namespace qcamera

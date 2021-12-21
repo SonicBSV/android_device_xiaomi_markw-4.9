@@ -42,6 +42,8 @@ soc_id=`cat /sys/devices/soc0/soc_id 2> /dev/null`
 esoc_name=`cat /sys/bus/esoc/devices/esoc0/esoc_name 2> /dev/null`
 
 target=`getprop ro.board.platform`
+product=`getprop ro.product.name`
+product=${product:(-4)}
 
 if [ -f /sys/class/android_usb/f_mass_storage/lun/nofua ]; then
 	echo 1  > /sys/class/android_usb/f_mass_storage/lun/nofua
@@ -93,11 +95,11 @@ if [ "$(getprop persist.vendor.usb.config)" == "" -a \
 			    fi
 		      ;;
 	              "msm8953")
-                              if [ "$(getprop ro.build.type)" = "user" -a $(getprop ro.debuggable) == "0" ] ; then
-                                 setprop persist.vendor.usb.config none
-                              else
-                                 setprop persist.vendor.usb.config adb
-			      fi
+                          build_type=`getprop ro.build.type`
+                          if [ "$build_type" == "userdebug" ]; then
+                              setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
+                          fi
+		          #setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb
 		      ;;
 	              "msm8998" | "sdm660" | "apq8098_latv")
 		          setprop persist.vendor.usb.config diag,serial_cdev,rmnet,adb

@@ -1,5 +1,6 @@
-
 PRODUCT_COMPATIBLE_PROPERTY_OVERRIDE:=true
+#PRODUCT_SHIPPING_API_LEVEL := $(SHIPPING_API_LEVEL)
+#SHIPPING_API_LEVEL :=28
 
 #PRODUCT_ENFORCE_RRO_TARGETS := *
 
@@ -207,10 +208,8 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.qcom.bluetooth.soc=pronto \
-    bluetooth.hfp.client=1 \
-    persist.vendor.btstack.enable.splita2dp=false \
+    persist.vendor.qcom.bluetooth.soc=pronto \
     persist.vendor.qcom.bluetooth.enable.splita2dp=false \
-    persist.vendor.btstack.enable.splita2dp=false \
     persist.vendor.bluetooth.modem_nv_support=true \
     ro.vendor.bluetooth.wipower=false
 
@@ -225,25 +224,27 @@ PRODUCT_PACKAGES += \
     android.frameworks.cameraservice.device@2.0 \
     android.frameworks.cameraservice.service@2.0 \
     vendor.qti.hardware.camera.device@1.0 \
+    android.hardware.camera.device@3.4 \
     android.hardware.camera.provider@2.5 \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service \
     camera.device@3.2-impl 
-
+    
 PRODUCT_PROPERTY_OVERRIDES += \
-    camera.display.lmax=1280x720 \
-    camera.display.umax=1920x1080 \
-    vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
+    persist.vendor.camera.display.umax=1920x1080 \
+    persist.vendor.camera.display.lmax=1280x720 \
+    vendor.camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk \
     vendor.camera.hal1.packagelist2=com.facebook.katana,com.instagram.android,com.snapchat.android \
-    camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk,ru.sberbankmobile \
+    camera.hal1.packagelist=com.whatsapp,com.skype.raider,com.google.android.talk \
     camera.hal1.packagelist2=com.facebook.katana,com.instagram.android,com.snapchat.android \
-    vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera \
-    vendor.camera.aux.packagelist2=com.android.systemui \
-    camera.lowpower.record.enable=1 \
+    vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.huaqin.factory,com.mi.AutoTest \
+    vendor.camera.aux.packagelist2=com.android.systemui,com.huaqin.cameraautotest,com.huaqin.runtime,org.lineageos.snap \
+    vendor.camera.aux.packageblacklist=com.discord \
+    vendor.camera.lowpower.record.enable=1 \
     media.camera.ts.monotonic=1 \
     persist.camera.isp.clock.optmz=0 \
     persist.camera.stats.test=5 \
-    persist.vendor.qti.telephony.vt_cam_interface=1 \
+    persist.vendor.qti.telephony.vt_cam_interface=2 \
     vidc.enc.dcvs.extra-buff-count=2
 
 # Charger from ASUS
@@ -274,10 +275,11 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-impl \
     android.hardware.graphics.composer@2.1-service \
-    android.hardware.graphics.mapper@2.0-impl \
+    android.hardware.graphics.mapper@2.0-impl-2.1 \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
     android.hardware.renderscript@1.0-impl \
+    vendor.display.config@1.9 \
     gralloc.msm8953 \
     hwcomposer.msm8953 \
     memtrack.msm8953 \
@@ -324,6 +326,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.1-service.markw \
     android.hardware.biometrics.fingerprint@2.1
 
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -469,13 +472,13 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml
 
-# Libshims
-PRODUCT_PACKAGES += \
-    libshim_c
-
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.xiaomi_markw
+    lights.msm8953
+
+PRODUCT_PACKAGES += \
+    android.hardware.light@2.0-impl \
+    android.hardware.light@2.0-service
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
@@ -502,7 +505,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     mmp.enable.3g2=true \
     media.aac_51_output_enabled=true \
     av.debug.disable.pers.cache=1 \
-    ro.config.media_vol_default=10 \
+    ro.config.media_vol_default=25 \
     vendor.mm.enable.qcom_parser=37748735 \
     debug.stagefright.omx_default_rank.sw-audio=1 \
     debug.stagefright.omx_default_rank=0 \
@@ -536,8 +539,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     keyguard.no_require_sim=true \
     persist.vendor.qcomsysd.enabled=1 \
     ro.ct.device.model=XMP-2016060 \
-    ro.config.safe_vol_default=8 \
-    ro.config.alarm_vol_default=3 \
     ro.product.band=Redmi \
     persist.debug.coresight.config=stm-events \
     persist.console.silent.config=1 \
@@ -643,6 +644,7 @@ PRODUCT_DEXPREOPT_SPEED_APPS += \
 PRODUCT_PACKAGES += \
     android.hardware.radio@1.4 \
     android.hardware.radio.config@1.2 \
+    android.hardware.radio.deprecated@1.0 \
     android.hardware.secure_element@1.0 \
     librmnetctl \
     libprotobuf-cpp-full \
@@ -678,7 +680,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.default_network=20,20 \
     telephony.lteOnCdmaDevice=1 \
     ro.com.android.dataroaming=false \
-    vendor.service.qti.ims.enabled=1
+    vendor.service.qti.ims.enabled=1 \
+    ril.ecclist=000,08,100,101,102,110,112,118,119,120,122,911,999
 
 # QMI
 PRODUCT_PACKAGES += \
@@ -812,7 +815,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/aoa_cldb_swl14.bin:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/aoa_cldb_swl14.bin \
     $(LOCAL_PATH)/wifi/p2p_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/p2p_supplicant_overlay.conf \
     $(LOCAL_PATH)/wifi/wpa_supplicant_overlay.conf:$(TARGET_COPY_OUT_VENDOR)/etc/wifi/wpa_supplicant_overlay.conf \
-    $(LOCAL_PATH)/wifi/WCNSS_cfg.dat:$(TARGET_COPY_OUT_VENDOR)/firmware/wlan/prima/WCNSS_cfg.dat \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini::$(TARGET_COPY_OUT_VENDOR)/etc/wifi/WCNSS_qcom_cfg.ini \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.accept \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:$(TARGET_COPY_OUT_VENDOR)/etc/hostapd/hostapd.deny \

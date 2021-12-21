@@ -14,10 +14,6 @@
     <string name="headphone_gain">Усиление звука в наушниках</string>
     <string name="microphone_gain">Усиление звука микрофона</string>
 
-    <!-- FPS Info -->
-    <string name="fps_info_title">Датчик FPS</string>
-    <string name="fps_info_summary">Отобразить информацию с текущими кадрами в секунду</string>
-
     <!-- Ambient gesture haptic feedback -->
     <string name="ambient_gesture_haptic_feedback">Виброотдача</string>
     <string name="ambient_gesture_haptic_feedback_summary">Вибрировать при задействовании определённого жеста</string>

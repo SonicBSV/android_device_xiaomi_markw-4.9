@@ -274,6 +274,8 @@
 18:4294967295:1001:3004
 /* Allow RCS service to communicate to IMS QMI Priv Svc*/
 77:4294967295:1001:3003
+/* Allow RCS service to access QMI-IMSS service */
+18:4294967295:1001:3003
 /* Allow SSGQMIGD to communicate to SSGCCS service*/
 76:4294967295:1001
 /* Allow cnd to accquire netbind */
@@ -329,3 +331,5 @@
 69:4294967295:1000
 /* <WLPS QMI Service ID - 0x39>:<WLFW QMI Instance ID - all instances>:<Client Group ID> */
 57:4294967295:1000
+/* Time-services */
+22:4294967295:3004:1000

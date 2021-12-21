@@ -27,13 +27,6 @@
         android:key="display"
         android:title="@string/display_title">
 
-        <SwitchPreference
-            android:key="fps_info"
-            android:icon="@drawable/ic_fps_info"
-            android:title="@string/fps_info_title"
-            android:summary="@string/fps_info_summary"
-            android:persistent="true" />
-
         <PreferenceScreen
             android:key="ambient_display_gestures"
             android:fragment="com.xiaomi.parts.ambient.AmbientGesturePreferenceActivity"

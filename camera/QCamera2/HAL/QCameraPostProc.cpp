@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2016, 2019, The Linux Foundation. All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are
@@ -286,7 +286,7 @@ int32_t QCameraPostProcessor::start(QCameraChannel *pSrcChannel)
         }
     }
 
-    property_get("persist.camera.longshot.save", prop, "0");
+    property_get("persist.vendor.camera.longshot.save", prop, "0");
     mUseSaveProc = atoi(prop) > 0 ? true : false;
 
     m_PPindex = 0;
@@ -330,7 +330,6 @@ int32_t QCameraPostProcessor::stop()
             pChannel->stop();
             delete pChannel;
             pChannel = NULL;
-            mPPChannels[i] = NULL;
         }
     }
     mPPChannelCount = 0;
@@ -476,7 +475,7 @@ int32_t QCameraPostProcessor::getJpegEncodingConfig(mm_jpeg_encode_params_t& enc
     size_t out_size;
 
     char prop[PROPERTY_VALUE_MAX];
-    property_get("persist.camera.jpeg_burst", prop, "0");
+    property_get("persist.vendor.camera.jpeg_burst", prop, "0");
     mUseJpegBurst = (atoi(prop) > 0) && !mUseSaveProc;
     encode_parm.burst_mode = mUseJpegBurst;
 
@@ -518,7 +517,7 @@ int32_t QCameraPostProcessor::getJpegEncodingConfig(mm_jpeg_encode_params_t& enc
     // system property to disable the thumbnail encoding in order to reduce the power
     // by default thumbnail encoding is set to TRUE and explicitly set this property to
     // disable the thumbnail encoding
-    property_get("persist.camera.tn.disable", prop, "0");
+    property_get("persist.vendor.camera.tn.disable", prop, "0");
     if (atoi(prop) == 1) {
         m_bThumbnailNeeded = FALSE;
         LOGH("m_bThumbnailNeeded is %d", m_bThumbnailNeeded);
@@ -634,6 +633,13 @@ int32_t QCameraPostProcessor::getJpegEncodingConfig(mm_jpeg_encode_params_t& enc
             (img_fmt_thumb != CAM_FORMAT_YUV_420_NV12_UBWC) &&
             (m_parent->mParameters.useJpegExifRotation() ||
             m_parent->mParameters.getJpegRotation() == 0);
+
+        if (encode_parm.thumb_from_postview &&
+          m_parent->mParameters.useJpegExifRotation()){
+          encode_parm.thumb_rotation =
+            m_parent->mParameters.getJpegExifRotation();
+        }
+
         LOGI("Src THUMB buf_cnt = %d, res = %dX%d len = %d rot = %d "
             "src_dim = %dX%d, dst_dim = %dX%d",
             encode_parm.num_tmb_bufs,
@@ -643,10 +649,6 @@ int32_t QCameraPostProcessor::getJpegEncodingConfig(mm_jpeg_encode_params_t& enc
             encode_parm.thumb_dim.src_dim.height,
             encode_parm.thumb_dim.dst_dim.width,
             encode_parm.thumb_dim.dst_dim.height);
-    }
-
-    if (m_parent->mParameters.useJpegExifRotation()){
-        encode_parm.thumb_rotation = m_parent->mParameters.getJpegExifRotation();
     }
 
     encode_parm.num_dst_bufs = 1;
@@ -1335,7 +1337,9 @@ int32_t QCameraPostProcessor::processPPData(mm_camera_super_buf_t *frame)
                 m_parent->mParameters.isFaceDetectionEnabled());
     }
 #endif
-    if ((m_parent->isLongshotEnabled())
+    int8_t mCurReprocCount = job->reprocCount;
+    if ((m_parent->isLongshotEnabled()
+            && (!(m_parent->mParameters.getQuadraCfa())|| (mCurReprocCount == 2)))
             && (!m_parent->isCaptureShutterEnabled())
             && (!m_parent->mCACDoneReceived)) {
         // play shutter sound for longshot
@@ -1344,7 +1348,6 @@ int32_t QCameraPostProcessor::processPPData(mm_camera_super_buf_t *frame)
     }
     m_parent->mCACDoneReceived = FALSE;
 
-    int8_t mCurReprocCount = job->reprocCount;
     int8_t mCurChannelIndex = job->ppChannelIndex;
     if ( mCurReprocCount > 1 ) {
         //In case of pp 2nd pass, we can release input of 2nd pass
@@ -1426,6 +1429,50 @@ int32_t QCameraPostProcessor::processPPData(mm_camera_super_buf_t *frame)
         if (meta_frame != NULL) {
             // fill in meta data frame ptr
             jpeg_job->metadata = (metadata_buffer_t *)meta_frame->buffer;
+        }
+
+        if (m_parent->mParameters.getQuadraCfa()) {
+            // find offline metadata frame for quadra CFA
+            mm_camera_buf_def_t *pOfflineMetaFrame = NULL;
+            QCameraStream * pOfflineMetadataStream = NULL;
+            QCameraChannel *pChannel = m_parent->getChannelByHandle(frame->ch_id);
+            if (pChannel == NULL) {
+                for (int8_t i = 0; i < mPPChannelCount; i++) {
+                    if ((mPPChannels[i] != NULL) &&
+                            (mPPChannels[i]->getMyHandle() == frame->ch_id)) {
+                        pChannel = mPPChannels[i];
+                        break;
+                    }
+                }
+            }
+            if (pChannel == NULL) {
+                LOGE("No corresponding channel (ch_id = %d) exist, return here",
+                        frame->ch_id);
+                return BAD_VALUE;
+            }
+
+            for (uint32_t i = 0; i < frame->num_bufs; i++) {
+                pOfflineMetadataStream = pChannel->getStreamByHandle(frame->bufs[i]->stream_id);
+                if (pOfflineMetadataStream != NULL) {
+                    if (pOfflineMetadataStream->isOrignalTypeOf(CAM_STREAM_TYPE_METADATA)) {
+                        pOfflineMetaFrame = frame->bufs[i];
+                        break;
+                    }
+                }
+            }
+            if (pOfflineMetaFrame != NULL) {
+                // fill in meta data frame ptr
+                jpeg_job->metadata = (metadata_buffer_t *)pOfflineMetaFrame->buffer;
+
+                // Dump offline metadata for Tuning
+                char value[PROPERTY_VALUE_MAX];
+                property_get("persist.vendor.camera.dumpmetadata", value, "0");
+                int32_t enabled = atoi(value);
+                if (enabled && jpeg_job->metadata->is_tuning_params_valid) {
+                    m_parent->dumpMetadataToFile(pOfflineMetadataStream,pOfflineMetaFrame,
+                                                 (char *)"Offline_isp_meta");
+                }
+            }
         }
 
         // enqueu reprocessed frame to jpeg input queue
@@ -1570,7 +1617,6 @@ void QCameraPostProcessor::releaseOngoingPPData(void *data, void *user_data)
                 && (pp_job->offline_buffer)) {
             free(pp_job->offline_reproc_buf);
             pp_job->offline_buffer = false;
-            pp_job->offline_reproc_buf = NULL;
         }
         pp_job->reprocCount = 0;
     }
@@ -1954,8 +2000,7 @@ int32_t QCameraPostProcessor::queryStreams(QCameraStream **main,
                     pStream->isOrignalTypeOf(CAM_STREAM_TYPE_SNAPSHOT) ||
                     pStream->isTypeOf(CAM_STREAM_TYPE_VIDEO) ||
                     pStream->isOrignalTypeOf(CAM_STREAM_TYPE_VIDEO) ||
-                    (m_parent->mParameters.getofflineRAW() &&
-                            pStream->isOrignalTypeOf(CAM_STREAM_TYPE_RAW))) {
+                    pStream->isOrignalTypeOf(CAM_STREAM_TYPE_RAW)) {
                 *main= pStream;
                 *main_image = frame->bufs[i];
             } else if (thumb_stream_needed &&
@@ -2461,6 +2506,12 @@ int32_t QCameraPostProcessor::encodeData(qcamera_jpeg_data_t *jpeg_job_data,
                     jpg_job.encode_job.cam_exif_params.debug_params->asd_debug_params_valid;
             jpg_job.encode_job.p_metadata->is_statsdebug_stats_params_valid =
                     jpg_job.encode_job.cam_exif_params.debug_params->stats_debug_params_valid;
+            jpg_job.encode_job.p_metadata->is_statsdebug_bestats_params_valid =
+                    jpg_job.encode_job.cam_exif_params.debug_params->bestats_debug_params_valid;
+            jpg_job.encode_job.p_metadata->is_statsdebug_bhist_params_valid =
+                    jpg_job.encode_job.cam_exif_params.debug_params->bhist_debug_params_valid;
+            jpg_job.encode_job.p_metadata->is_statsdebug_3a_tuning_params_valid =
+                    jpg_job.encode_job.cam_exif_params.debug_params->q3a_tuning_debug_params_valid;
 
             if (jpg_job.encode_job.cam_exif_params.debug_params->ae_debug_params_valid) {
                 jpg_job.encode_job.p_metadata->statsdebug_ae_data =
@@ -2481,6 +2532,18 @@ int32_t QCameraPostProcessor::encodeData(qcamera_jpeg_data_t *jpeg_job_data,
             if (jpg_job.encode_job.cam_exif_params.debug_params->stats_debug_params_valid) {
                 jpg_job.encode_job.p_metadata->statsdebug_stats_buffer_data =
                         jpg_job.encode_job.cam_exif_params.debug_params->stats_debug_params;
+            }
+            if (jpg_job.encode_job.cam_exif_params.debug_params->bestats_debug_params_valid) {
+                jpg_job.encode_job.p_metadata->statsdebug_bestats_buffer_data =
+                        jpg_job.encode_job.cam_exif_params.debug_params->bestats_debug_params;
+            }
+            if (jpg_job.encode_job.cam_exif_params.debug_params->bhist_debug_params_valid) {
+                jpg_job.encode_job.p_metadata->statsdebug_bhist_data =
+                        jpg_job.encode_job.cam_exif_params.debug_params->bhist_debug_params;
+            }
+            if (jpg_job.encode_job.cam_exif_params.debug_params->q3a_tuning_debug_params_valid) {
+                jpg_job.encode_job.p_metadata->statsdebug_3a_tuning_data =
+                        jpg_job.encode_job.cam_exif_params.debug_params->q3a_tuning_debug_params;
             }
         }
 
@@ -3118,18 +3181,14 @@ int32_t QCameraPostProcessor::doReprocess()
                 ret = mPPChannels[mCurChannelIdx]->doReprocessOffline(ppInputFrame,
                         meta_buf, m_parent->mParameters);
                 if (ret != NO_ERROR) {
-                    m_ongoingPPQ.dequeue(false);
                     pthread_mutex_unlock(&m_reprocess_lock);
                     goto end;
                 }
 
                 if ((ppreq_job->offline_buffer) &&
                         (ppreq_job->offline_reproc_buf)) {
-                    ret = mPPChannels[mCurChannelIdx]->doReprocessOffline(
+                    mPPChannels[mCurChannelIdx]->doReprocessOffline(
                             ppreq_job->offline_reproc_buf, meta_buf);
-                    if (ret != NO_ERROR) {
-                        m_ongoingPPQ.dequeue(false);
-                    }
                 }
                 pthread_mutex_unlock(&m_reprocess_lock);
             } else {
@@ -3174,9 +3233,6 @@ int32_t QCameraPostProcessor::doReprocess()
 
             ret = mPPChannels[mCurChannelIdx]->doReprocess(ppInputFrame,
                     m_parent->mParameters, pMetaStream, meta_buf_index);
-            if (ret != NO_ERROR) {
-                m_ongoingPPQ.dequeue(false);
-            }
         }
     } else {
         LOGE("Reprocess channel is NULL");
