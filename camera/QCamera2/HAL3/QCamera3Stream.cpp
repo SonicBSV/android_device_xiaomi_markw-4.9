@@ -54,8 +54,7 @@ const char* QCamera3Stream::mStreamNames[] = {
         "CAM_RAW",
         "CAM_OFFLINE_PROC",
         "CAM_PARM",
-        "CAM_ANALYSIS",
-        "CAM_MAX" };
+        "CAM_ANALYSIS" };
 
 /*===========================================================================
  * FUNCTION   : get_bufs
@@ -246,6 +245,7 @@ QCamera3Stream::QCamera3Stream(uint32_t camHandle,
         mDataCB(NULL),
         mUserData(NULL),
         mDataQ(releaseFrameData, this),
+        mTimeoutFrameQ(NULL, this),
         mStreamInfoBuf(NULL),
         mStreamBufs(NULL),
         mBufDefs(NULL),
@@ -470,6 +470,7 @@ int32_t QCamera3Stream::start()
     int32_t rc = 0;
 
     mDataQ.init();
+    mTimeoutFrameQ.init();
     if (mBatchSize)
         mFreeBatchBufQ.init();
     rc = mProcTh.launch(dataProcRoutine, this);
@@ -493,6 +494,35 @@ int32_t QCamera3Stream::stop()
     rc = mProcTh.exit();
     return rc;
 }
+
+/*===========================================================================
+ * FUNCTION   : timeoutFrame
+ *
+ * DESCRIPTION: Function to issue timeout on frame
+ *
+ * PARAMETERS :
+ *   @bufIdx  : buffer index of the frame to be timed out
+ *
+ * RETURN     : int32_t type of status
+ *              NO_ERROR  -- success
+ *              none-zero failure code
+ *==========================================================================*/
+int32_t QCamera3Stream::timeoutFrame(int32_t bufIdx)
+{
+    LOGD("E\n");
+    int32_t rc;
+    if (mTimeoutFrameQ.enqueue((void *)bufIdx)) {
+        rc = mProcTh.sendCmd(CAMERA_CMD_TYPE_TIMEOUT, FALSE, FALSE);
+    } else {
+        LOGD("Stream thread is not active, no ops here");
+        rc = NO_ERROR;
+    }
+    LOGD("X\n");
+    return rc;
+}
+
+
+
 
 /*===========================================================================
  * FUNCTION   : processDataNotify
@@ -592,6 +622,12 @@ void *QCamera3Stream::dataProcRoutine(void *data)
         // we got notified about new cmd avail in cmd queue
         camera_cmd_type_t cmd = cmdThread->getCmd();
         switch (cmd) {
+        case CAMERA_CMD_TYPE_TIMEOUT:
+            {
+                int32_t bufIdx = (int32_t)(pme->mTimeoutFrameQ.dequeue());
+                pme->cancelBuffer(bufIdx);
+                break;
+            }
         case CAMERA_CMD_TYPE_DO_NEXT_JOB:
             {
                 LOGD("Do next job");
@@ -606,7 +642,6 @@ void *QCamera3Stream::dataProcRoutine(void *data)
                     } else {
                         // no data cb routine, return buf here
                         pme->bufDone(frame->bufs[0]->buf_idx);
-                        free(frame);
                     }
                 }
             }
@@ -615,6 +650,7 @@ void *QCamera3Stream::dataProcRoutine(void *data)
             LOGH("Exit");
             /* flush data buf queue */
             pme->mDataQ.flush();
+            pme->mTimeoutFrameQ.flush();
             pme->flushFreeBatchBufQ();
             running = 0;
             break;
@@ -687,6 +723,46 @@ int32_t QCamera3Stream::bufDone(uint32_t index)
         rc = aggregateBufToBatch(mBufDefs[index]);
     } else {
         rc = mCamOps->qbuf(mCamHandle, mChannelHandle, &mBufDefs[index]);
+        if (rc < 0) {
+            return FAILED_TRANSACTION;
+        }
+    }
+
+    return rc;
+}
+
+/*===========================================================================
+ * FUNCTION   : cancelBuffer
+ *
+ * DESCRIPTION: Issue cancel buffer request to kernel
+ *
+ * PARAMETERS :
+ *   @index   : index of buffer to be cancelled
+ *
+ * RETURN     : int32_t type of status
+ *              NO_ERROR  -- success
+ *              none-zero failure code
+ *==========================================================================*/
+int32_t QCamera3Stream::cancelBuffer(uint32_t index)
+{
+    int32_t rc = NO_ERROR;
+    Mutex::Autolock lock(mLock);
+
+    if ((index >= mNumBufs) || (mBufDefs == NULL)) {
+        LOGE("index; %d, mNumBufs: %d", index, mNumBufs);
+        return BAD_INDEX;
+    }
+    if (mStreamBufs == NULL)
+    {
+        LOGE("putBufs already called");
+        return INVALID_OPERATION;
+    }
+
+    /* if (UNLIKELY(mBatchSize)) {
+        FIXME
+    } else */{
+        LOGE("Calling cancel buf on idx:%d for stream type:%d",index, getMyType());
+        rc = mCamOps->cancel_buffer(mCamHandle, mChannelHandle, mHandle, index);
         if (rc < 0) {
             return FAILED_TRANSACTION;
         }
@@ -1106,6 +1182,7 @@ int32_t QCamera3Stream::unmapBuf(uint8_t buf_type, uint32_t buf_idx, int32_t pla
 int32_t QCamera3Stream::setParameter(cam_stream_parm_buffer_t &param)
 {
     int32_t rc = NO_ERROR;
+    Mutex::Autolock lock(mParamLock);
     mStreamInfo->parm_buf = param;
     rc = mCamOps->set_stream_parms(mCamHandle,
                                    mChannelHandle,

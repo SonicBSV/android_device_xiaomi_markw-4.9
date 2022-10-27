@@ -24,7 +24,7 @@
 #include <cutils/properties.h>
 
 // System dependencies
-#include <CameraParameters.h>
+//#include <camera/CameraParameters.h>
 #include <utils/Errors.h>
 
 // Camera dependencies
@@ -33,14 +33,13 @@
 #include "QCameraParametersIntf.h"
 #include "QCameraThermalAdapter.h"
 #include "QCameraCommon.h"
+#include "CameraParameters.h"
 
 
 extern "C" {
 #include "mm_jpeg_interface.h"
 }
 
-using ::android::hardware::camera::common::V1_0::helper::CameraParameters;
-using ::android::hardware::camera::common::V1_0::helper::Size;
 using namespace android;
 
 namespace qcamera {
@@ -84,6 +83,11 @@ private:
         cam_dimension_t *getTotalSizeTbl();
         int32_t getPicSizeFromAPK(int &width, int &height);
         int32_t getPicSizeSetted(int &width, int &height);
+        bool mScaleEnabled;
+        bool mIsUnderScaling;  //if in scale status
+        bool isBokehEnabled;
+        int32_t bokehSnapshotWidth;
+        int32_t bokehSnapshotHeight;
 
     private:
         bool isScalePicSize(int width, int height);
@@ -91,10 +95,6 @@ private:
         int32_t setSensorSupportedPicSize();
         size_t checkScaleSizeTable(size_t scale_cnt, cam_dimension_t *scale_tbl,
                 size_t org_cnt, cam_dimension_t *org_tbl);
-
-        bool mScaleEnabled;
-        bool mIsUnderScaling;   //if in scale status
-
         // picture size cnt that need scale operation
         size_t mNeedScaleCnt;
         cam_dimension_t mNeedScaledSizeTbl[MAX_SCALE_SIZES_CNT];
@@ -616,9 +616,6 @@ private:
     static const char KEY_TS_MAKEUP[];
     static const char KEY_TS_MAKEUP_WHITEN[];
     static const char KEY_TS_MAKEUP_CLEAN[];
-    static const char KEY_XM_MAKEUP[];
-    static const char KEY_XM_MAKEUP_WHITEN[];
-    static const char KEY_XM_MAKEUP_CLEAN[];
 #endif
     //param key for HFR batch size
     static const char KEY_QC_VIDEO_BATCH_SIZE[];
@@ -648,6 +645,7 @@ public:
     int32_t commitParameters();
 
     char* getParameters();
+    bool getDualCameraMode();
     void getPreviewFpsRange(int *min_fps, int *max_fps) const {
             CameraParameters::getPreviewFpsRange(min_fps, max_fps);
     }
@@ -901,6 +899,8 @@ public:
     bool sendStreamConfigForPickRes(cam_stream_size_info_t &stream_config_info);
     int32_t updateDtVc(int32_t *dt, int32_t *vc);
     bool isLinkPreviewForLiveShot();
+    bool m_bDualCameraMode;
+    cam_dimension_t originalSnapshotDim;
 
 private:
     int32_t setPreviewSize(const QCameraParameters& );
@@ -958,7 +958,6 @@ private:
     int32_t setStillMore(const QCameraParameters& );
 #ifdef TARGET_TS_MAKEUP
     int32_t setTsMakeup(const QCameraParameters& );
-    int32_t setXmMakeup(const QCameraParameters& );
 #endif
     int32_t setNoiseReductionMode(const QCameraParameters& );
     int32_t setRedeyeReduction(const QCameraParameters& );
@@ -1267,7 +1266,6 @@ private:
     uint8_t mAecSkipDisplayFrameBound;
     bool m_bQuadraCfa;
     bool m_bSmallJpegSize;
-    bool m_bDualCameraMode;
     int32_t mDualCamId;
     bool m_bMainCamera;
 };

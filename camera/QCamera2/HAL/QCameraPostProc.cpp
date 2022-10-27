@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2016, 2019, The Linux Foundation. All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are
@@ -286,7 +286,7 @@ int32_t QCameraPostProcessor::start(QCameraChannel *pSrcChannel)
         }
     }
 
-    property_get("persist.camera.longshot.save", prop, "0");
+    property_get("persist.vendor.camera.longshot.save", prop, "0");
     mUseSaveProc = atoi(prop) > 0 ? true : false;
 
     m_PPindex = 0;
@@ -330,7 +330,6 @@ int32_t QCameraPostProcessor::stop()
             pChannel->stop();
             delete pChannel;
             pChannel = NULL;
-            mPPChannels[i] = NULL;
         }
     }
     mPPChannelCount = 0;
@@ -476,7 +475,7 @@ int32_t QCameraPostProcessor::getJpegEncodingConfig(mm_jpeg_encode_params_t& enc
     size_t out_size;
 
     char prop[PROPERTY_VALUE_MAX];
-    property_get("persist.camera.jpeg_burst", prop, "0");
+    property_get("persist.vendor.camera.jpeg_burst", prop, "0");
     mUseJpegBurst = (atoi(prop) > 0) && !mUseSaveProc;
     encode_parm.burst_mode = mUseJpegBurst;
 
@@ -518,7 +517,7 @@ int32_t QCameraPostProcessor::getJpegEncodingConfig(mm_jpeg_encode_params_t& enc
     // system property to disable the thumbnail encoding in order to reduce the power
     // by default thumbnail encoding is set to TRUE and explicitly set this property to
     // disable the thumbnail encoding
-    property_get("persist.camera.tn.disable", prop, "0");
+    property_get("persist.vendor.camera.tn.disable", prop, "0");
     if (atoi(prop) == 1) {
         m_bThumbnailNeeded = FALSE;
         LOGH("m_bThumbnailNeeded is %d", m_bThumbnailNeeded);
@@ -1467,7 +1466,7 @@ int32_t QCameraPostProcessor::processPPData(mm_camera_super_buf_t *frame)
 
                 // Dump offline metadata for Tuning
                 char value[PROPERTY_VALUE_MAX];
-                property_get("persist.camera.dumpmetadata", value, "0");
+                property_get("persist.vendor.camera.dumpmetadata", value, "0");
                 int32_t enabled = atoi(value);
                 if (enabled && jpeg_job->metadata->is_tuning_params_valid) {
                     m_parent->dumpMetadataToFile(pOfflineMetadataStream,pOfflineMetaFrame,
@@ -1618,7 +1617,6 @@ void QCameraPostProcessor::releaseOngoingPPData(void *data, void *user_data)
                 && (pp_job->offline_buffer)) {
             free(pp_job->offline_reproc_buf);
             pp_job->offline_buffer = false;
-            pp_job->offline_reproc_buf = NULL;
         }
         pp_job->reprocCount = 0;
     }
@@ -3183,18 +3181,14 @@ int32_t QCameraPostProcessor::doReprocess()
                 ret = mPPChannels[mCurChannelIdx]->doReprocessOffline(ppInputFrame,
                         meta_buf, m_parent->mParameters);
                 if (ret != NO_ERROR) {
-                    m_ongoingPPQ.dequeue(false);
                     pthread_mutex_unlock(&m_reprocess_lock);
                     goto end;
                 }
 
                 if ((ppreq_job->offline_buffer) &&
                         (ppreq_job->offline_reproc_buf)) {
-                    ret = mPPChannels[mCurChannelIdx]->doReprocessOffline(
+                    mPPChannels[mCurChannelIdx]->doReprocessOffline(
                             ppreq_job->offline_reproc_buf, meta_buf);
-                    if (ret != NO_ERROR) {
-                        m_ongoingPPQ.dequeue(false);
-                    }
                 }
                 pthread_mutex_unlock(&m_reprocess_lock);
             } else {
@@ -3239,9 +3233,6 @@ int32_t QCameraPostProcessor::doReprocess()
 
             ret = mPPChannels[mCurChannelIdx]->doReprocess(ppInputFrame,
                     m_parent->mParameters, pMetaStream, meta_buf_index);
-            if (ret != NO_ERROR) {
-                m_ongoingPPQ.dequeue(false);
-            }
         }
     } else {
         LOGE("Reprocess channel is NULL");
