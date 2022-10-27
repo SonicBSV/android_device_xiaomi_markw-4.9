@@ -1,5 +1,5 @@
-allow qti_init_shell proc_touchpanel:dir { r_dir_perms setattr };
-allow qti_init_shell proc_touchpanel:file { getattr setattr };
+allow qti_init_shell proc_gesture:dir { r_dir_perms setattr };
+allow qti_init_shell proc_gesture:file { getattr setattr };
 
 # Allow adjust page_cluster setting
 allow qti_init_shell proc_page_cluster:file { open write };

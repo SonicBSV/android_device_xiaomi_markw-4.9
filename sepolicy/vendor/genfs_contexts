@@ -11,7 +11,7 @@ genfscon sysfs   /devices/platform/soc/200f000.qcom,spmi/spmi-0/spmi0-02/200f000
 genfscon proc /sys/vm/dirty_writeback_centisecs                       u:object_r:proc_dirty:s0
 
 # Touchscreen
-genfscon proc /touchpanel                                             u:object_r:proc_touchpanel:s0
+genfscon proc /gesture                                             u:object_r:proc_gesture:s0
 
 # XiaomiParts (Sound-Control nodes)
 genfscon sysfs /kernel/sound_control/headphone_gain                u:object_r:sysfs_hgain:s0
