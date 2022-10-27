@@ -17,7 +17,7 @@
 #ifndef _BDROID_BUILDCFG_H
 #define _BDROID_BUILDCFG_H
 
-#define BTM_DEF_LOCAL_NAME   "Redmi Note 4"
+#define BTM_DEF_LOCAL_NAME   "Redmi 4 Prime"
 #define MAX_ACL_CONNECTIONS    16
 #define MAX_L2CAP_CHANNELS    16
 #define BLE_VND_INCLUDED   TRUE
