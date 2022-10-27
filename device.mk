@@ -87,6 +87,15 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/android.software.vulkan.deqp.level-2020-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml
 
+# ADB on boot
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.adb.secure=0 \
+ro.secure=0 \
+ro.debuggable=1 \
+persist.service.adb.enable=1 \
+persist.service.debuggable=1 \
+persist.sys.usb.config=mtp,adb
+
 # ANT
 PRODUCT_PACKAGES += \
     AntHalService \
