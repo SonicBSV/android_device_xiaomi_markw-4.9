@@ -79,8 +79,8 @@ on boot
     chmod 0660 /sys/bus/i2c/devices/3-0038/set_cover_mode
     chown system system /sys/kernel/boot_slpi/ssr
     chown system system /sys/kernel/boot_adsp/ssr
-    chown system system /sys/devices/soc/78b7000.i2c/i2c-3/3-0038/enable_dt2w
-    chmod 0664 /sys/devices/soc/78b7000.i2c/i2c-3/3-0038/enable_dt2w
+    chmod 0664 /proc/gesture/onoff
+    chown system system /proc/gesture/onoff
 
     # This location is used by QCRIL to host UNIX domain
     # socket files used for internal IPC within QCRIL
