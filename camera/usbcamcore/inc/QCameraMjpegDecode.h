@@ -1,4 +1,4 @@
-/* Copyright (c) 2012, 2016, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2012, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -24,54 +24,26 @@
  * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
  */
 
-#ifndef __QCAMERA_CMD_THREAD_H__
-#define __QCAMERA_CMD_THREAD_H__
+#ifndef __QCAMERA_MJPEG_DECODE_H
+#define __QCAMERA_MJPEG_DECODE_H
 
-// System dependencies
-#include <pthread.h>
+typedef int MJPEGD_ERR;
+#define MJPEGD_NO_ERROR          0
+#define MJPEGD_ERROR            -1
+#define MJPEGD_INSUFFICIENT_MEM -2
 
-// Camera dependencies
-#include "cam_semaphore.h"
-#include "cam_types.h"
-#include "QCameraQueue.h"
+MJPEGD_ERR mjpegDecoderInit(void**);
 
-namespace qcamera {
+MJPEGD_ERR mjpegDecoderDestroy(void* mjpegd);
 
-typedef enum
-{
-    CAMERA_CMD_TYPE_NONE,
-    CAMERA_CMD_TYPE_START_DATA_PROC,
-    CAMERA_CMD_TYPE_STOP_DATA_PROC,
-    CAMERA_CMD_TYPE_DO_NEXT_JOB,
-    CAMERA_CMD_TYPE_EXIT,
-    CAMERA_CMD_TYPE_TIMEOUT,
-    CAMERA_CMD_TYPE_MAX
-} camera_cmd_type_t;
+MJPEGD_ERR mjpegDecode(
+            void*   mjpegd,
+            char*   mjpegBuffer,
+            int     mjpegBufferSize,
+            char*   outputYptr,
+            char*   outputUVptr,
+            int     outputFormat);
 
-typedef struct {
-    camera_cmd_type_t cmd;
-} camera_cmd_t;
-
-class QCameraCmdThread {
-public:
-    QCameraCmdThread();
-    ~QCameraCmdThread();
-
-    int32_t launch(void *(*start_routine)(void *), void* user_data);
-    int32_t setName(const char* name);
-    int32_t exit();
-    int32_t sendCmd(camera_cmd_type_t cmd, uint8_t sync_cmd, uint8_t priority);
-    camera_cmd_type_t getCmd();
-
-    QCameraQueue cmd_queue;      /* cmd queue */
-    pthread_t cmd_pid;           /* cmd thread ID */
-    cam_semaphore_t cmd_sem;               /* semaphore for cmd thread */
-    cam_semaphore_t sync_sem;              /* semaphore for synchronized call signal */
-};
-
-}; // namespace qcamera
-
-#endif /* __QCAMERA_CMD_THREAD_H__ */
+#endif /* __QCAMERA_MJPEG_DECODE_H */
