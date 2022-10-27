@@ -309,6 +309,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.light@2.0-service.xiaomi_markw
 
+# LiveDisplay native
+PRODUCT_PACKAGES += \
+    vendor.lineage.livedisplay@2.0-service-sdm
+
 # LMKD
 # Enable stats logging in LMKD
 TARGET_LMKD_STATS_LOG := true
