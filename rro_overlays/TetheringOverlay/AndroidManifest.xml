@@ -12,7 +12,7 @@
 -->
 <!-- Device specific tethering overlays -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.networkstack.tethering.resources.mido"
+    package="com.android.networkstack.tethering.resources.markw"
     android:versionCode="1"
     android:versionName="1.0">
     <application android:hasCode="false" />

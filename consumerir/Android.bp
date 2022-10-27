@@ -14,11 +14,11 @@
 // limitations under the License.
 
 cc_binary {
-    name: "android.hardware.ir@1.0-service.xiaomi_mido",
+    name: "android.hardware.ir@1.0-service.xiaomi_markw",
     relative_install_path: "hw",
     defaults: ["hidl_defaults"],
-    init_rc: ["android.hardware.ir@1.0-service.xiaomi_mido.rc"],
-    vintf_fragments: ["android.hardware.ir@1.0-service.xiaomi_mido.xml"],
+    init_rc: ["android.hardware.ir@1.0-service.xiaomi_markw.rc"],
+    vintf_fragments: ["android.hardware.ir@1.0-service.xiaomi_markw.xml"],
     srcs: ["service.cpp", "ConsumerIr.cpp"],
     shared_libs: [
         "libbase",

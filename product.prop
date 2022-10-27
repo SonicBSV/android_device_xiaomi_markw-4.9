@@ -1,10 +1,10 @@
 #
-# product.prop for mido
+# product.prop for markw
 #
 
 # Bluetooth
 bluetooth.device.class_of_device=90,2,12
-bluetooth.device.default_name=Redmi Note 4
+bluetooth.device.default_name=Redmi 4 Prime
 bluetooth.hardware.power.operating_voltage_mv=3300
 
 # Bluetooth profiles

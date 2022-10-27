@@ -1,4 +1,4 @@
-service vendor.fps_hal /vendor/bin/hw/android.hardware.biometrics.fingerprint@2.1-service.xiaomi_mido
+service vendor.fps_hal /vendor/bin/hw/android.hardware.biometrics.fingerprint@2.1-service.xiaomi_markw
     # "class hal" causes a race condition on some devices due to files created
     # in /data. As a workaround, postpone startup until later in boot once
     # /data is mounted.
@@ -27,6 +27,15 @@ on boot
     chmod 0660 /sys/devices/soc/soc:fpc1020/hw_reset
     chown system system /sys/devices/soc/soc:fpc1020/wakeup_enable
     chmod 0660 /sys/devices/soc/soc:fpc1020/wakeup_enable
+
+    chown system system /sys/devices/platform/soc/soc:fpc1020/compatible_all
+    chmod 0664 /sys/devices/platform/soc/soc:fpc1020/compatible_all
+    chown system system /sys/devices/platform/soc/soc:fpc1020/irq
+    chmod 0660 /sys/devices/platform/soc/soc:fpc1020/irq
+    chown system system /sys/devices/platform/soc/soc:fpc1020/hw_reset
+    chmod 0660 /sys/devices/platform/soc/soc:fpc1020/hw_reset
+    chown system system /sys/devices/platform/soc/soc:fpc1020/wakeup_enable
+    chmod 0660 /sys/devices/platform/soc/soc:fpc1020/wakeup_enable
 
 service vendor.goodix_script /vendor/bin/init.goodix.sh
     class late_start
