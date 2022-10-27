@@ -10,8 +10,8 @@
 /sys/devices/(platform)?/soc/soc:fpc1020(/.*)?  u:object_r:fpc_sysfs:s0
 
 # Glove Mode
-/sys/class/tp_glove/device(/.*)?		  u:object_r:proc_touchpanel:s0
-/sys/devices/virtual/tp_glove(/.*)?		  u:object_r:proc_touchpanel:s0
+/sys/class/tp_glove/device(/.*)?		  u:object_r:proc_gesture:s0
+/sys/devices/virtual/tp_glove(/.*)?		  u:object_r:proc_gesture:s0
 
 # Goodix Fingerprint
 /dev/goodix_fp                                  u:object_r:gx_fpd_device:s0
@@ -49,7 +49,7 @@
 # Sys files
 /sys/devices(/platform)?/soc/78b6000\.i2c/i2c-2/2-[0-9a-f]+/leds(/.*)?          u:object_r:sysfs_leds:s0
 /sys/devices(/platform)?/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/onoff         u:object_r:proc_gesture:s0
-/sys/devices(/platform)?/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/disable_keys        u:object_r:proc_touchpanel:s0
+/sys/devices(/platform)?/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/disable_keys        u:object_r:proc_gesture:s0
 
 # Torch
 /sys/devices/platform/soc/200f000.qcom,spmi/spmi-0/spmi0-03/200f000.qcom,spmi:qcom,pmi8950@3:qcom,leds@d300/leds/led:torch_0/max_brightness          u:object_r:sysfs_torch:s0
