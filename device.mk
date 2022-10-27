@@ -206,7 +206,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.xiaomi_markw \
     fakelogprint \
-    libshims_gxfpd
+    gx_fpd_shim
 
 # FM
 PRODUCT_PACKAGES += \
