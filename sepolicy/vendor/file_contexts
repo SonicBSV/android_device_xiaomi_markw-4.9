@@ -57,3 +57,6 @@
 
 # Vibrator
 /sys/module/qti_haptics/parameters/vmax_mv_override          u:object_r:sysfs_vibrator:s0
+
+# USB HAL
+/(vendor|system/vendor)/bin/hw/android\.hardware\.usb\@1\.0-service\.markw                                u:object_r:hal_usb_default_exec:s0
