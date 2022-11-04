@@ -421,7 +421,7 @@ PRODUCT_PACKAGES += \
     vendor.lineage.touch@1.0-service.xiaomi_markw
 
 # Trust HAL
-PRODUCT_PACKAGES += \
+#PRODUCT_PACKAGES += \
     vendor.lineage.trust@1.0-service
 
 # USB HAL
