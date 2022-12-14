@@ -253,8 +253,6 @@ typedef struct{
 
     uint8_t video_stablization_supported; /* flag id video stablization is supported */
 
-    volatile char xiaomi_03[327]; /* xiaomi_03[3] = sizes_tbl_cnt, like preview_sizes_tbl_cnt */
-
     size_t picture_sizes_tbl_cnt;                           /* picture sizes table size */
     cam_dimension_t picture_sizes_tbl[MAX_SIZES_CNT];       /* picture sizes table */
     /* The minimum frame duration that is supported for each
@@ -555,7 +553,6 @@ typedef struct{
     uint8_t hotPixel_mode;
     uint32_t hotPixel_count;
     cam_coordinate_type_t hotPixelMap[512];
-    char xiaomi_04[2051];
 
     /* supported instant capture/AEC convergence modes */
     size_t supported_instant_aec_modes_cnt;
@@ -722,8 +719,8 @@ typedef struct {
     ((NULL != TABLE_PTR) ? \
     ((TABLE_PTR->data.member_variable_##META_ID[ 0 ] = DATA), \
     (TABLE_PTR->is_valid[META_ID] = 1), (0)) : \
-    (({LOGE("Unable to set metadata TABLE_PTR:%p META_ID:%d", \
-            TABLE_PTR, META_ID)}), (-1))) \
+    ((LOGE("Unable to set metadata TABLE_PTR:%p META_ID:%d", \
+            TABLE_PTR, META_ID)), (-1))) \
 
 #define ADD_SET_PARAM_ARRAY_TO_BATCH(TABLE_PTR, META_ID, PDATA, COUNT, RCOUNT) \
 { \
@@ -905,13 +902,10 @@ typedef struct {
     INCLUDE(CAM_INTF_PARM_BESTSHOT_MODE,                uint32_t,                    1);
     INCLUDE(CAM_INTF_PARM_DIS_ENABLE,                   int32_t,                     1);
     INCLUDE(CAM_INTF_PARM_LED_MODE,                     int32_t,                     1);
-    INCLUDE(XIAOMI_04,                                  uint32_t,                    1);
-    INCLUDE(XIAOMI_05,                                  uint8_t,                     1);
     INCLUDE(CAM_INTF_META_LED_MODE_OVERRIDE,            uint32_t,                    1);
 
     /* dual camera specific params */
     INCLUDE(CAM_INTF_PARM_RELATED_SENSORS_CALIBRATION,  cam_related_system_calibration_data_t, 1);
-    INCLUDE(XIAOMI_01,                                  uint32_t,                 8);
     INCLUDE(CAM_INTF_META_AF_FOCAL_LENGTH_RATIO,        cam_focal_length_ratio_t, 1);
     INCLUDE(CAM_INTF_META_SNAP_CROP_INFO_SENSOR,        cam_stream_crop_info_t,   1);
     INCLUDE(CAM_INTF_META_SNAP_CROP_INFO_CAMIF,         cam_stream_crop_info_t,   1);
@@ -1032,8 +1026,6 @@ typedef struct {
     INCLUDE(CAM_INTF_PARM_JPEG_SCALE_DIMENSION,         cam_dimension_t,             1);
     INCLUDE(CAM_INTF_META_FOCUS_DEPTH_INFO,             uint8_t,                     1);
     INCLUDE(CAM_INTF_PARM_HAL_BRACKETING_HDR,           cam_hdr_param_t,             1);
-    INCLUDE(XIAOMI_02,                                  uint32_t,                    1);
-    INCLUDE(XIAOMI_03,                                  uint32_t,                    1);
 } metadata_data_t;
 
 /* Update clear_metadata_buffer() function when a new is_xxx_valid is added to

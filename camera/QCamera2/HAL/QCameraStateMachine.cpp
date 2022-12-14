@@ -1661,9 +1661,6 @@ int32_t QCameraStateMachine::procEvtPreviewingState(qcamera_sm_evt_enum_t evt,
             case QCAMERA_INTERNAL_EVT_ZSL_CAPTURE_DONE:
                 rc = m_parent->processZSLCaptureDone();
                 break;
-            case QCAMERA_INTERNAL_EVT_DUAL_CAM_UPDATE:
-                rc = m_parent->processDualCameraUpdate(internal_evt->repro_info);
-                break;
             default:
                 LOGE("Invalid internal event %d in state(%d)",
                              internal_evt->evt_type, m_state);
@@ -1848,9 +1845,6 @@ int32_t QCameraStateMachine::procEvtPrepareSnapshotState(qcamera_sm_evt_enum_t e
                 break;
             case QCAMERA_INTERNAL_EVT_ZSL_CAPTURE_DONE:
                 rc = m_parent->processZSLCaptureDone();
-                break;
-            case QCAMERA_INTERNAL_EVT_DUAL_CAM_UPDATE:
-                rc = m_parent->processDualCameraUpdate(internal_evt->repro_info);
                 break;
             default:
                 LOGE("Invalid internal event %d in state(%d)",
@@ -2248,9 +2242,6 @@ int32_t QCameraStateMachine::procEvtPicTakingState(qcamera_sm_evt_enum_t evt,
                 break;
             case QCAMERA_INTERNAL_EVT_ZSL_CAPTURE_DONE:
                 rc = m_parent->processZSLCaptureDone();
-                break;
-            case QCAMERA_INTERNAL_EVT_DUAL_CAM_UPDATE:
-                rc = m_parent->processDualCameraUpdate(internal_evt->repro_info);
                 break;
             default:
                 break;
@@ -2726,9 +2717,6 @@ int32_t QCameraStateMachine::procEvtRecordingState(qcamera_sm_evt_enum_t evt,
             case QCAMERA_INTERNAL_EVT_ZSL_CAPTURE_DONE:
                 rc = m_parent->processZSLCaptureDone();
                 break;
-            case QCAMERA_INTERNAL_EVT_DUAL_CAM_UPDATE:
-                rc = m_parent->processDualCameraUpdate(internal_evt->repro_info);
-                break;
             default:
                 break;
             }
@@ -3108,9 +3096,6 @@ int32_t QCameraStateMachine::procEvtVideoPicTakingState(qcamera_sm_evt_enum_t ev
                 break;
             case QCAMERA_INTERNAL_EVT_ZSL_CAPTURE_DONE:
                 rc = m_parent->processZSLCaptureDone();
-                break;
-            case QCAMERA_INTERNAL_EVT_DUAL_CAM_UPDATE:
-                rc = m_parent->processDualCameraUpdate(internal_evt->repro_info);
                 break;
             default:
                 break;
@@ -3620,9 +3605,6 @@ int32_t QCameraStateMachine::procEvtPreviewPicTakingState(qcamera_sm_evt_enum_t 
                 break;
             case QCAMERA_INTERNAL_EVT_ZSL_CAPTURE_DONE:
                 rc = m_parent->processZSLCaptureDone();
-                break;
-            case QCAMERA_INTERNAL_EVT_DUAL_CAM_UPDATE:
-                rc = m_parent->processDualCameraUpdate(internal_evt->repro_info);
                 break;
             default:
                 break;
