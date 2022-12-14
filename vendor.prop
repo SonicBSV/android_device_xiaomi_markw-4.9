@@ -120,7 +120,7 @@ vendor.rild.libargs=-d /dev/smd0
 
 # SOC
 ro.soc.manufacturer=Qualcomm
-ro.soc.model=SDM450
+ro.soc.model=MSM8953
 
 # Tcp
 net.tcp.2g_init_rwnd=10
