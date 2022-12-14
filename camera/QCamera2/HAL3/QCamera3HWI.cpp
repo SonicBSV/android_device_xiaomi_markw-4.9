@@ -1442,6 +1442,7 @@ int QCamera3HardwareInterface::configureStreamsPerfLocked(
     LOGD("mOpMode: %d", mOpMode);
 
     mCurrentSceneMode = 0;
+    m_fwAeMode = ANDROID_CONTROL_AE_MODE_ON;
 
     /* first invalidate all the steams in the mStreamList
      * if they appear again, they will be validated */
@@ -3025,7 +3026,7 @@ void QCamera3HardwareInterface::handleMetadataWithLock(
                 i->bUrgentReceived = 1;
                 // Extract 3A metadata
                 result.result =
-                    translateCbUrgentMetadataToResultMetadata(metadata);
+                    translateCbUrgentMetadataToResultMetadata(metadata, i->fwkAeMode);
                 // Populate metadata result
                 result.frame_number = urgent_frame_number;
                 result.num_output_buffers = 0;
@@ -4646,6 +4647,13 @@ no_error:
                 meta.find(ANDROID_CONTROL_CAPTURE_INTENT).data.u8[0];
     }
     pendingRequest.capture_intent = mCaptureIntent;
+
+    if (meta.exists(ANDROID_CONTROL_AE_MODE)) {
+          pendingRequest.fwkAeMode = (uint8_t)meta.find(ANDROID_CONTROL_AE_MODE).data.u8[0];
+          m_fwAeMode = pendingRequest.fwkAeMode;
+    } else {
+          pendingRequest.fwkAeMode = m_fwAeMode;
+    }
 
     //extract CAC info
     if (meta.exists(ANDROID_COLOR_CORRECTION_ABERRATION_MODE)) {
@@ -6581,7 +6589,7 @@ mm_jpeg_exif_params_t QCamera3HardwareInterface::get3AExifParams()
  *==========================================================================*/
 camera_metadata_t*
 QCamera3HardwareInterface::translateCbUrgentMetadataToResultMetadata
-                                (metadata_buffer_t *metadata)
+                                (metadata_buffer_t *metadata, uint8_t fwkAeMode)
 {
     CameraMetadata camMetadata;
     camera_metadata_t *resultMetadata;
@@ -6664,6 +6672,7 @@ QCamera3HardwareInterface::translateCbUrgentMetadataToResultMetadata
         redeye = *pRedeye;
     }
 
+
     if (1 == redeye) {
         fwk_aeMode = ANDROID_CONTROL_AE_MODE_ON_AUTO_FLASH_REDEYE;
         camMetadata.update(ANDROID_CONTROL_AE_MODE, &fwk_aeMode, 1);
@@ -6677,7 +6686,10 @@ QCamera3HardwareInterface::translateCbUrgentMetadataToResultMetadata
             LOGE("Unsupported flash mode %d", flashMode);
         }
     } else if (aeMode == CAM_AE_MODE_ON) {
-        fwk_aeMode = ANDROID_CONTROL_AE_MODE_ON;
+        if (CAM_FLASH_MODE_OFF == flashMode)
+            fwk_aeMode = fwkAeMode;
+        else
+            fwk_aeMode = ANDROID_CONTROL_AE_MODE_ON;
         camMetadata.update(ANDROID_CONTROL_AE_MODE, &fwk_aeMode, 1);
     } else if (aeMode == CAM_AE_MODE_OFF) {
         fwk_aeMode = ANDROID_CONTROL_AE_MODE_OFF;
@@ -7500,8 +7512,14 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
     staticInfo.update(ANDROID_SENSOR_INFO_WHITE_LEVEL,
             &gCamCapability[cameraId]->white_level, 1);
 
-    staticInfo.update(ANDROID_SENSOR_BLACK_LEVEL_PATTERN,
-            gCamCapability[cameraId]->black_level_pattern, BLACK_LEVEL_PATTERN_CNT);
+    if(facingBack && gCamCapability[cameraId]->black_level_pattern[0] < 16) {
+        int32_t black_level_pattern_custom[BLACK_LEVEL_PATTERN_CNT] = {32,32,32,32};
+        staticInfo.update(ANDROID_SENSOR_BLACK_LEVEL_PATTERN,
+                black_level_pattern_custom, BLACK_LEVEL_PATTERN_CNT);
+    } else {
+        staticInfo.update(ANDROID_SENSOR_BLACK_LEVEL_PATTERN,
+                gCamCapability[cameraId]->black_level_pattern, BLACK_LEVEL_PATTERN_CNT);
+    }
 
 #ifndef USE_HAL_3_3
     bool hasBlackRegions = false;
@@ -8080,10 +8098,8 @@ int QCamera3HardwareInterface::initStaticMetadata(uint32_t cameraId)
     if (supportBurst) {
         available_capabilities.add(ANDROID_REQUEST_AVAILABLE_CAPABILITIES_BURST_CAPTURE);
     }
-#if 0
     available_capabilities.add(ANDROID_REQUEST_AVAILABLE_CAPABILITIES_PRIVATE_REPROCESSING);
     available_capabilities.add(ANDROID_REQUEST_AVAILABLE_CAPABILITIES_YUV_REPROCESSING);
-#endif
     if (hfrEnable && available_hfr_configs.array()) {
         available_capabilities.add(
                 ANDROID_REQUEST_AVAILABLE_CAPABILITIES_CONSTRAINED_HIGH_SPEED_VIDEO);
@@ -9219,7 +9235,7 @@ camera_metadata_t* QCamera3HardwareInterface::translateCapabilityToMetadata(int 
     /* CDS default */
     char prop[PROPERTY_VALUE_MAX];
     memset(prop, 0, sizeof(prop));
-    property_get("persist.vendor.camera.CDS", prop, "Off");
+    property_get("persist.vendor.camera.CDS", prop, "Auto");
     cam_cds_mode_type_t cds_mode = CAM_CDS_MODE_AUTO;
     cds_mode = lookupProp(CDS_MAP, METADATA_MAP_SIZE(CDS_MAP), prop);
     if (CAM_CDS_MODE_MAX == cds_mode) {
@@ -9985,7 +10001,10 @@ int QCamera3HardwareInterface::translateToHalMetadata
         if (frame_settings.exists(ANDROID_CONTROL_AE_MODE)) {
             uint8_t fwk_aeMode =
                 frame_settings.find(ANDROID_CONTROL_AE_MODE).data.u8[0];
-            if (fwk_aeMode > ANDROID_CONTROL_AE_MODE_ON) {
+            uint8_t fwk_flashMode =
+                 frame_settings.find(ANDROID_FLASH_MODE).data.u8[0];
+            if ((fwk_aeMode > ANDROID_CONTROL_AE_MODE_ON) &&
+                 (fwk_flashMode != ANDROID_FLASH_MODE_OFF)) {
                 respectFlashMode = 0;
                 LOGH("AE Mode controls flash, ignore android.flash.mode");
             }

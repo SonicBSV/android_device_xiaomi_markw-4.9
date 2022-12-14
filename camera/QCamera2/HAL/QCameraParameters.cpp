@@ -5751,13 +5751,11 @@ int32_t QCameraParameters::initDefaultParameters()
     set(KEY_SUPPORTED_SCENE_MODES, sceneModeValues);
     setSceneMode(SCENE_MODE_AUTO);
 
-#if 0
     // Set CDS Mode
     String8 cdsModeValues = createValuesStringFromMap(
             CDS_MODES_MAP,
             PARAM_MAP_SIZE(CDS_MODES_MAP));
     set(KEY_QC_SUPPORTED_CDS_MODES, cdsModeValues);
-#endif
 
     // Set video CDS Mode
     String8 videoCdsModeValues = createValuesStringFromMap(
@@ -8063,7 +8061,7 @@ int32_t QCameraParameters::setCDSMode(const QCameraParameters& params)
         } else {
             char video_prop[PROPERTY_VALUE_MAX];
             memset(video_prop, 0, sizeof(video_prop));
-            property_get("persist.vendor.camera.video.CDS", video_prop, CDS_MODE_OFF);
+            property_get("persist.vendor.camera.video.CDS", video_prop, CDS_MODE_ON);
             int32_t cds_mode = lookupAttr(CDS_MODES_MAP, PARAM_MAP_SIZE(CDS_MODES_MAP),
                     video_prop);
             if (cds_mode != NAME_NOT_FOUND) {
@@ -8103,7 +8101,7 @@ int32_t QCameraParameters::setCDSMode(const QCameraParameters& params)
         } else {
             char prop[PROPERTY_VALUE_MAX];
             memset(prop, 0, sizeof(prop));
-            property_get("persist.vendor.camera.CDS", prop, CDS_MODE_OFF);
+            property_get("persist.vendor.camera.CDS", prop, CDS_MODE_ON);
             int32_t cds_mode = lookupAttr(CDS_MODES_MAP, PARAM_MAP_SIZE(CDS_MODES_MAP),
                     prop);
             if (cds_mode != NAME_NOT_FOUND) {
