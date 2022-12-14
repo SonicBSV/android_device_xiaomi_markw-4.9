@@ -178,10 +178,9 @@ on post-fs-data
     mkdir /data/vendor/fm 0770 system system
     chmod 0770 /data/vendor/fm
 
-    # Create PERFD daemon related dirs
-    mkdir /data/vendor/perfd 0770 root system
-    chmod 2770 /data/vendor/perfd
-    rm /data/vendor/perfd/default_values
+    # Enable idle state listener
+    write /sys/class/drm/card0/device/idle_encoder_mask 1
+    write /sys/class/drm/card0/device/idle_timeout_ms 100
 
     # Secure Element directory for loader service functionality
     mkdir /data/vendor/secure_element 0770 secure_element secure_element
@@ -225,6 +224,9 @@ on property:sys.boot_completed=1
     write /sys/block/dm-1/queue/read_ahead_kb 512
     #Reinit lmkd to reconfigure lmkd properties
     setprop lmkd.reinit 1
+
+    # Enable PowerHAL hint processing
+    setprop vendor.powerhal.init 1
 
 on property:persist.vendor.radio.atfwd.start=false
     stop vendor.atfwd

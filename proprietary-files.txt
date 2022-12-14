@@ -840,10 +840,6 @@ vendor/lib/libOmxWmaDec.so|bc2a4a87b538ccd6004d6269a42bbef9a84ad7c4
 vendor/lib/libvqzip.so|f85628ea634df1c31d69380d960ad7ea3396e7b2
 vendor/lib64/libmmosal.so|e9fdb48163e92b089cea0c397723a8416436c272
 
-# Perf - from LA.UM.9.6.2.r1-04200-89xx.0
-vendor/lib64/libqti-perfd-client.so|cf1db630be11536a27a0ac66646c0024d78c80f7
-vendor/lib64/libqti-perfd-client-vendor.so|b198200962a1f4f76c26610a96501b2165768551
-
 # Peripheral manager - from LA.UM.9.6.3.r1-06200-89xx.0
 vendor/bin/pm-proxy|cfa016d416eb95949c76090bde8ccffcd5517159
 vendor/bin/pm-service|06608529b6125c5362dee26f459c52d9e51f3c92
