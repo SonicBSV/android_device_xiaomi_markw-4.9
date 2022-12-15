@@ -1784,18 +1784,18 @@ void sort_camera_info(int num_cam)
 uint8_t get_num_of_cameras()
 {
     int rc = 0;
-    int i = 0;
     int dev_fd = -1;
     struct media_device_info mdev_info;
     int num_media_devices = 0;
     int8_t num_cameras = 0;
     char subdev_name[32];
+    char prop[PROPERTY_VALUE_MAX];
+#ifdef DAEMON_PRESENT
     int32_t sd_fd = -1;
     struct sensor_init_cfg_data cfg;
-    char prop[PROPERTY_VALUE_MAX];
+#endif
 
     LOGD("E");
-
     property_get("vold.decrypt", prop, "0");
     int decrypt = atoi(prop);
     if (decrypt == 1)
@@ -1865,6 +1865,8 @@ uint8_t get_num_of_cameras()
         dev_fd = -1;
     }
 
+#ifdef DAEMON_PRESENT
+    LOGD("subdev_name %s", subdev_name);
     /* Open sensor_init subdev */
     sd_fd = open(subdev_name, O_RDWR);
     if (sd_fd < 0) {
@@ -1875,19 +1877,10 @@ uint8_t get_num_of_cameras()
     cfg.cfgtype = CFG_SINIT_PROBE_WAIT_DONE;
     cfg.cfg.setting = NULL;
     if (ioctl(sd_fd, VIDIOC_MSM_SENSOR_INIT_CFG, &cfg) < 0) {
-        LOGI("failed...Camera Daemon may not up so try again");
-        for(i = 0; i < (MM_CAMERA_EVT_ENTRY_MAX + EXTRA_ENTRY); i++) {
-            if (ioctl(sd_fd, VIDIOC_MSM_SENSOR_INIT_CFG, &cfg) < 0) {
-                LOGI("failed...Camera Daemon may not up so try again");
-                continue;
-            }
-            else
-                break;
-        }
+        LOGE("failed");
     }
     close(sd_fd);
-    dev_fd = -1;
-
+#endif
 
     num_media_devices = 0;
     while (1) {
