@@ -8,7 +8,7 @@ Chipset | Qualcomm MSM8953 Snapdragon 625
 GPU     | Adreno 506
 Memory  | 3 GB
 Shipped Android Version | Android 6.0.1 with MIUI 8/9/10
-Storage | 32 GB (Samsung RX1BMB/Hynix HBG4a2)
+Storage | 32 GB (Samsung RX1BMB/Hynix HBG4a2/Toshiba 032G32)
 MicroSD | Up to 256 GB (uses SIM 2 slot)
 Battery | 4000 mAh (non-removable Li-Po) (Coslight/Feimaotui)
 Dimensions | 141.3 x 69.6 x 8.9 mm (5.56 x 2.74 x 0.35 in)
