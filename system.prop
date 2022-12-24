@@ -6,26 +6,6 @@
 ro.config.media_vol_steps=25
 vendor.fastrpc.disable.adsprpcd_sensorspd.daemon=1
 
-# Camera
-vidc.enc.dcvs.extra-buff-count=2
-media.camera.ts.monotonic=1
-persist.vendor.camera.display.lmax=1280x720
-persist.vendor.camera.display.umax=1920x1080
-vendor.camera.lowpower.record.enable=1
-vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera,com.google.android.GoogleCamera
-vendor.camera.aux.packagelist2=com.android.systemui
-vendor.camera.aux.packageexcludelist=com.discord
-persist.vendor.qti.telephony.vt_cam_interface=2
-persist.vendor.camera.eis.enable=1
-persist.vendor.camera.gyro.disable=0
-persist.vendor.camera.isp.clock.optmz=0
-persist.vendor.camera.stats.test=5
-persist.vendor.camera.CDS=off
-persist.vendor.camera.perflock.enable=0
-persist.vendor.camera.HAL3.enabled=1
-persist.vendor.camera.dual.camera=0
-persist.vendor.camera.aux.camera=1
-
 # Charger
 ro.charger.disable_init_blank=true
 ro.charger.enable_suspend=true
