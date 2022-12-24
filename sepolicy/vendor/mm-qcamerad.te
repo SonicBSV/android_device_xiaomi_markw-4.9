@@ -1,6 +1,0 @@
-allow mm-qcamerad camera_socket:dir w_dir_perms;
-allow mm-qcamerad camera_socket:sock_file w_file_perms;
-
-allow mm-qcamerad diag_device:chr_file { ioctl open read write };
-
-allow mm-qcamerad { sysfs_jpeg }:file r_file_perms;
