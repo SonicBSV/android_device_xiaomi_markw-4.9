@@ -30,7 +30,7 @@
 /sys/devices(/platform)?/soc/[a-f0-9]+.sdhci/mmc_host/mmc[0-9]/mmc[0-9]:[a-f0-9]+/block/mmcblk[0-9]/queue/read_ahead_kb u:object_r:sysfs_mmc_host:s0
 
 # Ir
-/dev/lirc[0-9]*                                 u:object_r:lirc_device:s0
+/sys/devices(/platform)?/soc/soc:gpio-leds/leds(/.*)?                                   u:object_r:sysfs_leds:s0
 
 # Legacy root dirs
 /firmware(/.*)?                                 u:object_r:firmware_file:s0
