@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2017, 2019, The Linux Foundation. All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without
 * modification, are permitted provided that the following conditions are
@@ -230,7 +230,7 @@ public:
     int translateToHalMetadata(const camera3_capture_request_t *request,
             metadata_buffer_t *parm, uint32_t snapshotStreamId);
     camera_metadata_t* translateCbUrgentMetadataToResultMetadata (
-                             metadata_buffer_t *metadata);
+                             metadata_buffer_t *metadata, uint8_t fwkAeMode);
     camera_metadata_t* translateFromHalMetadata(metadata_buffer_t *metadata,
                             nsecs_t timestamp, int32_t request_id,
                             const CameraMetadata& jpegMetadata, uint8_t pipeline_depth,
@@ -472,6 +472,7 @@ private:
         uint8_t fwkCacMode;
         bool shutter_notified;
         uint8_t scene_mode;
+        uint8_t fwkAeMode;
     } PendingRequestInfo;
     typedef struct {
         uint32_t frame_number;
@@ -602,7 +603,7 @@ private:
 
 
     uint8_t mCurrentSceneMode;
-
+    int8_t m_fwAeMode;
 };
 
 }; // namespace qcamera
