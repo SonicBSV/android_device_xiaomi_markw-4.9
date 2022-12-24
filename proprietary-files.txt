@@ -864,6 +864,8 @@ vendor/etc/perf/perfboostsconfig.xml|da5ae082fe1d5d8e6afea68430e12e56cbf168d2
 vendor/etc/perf/perfconfigstore.xml|de7a673eca27fb44b7dcd34c60d21f7ffbd2b9d8
 vendor/etc/perf/targetconfig.xml|aa20c25397df1455206965737f82d44d44430e45
 vendor/etc/perf/targetresourceconfigs.xml|c7575bce83e7d83a68e260437ff0ba164dfcd25c
+vendor/lib64/libqti-perfd-client.so|cf1db630be11536a27a0ac66646c0024d78c80f7
+vendor/lib64/libqti-perfd-client-vendor.so|b198200962a1f4f76c26610a96501b2165768551
 
 # Peripheral manager - from LA.UM.9.6.3.r1-06200-89xx.0
 vendor/bin/pm-proxy|cfa016d416eb95949c76090bde8ccffcd5517159

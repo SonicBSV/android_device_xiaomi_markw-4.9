@@ -1,0 +1,5 @@
+#============= hal_perf_default ==============
+binder_call(hal_perf_default, hal_graphics_composer_default);
+allow hal_perf_default init:unix_stream_socket connectto;
+allow hal_perf_default property_socket:sock_file write;
+set_prop(hal_perf_default, vendor_mpctl_prop);
