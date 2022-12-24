@@ -154,19 +154,21 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    android.frameworks.displayservice@1.0_32 \
-    android.hardware.camera.common@1.0 \
-    android.hardware.camera.device@3.3:64 \
-    android.hardware.camera.device@3.4:64 \
-    android.hardware.camera.device@3.5:64 \
-    android.hardware.camera.provider@2.4 \
-    android.hardware.camera.provider@2.4-impl:32 \
-    android.hardware.camera.provider@2.4-service \
-    android.hardware.camera.provider@2.5:64 \
-    android.hardware.camera.provider@2.6:64 \
+    android.frameworks.displayservice@1.0:32 \
+    android.frameworks.cameraservice.common@2.0 \
+    android.frameworks.cameraservice.device@2.0 \
+    android.frameworks.cameraservice.service@2.0 \
     vendor.qti.hardware.camera.device@1.0 \
+    android.hardware.camera.device@3.4 \
+    android.hardware.camera.provider@2.5 \
+    android.hardware.camera.provider@2.4-impl \
+    android.hardware.camera.provider@2.4-service \
+    camera.device@3.2-impl \
+    vendor.qti.hardware.camera.device@1.0.vendor \
     camera.msm8953 \
-    libmm-qcamera
+    libdng_sdk.vendor \
+    libgui_vendor \
+    libstdc++.vendor
 
 PRODUCT_PACKAGES += \
     GrapheneCamera
@@ -438,10 +440,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_COPY_FILES += \
     vendor/qcom/opensource/vibrator/excluded-input-devices.xml:$(TARGET_COPY_OUT_VENDOR)/etc/excluded-input-devices.xml
-    
-# VNDK
-PRODUCT_PACKAGES += \
-    libstdc++.vendor
 
 # Wifi
 PRODUCT_PACKAGES += \
