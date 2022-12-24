@@ -74,8 +74,13 @@ vendor/lib64/vendor.qti.hardware.bluetooth_sar@1.1.so|5de4a802667afa2c05b9c75ae6
 system_ext/lib64/libaptX_encoder.so|df1c89d7af1bb35808d5fe3496b04ba066c10cbc
 system_ext/lib64/libaptXHD_encoder.so|e13fa70c97caaa24d061678bdee608eb8850a69e
 
-# Camera
+# Camera - from LA.UM.8.6.r1-05300-89xx.0
+lib/libseemore.so
+lib/libseestraight.so
+lib/libtruescanner.so
 lib64/libseemore.so
+lib64/libseestraight.so
+lib64/libtruescanner.so
 vendor/lib/libchromaflash.so
 vendor/lib/libcapiv2svacnn.so
 vendor/lib/libcapiv2vop.so
@@ -96,18 +101,16 @@ vendor/lib/libqomx_jpegenc_pipe.so
 vendor/lib/libremosaic_daemon.so
 vendor/lib/libseemore.so
 vendor/lib/libubifocus.so
-vendor/lib/libvideoutils.so
 vendor/lib64/libcapiv2svacnn.so
 vendor/lib64/libcapiv2vop.so
 vendor/lib64/libdualcameraddm.so
 vendor/lib64/liboptizoom.so
 vendor/lib64/libseemore.so
 vendor/lib64/libubifocus.so
-vendor/lib64/libvideoutils.so
 -vendor/lib/libts_detected_face_hal.so
 -vendor/lib/libts_face_beautify_hal.so
 
-# Camera actuators
+# Camera actuators - from LA.UM.8.6.r1-05300-89xx.0
 vendor/lib/libactuator_ad5816g.so
 vendor/lib/libactuator_ad5823.so
 vendor/lib/libactuator_ak7345.so
@@ -125,12 +128,14 @@ vendor/lib/libactuator_lc898212xd.so
 vendor/lib/libactuator_rohm_bu64243gwz.so
 vendor/lib/libactuator_pseudo.so
 
-# Camera chromatix
+# Camera chromatix - from LA.UM.8.6.r1-05300-89xx.0
 vendor/lib/libchromatix_csidtg_common.so
 vendor/lib/libchromatix_csidtg_cpp_preview.so
 vendor/lib/libchromatix_csidtg_postproc.so
 vendor/lib/libchromatix_csidtg_preview.so
 vendor/lib/libchromatix_csidtg_zsl_preview.so
+
+# Camera chromatix
 vendor/lib/libchromatix_ofilm_s5k3l8_f3l8yam_common.so
 vendor/lib/libchromatix_ofilm_s5k3l8_f3l8yam_cpp_hfr_120.so
 vendor/lib/libchromatix_ofilm_s5k3l8_f3l8yam_cpp_hfr_60.so
@@ -412,15 +417,18 @@ etc/camera/s5k4h8_chromatix.xml:vendor/etc/camera/s5k4h8_chromatix.xml
 etc/camera/s5k5e8_chromatix.xml:vendor/etc/camera/s5k5e8_chromatix.xml
 etc/camera/sunny_s5k3l8_f3l8yam_chromatix.xml:vendor/etc/camera/sunny_s5k3l8_f3l8yam_chromatix.xml
 
+# Camera Sensors - from LA.UM.8.6.r1-05300-89xx.0
+vendor/lib/libmmcamera_ov5670_sunny.so
+vendor/lib/libmmcamera_ov5670.so
+vendor/lib/libmmcamera_s5k5e8.so
+
 # Camera Sensors - from stock 6.0.1 MMB29M V10.2.2.0.MBEMIXM
 vendor/lib/libmmcamera_s5k3l8_eeprom.so
-vendor/lib/libmmcamera_ov5670_sunny.so
 vendor/lib/libmmcamera_ov5670_eeprom.so
 vendor/lib/libmmcamera_s5k4h8.so
 vendor/lib/libmmcamera_s5k5e8_eeprom.so
-vendor/lib/libmmcamera_s5k5e8.so
 
-# Camera Sensors - from LA.UM.8.6.r1-04400-89xx.0
+# Camera Sensors - from LA.UM.8.6.r1-05300-89xx.0
 vendor/lib/libmmcamera2_c2d_module.so
 vendor/lib/libmmcamera2_cpp_module.so
 vendor/lib/libmmcamera2_dcrf.so
@@ -492,7 +500,6 @@ vendor/lib/libmmcamera_llvd.so
 vendor/lib/libmmcamera_onsemi_cat24c16_eeprom.so
 vendor/lib/libmmcamera_onsemi_cat24c32_eeprom.so
 vendor/lib/libmmcamera_optizoom_lib.so
-vendor/lib/libmmcamera_ov5670.so
 vendor/lib/libmmcamera_paaf_lib.so
 vendor/lib/libmmcamera_pdaf.so
 vendor/lib/libmmcamera_pdafcamif.so
