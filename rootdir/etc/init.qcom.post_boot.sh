@@ -32,11 +32,8 @@ function 8953_sched_dcvs_eas()
     #governor settings
     echo 1 > /sys/devices/system/cpu/cpu0/online
     echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-
-    # Consider changing frequencies once per scheduling period
-    echo    4000 > /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us
-    echo   16000 > /sys/devices/system/cpu/cpufreq/schedutil/down_rate_limit_us
-
+    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/down_rate_limit_us
     #set the hispeed_freq
     echo 1401600 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
     #default value for hispeed_load is 90, for 8953 and sdm450 it should be 85
@@ -557,14 +554,14 @@ function configure_zram_parameters() {
     # For 512MB Go device, size = 384MB, set same for Non-Go.
     # For 1GB Go device, size = 768MB, set same for Non-Go.
     # For 2GB Go device, size = 1536MB, set same for Non-Go.
-    # For >2GB Non-Go devices, size = 2GB. Limit the size to 4GB.
+    # For >2GB Non-Go devices, size = 50% of RAM size. Limit the size to 4GB.
 
     let RamSizeGB="( $MemTotal / 1048576 ) + 1"
     diskSizeUnit=M
     if [ $RamSizeGB -le 2 ]; then
         let zRamSizeMB="( $RamSizeGB * 1024 ) * 3 / 4"
     else
-        let zRamSizeMB=2048
+        let zRamSizeMB="( $RamSizeGB * 1024 ) / 2"
     fi
 
     # use MB avoid 32 bit overflow
@@ -574,7 +571,7 @@ function configure_zram_parameters() {
 
     # Setup zram options
     echo lz4 > /sys/block/zram0/comp_algorithm
-    echo 4   > /sys/block/zram0/max_comp_streams
+    echo 8   > /sys/block/zram0/max_comp_streams
     echo 0   > /proc/sys/vm/page-cluster
 
     if [ -f /sys/block/zram0/disksize ]; then
@@ -734,7 +731,7 @@ else
 
         # Enable adaptive LMK for all targets &
         # use Google default LMK series for all 64-bit targets >=2GB.
-        echo 0 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
+        echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
 
         # Enable oom_reaper
         if [ -f /sys/module/lowmemorykiller/parameters/oom_reaper ]; then
@@ -760,7 +757,7 @@ else
               *)
                 #Set PPR parameters for all other targets.
                 echo $set_almk_ppr_adj > /sys/module/process_reclaim/parameters/min_score_adj
-                echo 0 > /sys/module/process_reclaim/parameters/enable_process_reclaim
+                echo 1 > /sys/module/process_reclaim/parameters/enable_process_reclaim
                 echo 50 > /sys/module/process_reclaim/parameters/pressure_min
                 echo 70 > /sys/module/process_reclaim/parameters/pressure_max
                 echo 30 > /sys/module/process_reclaim/parameters/swap_opt_eff
@@ -770,20 +767,10 @@ else
         fi
     fi
 
-    KernelVersionStr=`cat /proc/sys/kernel/osrelease`
-    KernelVersionS=${KernelVersionStr:2:2}
-    KernelVersionA=${KernelVersionStr:0:1}
-    KernelVersionB=${KernelVersionS%.*}
-
-    # Don't account allocstalls for <= 2GB RAM targets on kernel versions < 4.9
-    if [ $KernelVersionA -lt 4 ] || [ $KernelVersionB -lt 9 ]; then
-        if [ $MemTotal -le 2097152 ]; then
-            echo 100 > /sys/module/vmpressure/parameters/allocstall_threshold
-        fi
-    fi
-
-    # Set swappiness to 80 for all targets
-    echo 80 > /proc/sys/vm/swappiness
+    # Set allocstall_threshold to 0 for all targets.
+    # Set swappiness to 100 for all targets
+    echo 0 > /sys/module/vmpressure/parameters/allocstall_threshold
+    echo 100 > /proc/sys/vm/swappiness
 
     # Disable wsf for all targets beacause we are using efk.
     # wsf Range : 1..1000 So set to bare minimum value 1.

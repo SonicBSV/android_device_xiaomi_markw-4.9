@@ -20,9 +20,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
 TARGET_BOARD_PLATFORM := msm8953
 TARGET_BOARD_SUFFIX := _64
 
-# Apex
-PRODUCT_COMPRESSED_APEX := false
-
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-lineage
@@ -134,7 +131,6 @@ PRODUCT_COPY_FILES += \
 
 # Audio XML configuration files
 PRODUCT_COPY_FILES += \
-    frameworks/av/services/audiopolicy/config/a2dp_in_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/a2dp_in_audio_policy_configuration_7_0.xml \
     frameworks/av/services/audiopolicy/config/audio_policy_volumes.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_volumes.xml \
     frameworks/av/services/audiopolicy/config/bluetooth_audio_policy_configuration_7_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/bluetooth_audio_policy_configuration_7_0.xml \
     frameworks/av/services/audiopolicy/config/default_volume_tables.xml:$(TARGET_COPY_OUT_VENDOR)/etc/default_volume_tables.xml \
@@ -387,6 +383,9 @@ PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl:64 \
     android.hardware.sensors@1.0-service \
     libsensorndkbridge
+    
+# Speed profile services and wifi-service to reduce RAM and storage
+PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
 
 # Thermal
 PRODUCT_COPY_FILES += \

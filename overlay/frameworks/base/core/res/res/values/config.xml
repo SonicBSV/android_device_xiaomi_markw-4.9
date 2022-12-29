@@ -270,18 +270,6 @@
     -->
     <bool name="config_enableWifiDisplay">true</bool>
 
-    <!-- Set to true if the wifi display supports compositing content stored
-         in gralloc protected buffers.  For this to be true, there must exist
-         a protected hardware path for surface flinger to composite and send
-         protected buffers to the wifi display video encoder.
-         If this flag is false, we advise applications not to use protected
-         buffers (if possible) when presenting content to a wifi display because
-         the content may be blanked.
-         This flag controls whether the {@link Display#FLAG_SUPPORTS_PROTECTED_BUFFERS}
-         flag is set for wifi displays.
-    -->
-    <bool name="config_wifiDisplaySupportsProtectedBuffers">true</bool>
-
     <!-- IWLAN data service package name to bind to by default. If none is specified in an overlay, an
          empty string is passed in -->
     <string name="config_wlan_data_service_package">vendor.qti.iwlan</string>
@@ -459,6 +447,46 @@
         <item>"/apex/com.android.art/javalib/core-libart.jar"</item>
         <item>"/system_ext/priv-app/SystemUI/SystemUI.apk"</item>
         <item>"/system/bin/surfaceflinger"</item>
+        <item>"/system/lib/libEGL.so"</item>
+        <item>"/system/lib/libGLESv1_CM.so"</item>
+        <item>"/system/lib/libGLESv2.so"</item>
+        <item>"/system/lib/libGLESv3.so"</item>
+        <item>"/system/lib/libgui.so"</item>
+        <item>"/system/lib/libhwui.so"</item>
+        <item>"/system/lib/libui.so"</item>
+        <item>"/system/lib/libvulkan.so"</item>
+        <item>"/system/lib64/libEGL.so"</item>
+        <item>"/system/lib64/libGLESv1_CM.so"</item>
+        <item>"/system/lib64/libGLESv2.so"</item>
+        <item>"/system/lib64/libGLESv3.so"</item>
+        <item>"/system/lib64/libgui.so"</item>
+        <item>"/system/lib64/libhwui.so"</item>
+        <item>"/system/lib64/libui.so"</item>
+        <item>"/system/lib64/libvulkan.so"</item>
+        <item>"/vendor/lib/egl/eglSubDriverAndroid.so"</item>
+        <item>"/vendor/lib/egl/libEGL_adreno.so"</item>
+        <item>"/vendor/lib/egl/libGLESv1_CM_adreno.so"</item>
+        <item>"/vendor/lib/egl/libGLESv2_adreno.so"</item>
+        <item>"/vendor/lib/hw/vulkan.adreno.so"</item>
+        <item>"/vendor/lib/libCB.so"</item>
+        <item>"/vendor/lib/libOpenCL.so"</item>
+        <item>"/vendor/lib/libadreno_app_profiles.so"</item>
+        <item>"/vendor/lib/libadreno_utils.so"</item>
+        <item>"/vendor/lib/libgpudataproducer.so"</item>
+        <item>"/vendor/lib/libgsl.so"</item>
+        <item>"/vendor/lib/libllvm-glnext.so"</item>
+        <item>"/vendor/lib64/egl/eglSubDriverAndroid.so"</item>
+        <item>"/vendor/lib64/egl/libEGL_adreno.so"</item>
+        <item>"/vendor/lib64/egl/libGLESv1_CM_adreno.so"</item>
+        <item>"/vendor/lib64/egl/libGLESv2_adreno.so"</item>
+        <item>"/vendor/lib64/hw/vulkan.adreno.so"</item>
+        <item>"/vendor/lib64/libCB.so"</item>
+        <item>"/vendor/lib64/libOpenCL.so"</item>
+        <item>"/vendor/lib64/libadreno_app_profiles.so"</item>
+        <item>"/vendor/lib64/libadreno_utils.so"</item>
+        <item>"/vendor/lib64/libgpudataproducer.so"</item>
+        <item>"/vendor/lib64/libgsl.so"</item>
+        <item>"/vendor/lib64/libllvm-glnext.so"</item>
     </string-array>
 
     <!-- Should the pinner service pin the Home application? -->
@@ -496,4 +524,10 @@
 
     <!-- Whether to cancel fingerprint operation if not idle -->
     <bool name="config_fpCancelIfNotIdle">true</bool>
+
+    <!-- Feature flag to store TaskSnapshot in 16 bit pixel format to save memory. -->
+    <bool name="config_use16BitTaskSnapshotPixelFormat">true</bool>
+
+    <!-- Display low battery warning when battery level dips to this value -->
+    <integer name="config_lowBatteryWarningLevel">15</integer>
 </resources>
