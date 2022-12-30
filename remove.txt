@@ -1,0 +1,3 @@
+device/xiaomi/
+vendor/xiaomi/
+kernel/xiaomi/
