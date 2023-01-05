@@ -1,10 +1,1 @@
 typeattribute tee data_between_core_and_vendor_violators;
-
-# /data/goodix labeling
-type_transition tee system_data_file:{ dir file } gx_fpd_data_file;
-
-# allow storing goodix data
-allow tee mnt_vendor_file:dir { search };
-allow tee system_data_file:dir create_dir_perms;
-allow tee { persist_drm_file gx_fpd_data_file fingerprintd_data_file }:dir create_dir_perms;
-allow tee { persist_drm_file gx_fpd_data_file fingerprintd_data_file }:file create_file_perms;

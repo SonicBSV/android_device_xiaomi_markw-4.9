@@ -11,6 +11,7 @@ cc_binary {
     ],
 
     shared_libs: [
+        "libbase",
         "libbinder",
         "libcutils",
         "liblog",
@@ -19,5 +20,4 @@ cc_binary {
         "libutils",
         "android.hardware.biometrics.fingerprint@2.1",
     ],
-
 }

@@ -14,20 +14,24 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.biometrics.fingerprint@2.1-service.xiaomi_markw"
-
-#include <binder/ProcessState.h>
+#define LOG_TAG "android.hardware.biometrics.fingerprint@2.1-service"
 
 #include <android/log.h>
+#include <android-base/file.h>
+#include <android-base/properties.h>
+#include <binder/ProcessState.h>
 #include <hidl/HidlSupport.h>
 #include <hidl/HidlTransportSupport.h>
 #include <android/hardware/biometrics/fingerprint/2.1/IBiometricsFingerprint.h>
 #include <android/hardware/biometrics/fingerprint/2.1/types.h>
-
 #include "BiometricsFingerprint.h"
-#include <cutils/properties.h>
 #include <errno.h>
 #include <unistd.h>
+
+bool is_goodix = false;
+bool use_cancel_hack = true;
+
+static constexpr char kGoodixFpDev[] = "/dev/goodix_fp";
 
 using android::hardware::biometrics::fingerprint::V2_1::IBiometricsFingerprint;
 using android::hardware::biometrics::fingerprint::V2_1::implementation::BiometricsFingerprint;
@@ -35,23 +39,20 @@ using android::hardware::configureRpcThreadpool;
 using android::hardware::joinRpcThreadpool;
 using android::sp;
 
-bool is_goodix = false;
-
-static constexpr char kGoodixFpDev[] = "/dev/goodix_fp";
-
 int main() {
-    char vend[PROPERTY_VALUE_MAX];
-    property_get("ro.hardware.fingerprint", vend, "none");
-
-    if (!strcmp(vend, "none")) {
-    	ALOGE("ro.hardware.fingerprint not set! Killing " LOG_TAG " binder service!");
-        return 1;
-    } else if (!strcmp(vend, "goodix")) {
-        ALOGI("is_goodix = true");
+    if (android::base::GetProperty("persist.sys.fp.vendor","") == "goodix") {
         is_goodix = true;
+        ALOGD("Enable workarounds for goodix.");
+    }
+    if (android::base::GetProperty("vendor.fingerprint.disable_notify_cancel_hack","") == "1") {
+        use_cancel_hack = false;
+        ALOGD("Disable notify client on cancel hack.");
     }
 
-    ALOGI("Start biometrics");
+    if (!android::base::WriteStringToFile("disable", "/sys/devices/soc/soc:fpc1020/compatible_all", true)) {
+        ALOGE("Failed to reset fpc1020 driver.");
+    }
+
     android::sp<IBiometricsFingerprint> bio = BiometricsFingerprint::getInstance();
 
     if (is_goodix) {
@@ -59,14 +60,12 @@ int main() {
             ALOGE("Cannot access %s (%s)", kGoodixFpDev, strerror(errno));
             return 1;
         }
-
         // the conventional HAL might start vndbinder services
         android::ProcessState::initWithDriver("/dev/vndbinder");
         android::ProcessState::self()->startThreadPool();
     }
 
-    /* process Binder transaction as a single-threaded program. */
-    configureRpcThreadpool(1, true /* callerWillJoin */);
+    configureRpcThreadpool(1, true /*callerWillJoin*/);
 
     if (bio != nullptr) {
         if (::android::OK != bio->registerAsService()) {
