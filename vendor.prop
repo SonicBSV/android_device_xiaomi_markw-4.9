@@ -119,7 +119,7 @@ persist.vendor.radio.sib16_support=1
 
 # SOC
 ro.soc.manufacturer=Qualcomm
-ro.soc.model=MSM8953
+ro.soc.model=SDM450
 
 # Tcp
 net.tcp.2g_init_rwnd=10
