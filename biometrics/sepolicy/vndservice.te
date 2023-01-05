@@ -1,2 +1,0 @@
-type goodix_fingerprint_vndservice, vndservice_manager_type;
-type gx_fpd_service, vndservice_manager_type;

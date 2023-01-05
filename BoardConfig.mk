@@ -159,7 +159,6 @@ VENDOR_SECURITY_PATCH := 2022-09-05
 # SELinux
 include device/qcom/sepolicy-legacy-um/SEPolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
-BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/biometrics/sepolicy
 
 # Treble
 PRODUCT_FULL_TREBLE_OVERRIDE := true

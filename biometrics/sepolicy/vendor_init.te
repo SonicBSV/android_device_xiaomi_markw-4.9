@@ -1,1 +1,0 @@
-allow vendor_init { fpc_data_file gx_fpd_data_file }:dir create_dir_perms;
