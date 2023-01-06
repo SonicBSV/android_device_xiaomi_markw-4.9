@@ -10,14 +10,14 @@ Memory  | 3 GB
 Shipped Android Version | Android 6.0.1 with MIUI 8/9/10
 Storage | 32 GB (Samsung RX1BMB/Hynix HBG4a2/Toshiba 032G32)
 MicroSD | Up to 256 GB (uses SIM 2 slot)
-Battery | 4000 mAh (non-removable Li-Po) (Coslight/Feimaotui)
+Battery | 4100 mAh (4000) (non-removable Li-Po) (Coslight/Feimaotui)
 Dimensions | 141.3 x 69.6 x 8.9 mm (5.56 x 2.74 x 0.35 in)
 Weight | 156 g (5.50 oz)
 Build | Front glass, aluminum body
 SIM | Hybrid Dual SIM
 Display | 1080 x 1920 pixels,16:9 ratio (~441 ppi density), 5.0" IPS (Tianma r63350/EBBG nt35521s/EBBG nt35596)
 Touchscreen | FOCALTECH FT5346 (for Tianma)/ATMEL A308U (for EBBG)
-Rear Camera  | 13.0 MP, PDAF, f/2.2, Dual LED flash (Samsung S5K3L8(qtech/ofilm/sunny)/OmniVision OV13853)
+Rear Camera  | 13.0 MP, PDAF, f/2.2, Dual LED flash (Samsung S5K3L8(qtech/ofilm/sunny))
 Front Camera | 5.0 MP, f/2.2 (OmniVision OV5670)
 FingerPrint | Yes (FPC 1020/Goodix GF3208)
 Accelerometer | Yes (Bosch BMI160)
