@@ -140,7 +140,7 @@ BOARD_VENDORIMAGE_PARTITION_SIZE := 536870912 # /cust
 TARGET_PER_MGR_ENABLED := true
 
 # Power
-TARGET_TAP_TO_WAKE_NODE := "/proc/gesture/onoff"
+TARGET_TAP_TO_WAKE_NODE := "/proc/sys/dev/dt2w"
 TARGET_USES_INTERACTION_BOOST := true
 
 # Qualcomm
