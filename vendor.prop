@@ -91,6 +91,9 @@ persist.vendor.dpmhalservice.enable=1
 # DRM
 drm.service.enabled=true
 
+# Fingerprint
+persist.qfp=false
+
 # Frp
 ro.frp.pst=/dev/block/bootdevice/by-name/config
 

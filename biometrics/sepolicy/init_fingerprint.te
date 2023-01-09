@@ -14,6 +14,9 @@ allow init_fingerprint mnt_vendor_file:dir search;
 allow init_fingerprint persist_drm_file:dir { read search open write remove_name getattr rmdir };
 allow init_fingerprint persist_drm_file:file { getattr unlink };
 allow init_fingerprint system_data_file:file r_file_perms;
-allow init_fingerprint gx_fpd_data_file:dir { getattr read search open write rmdir remove_name };
-allow init_fingerprint gx_fpd_data_file:file r_file_perms;
-allow init_fingerprint gx_fpd_data_file:file { getattr unlink };
+
+allow init_fingerprint gx_fpd_data_file:dir create_dir_perms;
+allow init_fingerprint gx_fpd_data_file:file create_file_perms;
+
+# Don't allow dac_override for goodix script
+allow init_fingerprint self:capability chown;

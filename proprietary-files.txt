@@ -659,10 +659,12 @@ vendor/etc/init/android.hardware.drm@1.4-service.widevine.rc|225dd006bfecf6c1dca
 vendor/etc/vintf/manifest/manifest_android.hardware.drm@1.4-service.widevine.xml|91d7c0996133556cb7f7c5d1b7e5d9e7f07b78b2
 vendor/lib64/libwvhidl.so|aa31972bf48749785f3e5d91aaafac21f226ac87
 
-# Fingerprint from stock 6.0.1 MMB29M V10.2.2.0.MBEMIXM (patched)
+# Fingerprint FPC from stock
+lib64/hw/fingerprint.default.so:vendor/lib64/hw/fingerprint.fpc.so
+
+# Fingerprint Goodix from stock (patched - Mi-Thorium for Prada)
 bin/gx_fpd:vendor/bin/gx_fpd
 lib64/hw/fingerprint.goodix.so:vendor/lib64/hw/fingerprint.goodix.so
-lib64/hw/fingerprint.default.so:vendor/lib64/hw/fingerprint.searchf.so
 lib64/hw/gxfingerprint.default.so:vendor/lib64/hw/gxfingerprint.default.so
 lib64/libfp_client.so:vendor/lib64/libfp_client.so
 lib64/libfpnav.so:vendor/lib64/libfpnav.so
