@@ -662,13 +662,14 @@ vendor/lib64/libwvhidl.so|aa31972bf48749785f3e5d91aaafac21f226ac87
 # Fingerprint FPC from stock
 lib64/hw/fingerprint.default.so:vendor/lib64/hw/fingerprint.fpc.so
 
-# Fingerprint Goodix from stock (patched - Mi-Thorium for Prada)
+# Fingerprint Goodix from stock (patched - by @ShihabZzz)
 bin/gx_fpd:vendor/bin/gx_fpd
 lib64/hw/fingerprint.goodix.so:vendor/lib64/hw/fingerprint.goodix.so
 lib64/hw/gxfingerprint.default.so:vendor/lib64/hw/gxfingerprint.default.so
 lib64/libfp_client.so:vendor/lib64/libfp_client.so
 lib64/libfpnav.so:vendor/lib64/libfpnav.so
 lib64/libfpservice.so:vendor/lib64/libfpservice.so
+lib64/libcom_fingerprints_service.so:vendor/lib64/libcom_fingerprints_service.so
 
 # FM Radio - from LA.UM.9.6.2.r1-04200-89xx.0
 vendor/lib64/vendor.qti.hardware.fm@1.0.so|f7494923e84b136a44f02699082a7e0a380f94e9

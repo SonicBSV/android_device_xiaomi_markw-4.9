@@ -12,6 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+//
 
 // Goodix
 cc_library_shared {
@@ -23,36 +24,8 @@ cc_library_shared {
 }
 
 cc_library_shared {
-    name: "libshims_binder",
-    proprietary: true,
-    defaults: ["hidl_defaults"],
-    srcs: [
-        "libshims_binder.cpp",
-    ],
-    cflags: [
-        "-Werror",
-        "-Wextra",
-        "-Wall",
-    ],
-    shared_libs: [
-        "libutils",
-    ],
-}
-
-// libandroid
-cc_library_shared {
-    name: "libshims_android",
-    proprietary: true,
-    defaults: ["hidl_defaults"],
-    srcs: [
-        "libshims_android.cpp",
-    ],
-    cflags: [
-        "-Werror",
-        "-Wextra",
-        "-Wall",
-    ],
-    shared_libs: [
-        "libutils",
-    ],
+    name: "gx_fpd_shim",
+    srcs: ["gxfpd_shim.cpp"],
+    compile_multilib: "64",
+    vendor: true
 }

@@ -212,8 +212,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.xiaomi_markw \
     fakelogprint \
-    libshims_android \
-    libshims_binder
+    gx_fpd_shim
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/blank.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/blank.xml
 
 # FM
 PRODUCT_PACKAGES += \
@@ -353,6 +355,7 @@ PRODUCT_PACKAGES += \
     fstab.qcom \
     init.class_main.sh \
     init.goodix.sh \
+    init.xiaomi.device.rc \
     init.msm.usb.configfs.rc \
     init.qcom.early_boot.sh \
     init.qcom.post_boot.sh \
