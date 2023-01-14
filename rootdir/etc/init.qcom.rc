@@ -44,9 +44,6 @@ on init
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
 
-    # DT2W
-    write /proc/sys/dev/dt2w 1
-    
     # Setup all the sub-system as related
     write /sys/bus/msm_subsys/devices/subsys0/restart_level RELATED
     write /sys/bus/msm_subsys/devices/subsys1/restart_level RELATED
@@ -109,6 +106,12 @@ on boot
     # Create hvdcp_opti directory
     mkdir /mnt/vendor/persist/hvdcp_opti 0770 root system
 
+    # DT2W
+    chmod 0660 /proc/touchpanel/enable_dt2w
+    chown system system /proc/touchpanel/enable_dt2w
+    write /dev/kmsg "dinhlong change system system for dt2w"
+
+    
 # msm specific files that need to be created on /data
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system
