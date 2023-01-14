@@ -115,6 +115,15 @@ typedef enum {
     QCAMERA_DATA_SNAPSHOT_CALLBACK
 } qcamera_callback_type_m;
 
+/* meta data type and value in CameraMetaDataCallback */
+typedef enum {
+    CAMERA_META_DATA_ASD = 0x001, //ASD data
+    CAMERA_META_DATA_FD = 0x002, //FD/FP data
+    CAMERA_META_DATA_HDR = 0x003, //Auto HDR data
+    /*Add new data type after this, since 4 is being used in APP*/
+    CAMERA_META_DATA_DUAL = 0x004 //Dual camera data
+} qcamera_metadatacallback_type_m;;
+
 typedef void (*camera_release_callback)(void *user_data,
                                         void *cookie,
                                         int32_t cb_status);
@@ -640,6 +649,8 @@ private:
     bool mIs3ALocked;
     bool mPrepSnapRun;
     int32_t mZoomLevel;
+    int32_t mStride;
+    int32_t mScanline;
     // Flag to indicate whether preview restart needed (for dual camera mode)
     bool mPreviewRestartNeeded;
 
@@ -765,7 +776,7 @@ private:
 #endif
     QCameraMemory *mMetadataMem;
 
-    static uint32_t sNextJobId;
+    uint32_t sNextJobId;
 
     //Gralloc memory details
     pthread_mutex_t mGrallocLock;

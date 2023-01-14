@@ -8,7 +8,10 @@ genfscon sysfs   /devices/platform/soc/200f000.qcom,spmi/spmi-0/spmi0-02/200f000
 genfscon sysfs   /devices/platform/soc/200f000.qcom,spmi/spmi-0/spmi0-02/200f000.qcom,spmi:qcom,pm8953@0:qcom,pm8953_rtc                     u:object_r:sysfs_rtc:s0
 
 # Touchscreen
-genfscon proc /touchpanel                                             u:object_r:proc_touchpanel:s0
+genfscon proc /sys/devices/soc/78b7000.i2c/i2c-3/3-004a/wakeup_mode                                             u:object_r:proc_gesture:s0
+
+# IR
+genfscon sysfs /devices/platform/soc/soc:gpio-leds/leds	u:object_r:sysfs_leds:s0
 
 # XiaomiParts (Sound-Control nodes)
 genfscon sysfs /kernel/sound_control/headphone_gain                u:object_r:sysfs_hgain:s0

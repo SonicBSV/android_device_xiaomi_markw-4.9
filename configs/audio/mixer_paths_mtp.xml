@@ -90,6 +90,7 @@
     <ctl name="EAR PA Gain" value="POS_1P5_DB" />
     <ctl name="EAR PA Boost" value="ENABLE" />
     <ctl name="Speaker Boost" value="DISABLE" />
+    <ctl name="Speaker PA Open" value="ON" />
     <ctl name="MI2S_RX Channels" value="One" />
     <ctl name="MI2S_TX Channels" value="One" />
     <ctl name="PRI_MI2S_RX_DL_HL Switch" value="0" />
@@ -1223,7 +1224,9 @@
     </path>
 
     <path name="speaker">
+        <ctl name="Speaker PA Open" value="OFF" />
         <ctl name="RX3 MIX1 INP1" value="RX1" />
+        <ctl name="RX3 Digital Volume" value="78" />
         <ctl name="LINE_OUT" value="Switch" />
     </path>
 

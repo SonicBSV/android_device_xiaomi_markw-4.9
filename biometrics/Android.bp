@@ -1,8 +1,8 @@
 cc_binary {
-    name: "android.hardware.biometrics.fingerprint@2.1-service.xiaomi_mido",
+    name: "android.hardware.biometrics.fingerprint@2.1-service.xiaomi_markw",
     defaults: ["hidl_defaults"],
-    init_rc: ["android.hardware.biometrics.fingerprint@2.1-service.xiaomi_mido.rc"],
-    vintf_fragments: ["android.hardware.biometrics.fingerprint@2.1-service.xiaomi_mido.xml"],
+    init_rc: ["android.hardware.biometrics.fingerprint@2.1-service.xiaomi_markw.rc"],
+    vintf_fragments: ["android.hardware.biometrics.fingerprint@2.1-service.xiaomi_markw.xml"],
     vendor: true,
     relative_install_path: "hw",
     srcs: [
@@ -11,6 +11,7 @@ cc_binary {
     ],
 
     shared_libs: [
+        "libbase",
         "libbinder",
         "libcutils",
         "liblog",
@@ -19,5 +20,4 @@ cc_binary {
         "libutils",
         "android.hardware.biometrics.fingerprint@2.1",
     ],
-
 }

@@ -9,7 +9,7 @@ allow init adsprpcd_file:filesystem { getattr mount relabelfrom relabelto };
 # Firmware
 allow init firmware_file:filesystem getattr;
 
-# LEDs
+# Leds
 allow init sysfs_leds:lnk_file read;
 allow init sysfs_leds:file { getattr setattr write };
 
@@ -25,5 +25,5 @@ allow init proc:file { getattr relabelfrom write };
 allow init sysfs_hgain:file { getattr relabelfrom write };
 allow init sysfs_mgain:file { getattr relabelfrom write };
 
-get_prop(vendor_init, vendor_fp_prop)
-set_prop(vendor_init, vendor_fp_prop)
+get_prop(vendor_init, vendor_fingerprint_prop);
+set_prop(vendor_init, vendor_fingerprint_prop);

@@ -17,7 +17,6 @@
 #define LOG_TAG "ConsumerIrService"
 
 #include <fcntl.h>
-#include <linux/lirc.h>
 
 #include <android-base/logging.h>
 
@@ -29,65 +28,40 @@ namespace ir {
 namespace V1_0 {
 namespace implementation {
 
-#define LIRC_DEV_PATH "/dev/lirc0"
-
-static const int dutyCycle = 33;
+#define IR_PATH "/sys/class/leds/infrared/transmit"
 
 static hidl_vec<ConsumerIrFreqRange> rangeVec{
-    {.min = 30000, .max = 60000},
+    {.min = 30000, .max = 30000},
+    {.min = 33000, .max = 33000},
+    {.min = 36000, .max = 36000},
+    {.min = 38000, .max = 38000},
+    {.min = 40000, .max = 40000},
+    {.min = 56000, .max = 56000},
 };
-
-static int openLircDev() {
-    int fd = open(LIRC_DEV_PATH, O_RDWR);
-
-    if (fd < 0) {
-        LOG(ERROR) << "failed to open " << LIRC_DEV_PATH << ", error " << fd;
-    }
-
-    return fd;
-}
 
 // Methods from ::android::hardware::ir::V1_0::IConsumerIr follow.
 Return<bool> ConsumerIr::transmit(int32_t carrierFreq, const hidl_vec<int32_t>& pattern) {
-    size_t entries = pattern.size();
+    size_t len = pattern.size()*4;
+    int fd = -1;
     int rc;
-    int lircFd;
+    char buffer[4100];
 
-    lircFd = openLircDev();
-    if (lircFd < 0) {
-        return lircFd;
+    memset(buffer,0,4100);
+    memcpy(buffer, &carrierFreq, 4);
+    memcpy(buffer+4, pattern.data(), len);
+
+    fd = open(IR_PATH, O_RDWR);
+    if (fd < 0)
+    {
+        LOG(ERROR) << "failed to open " << IR_PATH << ", error: " << fd;
+        return fd;
     }
 
-    rc = ioctl(lircFd, LIRC_SET_SEND_CARRIER, &carrierFreq);
-    if (rc < 0) {
-        LOG(ERROR) << "failed to set carrier " << carrierFreq << ", error: " << errno;
-        goto out_close;
-    }
-
-    rc = ioctl(lircFd, LIRC_SET_SEND_DUTY_CYCLE, &dutyCycle);
-    if (rc < 0) {
-        LOG(ERROR) << "failed to set duty cycle " << dutyCycle << ", error: " << errno;
-        goto out_close;
-    }
-
-    if ((entries & 1) != 0) {
-        rc = write(lircFd, pattern.data(), sizeof(int32_t) * entries);
-    } else {
-        rc = write(lircFd, pattern.data(), sizeof(int32_t) * (entries - 1));
-        usleep(pattern[entries - 1]);
-    }
-
-    if (rc < 0) {
-        LOG(ERROR) << "failed to write pattern " << pattern.size() << ", error: " << errno;
-        goto out_close;
-    }
-
-    rc = 0;
-
-out_close:
-    close(lircFd);
-
-    return rc == 0;
+    rc = write(fd, buffer, len+4);
+    close(fd);
+    if (rc == -1)
+        return rc;
+    return 0;
 }
 
 Return<void> ConsumerIr::getCarrierFreqs(getCarrierFreqs_cb _hidl_cb) {

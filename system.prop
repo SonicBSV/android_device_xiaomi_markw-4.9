@@ -1,25 +1,10 @@
 #
-# system.prop for mido
+# system.prop for markw
 #
 
 # Audio
 ro.config.media_vol_steps=25
 vendor.fastrpc.disable.adsprpcd_sensorspd.daemon=1
-
-# Camera
-persist.camera.gyro.android=0
-persist.camera.gyro.disable=1
-persist.camera.iface.logs=0
-persist.camera.imglib.logs=0
-persist.camera.isp.clock.optmz=0
-persist.camera.isp.debug=0
-persist.camera.mct.debug=0
-persist.camera.sensor.debug=0
-persist.camera.stats.test=5
-persist.vendor.camera.display.lmax=1280x720
-persist.vendor.camera.display.umax=1920x1080
-vendor.camera.lowpower.record.enable=1
-vidc.enc.dcvs.extra-buff-count=2
 
 # Charger
 ro.charger.disable_init_blank=true
@@ -57,9 +42,6 @@ vendor.display.disable_skip_validate=1
 vendor.display.enable_default_color_mode=1
 vendor.gralloc.enable_fb_ubwc=1
 
-# Fingerprint
-persist.qfp=false
-
 # FM
 ro.fm.transmitter=false
 vendor.hw.fm.init=0
@@ -88,12 +70,6 @@ ro.vendor.qti.sys.fw.bservice_enable=true
 
 # Qualcomm
 ro.vendor.qti.va_aosp.support=1
-
-# Iorapd
-ro.iorapd.enable=false
-iorapd.perfetto.enable=false
-iorapd.readahead.enable=false
-persist.device_config.runtime_native_boot.iorap_readahead_enable=false
 
 # Radio (IMS)
 persist.dbg.volte_avail_ovr=1
@@ -131,6 +107,9 @@ ro.surface_flinger.force_hwc_copy_for_virtual_displays=true
 ro.surface_flinger.max_frame_buffer_acquired_buffers=3
 ro.surface_flinger.max_virtual_display_dimension=4096
 
+# System
+persist.sys.binary_xml=false
+
 # Time
 persist.backup.ntpServer=0.pool.ntp.org
 persist.timed.enable=true
@@ -154,14 +133,6 @@ persist.mm.sta.enable=0
 
 # WFD
 persist.hwc.enable_vds=1
-
-# Don't write binary XML files
-persist.sys.binary_xml=false
-
-# Bluetooth
-bluetooth.device.class_of_device=90,2,12
-bluetooth.device.default_name=Redmi Note 4
-bluetooth.hardware.power.operating_voltage_mv=3300
 
 # Zygote
 zygote.critical_window.minute=10

@@ -31,7 +31,7 @@
             64 - Volume rocker
          For example, a device with Home, Back and Menu keys would set this
          config to 7. -->
-    <integer name="config_deviceHardwareKeys">83</integer>
+    <integer name="config_deviceHardwareKeys">71</integer>
 
     <!-- Whether to cleanup fingerprints upon connection to the daemon and when
          user switches -->
@@ -46,7 +46,7 @@
             1 - Supported, but only on/off mode
             2 - Supported with variable brightness control
     -->
-    <integer name="config_deviceSupportsButtonBrightnessControl">1</integer>
+    <integer name="config_deviceSupportsButtonBrightnessControl">0</integer>
 
     <!-- Whether to cancel fingerprint operation if not idle -->
     <bool name="config_fpCancelIfNotIdle">true</bool>
