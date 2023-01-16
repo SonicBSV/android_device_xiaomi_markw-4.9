@@ -27,7 +27,6 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 #
 # Make modem config folder and copy firmware config to that folder for RIL
 #

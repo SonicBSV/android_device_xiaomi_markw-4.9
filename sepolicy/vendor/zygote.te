@@ -1,1 +1,2 @@
 allow zygote self:capability kill;
+get_prop(zygote, exported_camera_prop);

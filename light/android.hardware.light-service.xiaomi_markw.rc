@@ -1,0 +1,26 @@
+on early-boot
+    # Notification LEDs
+    chown system system /sys/class/leds/red/blink
+    chown system system /sys/class/leds/red/brightness
+    chown system system /sys/class/leds/red/max_brightness
+
+    chown system system /sys/class/leds/green/blink
+    chown system system /sys/class/leds/green/brightness
+    chown system system /sys/class/leds/green/max_brightness
+
+    chown system system /sys/class/leds/blue/blink
+    chown system system /sys/class/leds/blue/brightness
+    chown system system /sys/class/leds/blue/max_brightness
+
+    # Backlight
+    chown system system /sys/class/leds/lcd-backlight/brightness
+    chown system system /sys/class/leds/lcd-backlight/max_brightness
+
+    # Buttons
+    chown system system /sys/class/leds/button-backlight/brightness
+
+service vendor.light-default /vendor/bin/hw/android.hardware.light-service.xiaomi_markw
+    class hal
+    user system
+    group system
+    shutdown critical
