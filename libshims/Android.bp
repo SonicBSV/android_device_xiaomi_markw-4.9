@@ -32,7 +32,7 @@ cc_library_shared {
 }
 
 cc_library_shared {
-    name: "libshims_gxfpd",
+    name: "gx_fpd_shim",
     srcs: ["gxfpd_shim.cpp"],
     compile_multilib: "64",
     vendor: true

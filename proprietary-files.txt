@@ -659,15 +659,17 @@ vendor/etc/init/android.hardware.drm@1.4-service.widevine.rc|225dd006bfecf6c1dca
 vendor/etc/vintf/manifest/manifest_android.hardware.drm@1.4-service.widevine.xml|91d7c0996133556cb7f7c5d1b7e5d9e7f07b78b2
 vendor/lib64/libwvhidl.so|8ffc9cfc0ca2abc0e7bbde94c61961b1fef45e6f
 
-# Fingerprint from stock 6.0.1 MMB29M V10.2.2.0.MBEMIXM (patched @ShihabZzz)
-bin/gx_fpd:vendor/bin/gx_fpd
-lib/hw/fingerprint.default.so:vendor/lib/hw/fingerprint.fpc.so
-lib64/hw/fingerprint.goodix.so:vendor/lib64/hw/fingerprint.goodix.so
+# Fingerprint FPC from stock
 lib64/hw/fingerprint.default.so:vendor/lib64/hw/fingerprint.fpc.so
+
+# Fingerprint Goodix from stock (patched - by @ShihabZzz)
+bin/gx_fpd:vendor/bin/gx_fpd
+lib64/hw/fingerprint.goodix.so:vendor/lib64/hw/fingerprint.goodix.so
 lib64/hw/gxfingerprint.default.so:vendor/lib64/hw/gxfingerprint.default.so
 lib64/libfp_client.so:vendor/lib64/libfp_client.so
 lib64/libfpnav.so:vendor/lib64/libfpnav.so
 lib64/libfpservice.so:vendor/lib64/libfpservice.so
+lib64/libcom_fingerprints_service.so:vendor/lib64/libcom_fingerprints_service.so
 
 # FM Radio - from LA.UM.9.6.2.r1-04200-89xx.0
 vendor/lib64/vendor.qti.hardware.fm@1.0.so|f7494923e84b136a44f02699082a7e0a380f94e9

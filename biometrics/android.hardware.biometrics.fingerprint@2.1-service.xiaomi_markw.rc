@@ -3,22 +3,23 @@ service vendor.fps_hal /vendor/bin/hw/android.hardware.biometrics.fingerprint@2.
     # in /data. As a workaround, postpone startup until later in boot once
     # /data is mounted.
     class late_start
+    socket fpce stream 0666 system system
     user system
-    group system input uhid
-    task_profiles ServiceCapacityLow
+    group system input uhid sdcard_rw
     disabled
 
 service vendor.gx_fpd /vendor/bin/gx_fpd
-     class core
-     user system
-     group system drmrpc
-     task_profiles ServiceCapacityLow
+    class main
+    user system
+    group system
+    disabled
 
 on boot
-    # Fingerprint Permissions
+    # Goodix
     chown system system /dev/goodix_fp
     chmod 0644 /dev/goodix_fp
 
+    # FPC
     chown system system /sys/devices/soc/soc:fpc1020/compatible_all
     chmod 0664 /sys/devices/soc/soc:fpc1020/compatible_all
     chown system system /sys/devices/soc/soc:fpc1020/irq
@@ -28,22 +29,34 @@ on boot
     chown system system /sys/devices/soc/soc:fpc1020/wakeup_enable
     chmod 0660 /sys/devices/soc/soc:fpc1020/wakeup_enable
 
-service vendor.goodix_script /vendor/bin/init.goodix.sh
-    class late_start
-    user system
-    oneshot
+    chown system system /sys/devices/platform/soc/soc:fpc1020/compatible_all
+    chmod 0664 /sys/devices/platform/soc/soc:fpc1020/compatible_all
+    chown system system /sys/devices/platform/soc/soc:fpc1020/irq
+    chmod 0660 /sys/devices/platform/soc/soc:fpc1020/irq
+    chown system system /sys/devices/platform/soc/soc:fpc1020/hw_reset
+    chmod 0660 /sys/devices/platform/soc/soc:fpc1020/hw_reset
+    chown system system /sys/devices/platform/soc/soc:fpc1020/wakeup_enable
+    chmod 0660 /sys/devices/platform/soc/soc:fpc1020/wakeup_enable
 
-on property:sys.fp.vendor=switchf
+    setprop persist.sys.fp.vendor none
+    setprop persist.sys.fp.onstart 0
+    setprop ro.vendor.fingerprint.ready 1
+    enable vendor.gx_fpd
+
+on post-fs-data
+    mkdir /data/fpc 0770 system system
+    mkdir /data/fpcd 0770 system system
+
+on property:persist.sys.fp.vendor=switchf && property:ro.vendor.fingerprint.ready=1
     stop vendor.gx_fpd
-    setprop sys.fp.vendor searchf
-    setprop fpc.fp.miui.token 0
-    setprop ro.boot.fpsensor fpc
-    setprop ro.hardware.fingerprint searchf
-    start vendor.fps_hal
+    setprop ro.hardware.fingerprint fpc
+    enable vendor.fps_hal
 
-on property:sys.fp.onstart=1
-   setprop goodix.fp.miui.analyse 1
-   setprop goodix.fp.miui.token 0
-   setprop ro.boot.fpsensor gdx
-   setprop ro.hardware.fingerprint goodix
-   start vendor.fps_hal
+on property:persist.sys.fp.vendor=goodix && property:persist.sys.fp.onstart=1 && property:ro.vendor.fingerprint.ready=1
+    setprop ro.hardware.fingerprint goodix
+    enable vendor.fps_hal
+
+on property:ro.vendor.fingerprint.failed=1
+    stop vendor.fps_hal
+    stop vendor.gx_fpd
+    mount none /vendor/etc/permissions/blank.xml /vendor/etc/permissions/android.hardware.fingerprint.xml bind

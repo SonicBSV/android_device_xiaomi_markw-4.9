@@ -5,16 +5,14 @@
 /data/vendor/qcam(/.*)?                         u:object_r:vendor_camera_data_file:s0
 
 # Fpc Fingerprint
-/data/fpc(/.*)?                                 u:object_r:fpc_data_file:s0
-/dev/socket/fpce(/.*)?                          u:object_r:fpce_socket:s0
-/sys/devices/(platform)?/soc/soc:fpc1020(/.*)?  u:object_r:fpc_sysfs:s0
+/data/fpc(/.*)?					u:object_r:fpc_data_file:s0
+/dev/socket/fpce(/.*)?				u:object_r:fpce_socket:s0
+/sys/devices(/platform)?/soc/soc:fpc1020(/.*)?		u:object_r:fpc_sysfs:s0
 
 # Goodix Fingerprint
-/dev/goodix_fp                                  u:object_r:gx_fpd_device:s0
+/dev/goodix_fp					u:object_r:gx_fpd_device:s0
 /data/gf_data(/.*)?                             u:object_r:gx_fpd_data_file:s0
-/data/system/fingerprint(/.*)?                  u:object_r:gx_fpd_data_file:s0
-/(vendor|system/vendor)/bin/gx_fpd              u:object_r:gx_fpd_exec:s0
-/(vendor|system/vendor)/bin/init\.goodix\.sh	  u:object_r:init_fingerprint_exec:s0
+/persist/data/gxfp(/.*)?			u:object_r:gx_fpd_data_file:s0
 
 # Graphics Libs
 /vendor/lib(64)?/libadreno_app_profiles\.so    u:object_r:same_process_hal_file:s0
@@ -23,7 +21,10 @@
 # HALs
 /(vendor|system/vendor)/bin/hw/android\.hardware\.biometrics\.fingerprint@2\.1-service\.xiaomi_markw    u:object_r:hal_fingerprint_default_exec:s0
 /(vendor|system/vendor)/bin/hw/android\.hardware\.ir@1\.0-service\.xiaomi_markw                         u:object_r:hal_ir_default_exec:s0
-/(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service\.xiaomi_markw                      u:object_r:hal_light_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.light-service\.xiaomi_markw                           u:object_r:hal_light_default_exec:s0
+
+# Goodix Fingerprint
+/(vendor|system/vendor)/bin/gx_fpd		u:object_r:gx_fpd_exec:s0
 
 # I/O
 # This node is already labelled by QCOM but Lineage overrides it with sysfs_io_sched_tunable label
@@ -32,7 +33,7 @@
 /sys/devices(/platform)?/soc/[a-f0-9]+.sdhci/mmc_host/mmc[0-9]/mmc[0-9]:[a-f0-9]+/block/mmcblk[0-9]/queue/read_ahead_kb u:object_r:sysfs_mmc_host:s0
 
 # Ir
-/sys/devices(/platform)?/soc/soc:gpio-leds/leds(/.*)?                                   u:object_r:sysfs_leds:s0
+/dev/lirc[0-9]*                                 u:object_r:lirc_device:s0
 
 # Legacy root dirs
 /firmware(/.*)?                                 u:object_r:firmware_file:s0
@@ -50,6 +51,9 @@
 # Sys files
 /sys/devices(/platform)?/soc/78b6000\.i2c/i2c-2/2-[0-9a-f]+/leds(/.*)?          u:object_r:sysfs_leds:s0
 /sys/devices(/platform)?/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/onoff         u:object_r:proc_gesture:s0
+
+# Shell Script
+/(vendor|system/vendor)/bin/init\.goodix\.sh	u:object_r:init_fingerprint_exec:s0
 
 # Torch
 /sys/devices/platform/soc/200f000.qcom,spmi/spmi-0/spmi0-03/200f000.qcom,spmi:qcom,pmi8950@3:qcom,leds@d300/leds/led:torch_0/max_brightness          u:object_r:sysfs_torch:s0
