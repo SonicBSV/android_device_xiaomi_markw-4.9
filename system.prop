@@ -69,6 +69,12 @@ ro.vendor.qti.sys.fw.bservice_enable=true
 # Qualcomm
 ro.vendor.qti.va_aosp.support=1
 
+# Iorapd
+ro.iorapd.enable=false
+iorapd.perfetto.enable=false
+iorapd.readahead.enable=false
+persist.device_config.runtime_native_boot.iorap_readahead_enable=false
+
 # Radio (IMS)
 persist.dbg.volte_avail_ovr=1
 persist.dbg.vt_avail_ovr=1
@@ -105,9 +111,6 @@ ro.surface_flinger.force_hwc_copy_for_virtual_displays=true
 ro.surface_flinger.max_frame_buffer_acquired_buffers=3
 ro.surface_flinger.max_virtual_display_dimension=4096
 
-# System
-persist.sys.binary_xml=false
-
 # Time
 persist.backup.ntpServer=0.pool.ntp.org
 persist.timed.enable=true
@@ -131,6 +134,14 @@ persist.mm.sta.enable=0
 
 # WFD
 persist.hwc.enable_vds=1
+
+# Don't write binary XML files
+persist.sys.binary_xml=false
+
+# Bluetooth
+bluetooth.device.class_of_device=90,2,12
+bluetooth.device.default_name=Redmi 4 Prime
+bluetooth.hardware.power.operating_voltage_mv=3300
 
 # Zygote
 zygote.critical_window.minute=10

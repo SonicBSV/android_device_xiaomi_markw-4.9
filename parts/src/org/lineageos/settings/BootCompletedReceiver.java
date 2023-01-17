@@ -40,7 +40,6 @@ public class BootCompletedReceiver extends BroadcastReceiver implements Controll
             if (DEBUG) Log.d(TAG, "Starting Doze service");
             DozeUtils.startService(context);
         }
-        new DiracUtils(context).onBootCompleted();
 
         FileUtils.setValue(TorchSettings.TORCH_1_BRIGHTNESS_PATH,
                 Settings.Secure.getInt(context.getContentResolver(),
@@ -80,6 +79,15 @@ public class BootCompletedReceiver extends BroadcastReceiver implements Controll
                     PREF_CONTRAST, CONTRAST_DEFAULT) + CONTRAST_OFFSET);
             FileUtils.setValue(KCAL_HUE, Settings.Secure.getInt(context.getContentResolver(),
                     PREF_HUE, HUE_DEFAULT));
+        }
+
+        // Dirac
+        int millis = 1 * 60 * 1000;  // 1min
+        try {
+            Thread.sleep(millis);
+            new DiracUtils(context).onBootCompleted();
+        } catch( Exception e) {
+            e.printStackTrace();
         }
     }
 }
