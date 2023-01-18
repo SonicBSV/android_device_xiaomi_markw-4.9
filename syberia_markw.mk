@@ -17,21 +17,26 @@
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+#TARGET_INCLUDE_PIXEL_CHARGER := true
+
+# Bootanimation
+TARGET_BOOT_ANIMATION_RES := 1080
 
 # Inherit from markw device
-$(call inherit-product, vendor/derp/config/common_full_phone.mk)
+$(call inherit-product, vendor/syberia/common.mk)
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
 
-# PixelExperience specific flags
-TARGET_BOOT_ANIMATION_RES := 1080
+# GApps
+WITH_GMS=true
+
+# specific flags
 TARGET_INCLUDE_LIVE_WALLPAPERS := false
 TARGET_FACE_UNLOCK_SUPPORTED := true
 TARGET_SUPPORTS_QUICK_TAP := false
-USE_LEGACY_BOOTANIMATION := true
 
 # Device identifier. This must come after all inclusions
 PRODUCT_BRAND := Xiaomi
-PRODUCT_NAME := derp_markw
+PRODUCT_NAME := syberia_markw
 BOARD_VENDOR := Xiaomi
 PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_DEVICE := markw
