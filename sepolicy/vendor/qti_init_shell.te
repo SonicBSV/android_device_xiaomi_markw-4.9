@@ -19,6 +19,6 @@ allow qti_init_shell sysfs_torch:file rw_file_perms;
 allow qti_init_shell system_data_file:file getattr;
 
 # Allow watermark scale factor to write
-allow qti_init_shell proc_watermark_scale_factor:file write;
+allow qti_init_shell proc_watermark_scale_factor:file { open write };
 
 allow qti_init_shell sysfs_leds:file setattr;
