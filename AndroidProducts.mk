@@ -14,9 +14,9 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/aosp_markw.mk
+    $(LOCAL_DIR)/evolution_markw.mk
 
 COMMON_LUNCH_CHOICES := \
-    aosp_markw-user \
-    aosp_markw-userdebug \
-    aosp_markw-eng
+    evolution_markw-user \
+    evolution_markw-userdebug \
+    evolution_markw-eng
