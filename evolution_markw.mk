@@ -23,10 +23,12 @@ $(call inherit-product, vendor/evolution/config/common_full_phone.mk)
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
 
 # evolution specific flags
+EVO_BUILD_TYPE := UNOFFICIAL
 TARGET_BOOT_ANIMATION_RES := 1080
 TARGET_INCLUDE_LIVE_WALLPAPERS := false
 TARGET_FACE_UNLOCK_SUPPORTED := true
 TARGET_SUPPORTS_QUICK_TAP := false
+TARGET_SUPPORTS_GOOGLE_RECORDER := true
 TARGET_USES_MICRO_GAPPS := true
 
 # Device identifier. This must come after all inclusions
