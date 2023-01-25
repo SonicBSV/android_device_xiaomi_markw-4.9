@@ -33,7 +33,7 @@ TARGET_USES_MICRO_GAPPS := true
 
 # Device identifier. This must come after all inclusions
 PRODUCT_BRAND := Xiaomi
-PRODUCT_NAME := evolution_markw
+PRODUCT_NAME := volution_markw
 BOARD_VENDOR := Xiaomi
 PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_DEVICE := markw
