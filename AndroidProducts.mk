@@ -19,4 +19,4 @@ PRODUCT_MAKEFILES := \
 COMMON_LUNCH_CHOICES := \
     evolution_markw-user \
     evolution_markw-userdebug \
-    evolution_markw-eng
+    olution_markw-eng
