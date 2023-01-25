@@ -19,6 +19,6 @@ android_app {
     ],
 
     optimize: {
-        roguard_flags_files: ["proguard.flags"],
+        proguard_flags_files: ["proguard.flags"],
     },
 }
