@@ -97,6 +97,15 @@ persist.sys.usb.config=mtp,adb
 PRODUCT_PACKAGES += \
     AntHalService
 
+# ART
+DONT_DEXPREOPT_PREBUILTS := true
+PRODUCT_ALWAYS_PREOPT_EXTRACTED_APK := true
+PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := frameworks/base/config/boot-image-profile.txt
+PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
+PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
+USE_DEX2OAT_DEBUG := false
+WITH_DEXPREOPT_DEBUG_INFO := false
+
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@7.1-impl:32 \
@@ -261,6 +270,19 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/gps/seccomp_policy/gnss@2.0-xtra-daemon.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/gnss@2.0-xtra-daemon.policy \
     $(LOCAL_PATH)/configs/gps/seccomp_policy/gnss@2.0-xtwifi-client.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/gnss@2.0-xtwifi-client.policy \
     $(LOCAL_PATH)/configs/gps/seccomp_policy/gnss@2.0-xtwifi-inet-agent.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/gnss@2.0-xtwifi-inet-agent.policy
+
+
+# Google Dialer Call recording
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/permissions/com.google.android.apps.dialer.call_recording_audio.features.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/com.google.android.apps.dialer.call_recording_audio.features.xml
+
+# Google LILY_EXPERIENCE feature
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/permissions/lily_experience.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/sysconfig/lily_experience.xml
+
+# Google Photos Unlimited Storage
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/pixel_2016_exclusive.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/sysconfig/pixel_2016_exclusive.
 
 # Healthd
 PRODUCT_PACKAGES += \
