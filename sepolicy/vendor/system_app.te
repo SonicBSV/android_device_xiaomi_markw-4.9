@@ -29,4 +29,4 @@ get_prop(system_app, vendor_bluetooth_prop)
 
 # Power
 allow system_app sysfs_battery_supply:dir r_dir_perms;
-llow system_app sysfs_battery_supply:file r_file_perms;
+allow system_app sysfs_battery_supply:file r_file_perms;
