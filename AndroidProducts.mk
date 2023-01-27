@@ -14,9 +14,9 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/evolution_markw.mk
+    $(LOCAL_DIR)/pixys_markw.mk
 
 COMMON_LUNCH_CHOICES := \
-    evolution_markw-user \
-    evolution_markw-userdebug \
-    evolution_markw-eng
+    pixys_markw-user \
+    pixys_markw-userdebug \
+    pixys_markw-eng
