@@ -1,0 +1,29 @@
+[
+    {
+        "repository": "proprietary_vendor_xiaomi",
+        "target_path": "vendor/xiaomi/markw",
+        "branch": "thirteen"
+    },
+    {
+        "repository": "android_kernel_xiaomi_markw_new",
+        "target_path": "kernel/xiaomi/markw",
+        "branch": "thirteen"
+    },
+    {
+        "remote": "github",
+        "repository": "LineageOS/android_hardware_lineage_compat",
+        "target_path": "hardware/lineage/compat",
+        "branch": "lineage-20.0"
+    },
+    {
+        "repository": "kdrag0n/proton-clang",
+        "target_path": "prebuilts/clang/host/linux-x86/proton-clang",
+        "branch": "master",
+        "remote": "github"
+    }
+    {   "repository": "crdroidandroid/android_prebuilts_clang_host_linux-x86_clang-r475365b" 
+        "target_path": "prebuilts/clang/host/linux-x86/clang-r475365b"
+        "remote": "gitlab"
+
+
+]
