@@ -1,7 +1,7 @@
 [
     {
         "repository": "proprietary_vendor_xiaomi",
-        "target_path": "vendor/xiaomi/markw",
+        "target_path": "vendor/xiaomi",
         "branch": "thirteen"
     },
     {
