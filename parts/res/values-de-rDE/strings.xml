@@ -136,8 +136,21 @@
     <string name="dirac_qs_tile_title">Dirac-Sound</string>
 
     <!-- Torch -->
-    <string name="torch_title">Fackel-Einstellungen</string>
+    <string name="torch_title">Taschenlampen-Einstellungen</string>
     <string name="torch_summary">Taschenlampe weiß/gelb Steuerung</string>
+
     <string name="yellow_torch_brightness_title">Helligkeit der gelben Fackel</string>
     <string name="white_torch_brightness_title">Helligkeit der weißen Fackel</string>
+
+    <string name="yellow_torch_brightness_title">Helligkeit der gelben Taschenlampe</string>
+    <string name="white_torch_brightness_title">Helligkeit der weißen Taschenlampe</string>
+
+    <!-- Vibration Intensity -->
+    <string name="haptic_warning">Ein zu hoher Haptikpegel kann zu dauerhaften Hardwareschäden führen, Verwendung auf eigene Gefahr</string>
+    <string name="haptic_summary">Vibrationsintensität anpassen</string>
+    <string name="vibrator_intensity_control">Vibrationsintensitätssteuerung</string>
+    <string name="vmax_override_mode_title">Vibrationsintensität überschreiben</string>
+    <string name="vmax_override_mode_summary">Überschreibt den Vibrationsintensitätswert für alle Benachrichtigungsereignisse</string>
+    <string name="system_strength_title">Vibrationsstärke</string>
+
 </resources>
