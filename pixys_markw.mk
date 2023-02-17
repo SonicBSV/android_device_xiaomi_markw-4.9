@@ -31,6 +31,7 @@ TARGET_SUPPORTS_QUICK_TAP := false
 
 #Gapps
 TARGET_GAPPS_ARCH := arm64
+TARGET_USES_MINI_GAPPS := true
 
 # Device identifier. This must come after all inclusions
 PRODUCT_BRAND := Xiaomi
