@@ -86,9 +86,14 @@
     <!-- Torch -->
     <string name="torch_title">Taschenlampen-Einstellungen</string>
     <string name="torch_summary">Taschenlampe weiß/gelb Steuerung</string>
+<<<<<<< HEAD
 
     <string name="yellow_torch_brightness_title">Helligkeit der gelben Fackel</string>
     <string name="white_torch_brightness_title">Helligkeit der weißen Fackel</string>
+=======
+    <string name="yellow_torch_brightness_title">Helligkeit der gelben Taschenlampe</string>
+    <string name="white_torch_brightness_title">Helligkeit der weißen Taschenlampe</string>
+>>>>>>> acb6d4b1 (Merge branch 'SonicBSV:lineage-20.0' into lineage-20.0)
 
     <string name="yellow_torch_brightness_title">Helligkeit der gelben Taschenlampe</string>
     <string name="white_torch_brightness_title">Helligkeit der weißen Taschenlampe</string>
