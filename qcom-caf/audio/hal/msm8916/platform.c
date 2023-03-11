@@ -2151,12 +2151,12 @@ static void get_source_mic_type(struct platform_data * my_data)
         case 4:
             my_data->source_mic_type |= SOURCE_QUAD_MIC;
         case 3:
-            my_data->source_mic_type |= SOURCE_THREE_MIC;;
+            my_data->source_mic_type |= SOURCE_THREE_MIC;
         case 2:
             my_data->source_mic_type |= SOURCE_DUAL_MIC;
         case 1:
             my_data->source_mic_type |= SOURCE_MONO_MIC;
-           break;
+            break;
         default:
             ALOGE("%s: max_mic_count (%d), is not supported, setting to default",
                    __func__, my_data->max_mic_count);
@@ -3087,13 +3087,13 @@ bool platform_check_backends_match(snd_device_t snd_device1, snd_device_t snd_de
                 platform_get_snd_device_name(snd_device1),
                 platform_get_snd_device_name(snd_device2));
 
-    if ((snd_device1 < SND_DEVICE_MIN) || (snd_device1 >= SND_DEVICE_OUT_END)) {
-        ALOGE("%s: Invalid snd_device = %s", __func__,
+    if ((snd_device1 < SND_DEVICE_MIN) || (snd_device1 >= SND_DEVICE_MAX)) {
+        ALOGV("%s: Invalid snd_device1 = %s", __func__,
                 platform_get_snd_device_name(snd_device1));
         return false;
     }
-    if ((snd_device2 < SND_DEVICE_MIN) || (snd_device2 >= SND_DEVICE_OUT_END)) {
-        ALOGE("%s: Invalid snd_device = %s", __func__,
+    if ((snd_device2 < SND_DEVICE_MIN) || (snd_device2 >= SND_DEVICE_MAX)) {
+        ALOGV("%s: Invalid snd_device2 = %s", __func__,
                 platform_get_snd_device_name(snd_device2));
         return false;
     }

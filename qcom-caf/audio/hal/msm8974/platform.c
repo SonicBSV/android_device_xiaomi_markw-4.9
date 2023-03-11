@@ -4575,12 +4575,12 @@ bool platform_check_backends_match(snd_device_t snd_device1, snd_device_t snd_de
                 platform_get_snd_device_name(snd_device1),
                 platform_get_snd_device_name(snd_device2));
 
-    if ((snd_device1 < SND_DEVICE_MIN) || (snd_device1 >= SND_DEVICE_OUT_END)) {
+    if ((snd_device1 < SND_DEVICE_MIN) || (snd_device1 >= SND_DEVICE_MAX)) {
         ALOGV("%s: Invalid snd_device1 = %s", __func__,
                 platform_get_snd_device_name(snd_device1));
         return false;
     }
-    if ((snd_device2 < SND_DEVICE_MIN) || (snd_device2 >= SND_DEVICE_OUT_END)) {
+    if ((snd_device2 < SND_DEVICE_MIN) || (snd_device2 >= SND_DEVICE_MAX)) {
         ALOGV("%s: Invalid snd_device2 = %s", __func__,
                 platform_get_snd_device_name(snd_device2));
         return false;
@@ -5491,8 +5491,10 @@ int platform_send_audio_calibration(void *platform, struct audio_usecase *usecas
     if (voice_is_in_call_or_call_screen(my_data->adev) && (usecase->type == PCM_CAPTURE))
         is_incall_rec_usecase = voice_is_in_call_rec_stream(usecase->stream.in);
 
-    if (compare_device_type(&usecase->device_list, AUDIO_DEVICE_OUT_BUS))
-        is_bus_dev_usecase = true;
+    if (usecase->type != PCM_CAPTURE) {
+        if (compare_device_type(&usecase->device_list, AUDIO_DEVICE_OUT_BUS))
+            is_bus_dev_usecase = true;
+    }
 
     if (usecase->type == PCM_PLAYBACK)
         snd_device = usecase->out_snd_device;
