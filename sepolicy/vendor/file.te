@@ -10,8 +10,8 @@ type gx_fpd_data_file, file_type, core_data_file_type, data_file_type;
 # Rild
 type rild_file, file_type, vendor_file_type;
 
-# DT2W
-type dt2w_ctrl, fs_type, proc_type;
+# Touchscreen
+type proc_gesture, fs_type, sysfs_type, proc_type;
 
 # XiaomiParts
 type sysfs_hgain, sysfs_type, fs_type;

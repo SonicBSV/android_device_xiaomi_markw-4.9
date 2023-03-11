@@ -1,2 +1,3 @@
-# DT2W
-allow hal_power_default dt2w_ctrl:file rw_file_perms;
+# Allow writing to files in /proc/gesture
+allow hal_power_default proc_gesture:dir search;
+allow hal_power_default proc_gesture:file rw_file_perms;

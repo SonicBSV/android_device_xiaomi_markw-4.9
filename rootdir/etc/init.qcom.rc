@@ -43,9 +43,6 @@ on init
     write /sys/fs/cgroup/memory/bg/memory.move_charge_at_immigrate 1
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
-
-    # DT2W
-    write /proc/sys/dev/dt2w 1
     
     # Setup all the sub-system as related
     write /sys/bus/msm_subsys/devices/subsys0/restart_level RELATED
@@ -82,6 +79,8 @@ on boot
     chmod 0660 /sys/bus/i2c/devices/3-0038/set_cover_mode
     chown system system /sys/kernel/boot_slpi/ssr
     chown system system /sys/kernel/boot_adsp/ssr
+    chmod 0666 /proc/gesture/onoff
+    chown system system /proc/gesture/onoff
 
     # This location is used by QCRIL to host UNIX domain
     # socket files used for internal IPC within QCRIL
