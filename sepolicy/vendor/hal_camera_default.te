@@ -1,2 +1,4 @@
 get_prop(hal_camera_default, bootanim_system_prop);
 get_prop(hal_camera_default, camera_prop);
+allow hal_camera_default graphics_device:dir search;
+allow hal_camera_default diag_device:chr_file rw_file_perms;

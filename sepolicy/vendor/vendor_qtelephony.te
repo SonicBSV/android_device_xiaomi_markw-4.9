@@ -1,0 +1,2 @@
+get_prop(vendor_qtelephony, vendor_qcom_ims_prop);
+get_prop(vendor_qtelephony, vendor_radio_prop);

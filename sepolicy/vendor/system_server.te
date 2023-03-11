@@ -1,6 +1,9 @@
 get_prop(system_server, userspace_reboot_config_prop)
 get_prop(system_server, userspace_reboot_exported_prop)
 
+# Input devices
+r_dir_file(system_server, vendor_keylayout_file);
+
 # power
 allow system_server sysfs_battery_supply:file { read open getattr };
 
