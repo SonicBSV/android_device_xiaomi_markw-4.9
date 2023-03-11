@@ -17,11 +17,30 @@
  */
 -->
 <resources>
+    <bool name="def_wifi_on">true</bool>
+
+    <!-- Whether Bluetooth should be switched on by default -->
+    <bool name="def_bluetooth_on">false</bool>
 
     <!-- Set the automatic brightness mode on by default -->
     <bool name="def_screen_brightness_automatic_mode">true</bool>
 
-    <!-- Disable bluetooth by default -->
-    <bool name="def_bluetooth_on">false</bool>
+    <!-- Default screen brightness, from 0 to 255. 78 is 30%. -->
+    <integer name="def_screen_brightness">78</integer>
 
+    <!-- 60 seconds for default screen timeout -->
+    <integer name="def_screen_off_timeout">60000</integer>
+
+    <!-- user interface sound effects -->
+    <integer name="def_power_sounds_enabled">0</integer>
+    <integer name="def_lockscreen_sounds_enabled">0</integer>
+
+    <!-- Disable UI touch sounds by default -->
+    <bool name="def_sound_effects_enabled">false</bool>
+
+    <!-- Disable UI touch haptic feedback by default -->
+    <bool name="def_haptic_feedback">false</bool>
+
+    <!-- Default for Settings.Secure.CHARGING_SOUNDS_ENABLED -->
+    <bool name="def_charging_sounds_enabled">false</bool>
 </resources>
