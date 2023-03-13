@@ -4,6 +4,7 @@
 
 # Audio
 ro.config.media_vol_steps=25
+persist.vendor.audio_hal.dsp_bit_width_enforce_mode=24
 vendor.fastrpc.disable.adsprpcd_sensorspd.daemon=1
 
 # Charger
