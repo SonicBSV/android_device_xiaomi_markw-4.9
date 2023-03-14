@@ -1,5 +1,4 @@
 allow init self:capability sys_nice;
-allow init proc_boot_reason:file r_file_perms;
 
 # Allow init to bind mount gps_debug.conf
 allow init system_file:file mounton;
