@@ -92,6 +92,10 @@ persist.service.adb.enable=1 \
 persist.service.debuggable=1 \
 persist.sys.usb.config=mtp,adb
 
+# AdGuard CA Root Certificate 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/security/cacerts/0f4ed297.0:$(TARGET_COPY_OUT_SYSTEM)/etc/security/cacerts/0f4ed297.0
+
 # ANT
 PRODUCT_PACKAGES += \
     AntHalService
