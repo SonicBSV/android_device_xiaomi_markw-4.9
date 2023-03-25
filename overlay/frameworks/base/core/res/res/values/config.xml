@@ -551,8 +551,10 @@
     <!-- Display low battery warning when battery level dips to this value -->
     <integer name="config_lowBatteryWarningLevel">15</integer>
     
-    <!-- Smart charging -->
-    <bool name="config_smartChargingAvailable">true</bool>
+    <!-- Enable Smart charging -->
+    <string name="config_SmartChargingSysfsNode" translatable="false">/sys/class/power_supply/battery/charging_enabled</string>
+    <string name="config_SmartChargingSuspendValue" translatable="false">0</string>
+    <string name="config_SmartChargingResumeValue" translatable="false">1</string>
 
     <!-- Does the device support battery LED? -->
     <bool name="config_intrusiveBatteryLed">true</bool>
