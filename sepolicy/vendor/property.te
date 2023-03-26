@@ -3,6 +3,7 @@ vendor_restricted_prop(vendor_dirac_prop);
 
 # Fingerprint
 vendor_public_prop(vendor_fp_prop);
+type vendor_fingerprint_prop, property_type;
 
 # mwqem property
 vendor_restricted_prop(vendor_mwqem_prop);
