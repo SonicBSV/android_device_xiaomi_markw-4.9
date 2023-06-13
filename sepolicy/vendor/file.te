@@ -7,10 +7,6 @@ type fpce_socket, file_type;
 type fpc_sysfs, fs_type, sysfs_type;
 type gx_fpd_data_file, file_type, core_data_file_type, data_file_type;
 
-# HW Key
-type sysfs_keys_atmel, fs_type, sysfs_type;
-type sysfs_keys_ft5346, fs_type, sysfs_type;
-
 # Rild
 type rild_file, file_type, vendor_file_type;
 

@@ -52,8 +52,6 @@
 # Sys files
 /sys/devices(/platform)?/soc/78b6000\.i2c/i2c-2/2-[0-9a-f]+/leds(/.*)?          u:object_r:sysfs_leds:s0
 /sys/devices(/platform)?/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/onoff         u:object_r:proc_gesture:s0
-/sys/board_properties/virtualkeys.atmel-maxtouch                                u:object_r:sysfs_keys_atmel:s0
-/sys/board_properties/virtualkeys.ft5346                                        u:object_r:sysfs_keys_ft5346:s0
 
 # Shell Script
 /(vendor|system/vendor)/bin/init\.goodix\.sh	u:object_r:init_fingerprint_exec:s0
