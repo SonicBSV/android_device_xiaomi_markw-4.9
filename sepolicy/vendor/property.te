@@ -1,2 +1,10 @@
+# Dirac
+type dirac_prop, property_type;
+
 # Camera
 type vendor_camera_prop, property_type;
+
+# Fingerprint
+#vendor_public_prop(vendor_fp_prop);
+type vendor_fp_prop, property_type;
+type vendor_fingerprint_prop, property_type;

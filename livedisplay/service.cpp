@@ -16,7 +16,7 @@
 
 #include <dlfcn.h>
 
-#define LOG_TAG "vendor.lineage.livedisplay@2.0-service.xiaomi_mido"
+#define LOG_TAG "vendor.lineage.livedisplay@2.0-service.xiaomi_markw"
 
 #include <android-base/logging.h>
 #include <binder/ProcessState.h>

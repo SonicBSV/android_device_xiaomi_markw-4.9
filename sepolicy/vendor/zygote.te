@@ -1,0 +1,2 @@
+allow zygote self:capability kill;
+allow zygote theme_prop:file { open read getattr };

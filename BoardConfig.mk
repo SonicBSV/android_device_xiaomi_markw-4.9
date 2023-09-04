@@ -14,7 +14,12 @@
 # limitations under the License.
 #
 
-DEVICE_PATH := device/xiaomi/mido
+DEVICE_PATH := device/xiaomi/markw
+
+BUILD_BROKEN_ANDROIDMK_EXPORTS :=true
+BUILD_BROKEN_DUP_COPY_HEADERS :=true
+BUILD_BROKEN_DUP_RULES :=true
+BUILD_BROKEN_PHONY_TARGETS :=true
 
 # Architecture
 TARGET_ARCH := arm64
@@ -40,14 +45,15 @@ TARGET_USES_64_BIT_BINDER := true
 TARGET_SYSTEM_PROP := $(DEVICE_PATH)/system.prop
 
 # Kernel
-TARGET_KERNEL_CONFIG := mido_defconfig
+TARGET_KERNEL_CONFIG := markw_defconfig
 BOARD_KERNEL_BASE := 0x80000000
 BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 androidboot.bootdevice=7824900.sdhci earlycon=msm_hsl_uart,0x78af000 loop.max_part=16 androidboot.usbconfigfs=true
+#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
 BOARD_KERNEL_PAGESIZE :=  2048
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x01000000 --tags_offset 0x00000100
 TARGET_KERNEL_CLANG_COMPILE := true
-TARGET_KERNEL_SOURCE := kernel/xiaomi/mido
+TARGET_KERNEL_SOURCE := kernel/xiaomi/markw
 TARGET_KERNEL_VERSION := 4.9
 
 # ANT
@@ -91,11 +97,7 @@ BOARD_QTI_CAMERA_32BIT_ONLY := true
 TARGET_TS_MAKEUP := true
 TARGET_USES_QTI_CAMERA_DEVICE := true
 USE_DEVICE_SPECIFIC_CAMERA := true
-
-# API Override
-TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
-    /vendor/bin/mm-qcamera-daemon=27 \
-    /system/vendor/bin/mm-qcamera-daemon=27 \
+CAMERA_DAEMON_NOT_PRESENT := true
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
@@ -118,11 +120,13 @@ ifeq ($(HOST_OS),linux)
 endif
 
 # Display
-TARGET_SCREEN_DENSITY := 420
+TARGET_DISPLAY_USE_SMOOTH_MOTION := true
+TARGET_SCREEN_DENSITY := 480
 TARGET_USES_ION := true
 TARGET_USES_NEW_ION_API :=true
 TARGET_USES_GRALLOC1 := true
 TARGET_USES_HWC2 := true
+TARGET_DISABLE_POSTRENDER_CLEANUP := true
 TARGET_USES_OVERLAY := true
 
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
@@ -137,7 +141,7 @@ TARGET_ENABLE_MEDIADRM_64 := true
 # Filesystem
 TARGET_USERIMAGES_USE_F2FS := true
 TARGET_USERIMAGES_USE_EXT4 := true
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := f2fs
 BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
 BOARD_ROOT_EXTRA_SYMLINKS := \
     /vendor/dsp:/dsp \
@@ -159,9 +163,18 @@ DEVICE_FRAMEWORK_MANIFEST_FILE := $(DEVICE_PATH)/framework_manifest.xml
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/manifest.xml
 DEVICE_MATRIX_FILE   := $(DEVICE_PATH)/compatibility_matrix.xml
 
+# Lineage Hardware
+JAVA_SOURCE_OVERLAYS := org.lineageos.hardware|$(DEVICE_PATH)/lineagehw|**/*.java
+
 # Init
-TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_mido
-TARGET_RECOVERY_DEVICE_MODULES := libinit_mido
+TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_markw
+TARGET_RECOVERY_DEVICE_MODULES := libinit_markw
+
+# Keystore
+TARGET_PROVIDES_KEYMASTER := true
+
+# Lockscreen real time charging current values
+BOARD_GLOBAL_CFLAGS += -DBATTERY_REAL_INFO
 
 # Media
 TARGET_USES_MEDIA_EXTENSIONS := true
@@ -174,13 +187,13 @@ BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_CACHEIMAGE_PARTITION_SIZE := 268435456
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 67108864
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 25765043200 # 25765059584 - 16384
-BOARD_VENDORIMAGE_PARTITION_SIZE := 872415232
+BOARD_VENDORIMAGE_PARTITION_SIZE := 536870912 # /cust
 
 # Peripheral manager
 TARGET_PER_MGR_ENABLED := true
 
 # Power
-TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/enable_dt2w"
+TARGET_TAP_TO_WAKE_NODE := "/proc/gesture/onoff"
 TARGET_USES_INTERACTION_BOOST := true
 
 # Qualcomm
@@ -190,7 +203,7 @@ BOARD_USES_QCOM_HARDWARE := true
 TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.recovery.qcom
 
 # RIL
-DISABLE_RILD_OEM_HOOK := true
+ENABLE_VENDOR_RIL_SERVICE := true
 TARGET_PROVIDES_QTI_TELEPHONY_JAR := true
 
 # Security patch level
@@ -198,14 +211,14 @@ VENDOR_SECURITY_PATCH := 2020-08-01
 
 # SELinux
 include device/qcom/sepolicy-legacy-um/sepolicy.mk
-BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(DEVICE_PATH)/sepolicy/private
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
+SELINUX_IGNORE_NEVERALLOWS := true
 
 # Treble
+PRODUCT_VENDOR_MOVE_ENABLED := true
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 PRODUCT_FULL_TREBLE_OVERRIDE := true
 BOARD_VNDK_VERSION := current
-BOARD_VNDK_RUNTIME_DISABLE := true
 
 # Wi-Fi
 BOARD_HAS_QCOM_WLAN := true
@@ -220,4 +233,4 @@ WIFI_HIDL_FEATURE_DISABLE_AP_MAC_RANDOMIZATION := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 
 # Inherit from the proprietary version
--include vendor/xiaomi/mido/BoardConfigVendor.mk
+-include vendor/xiaomi/markw/BoardConfigVendor.mk

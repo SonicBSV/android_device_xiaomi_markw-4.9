@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2016, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2016, 2019, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -38,7 +38,6 @@
 #include <linux/media.h>
 #include <media/msm_cam_sensor-legacy.h>
 #include <dlfcn.h>
-#include <unistd.h>
 
 #define IOCTL_H <SYSTEM_HEADER_PREFIX/ioctl.h>
 #include IOCTL_H
@@ -56,6 +55,10 @@ static mm_camera_ctrl_t g_cam_ctrl;
 
 static pthread_mutex_t g_handler_lock = PTHREAD_MUTEX_INITIALIZER;
 static uint16_t g_handler_history_count = 0; /* history count for handler */
+
+#ifndef DAEMON_PRESENT
+static bool g_shim_initialized = FALSE; /* Tells mct shim layer initialized or not */
+#endif
 
 // 16th (starting from 0) bit tells its a BACK or FRONT camera
 #define CAM_SENSOR_FACING_MASK (1U<<16)
@@ -637,6 +640,41 @@ static int32_t mm_camera_intf_qbuf(uint32_t camera_handle,
     LOGD("X evt_type = %d",rc);
     return rc;
 }
+
+/*===========================================================================
+ * FUNCTION   : mm_camera_intf_qbuf
+ *
+ * DESCRIPTION: enqueue buffer back to kernel
+ *
+ * PARAMETERS :
+ *   @camera_handle: camera handle
+ *   @ch_id        : channel handle
+ *   @buf          : buf ptr to be enqueued
+ *
+ * RETURN     : int32_t type of status
+ *              0  -- success
+ *              -1 -- failure
+ *==========================================================================*/
+static int32_t mm_camera_intf_cancel_buf(uint32_t camera_handle, uint32_t ch_id, uint32_t stream_id,
+                     uint32_t buf_idx)
+{
+    int32_t rc = -1;
+    mm_camera_obj_t * my_obj = NULL;
+
+    pthread_mutex_lock(&g_intf_lock);
+    my_obj = mm_camera_util_get_camera_by_handler(camera_handle);
+
+    if(my_obj) {
+        pthread_mutex_lock(&my_obj->cam_lock);
+        pthread_mutex_unlock(&g_intf_lock);
+        rc = mm_camera_cancel_buf(my_obj, ch_id, stream_id, buf_idx);
+    } else {
+        pthread_mutex_unlock(&g_intf_lock);
+    }
+    LOGD("X evt_type = %d",rc);
+    return rc;
+}
+
 
 /*===========================================================================
  * FUNCTION   : mm_camera_intf_get_queued_buf_count
@@ -1648,7 +1686,7 @@ void sort_camera_info(int num_cam)
 
     // Signifies whether YUV AUX camera has to be exposed as physical camera
     memset(prop, 0, sizeof(prop));
-    property_get("persist.camera.aux.yuv", prop, "0");
+    property_get("persist.vendor.camera.aux.yuv", prop, "0");
     is_yuv_aux_cam_exposed = atoi(prop);
     LOGI("YUV Aux camera exposed %d",is_yuv_aux_cam_exposed);
 
@@ -1685,7 +1723,7 @@ void sort_camera_info(int num_cam)
         }
     }
 
-    /* Expose YUV AUX camera if persist.camera.aux.yuv is set to 1.
+    /* Expose YUV AUX camera if persist.vendor.camera.aux.yuv is set to 1.
     Otherwsie expose AUX camera if it is not YUV. */
     for (i = 0; i < num_cam; i++) {
         if ((g_cam_ctrl.info[i].facing == CAMERA_FACING_BACK) &&
@@ -1701,7 +1739,7 @@ void sort_camera_info(int num_cam)
         }
     }
 
-    /* Expose YUV AUX camera if persist.camera.aux.yuv is set to 1.
+    /* Expose YUV AUX camera if persist.vendor.camera.aux.yuv is set to 1.
     Otherwsie expose AUX camera if it is not YUV. */
     for (i = 0; i < num_cam; i++) {
         if ((g_cam_ctrl.info[i].facing == CAMERA_FACING_FRONT) &&
@@ -1746,18 +1784,18 @@ void sort_camera_info(int num_cam)
 uint8_t get_num_of_cameras()
 {
     int rc = 0;
-    int i = 0;
     int dev_fd = -1;
     struct media_device_info mdev_info;
     int num_media_devices = 0;
     int8_t num_cameras = 0;
     char subdev_name[32];
+    char prop[PROPERTY_VALUE_MAX];
+#ifdef DAEMON_PRESENT
     int32_t sd_fd = -1;
     struct sensor_init_cfg_data cfg;
-    char prop[PROPERTY_VALUE_MAX];
+#endif
 
     LOGD("E");
-
     property_get("vold.decrypt", prop, "0");
     int decrypt = atoi(prop);
     if (decrypt == 1)
@@ -1766,9 +1804,15 @@ uint8_t get_num_of_cameras()
 
     memset (&g_cam_ctrl, 0, sizeof (g_cam_ctrl));
 #ifndef DAEMON_PRESENT
-    if (mm_camera_load_shim_lib() < 0) {
-        LOGE ("Failed to module shim library");
-        return 0;
+    if (g_shim_initialized == FALSE) {
+        if (mm_camera_load_shim_lib() < 0) {
+            LOGE("Failed to module shim library");
+            return 0;
+        } else {
+            g_shim_initialized = TRUE;
+        }
+    } else {
+        LOGH("module shim layer already intialized");
     }
 #endif /* DAEMON_PRESENT */
 
@@ -1821,6 +1865,7 @@ uint8_t get_num_of_cameras()
         dev_fd = -1;
     }
 
+#ifdef DAEMON_PRESENT
     /* Open sensor_init subdev */
     sd_fd = open(subdev_name, O_RDWR);
     if (sd_fd < 0) {
@@ -1843,7 +1888,7 @@ uint8_t get_num_of_cameras()
     }
     close(sd_fd);
     dev_fd = -1;
-
+#endif
 
     num_media_devices = 0;
     while (1) {
@@ -2024,6 +2069,7 @@ static mm_camera_ops_t mm_camera_ops = {
     .delete_stream = mm_camera_intf_del_stream,
     .config_stream = mm_camera_intf_config_stream,
     .qbuf = mm_camera_intf_qbuf,
+    .cancel_buffer = mm_camera_intf_cancel_buf,
     .get_queued_buf_count = mm_camera_intf_get_queued_buf_count,
     .map_stream_buf = mm_camera_intf_map_stream_buf,
     .map_stream_bufs = mm_camera_intf_map_stream_bufs,

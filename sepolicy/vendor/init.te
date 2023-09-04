@@ -16,3 +16,6 @@ allow init firmware_file:filesystem getattr;
 
 # LEDs
 allow init sysfs_leds:lnk_file read;
+
+get_prop(vendor_init, vendor_fingerprint_prop);
+set_prop(vendor_init, vendor_fingerprint_prop);

@@ -5,27 +5,23 @@
 /data/vendor/qcam(/.*)?                         u:object_r:vendor_camera_data_file:s0
 
 # Fpc Fingerprint
-/data/fpc(/.*)?                                 u:object_r:fpc_data_file:s0
-/dev/socket/fpce(/.*)?                          u:object_r:fpce_socket:s0
-/sys/devices/(platform)?/soc/soc:fpc1020(/.*)?  u:object_r:fpc_sysfs:s0
-
-# Glove Mode
-/sys/class/tp_glove/device(/.*)?		u:object_r:proc_touchpanel:s0
-/sys/devices/virtual/tp_glove(/.*)?		u:object_r:proc_touchpanel:s0
+/data/fpc(/.*)?					u:object_r:fpc_data_file:s0
+/dev/socket/fpce(/.*)?				u:object_r:fpce_socket:s0
+/sys/devices(/platform)?/soc/soc:fpc1020(/.*)?		u:object_r:fpc_sysfs:s0
 
 # Goodix Fingerprint
-/dev/goodix_fp                                  u:object_r:gx_fpd_device:s0
+/dev/goodix_fp					u:object_r:gx_fpd_device:s0
 /data/gf_data(/.*)?                             u:object_r:gx_fpd_data_file:s0
+/persist/data/gxfp(/.*)?			u:object_r:gx_fpd_data_file:s0
 /data/system/fingerprint(/.*)?                  u:object_r:gx_fpd_data_file:s0
 /(vendor|system/vendor)/bin/gx_fpd              u:object_r:gx_fpd_exec:s0
 /(vendor|system/vendor)/bin/init\.goodix\.sh	u:object_r:init_fingerprint_exec:s0
 
 # HALs
-/(vendor|system/vendor)/bin/hw/android\.hardware\.biometrics\.fingerprint@2\.1-service\.xiaomi_mido		u:object_r:hal_fingerprint_mido_exec:s0
-/(vendor|system/vendor)/bin/hw/android\.hardware\.ir@1\.0-service\.xiaomi_mido					u:object_r:hal_ir_default_exec:s0
-/(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service\.xiaomi_mido                           u:object_r:hal_light_default_exec:s0
-/(vendor|system/vendor)/bin/hw/vendor\.lineage\.livedisplay@2\.0-service\.xiaomi_mido                  u:object_r:hal_lineage_livedisplay_qti_exec:s0
-/(vendor|system/vendor)/bin/hw/vendor\.lineage\.touch@1\.0-service\.xiaomi_mido                     u:object_r:hal_lineage_touch_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.biometrics\.fingerprint@2\.1-service\.xiaomi_markw		u:object_r:hal_fingerprint_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.ir@1\.0-service\.xiaomi_markw					u:object_r:hal_ir_default_exec:s0
+/(vendor|system/vendor)/bin/hw/android\.hardware\.light@2\.0-service\.xiaomi_markw                           u:object_r:hal_light_default_exec:s0
+/(vendor|system/vendor)/bin/hw/vendor\.lineage\.livedisplay@2\.0-service\.xiaomi_markw                  u:object_r:hal_lineage_livedisplay_qti_exec:s0
 /(vendor|system/vendor)/bin/hw/vendor\.qti\.hardware\.perf@2\.1-service                                 u:object_r:hal_perf_default_exec:s0
 /vendor/lib(64)?/vendor\.qti\.hardware\.perf@2\.1\.so                                                   u:object_r:same_process_hal_file:s0
 
@@ -44,5 +40,5 @@
 # Sys files
 /sys/devices(/platform)?/soc/78b6000\.i2c/i2c-2/2-[0-9a-f]+/leds(/.*)?          u:object_r:sysfs_leds:s0
 /sys/devices(/platform)?/soc/leds-qpnp-[0-9]+/leds(/.*)?                        u:object_r:sysfs_leds:s0
-/sys/devices(/platform)?/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/enable_dt2w         u:object_r:proc_touchpanel:s0
-/sys/devices(/platform)?/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/disable_keys        u:object_r:proc_touchpanel:s0
+/sys/devices(/platform)?/soc/78b7000\.i2c/i2c-3/3-[0-9a-f]+/onoff         u:object_r:proc_gesture:s0
+/sys/board_properties/virtualkeys.ft5346                                        u:object_r:sysfs_keys_ft5346:s0

@@ -1,0 +1,10 @@
+type vendor_init_proc_gesture, domain;
+type vendor_init_proc_gesture_exec, file_type, exec_type, vendor_file_type;
+
+# Allow for transition from init domain to vendor_init_proc_gesture
+init_daemon_domain(vendor_init_proc_gesture)
+
+# Required for chown -LR of /proc/gesture
+allow vendor_init_proc_gesture proc_gesture:dir { r_dir_perms setattr };
+allow vendor_init_proc_gesture proc_gesture:file { r_file_perms setattr };
+allow vendor_init_proc_gesture self:capability { chown };

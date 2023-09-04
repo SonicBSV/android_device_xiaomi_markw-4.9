@@ -32,11 +32,15 @@ function 8953_sched_dcvs_eas()
     #governor settings
     echo 1 > /sys/devices/system/cpu/cpu0/online
     echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/down_rate_limit_us
     #set the hispeed_freq
     echo 1401600 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
     #default value for hispeed_load is 90, for 8953 and sdm450 it should be 85
     echo 85 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_load
+
+    echo "0:1248000" > /sys/module/cpu_boost/parameters/input_boost_freq
+    echo 120 > /sys/module/cpu_boost/parameters/input_boost_ms
 }
 
 function 8917_sched_dcvs_eas()
@@ -44,7 +48,8 @@ function 8917_sched_dcvs_eas()
     #governor settings
     echo 1 > /sys/devices/system/cpu/cpu0/online
     echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/up_rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/down_rate_limit_us
     #set the hispeed_freq
     echo 1094400 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
     #default value for hispeed_load is 90, for 8917 it should be 85
@@ -56,7 +61,8 @@ function 8937_sched_dcvs_eas()
     # enable governor for perf cluster
     echo 1 > /sys/devices/system/cpu/cpu0/online
     echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
     #set the hispeed_freq
     echo 1094400 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
     #default value for hispeed_load is 90, for 8937 it should be 85
@@ -64,7 +70,8 @@ function 8937_sched_dcvs_eas()
     ## enable governor for power cluster
     echo 1 > /sys/devices/system/cpu/cpu4/online
     echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-    echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
+    echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
     #set the hispeed_freq
     echo 768000 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_freq
     #default value for hispeed_load is 90, for 8937 it should be 85
@@ -548,7 +555,6 @@ function configure_zram_parameters() {
     # For 1GB Go device, size = 768MB, set same for Non-Go.
     # For 2GB Go device, size = 1536MB, set same for Non-Go.
     # For >2GB Non-Go devices, size = 50% of RAM size. Limit the size to 4GB.
-    # And enable lz4 zram compression for Go targets.
 
     let RamSizeGB="( $MemTotal / 1048576 ) + 1"
     diskSizeUnit=M
@@ -563,9 +569,9 @@ function configure_zram_parameters() {
         let zRamSizeMB=4096
     fi
 
-    if [ "$low_ram" == "true" ]; then
-        echo lz4 > /sys/block/zram0/comp_algorithm
-    fi
+    # Setup zram options
+    echo zstd > /sys/block/zram0/comp_algorithm
+    echo 0   > /proc/sys/vm/page-cluster
 
     if [ -f /sys/block/zram0/disksize ]; then
         if [ -f /sys/block/zram0/use_dedup ]; then
@@ -724,7 +730,7 @@ else
 
         # Enable adaptive LMK for all targets &
         # use Google default LMK series for all 64-bit targets >=2GB.
-        echo 0 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
+        echo 1 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
 
         # Enable oom_reaper
         if [ -f /sys/module/lowmemorykiller/parameters/oom_reaper ]; then
@@ -750,7 +756,7 @@ else
               *)
                 #Set PPR parameters for all other targets.
                 echo $set_almk_ppr_adj > /sys/module/process_reclaim/parameters/min_score_adj
-                echo 0 > /sys/module/process_reclaim/parameters/enable_process_reclaim
+                echo 1 > /sys/module/process_reclaim/parameters/enable_process_reclaim
                 echo 50 > /sys/module/process_reclaim/parameters/pressure_min
                 echo 70 > /sys/module/process_reclaim/parameters/pressure_max
                 echo 30 > /sys/module/process_reclaim/parameters/swap_opt_eff
@@ -791,15 +797,6 @@ function enable_memory_features()
         #Enable Delay Service Restart
         setprop ro.vendor.qti.am.reschedule_service true
     fi
-}
-
-function start_hbtp()
-{
-        # Start the Host based Touch processing but not in the power off mode.
-        bootmode=`getprop ro.bootmode`
-        if [ "charger" != $bootmode ]; then
-                start vendor.hbtp
-        fi
 }
 
 case "$target" in
@@ -1143,26 +1140,6 @@ case "$target" in
                 if [ -f /sys/devices/soc0/hw_platform ]; then
                     hw_platform=`cat /sys/devices/soc0/hw_platform`
                 fi
-                case "$soc_id" in
-                    "239")
-                    case "$hw_platform" in
-                        "Surf")
-                            case "$platform_subtype_id" in
-                                "1" | "2")
-                                    start_hbtp
-                                ;;
-                            esac
-                        ;;
-                        "MTP")
-                            case "$platform_subtype_id" in
-                                "3")
-                                    start_hbtp
-                                ;;
-                            esac
-                        ;;
-                    esac
-                    ;;
-                esac
             ;;
             "268" | "269" | "270" | "271")
                 echo 10 > /sys/class/net/rmnet0/queues/rx-0/rps_cpus
@@ -1989,28 +1966,6 @@ case "$target" in
         case "$soc_id" in
             "293" | "304" | "338" | "351")
 
-                # Start Host based Touch processing
-                case "$hw_platform" in
-                     "MTP" | "Surf" | "RCM" )
-                        #if this directory is present, it means that a
-                        #1200p panel is connected to the device.
-                        dir="/sys/bus/i2c/devices/3-0038"
-                        if [ ! -d "$dir" ]; then
-                              start_hbtp
-                        fi
-                        ;;
-                esac
-
-                if [ $soc_id -eq "338" ]; then
-                    case "$hw_platform" in
-                        "QRD" )
-                            if [ $platform_subtype_id -eq "1" ]; then
-                               start_hbtp
-                            fi
-                            ;;
-                    esac
-                fi
-
                 #init task load, restrict wakeups to preferred cluster
                 echo 15 > /proc/sys/kernel/sched_init_task_load
 
@@ -2148,13 +2103,6 @@ case "$target" in
         case "$soc_id" in
             "349" | "350")
 
-            # Start Host based Touch processing
-            case "$hw_platform" in
-                 "MTP" | "Surf" | "RCM" | "QRD" )
-                          start_hbtp
-                    ;;
-            esac
-
             for devfreq_gov in /sys/class/devfreq/qcom,mincpubw*/governor
             do
                 echo "cpufreq" > $devfreq_gov
@@ -2221,7 +2169,8 @@ case "$target" in
             # configure governor settings for little cluster
             echo 1 > /sys/devices/system/cpu/cpu0/online
             echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-            echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/rate_limit_us
+            echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+            echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
             echo 1363200 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
             #default value for hispeed_load is 90, for sdm632 it should be 85
             echo 85 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
@@ -2234,7 +2183,8 @@ case "$target" in
             # configure governor settings for big cluster
             echo 1 > /sys/devices/system/cpu/cpu4/online
             echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-            echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/rate_limit_us
+            echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
+            echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
             echo 1401600 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_freq
             #default value for hispeed_load is 90, for sdm632 it should be 85
             echo 85 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_load
@@ -2331,20 +2281,6 @@ case "$target" in
         case "$soc_id" in
            "303" | "307" | "308" | "309" | "320" | "386" | "436")
 
-                  # Start Host based Touch processing
-                  case "$hw_platform" in
-                    "MTP" )
-			start_hbtp
-                        ;;
-                  esac
-
-                  case "$hw_platform" in
-                    "Surf" | "RCM" )
-			if [ $platform_subtype_id -ne "4" ]; then
-			    start_hbtp
-		        fi
-                        ;;
-                  esac
                 # Apply Scheduler and Governor settings for 8917 / 8920
 
                 echo 20000000 > /proc/sys/kernel/sched_ravg_window
@@ -2422,13 +2358,6 @@ case "$target" in
 
         case "$soc_id" in
              "294" | "295" | "313" )
-
-                  # Start Host based Touch processing
-                  case "$hw_platform" in
-                    "MTP" | "Surf" | "RCM" )
-                        start_hbtp
-                        ;;
-                  esac
 
                 # Apply Scheduler and Governor settings for 8937/8940
 
@@ -2525,13 +2454,6 @@ case "$target" in
         case "$soc_id" in
              "354" | "364" | "353" | "363" )
 
-                # Start Host based Touch processing
-                case "$hw_platform" in
-                    "MTP" | "Surf" | "RCM" | "QRD" )
-                    start_hbtp
-                ;;
-                esac
-
                 # Apply settings for sdm429/sda429/sdm439/sda439
 
                 for cpubw in /sys/class/devfreq/*qcom,mincpubw*
@@ -2558,7 +2480,9 @@ case "$target" in
                      # enable governor for perf cluster
                      echo 1 > /sys/devices/system/cpu/cpu0/online
                      echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/rate_limit_us
+                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
+
                      #set the hispeed_freq
                      echo 1497600 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
                      echo 80 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
@@ -2572,7 +2496,9 @@ case "$target" in
                      ## enable governor for power cluster
                      echo 1 > /sys/devices/system/cpu/cpu4/online
                      echo "schedutil" > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-                     echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/rate_limit_us
+                     echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/up_rate_limit_us
+                     echo 0 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/down_rate_limit_us
+
                      #set the hispeed_freq
                      echo 998400 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_freq
                      echo 85 > /sys/devices/system/cpu/cpu4/cpufreq/schedutil/hispeed_load
@@ -2622,7 +2548,9 @@ case "$target" in
                      # configure schedutil governor settings
                      echo 1 > /sys/devices/system/cpu/cpu0/online
                      echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/rate_limit_us
+                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/up_rate_limit_us
+                     echo 0 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/down_rate_limit_us
+
                      #set the hispeed_freq
                      echo 1305600 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_freq
                      echo 80 > /sys/devices/system/cpu/cpu0/cpufreq/schedutil/hispeed_load
@@ -2665,13 +2593,6 @@ case "$target" in
 
         case "$soc_id" in
              "386" | "436")
-
-                # Start Host based Touch processing
-                case "$hw_platform" in
-                    "QRD" )
-                    start_hbtp
-                ;;
-                esac
 	    ;;
 	esac
     ;;
@@ -2752,24 +2673,11 @@ case "$target" in
             # Start cdsprpcd only for sdm660 and disable for sdm630
             start vendor.cdsprpcd
 
-            # Start Host based Touch processing
-                case "$hw_platform" in
-                        "MTP" | "Surf" | "RCM" | "QRD" )
-                        start_hbtp
-                        ;;
-                esac
             ;;
         esac
         #Apply settings for sdm630 and Tahaa
         case "$soc_id" in
             "318" | "327" | "385" )
-
-            # Start Host based Touch processing
-            case "$hw_platform" in
-                "MTP" | "Surf" | "RCM" | "QRD" )
-                start_hbtp
-                ;;
-            esac
 
             # Setting b.L scheduler parameters
             echo 85 > /proc/sys/kernel/sched_upmigrate
@@ -2949,13 +2857,6 @@ case "$target" in
 
         case "$soc_id" in
             "336" | "337" | "347" | "360" | "393" )
-
-            # Start Host based Touch processing
-            case "$hw_platform" in
-              "MTP" | "Surf" | "RCM" | "QRD" )
-                  start_hbtp
-                  ;;
-            esac
 
       # Core control parameters on silver
       echo 0 0 0 0 1 1 > /sys/devices/system/cpu/cpu0/core_ctl/not_preferred
@@ -4259,18 +4160,6 @@ case "$target" in
         case "$soc_id" in
             "347" )
 
-            # Start Host based Touch processing
-            case "$hw_platform" in
-              "Surf" | "RCM" | "QRD" )
-                  start_hbtp
-                  ;;
-              "MTP" )
-                  if [ $platform_subtype_id != 5 ]; then
-                      start_hbtp
-                  fi
-                  ;;
-            esac
-
       # Core control parameters on silver
       echo 0 0 0 0 1 1 > /sys/devices/system/cpu/cpu0/core_ctl/not_preferred
       echo 4 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
@@ -4773,25 +4662,6 @@ case "$target" in
                 platform_subtype_id=`cat /sys/devices/soc0/platform_subtype_id`
         fi
 
-        case "$soc_id" in
-                "321" | "341")
-                # Start Host based Touch processing
-                case "$hw_platform" in
-                    "QRD" )
-                            case "$platform_subtype_id" in
-                                   "32") #QVR845 do nothing
-                                     ;;
-                                   *)
-                                         start_hbtp
-                                     ;;
-                            esac
-                     ;;
-                    *)
-                          start_hbtp
-                     ;;
-                esac
-         ;;
-        esac
 	# Core control parameters
 	echo 2 > /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
 	echo 60 > /sys/devices/system/cpu/cpu4/core_ctl/busy_up_thres
@@ -5086,22 +4956,6 @@ case "$target" in
         platform_subtype_id=`cat /sys/devices/soc0/platform_subtype_id`
     fi
 
-    case "$hw_platform" in
-        "MTP" | "Surf" | "RCM" )
-            # Start Host based Touch processing
-            case "$platform_subtype_id" in
-                "0" | "1" | "2" | "3" | "4" | "5")
-                    start_hbtp
-                    ;;
-            esac
-        ;;
-        "HDK" )
-            if [ -d /sys/kernel/hbtpsensor ] ; then
-                start_hbtp
-            fi
-        ;;
-    esac
-
     echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
     configure_memory_parameters
     target_type=`getprop ro.hardware.type`
@@ -5290,22 +5144,6 @@ case "$target" in
     if [ -f /sys/devices/soc0/platform_subtype_id ]; then
         platform_subtype_id=`cat /sys/devices/soc0/platform_subtype_id`
     fi
-
-    case "$hw_platform" in
-        "MTP" | "Surf" | "RCM" )
-            # Start Host based Touch processing
-            case "$platform_subtype_id" in
-                "0" | "1")
-                    start_hbtp
-                    ;;
-            esac
-        ;;
-        "HDK" )
-            if [ -d /sys/kernel/hbtpsensor ] ; then
-                start_hbtp
-            fi
-        ;;
-    esac
 
 	#Setting the min and max supported frequencies
 	reg_val=`cat /sys/devices/platform/soc/780130.qfprom/qfprom0/nvmem | od -An -t d4`
@@ -5667,27 +5505,6 @@ case "$target" in
 	if [ -f /sys/devices/soc0/platform_subtype_id ]; then
 		platform_subtype_id=`cat /sys/devices/soc0/platform_subtype_id`
 	fi
-
-	case "$soc_id" in
-		"292") #msm8998 apq8098_latv
-		# Start Host based Touch processing
-		case "$hw_platform" in
-		"QRD")
-			case "$platform_subtype_id" in
-				"0")
-					start_hbtp
-					;;
-				"16")
-					if [ $platform_major_version -lt 6 ]; then
-						start_hbtp
-					fi
-					;;
-			esac
-
-			;;
-		esac
-	    ;;
-	esac
 
 	echo N > /sys/module/lpm_levels/system/pwr/cpu0/ret/idle_enabled
 	echo N > /sys/module/lpm_levels/system/pwr/cpu1/ret/idle_enabled
