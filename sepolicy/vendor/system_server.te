@@ -6,6 +6,9 @@ allow system_server sysfs_battery_supply:file { read open getattr };
 
 # vibrator
 allow system_server sysfs_vibrator:file read;
+allow system_server sysfs_keys_ft5346:file { open read getattr };
 
 # zygote
 allow system_server app_zygote:process getpgid;
+
+allow system_server sysfs:file r_file_perms;
