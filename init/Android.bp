@@ -15,9 +15,9 @@
 //
 
 cc_library_static {
-    name: "libinit_mido",
+    name: "libinit_markw",
     recovery_available: true,
-    srcs: ["init_mido.cpp"],
+    srcs: ["init_markw.cpp"],
     include_dirs: [
         "system/core/base/include",
         "system/core/init"

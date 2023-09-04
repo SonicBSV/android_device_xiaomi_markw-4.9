@@ -1,0 +1,6 @@
+# Fingerprint
+service vendor.goodix_script /vendor/bin/init.goodix.sh
+    class late_start
+    user system
+    group system
+    oneshot

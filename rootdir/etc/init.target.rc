@@ -42,6 +42,19 @@ on fs
     mkdir /mnt/vendor/persist/data 0700 system system
     mkdir /mnt/vendor/persist/bms 0700 root system
 
+on early-boot
+    chown system system /mnt/vendor/persist/sensors
+    chown system system /mnt/vendor/persist/sensors/sns.reg
+    chown system system /mnt/vendor/persist/sensors/sensors_list.txt
+    chown system system /mnt/vendor/persist/sensors/registry
+    chown system system /mnt/vendor/persist/sensors/registry/registry
+    chown system system /mnt/vendor/persist/sensors/registry/registry/sensors_registry
+    chown system system /mnt/vendor/persist/sensors/sensors_settings
+    chown system system /mnt/vendor/persist/sensors/registry/sns_reg_config
+    chown system system /mnt/vendor/persist/sensors/registry/sns_reg_version
+    chown system system /mnt/vendor/persist/sensors/registry/config
+    chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
+
 on init
     write /dev/stune/foreground/schedtune.sched_boost_no_override 1
     write /dev/stune/top-app/schedtune.sched_boost_no_override 1
@@ -63,11 +76,11 @@ on post-fs-data
 mkdir /data/vendor/qcam/ 0770 camera camera
 
 #start camera server as daemon
-service vendor.qcamerasvr /vendor/bin/mm-qcamera-daemon
-    class late_start
-    user camera
-    group camera system inet input graphics
-    writepid /dev/cpuset/system-background/tasks
+#service vendor.qcamerasvr /vendor/bin/mm-qcamera-daemon
+#    class late_start
+#    user camera
+#    group camera system inet input graphics
+#    task_profiles ServiceCapacityLow
 
 #Start up peripheral manager
 service vendor.per_mgr /vendor/bin/pm-service
@@ -75,14 +88,14 @@ service vendor.per_mgr /vendor/bin/pm-service
     user system
     group system net_raw
     ioprio rt 4
-    writepid /dev/cpuset/system-background/tasks
+    task_profiles ServiceCapacityLow
 
 service vendor.per_proxy /vendor/bin/pm-proxy
     class core
     user system
     group system
     disabled
-    writepid /dev/cpuset/system-background/tasks
+    task_profiles ServiceCapacityLow
 
 on property:init.svc.vendor.per_mgr=running
     start vendor.per_proxy
@@ -95,7 +108,7 @@ service vendor.qseecomd /vendor/bin/qseecomd
    class core
    user root
    group root
-   writepid /dev/cpuset/system-background/tasks
+   task_profiles ServiceCapacityLow
 
 service thermal-engine /vendor/bin/thermal-engine
    class main
@@ -130,12 +143,6 @@ on property:init.svc.zygote=running
 on property:init.svc.zygote=restarting
     stop ppd
 
-service energy-awareness /vendor/bin/energy-awareness
-    class main
-    user root
-    group system
-    oneshot
-
 service vendor.hvdcp_opti /vendor/bin/hvdcp_opti
     class main
     user root
@@ -149,7 +156,7 @@ on charger
     setprop persist.sys.usb.config mass_storage
     start vendor.hvdcp_opti
     start vendor.power_off_alarm
-    start thermal-engine
+    restart thermal-engine
 
 on boot
     # Add a cpuset for the camera daemon
@@ -177,4 +184,15 @@ service ppd /vendor/bin/mm-pp-dpps
     user system
     group system graphics
     socket pps stream 0660 system system
+    disabled
+
+service vendor-sensor-sh /vendor/bin/init.qcom.sensors.sh
+    class core
+    user root
+    oneshot
+
+service vendor.sensors.qti /vendor/bin/sensors.qti
+    class core
+    user system
+    group system
     disabled

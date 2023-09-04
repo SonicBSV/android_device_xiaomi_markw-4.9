@@ -5,11 +5,3 @@
 -keep class org.lineageos.settings.doze.* {
   *;
 }
-
--keep class org.lineageos.settings.soundcontrol.* {
-  *;
-}
-
--keep class org.lineageos.settings.torch.* {
-  *;
-}

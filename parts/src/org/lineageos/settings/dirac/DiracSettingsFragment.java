@@ -17,10 +17,6 @@
 package org.lineageos.settings.dirac;
 
 import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -30,9 +26,9 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
+
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.SwitchPreference;
@@ -40,7 +36,7 @@ import androidx.preference.SwitchPreference;
 import org.lineageos.settings.R;
 
 public class DiracSettingsFragment extends PreferenceFragment implements
-        OnPreferenceChangeListener, CompoundButton.OnCheckedChangeListener {
+        Preference.OnPreferenceChangeListener, CompoundButton.OnCheckedChangeListener {
 
     private static final String PREF_HEADSET = "dirac_headset_pref";
     private static final String PREF_PRESET = "dirac_preset_pref";
@@ -57,10 +53,11 @@ public class DiracSettingsFragment extends PreferenceFragment implements
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.dirac_settings);
-        final ActionBar actionBar = getActivity().getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
 
         mDiracUtils = new DiracUtils(getContext());
+
+        final ActionBar actionBar = getActivity().getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         boolean enhancerEnabled = mDiracUtils.isDiracEnabled();
 
@@ -75,7 +72,7 @@ public class DiracSettingsFragment extends PreferenceFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         final View view = LayoutInflater.from(getContext()).inflate(R.layout.dirac,
                 container, false);
         ((ViewGroup) view).addView(super.onCreateView(inflater, container, savedInstanceState));
@@ -112,7 +109,8 @@ public class DiracSettingsFragment extends PreferenceFragment implements
             case PREF_PRESET:
                 mDiracUtils.setLevel(String.valueOf(newValue));
                 return true;
-            default: return false;
+            default:
+                return false;
         }
     }
 
@@ -120,23 +118,23 @@ public class DiracSettingsFragment extends PreferenceFragment implements
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         mDiracUtils.setEnabled(isChecked);
         mTextView.setText(getString(isChecked ? R.string.switch_bar_on : R.string.switch_bar_off));
-        if (isChecked){
+        if (isChecked) {
             mSwitchBar.setEnabled(false);
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    try{
+                    try {
                         mSwitchBar.setEnabled(true);
                         setEnabled(isChecked);
-                    }catch(Exception ignored){
+                    } catch(Exception ignored) {
                     }
                 }
             }, 1020);
-        }else{
+        } else {
             setEnabled(isChecked);
         }
     }
-    
+
     private void setEnabled(boolean enabled){
         mSwitchBar.setActivated(enabled);
         mHeadsetType.setEnabled(enabled);

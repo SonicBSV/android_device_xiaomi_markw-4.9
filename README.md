@@ -1,23 +1,41 @@
-# Device Tree for Xiaomi Redmi Note 4 & 4x (Mido)
+Device configuration for Xiaomi Redmi (Hongmi) 4 (Prime/Pro/Premium) (Markw/wt88553)
+========================================================================================
 
-## Spec Sheet
+Basic   | Spec Sheet
+-------:|:-------------------------
+CPU     | Octa-core 2.0 GHz Cortex-A53
+Chipset | Qualcomm MSM8953 Snapdragon 625
+GPU     | Adreno 506
+Memory  | 3 GB
+Shipped Android Version | Android 6.0.1 with MIUI 8/9/10
+Storage | 32 GB (Samsung RX1BMB/Hynix HBG4a2/Toshiba 032G32)
+MicroSD | Up to 256 GB (uses SIM 2 slot)
+Battery | 4000 mAh (non-removable Li-Po) (Coslight/Feimaotui)
+Dimensions | 141.3 x 69.6 x 8.9 mm (5.56 x 2.74 x 0.35 in)
+Weight | 156 g (5.50 oz)
+Build | Front glass, aluminum body
+SIM | Hybrid Dual SIM
+Display | 1080 x 1920 pixels,16:9 ratio (~441 ppi density), 5.0" IPS (Tianma r63350/EBBG nt35521s/EBBG nt35596)
+Touchscreen | FOCALTECH FT5346 (for Tianma)/ATMEL A308U (for EBBG)
+Rear Camera  | 13.0 MP, PDAF, f/2.2, Dual LED flash (Samsung S5K3L8(qtech/ofilm/sunny)/OmniVision OV13853)
+Front Camera | 5.0 MP, f/2.2 (OmniVision OV5670)
+FingerPrint | Yes (FPC 1020/Goodix GF3208)
+Accelerometer | Yes (Bosch BMI160)
+Magnetometer | Yes (Yamaha YAS537)
+Network Technology | GSM / CDMA / HSPA / EVDO / LTE
+Alert types | Vibration, MP3, WAV ringtones
+Loudspeaker | Yes 
+3.5mm jack | Yes
+NFC | No
+QC Support | No
+Bluetooth | 4.2, A2DP, LE
+WLAN | Wi-Fi 802.11 a/b/g/n, dual-band, Wi-Fi Direct, hotspot
+GPS | Yes, with A-GPS, GLONASS, BDS
+Infrared port |	Yes
+Radio |	FM radio
+USB | microUSB 2.0, USB On-The-Go
+Als/ps | Yes (Liteon LTR55X)
+LED | Yes (Awinic AW2013)
+Release Date | November 2016
 
-| Feature                 | Specification                     |
-| :---------------------- | :-------------------------------- |
-| CPU                     | Octa-core 2.0 GHz Cortex-A53      |
-| Chipset                 | Qualcomm MSM8953 Snapdragon 625   |
-| GPU                     | Adreno 506                        |
-| Memory                  | 2/3/4 GB                          |
-| Shipped Android Version | 6.0.1                             |
-| Storage                 | 32/64 GB                          |
-| MicroSD                 | Up to 256 GB                      |
-| Battery                 | 4100 mAh (non-removable)          |
-| Dimensions              | 151 x 76 x 8.5 mm                 |
-| Display                 | 1920x1080 pixels, 5.5 (~401 PPI)  |
-| Rear Camera             | 13 MP, LED flash                  |
-| Front Camera            | 5 MP                              |
-| Release Date            | January 2017                      |
-
-## Device Picture
-
-![Redmi Note 4](http://i01.appmifile.com/webfile/globalimg/7/537557F3-A4F1-2490-E9D3-138B2A11DBF6.png "Redmi Note 4")
+![Xiaomi Redmi 4 Prime](https://ixbt.online/live/images/original/00/00/07/2016/12/23/ed26fbbef4.jpg "Xiaomi Redmi 4 Prime")

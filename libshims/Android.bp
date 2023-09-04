@@ -14,33 +14,6 @@
 // limitations under the License.
 //
 
-cc_library_shared {
-    name: "libui_shim",
-    srcs: ["GraphicBuffer.cpp"],
-    shared_libs: ["libui"],
-    compile_multilib: "32",
-    vendor: true
-}
-
-// Camera
-cc_library_shared {
-    name: "libcamshim",
-    proprietary: true,
-    compile_multilib: "32",
-    defaults: ["hidl_defaults"],
-    srcs: [
-        "libshims.cpp",
-    ],
-    cflags: [
-        "-Werror",
-        "-Wextra",
-        "-Wall",
-    ],
-    shared_libs: [
-        "libutils",
-    ],
-}
-
 // Goodix
 cc_library_shared {
     name: "fakelogprint",
@@ -51,7 +24,7 @@ cc_library_shared {
 }
 
 cc_library_shared {
-    name: "libshims_gxfpd",
+    name: "gx_fpd_shim",
     srcs: ["gxfpd_shim.cpp"],
     compile_multilib: "64",
     vendor: true

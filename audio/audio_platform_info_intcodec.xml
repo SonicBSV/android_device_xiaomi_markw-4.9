@@ -61,15 +61,19 @@
         <param key="spkr_2_tz_name" value=""/>
     </config_params>
     <acdb_ids>
-        <device name="SND_DEVICE_OUT_SPEAKER_PROTECTED" acdb_id="136"/>
-        <device name="SND_DEVICE_OUT_VOICE_SPEAKER_PROTECTED" acdb_id="136"/>
-        <device name="SND_DEVICE_OUT_SPEAKER_PROTECTED_VBAT" acdb_id="136"/>
-        <device name="SND_DEVICE_OUT_VOICE_SPEAKER_PROTECTED_VBAT" acdb_id="136"/>
-        <device name="SND_DEVICE_IN_CAPTURE_VI_FEEDBACK" acdb_id="137"/>
-        <device name="SND_DEVICE_IN_HEADSET_MIC_FLUENCE" acdb_id="8"/>
         <device name="SND_DEVICE_IN_HANDSET_MIC" acdb_id="1"/>
         <device name="SND_DEVICE_IN_HANDSET_STEREO_DMIC" acdb_id="1"/>
+        <device name="SND_DEVICE_OUT_SPEAKER_WSA" acdb_id="14"/>
+        <device name="SND_DEVICE_OUT_SPEAKER_AND_USB_HEADSET" acdb_id= "14"/>
+        <device name="SND_DEVICE_OUT_SPEAKER_REVERSE" acdb_id="135"/>
+        <device name="SND_DEVICE_IN_VOICE_SPEAKER_MIC" acdb_id="43"/>
+        <device name="SND_DEVICE_IN_VOICE_FLUENCE_DMIC_AANC" acdb_id="12"/>
+        <device name="SND_DEVICE_IN_SPEAKER_DMIC_BROADSIDE" acdb_id="119"/>
+        <device name="SND_DEVICE_IN_SPEAKER_DMIC_AEC_BROADSIDE" acdb_id="121"/>
+        <device name="SND_DEVICE_IN_SPEAKER_DMIC_NS_BROADSIDE" acdb_id="120"/>
+        <device name="SND_DEVICE_IN_SPEAKER_DMIC_AEC_NS_BROADSIDE" acdb_id="105"/>
     </acdb_ids>
+
     <backend_names>
         <device name="SND_DEVICE_OUT_HEADPHONES" interface="PRI_MI2S_RX"/>
         <device name="SND_DEVICE_OUT_BT_SCO_WB" interface="INT_BT_SCO_RX"/>
@@ -140,8 +144,8 @@
         <device name="SND_DEVICE_IN_VOICE_REC_DMIC_FLUENCE" interface="TERT_MI2S_TX"/>
         <device name="SND_DEVICE_IN_AANC_HANDSET_MIC" interface="TERT_MI2S_TX"/>
         <device name="SND_DEVICE_IN_QUAD_MIC" interface="TERT_MI2S_TX"/>
-        <device name="SND_DEVICE_IN_HANDSET_STEREO_DMIC" interface="TERT_MI2S_TX"/>
-        <device name="SND_DEVICE_IN_SPEAKER_STEREO_DMIC" interface="TERT_MI2S_TX"/>
+        <device name="SND_DEVICE_IN_HANDSET_DMIC_STEREO" interface="TERT_MI2S_TX"/>
+        <device name="SND_DEVICE_IN_SPEAKER_DMIC_STEREO" interface="TERT_MI2S_TX"/>
         <device name="SND_DEVICE_IN_CAPTURE_VI_FEEDBACK" interface="SENARY_MI2S_TX"/>
         <device name="SND_DEVICE_IN_CAPTURE_VI_FEEDBACK_MONO_1" interface="SENARY_MI2S_TX"/>
         <device name="SND_DEVICE_IN_CAPTURE_VI_FEEDBACK_MONO_2" interface="SENARY_MI2S_TX"/>
@@ -356,13 +360,13 @@
                         <mic_info mic_device_id="builtin_mic_4"
                             channel_mapping="AUDIO_MICROPHONE_CHANNEL_MAPPING_PROCESSED"/>
                     </snd_dev>
-                    <snd_dev in_snd_device="SND_DEVICE_IN_HANDSET_STEREO_DMIC">
+                    <snd_dev in_snd_device="SND_DEVICE_IN_HANDSET_DMIC_STEREO">
                         <mic_info mic_device_id="builtin_mic_1"
                             channel_mapping="AUDIO_MICROPHONE_CHANNEL_MAPPING_PROCESSED"/>
                         <mic_info mic_device_id="builtin_mic_2"
                             channel_mapping="AUDIO_MICROPHONE_CHANNEL_MAPPING_PROCESSED"/>
                     </snd_dev>
-                    <snd_dev in_snd_device="SND_DEVICE_IN_SPEAKER_STEREO_DMIC">
+                    <snd_dev in_snd_device="SND_DEVICE_IN_SPEAKER_DMIC_STEREO">
                         <mic_info mic_device_id="builtin_mic_1"
                             channel_mapping="AUDIO_MICROPHONE_CHANNEL_MAPPING_PROCESSED"/>
                         <mic_info mic_device_id="builtin_mic_2"
@@ -546,3 +550,4 @@
         </input_snd_device>
     </snd_devices>
 </audio_platform_info>
+

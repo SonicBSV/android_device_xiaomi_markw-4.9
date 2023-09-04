@@ -1,1 +1,3 @@
 dontaudit untrusted_app_29 hal_memtrack_hwservice:hwservice_manager { find } ;
+allow untrusted_app_29 vendor_persist_camera_prop:file { read };
+allow untrusted_app_29 rootfs:dir { read };

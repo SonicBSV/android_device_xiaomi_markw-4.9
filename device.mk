@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-$(call inherit-product, vendor/xiaomi/mido/mido-vendor.mk)
+$(call inherit-product, vendor/xiaomi/markw/markw-vendor.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
 
 # Overlays
@@ -75,10 +75,12 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.passpoint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.passpoint.xml \
+    frameworks/native/data/etc/android.software.app_widgets.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.app_widgets.xml \
+    frameworks/native/data/etc/android.software.freeform_window_management.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.freeform_window_management.xml \
     frameworks/native/data/etc/android.software.ipsec_tunnels.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.ipsec_tunnels.xml \
     frameworks/native/data/etc/android.software.midi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.midi.xml \
     frameworks/native/data/etc/android.software.print.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.print.xml \
-    frameworks/native/data/etc/android.software.vulkan.deqp.level-2019-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml
+    frameworks/native/data/etc/android.software.vulkan.deqp.level-2020-03-01.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.vulkan.deqp.level.xml
 
 # ANT
 PRODUCT_PACKAGES += \
@@ -99,10 +101,11 @@ PRODUCT_PACKAGES += \
     audio.r_submix.default \
     audio.usb.default \
     libaacwrapper \
-    libaudio-resampler \
-    libqcomvisualizer \
-    libqcomvoiceprocessing \
-    libqcompostprocbundle
+    libaudio-resampler:32 \
+    libqcomvisualizer:32 \
+    libqcomvoiceprocessing:32 \
+    libqcompostprocbundle:32 \
+    sound_trigger.primary.msm8953:32
 
 # Audio features
 PRODUCT_PACKAGES += \
@@ -113,10 +116,10 @@ PRODUCT_PACKAGES += \
 # Audio configuration
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
-    $(LOCAL_PATH)//qcom-caf/audio/configs/msm8953/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
-    $(LOCAL_PATH)//qcom-caf/audio/configs/msm8953/audio_tuning_mixer.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer.txt \
-    $(LOCAL_PATH)//qcom-caf/audio/configs/msm8953/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
-    $(LOCAL_PATH)//qcom-caf/audio/configs/msm8953/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml
+    $(LOCAL_PATH)/qcom-caf/audio/configs/msm8953/audio_output_policy.conf:$(TARGET_COPY_OUT_VENDOR)/etc/audio_output_policy.conf \
+    $(LOCAL_PATH)/qcom-caf/audio/configs/msm8953/audio_tuning_mixer.txt:$(TARGET_COPY_OUT_VENDOR)/etc/audio_tuning_mixer.txt \
+    $(LOCAL_PATH)/qcom-caf/audio/configs/msm8953/sound_trigger_mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_mixer_paths.xml \
+    $(LOCAL_PATH)/qcom-caf/audio/configs/msm8953/sound_trigger_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sound_trigger_platform_info.xml
 
 # Audio XML configuration files
 PRODUCT_COPY_FILES += \
@@ -149,18 +152,21 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.6:64 \
     vendor.qti.hardware.camera.device@1.0 \
     camera.msm8953 \
-    libcamshim \
+    libstdc++.vendor \
     libmm-qcamera \
-    libui_shim \
     Snap
 
 # Component overrides
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/component-overrides.xml:$(TARGET_COPY_OUT_VENDOR)/etc/sysconfig/component-overrides.xml
 
+# ConfigStore
+PRODUCT_PACKAGES += \
+    disable_configstore
+
 # Consumerir
 PRODUCT_PACKAGES += \
-    android.hardware.ir@1.0-service.xiaomi_mido
+    android.hardware.ir@1.0-service.xiaomi_markw
 
 # Display
 PRODUCT_PACKAGES += \
@@ -172,16 +178,23 @@ PRODUCT_PACKAGES += \
     android.hardware.memtrack@1.0-service \
     gralloc.msm8953 \
     hwcomposer.msm8953 \
-    memtrack.msm8953 \
-    libdisplayconfig \
-    libqdMetaData \
+    libgralloc.system.qti \
+    libqdMetaData.system \
     libtinyxml \
     libvulkan \
-    vendor.display.config@1.0.vendor
+    memtrack.msm8953 \
+    vendor.display.config@1.0.vendor \
+    vendor.qti.hardware.display.mapper@2.0.vendor
 
 # Device-specific settings
 PRODUCT_PACKAGES += \
     XiaomiParts
+    
+# Dex/ART optimization
+PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
+PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
+PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := everything
+USE_DEX2OAT_DEBUG := false    
 
 # DRM
 PRODUCT_PACKAGES += \
@@ -191,9 +204,16 @@ PRODUCT_PACKAGES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.1-service.xiaomi_mido \
+    android.hardware.biometrics.fingerprint@2.1-service.xiaomi_markw \
     fakelogprint \
-    libshims_gxfpd
+    gx_fpd_shim
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/blank.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/blank.xml
+
+# FlipFlap
+PRODUCT_PACKAGES += \
+    FlipFlap
 
 # FM
 PRODUCT_PACKAGES += \
@@ -244,13 +264,15 @@ PRODUCT_PACKAGES += \
     ims-ext-common \
     ims_ext_common.xml
 
+# Inherit several Android Go Configurations(Beneficial for everyone, even on non-Go devices)
+PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
+PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := frameworks/base/config/boot-image-profile.txt
+
 # Input
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/keylayout/ft5435_ts.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/ft5435_ts.kl \
-    $(LOCAL_PATH)/keylayout/gf3208.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gf3208.kl \
-    $(LOCAL_PATH)/keylayout/goodix-ts.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/goodix-ts.kl \
+    $(LOCAL_PATH)/keylayout/ft5x06_ts.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/ft5x06_ts.kl \
     $(LOCAL_PATH)/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl \
-    $(LOCAL_PATH)/keylayout/ist30xx_ts_input.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/ist30xx_ts_input.kl \
+    $(LOCAL_PATH)/keylayout/gf3208.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gf3208.kl \
     $(LOCAL_PATH)/keylayout/msm8953-snd-card-mtp_Button_Jack.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/msm8953-snd-card-mtp_Button_Jack.kl \
     $(LOCAL_PATH)/keylayout/uinput-fpc.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/uinput-fpc.kl
 
@@ -266,15 +288,11 @@ PRODUCT_PACKAGES += \
 
 # Lights
 PRODUCT_PACKAGES += \
-    android.hardware.light@2.0-service.xiaomi_mido
+    android.hardware.light@2.0-service.xiaomi_markw
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
-    vendor.lineage.livedisplay@2.0-service.xiaomi_mido
-
-# LMKD
-# Enable stats logging in LMKD
-TARGET_LMKD_STATS_LOG := true
+    vendor.lineage.livedisplay@2.0-service.xiaomi_markw
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -298,26 +316,36 @@ PRODUCT_PACKAGES += \
 
 # OMX
 PRODUCT_PACKAGES += \
-    libc2dcolorconvert \
-    libmm-omxcore \
-    libOmxAacEnc \
-    libOmxAmrEnc \
-    libOmxCore \
-    libOmxEvrcEnc \
-    libOmxG711Enc \
-    libOmxQcelp13Enc \
-    libOmxSwVencHevc \
-    libOmxVdec \
-    libOmxVenc \
-    libstagefrighthw \
-    libstagefright_enc_common
+    libc2dcolorconvert:32 \
+    libmm-omxcore:32 \
+    libOmxAacEnc:32 \
+    libOmxAmrEnc:32 \
+    libOmxCore:32 \
+    libOmxEvrcEnc:32 \
+    libOmxG711Enc:32 \
+    libOmxQcelp13Enc:32 \
+    libOmxVdec:32 \
+    libOmxVenc:32 \
+    libstagefrighthw
 
 # Power
 PRODUCT_PACKAGES += \
+    android.hardware.power@1.0 \
+    android.hardware.power@1.0.vendor \
+    android.hardware.power@1.1 \
+    android.hardware.power@1.1.vendor \
+    android.hardware.power@1.2 \
+    android.hardware.power@1.2.vendor \
+    android.hardware.power@1.3 \
+    android.hardware.power@1.3.vendor \
     android.hardware.power-service-qti \
-    android.hardware.power.stats@1.0-service.mock \
-    vendor.qti.hardware.perf@2.0.vendor \
-    vendor.qti.hardware.perf@2.1.vendor
+    android.hardware.power.stats@1.0-service.mock
+
+# Perf
+PRODUCT_PACKAGES += \
+   libtflite \
+   libtextclassifier_hash \
+   vendor.qti.hardware.perf@2.2.vendor
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/powerhint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/powerhint.xml \
@@ -334,10 +362,13 @@ PRODUCT_PACKAGES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.qcom \
+    init.class_main.sh \
     init.goodix.sh \
+    init.xiaomi.device.rc \
     init.msm.usb.configfs.rc \
     init.qcom.early_boot.sh \
     init.qcom.post_boot.sh \
+    init.qcom.sensors.sh \
     init.qcom.rc \
     init.qcom.sh \
     init.qcom.usb.rc \
@@ -347,29 +378,26 @@ PRODUCT_PACKAGES += \
     init.target.rc \
     ueventd.qcom.rc
 
-# RenderScript HAL
-PRODUCT_PACKAGES += \
-    android.hardware.renderscript@1.0-impl
-
 # RIL
 PRODUCT_PACKAGES += \
-    android.hardware.secure_element@1.0 \
-    librmnetctl \
-    libcnefeatureconfig \
+    android.hardware.radio@1.5.vendor:64 \
+    android.hardware.radio.config@1.2.vendor:64 \
+    android.hardware.radio.deprecated@1.0.vendor:64 \
+    android.hardware.secure_element@1.2.vendor:64 \
+    librmnetctl:64 \
     qti-telephony-hidl-wrapper \
     qti_telephony_hidl_wrapper.xml \
     qti-telephony-utils \
-    qti_telephony_utils.xml \
-    telephony-ext
-
-PRODUCT_BOOT_JARS += \
-    telephony-ext
+    qti_telephony_utils.xml
 
 # Sensors
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl:64 \
     android.hardware.sensors@1.0-service \
     libsensorndkbridge
+    
+# Speed profile services and wifi-service to reduce RAM and storage
+PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
 
 # Thermal
 PRODUCT_COPY_FILES += \
@@ -378,11 +406,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.thermal@1.0-impl:64 \
     android.hardware.thermal@1.0-service \
-    thermal.msm8953
-
-# Touch features
-PRODUCT_PACKAGES += \
-    vendor.lineage.touch@1.0-service.xiaomi_mido
+    thermal.msm8953:64
 
 # Trust HAL
 PRODUCT_PACKAGES += \
@@ -392,24 +416,33 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.usb@1.0-service.basic
 
+# vndservicemanager
+PRODUCT_PACKAGES += \
+    vndservicemanager
+
 # Vibrator
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.vibrator.service
 
 PRODUCT_COPY_FILES += \
     vendor/qcom/opensource/vibrator/excluded-input-devices.xml:$(TARGET_COPY_OUT_VENDOR)/etc/excluded-input-devices.xml
-    
-# VNDK
+
+# WFD
 PRODUCT_PACKAGES += \
-    libstdc++.vendor
+    libnl \
+    libstagefright_enc_common
+
+PRODUCT_BOOT_JARS += \
+    WfdCommon
 
 # Wifi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service-lazy \
-    libcld80211 \
-    libwpa_client \
+    android.hardware.wifi@1.0-service \
+    android.system.net.netd@1.1.vendor:64 \
+    libcld80211:64 \
+    libwpa_client:64 \
     hostapd \
-    libwifi-hal-qcom \
+    libwifi-hal-qcom:64 \
     TetheringConfigOverlay \
     WifiOverlay \
     wpa_supplicant \

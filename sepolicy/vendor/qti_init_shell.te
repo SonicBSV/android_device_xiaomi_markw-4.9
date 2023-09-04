@@ -1,13 +1,21 @@
-dontaudit qti_init_shell self:capability dac_override;
-
-allow qti_init_shell proc_touchpanel:dir { r_dir_perms setattr };
-allow qti_init_shell proc_touchpanel:file { getattr setattr };
-
-# Allow access to swappiness
-allow qti_init_shell proc_swap:file { open write };
+allow qti_init_shell proc_gesture:dir { r_dir_perms setattr };
+allow qti_init_shell proc_gesture:file { getattr setattr };
 
 # Allow adjust page_cluster setting
 allow qti_init_shell proc_page_cluster:file { open write };
 
 # Postboot
 allow qti_init_shell sysfs:file { write setattr };
+
+allow qti_init_shell system_data_file:file getattr;
+
+# Kcal
+allow qti_init_shell kcal_dev:dir search;
+allow qti_init_shell kcal_dev:file rw_file_perms;
+
+# Allow watermark scale factor to write
+#allow qti_init_shell proc_watermark_scale_factor:file { open write };
+
+allow qti_init_shell sysfs_leds:file setattr;
+
+allow qti_init_shell sysfs_io_sched_tuneable:file { write };

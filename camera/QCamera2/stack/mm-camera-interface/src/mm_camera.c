@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2017, 2019, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -35,8 +35,8 @@
 #include <errno.h>
 #include <fcntl.h>
 #include <stdlib.h>
-#include <dlfcn.h>
 #include <unistd.h>
+#include <dlfcn.h>
 #define IOCTL_H <SYSTEM_HEADER_PREFIX/ioctl.h>
 #include IOCTL_H
 
@@ -561,6 +561,38 @@ int32_t mm_camera_qbuf(mm_camera_obj_t *my_obj,
      * in order to avoid deadlock, we are not locking ch_lock for qbuf */
     if (NULL != ch_obj) {
         rc = mm_channel_qbuf(ch_obj, buf);
+    }
+
+    return rc;
+}
+
+/*===========================================================================
+ * FUNCTION   : mm_camera_cancel_buf
+ *
+ * DESCRIPTION: Cancel an already queued buffer
+ *
+ * PARAMETERS :
+ *   @my_obj       : camera object
+ *   @ch_id        : channel handle
+ *
+ *   @buf          : buf ptr to be enqueued
+ *
+ * RETURN     : int32_t type of status
+ *              0  -- success
+ *              -1 -- failure
+ *==========================================================================*/
+int32_t mm_camera_cancel_buf(mm_camera_obj_t *my_obj,
+                       uint32_t ch_id,
+                       uint32_t stream_id,
+                       uint32_t buf_idx)
+{
+    int rc = -1;
+    mm_channel_t * ch_obj = NULL;
+    ch_obj = mm_camera_util_get_channel_by_handler(my_obj, ch_id);
+
+    if (NULL != ch_obj) {
+        pthread_mutex_unlock(&my_obj->cam_lock);
+        rc = mm_channel_cancel_buf(ch_obj,stream_id,buf_idx);
     }
 
     return rc;
@@ -2450,13 +2482,13 @@ typedef struct {
 
 static module_debug_t cam_loginfo[(int)CAM_LAST_MODULE] = {
   {CAM_GLBL_DBG_ERR, 1,
-      "",         "persist.camera.global.debug"     }, /* CAM_NO_MODULE     */
+      "",         "persist.vendor.camera.global.debug"     }, /* CAM_NO_MODULE     */
   {CAM_GLBL_DBG_ERR, 1,
-      "<HAL>", "persist.camera.hal.debug"        }, /* CAM_HAL_MODULE    */
+      "<HAL>", "persist.vendor.camera.hal.debug"        }, /* CAM_HAL_MODULE    */
   {CAM_GLBL_DBG_ERR, 1,
-      "<MCI>", "persist.camera.mci.debug"        }, /* CAM_MCI_MODULE    */
+      "<MCI>", "persist.vendor.camera.mci.debug"        }, /* CAM_MCI_MODULE    */
   {CAM_GLBL_DBG_ERR, 1,
-      "<JPEG>", "persist.camera.mmstill.logs"     }, /* CAM_JPEG_MODULE   */
+      "<JPEG>", "persist.vendor.camera.mmstill.logs"     }, /* CAM_JPEG_MODULE   */
 };
 
 /** cam_get_dbg_level

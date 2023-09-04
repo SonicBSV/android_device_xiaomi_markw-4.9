@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-ifeq ($(TARGET_DEVICE),mido)
+ifeq ($(TARGET_DEVICE),markw)
 
 include $(call all-subdir-makefiles)
 
@@ -106,7 +106,7 @@ $(RFS_MSM_SLPI_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 
 ALL_DEFAULT_INSTALLED_MODULES += $(RFS_MSM_ADSP_SYMLINKS) $(RFS_MSM_MPSS_SYMLINKS) $(RFS_MSM_SLPI_SYMLINKS)
 
-EGL_LIBS := libEGL_adreno.so libGLESv2_adreno.so libq3dtools_adreno.so
+EGL_LIBS := libEGL_adreno.so libGLESv2_adreno.so
 EGL_32_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/lib/,$(notdir $(EGL_LIBS)))
 $(EGL_32_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	@echo "EGL 32 lib link: $@"
@@ -132,5 +132,18 @@ $(CNE_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
 	$(hide) ln -sf /vendor/lib64/$(notdir $@) $@
 
 ALL_DEFAULT_INSTALLED_MODULES += $(CNE_SYMLINKS)
+
+GOODIX_IMAGES := \
+	      goodixfp.b00 goodixfp.b01 goodixfp.b02 goodixfp.b03 \
+	      goodixfp.b04 goodixfp.b05 goodixfp.b06 goodixfp.mdt
+
+GOODIX_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(GOODIX_IMAGES)))
+$(GOODIX_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
+	      @echo "Goodix firmware link: $@"
+	      @mkdir -p $(dir $@)
+	      @rm -rf $@
+	      $(hide) ln -sf /firmware/image/$(notdir $@) $@
+
+ALL_DEFAULT_INSTALLED_MODULES += $(GOODIX_SYMLINKS)
 
 endif
