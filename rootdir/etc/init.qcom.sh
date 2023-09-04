@@ -27,9 +27,6 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# Set shared touchpanel nodes ownership (these are proc_symlinks to the real sysfs nodes)
-chown -LR system.system /proc/gesture/onoff
-
 #
 # Make modem config folder and copy firmware config to that folder for RIL
 #
