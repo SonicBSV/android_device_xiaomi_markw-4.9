@@ -1,0 +1,1 @@
+allow location sysfs_socinfo_sensitive:file r_file_perms;

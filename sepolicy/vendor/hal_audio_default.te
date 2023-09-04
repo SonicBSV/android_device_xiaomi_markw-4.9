@@ -2,3 +2,16 @@ allow hal_audio_default sysfs:dir r_dir_perms;
 allow hal_audio_default self:capability sys_nice;
 get_prop(hal_audio_default, vendor_dirac_prop)
 set_prop(hal_audio_default, vendor_dirac_prop)
+
+# Audio Socket
+allow hal_audio_default init:unix_stream_socket connectto;
+
+# Allow hal_audio_default to read audio_device
+allow hal_audio_default audio_device:dir r_dir_perms;
+
+# Allow HAL to set audio properties
+set_prop(hal_audio_default, vendor_audio_prop)
+get_prop(hal_audio_default, vendor_audio_prop)
+
+allow hal_audio_default vendor_data_file:dir { create write add_name };
+allow hal_audio_default vendor_data_file:file { append create getattr open read };
