@@ -31,54 +31,6 @@
          config to 7. -->
     <integer name="config_deviceHardwareKeys">71</integer>
 
-    <!-- Control the behavior when the user long presses the home button.
-            0 - Nothing
-            1 - Menu key
-            2 - Recent apps view in SystemUI
-            3 - Launch assist intent
-            4 - Voice Search
-            5 - In-app Search
-            6 - Launch camera
-            7 - Sleep
-            8 - Last app
-            9 - Toggle split screen
-            10 - Kill foreground app
-            11 - Torch
-            12 - Screenshot
-            13 - Volume Panel
-            14 - Clear All Notifications
-            15 - Notifications
-            16 - Toggle Qs Panel
-            17 - Ringer Modes
-         This needs to match the enums in
-         sdk/src/java/org/lineageos/internal/util/DeviceKeysConstants.java.
-    -->
-    <integer name="config_longPressOnHomeBehavior">0</integer>
-
-    <!-- Control the behavior when the user long presses the menu button.
-            0 - Nothing
-            1 - Menu key
-            2 - Recent apps view in SystemUI
-            3 - Launch assist intent
-            4 - Voice Search
-            5 - In-app Search
-            6 - Launch camera
-            7 - Sleep
-            8 - Last app
-            9 - Toggle split screen
-            10 - Kill foreground app
-            11 - Torch
-            12 - Screenshot
-            13 - Volume Panel
-            14 - Clear All Notifications
-            15 - Notifications
-            16 - Toggle Qs Panel
-            17 - Ringer Modes
-         This needs to match the enums in
-         sdk/src/java/org/lineageos/internal/util/DeviceKeysConstants.java.
-    -->
-    <integer name="config_longPressOnMenuBehavior">0</integer>
-
    <!-- All the capabilities of the LEDs on this device, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
          of the following capabilities present:
@@ -164,5 +116,6 @@
         <item>restart</item>
         <item>restart_recovery</item>
         <item>restart_fastboot</item>
+	<item>restart_systemui</item>
     </string-array>
 </resources>
