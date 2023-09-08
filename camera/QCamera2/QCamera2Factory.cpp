@@ -90,12 +90,8 @@ QCamera2Factory::QCamera2Factory()
 
     // Signifies whether system has to enable dual camera mode
     snprintf(propDefault, PROPERTY_VALUE_MAX, "%d", isDualCamAvailable(isHAL3Enabled));
-    property_get("persist.vendor.camera.dual.camera", prop, propDefault);
-    bDualCamera = atoi(prop);
-    LOGH("dualCamera:%d ", bDualCamera);
-#ifndef QCAMERA_HAL1_SUPPORT
     bDualCamera = 0;
-#endif
+    LOGH("dualCamera:%d ", bDualCamera);
 
     if(bDualCamera) {
         LOGI("Enabling QCamera Muxer");
