@@ -6,7 +6,7 @@
 audio.deep_buffer.media=true
 audio.offload.min.duration.secs=30
 audio.offload.video=true
-persist.vendor.audio.fluence.speaker=true
+persist.vendor.audio.fluence.speaker=false
 persist.vendor.audio.fluence.voicecall=true
 persist.vendor.audio.fluence.voicerec=false
 persist.vendor.audio.hw.binder.size_kbyte=1024
@@ -49,7 +49,7 @@ vendor.audio.feature.incall_music.enable=false
 vendor.audio.feature.kpi_optimize.enable=true
 vendor.audio.feature.multi_voice_session.enable=true
 vendor.audio.feature.snd_mon.enable=true
-vendor.audio.feature.spkr_prot.enable=true
+vendor.audio.feature.spkr_prot.enable=false
 vendor.audio.feature.src_trkn.enable=true
 vendor.audio.feature.vbat.enable=true
 vendor.audio.feature.wsa.enable=true
@@ -69,13 +69,10 @@ persist.vendor.camera.display.lmax=1280x720
 persist.vendor.camera.display.umax=1920x1080
 vendor.camera.lowpower.record.enable=1
 persist.vendor.qti.telephony.vt_cam_interface=2
-persist.vendor.camera.eis.enable=1
 persist.vendor.camera.gyro.disable=0
 persist.vendor.camera.isp.clock.optmz=0
 persist.vendor.camera.stats.test=5
-persist.vendor.camera.CDS=off
 persist.vendor.camera.perflock.enable=0
-persist.vendor.camera.HAL3.enabled=1
 
 # Display
 ro.hardware.vulkan=adreno
