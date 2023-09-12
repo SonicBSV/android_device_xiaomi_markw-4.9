@@ -1784,6 +1784,9 @@ void sort_camera_info(int num_cam)
 uint8_t get_num_of_cameras()
 {
     int rc = 0;
+#ifdef DAEMON_PRESENT
+    int i = 0;
+#endif
     int dev_fd = -1;
     struct media_device_info mdev_info;
     int num_media_devices = 0;
