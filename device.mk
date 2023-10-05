@@ -168,7 +168,7 @@ PRODUCT_PACKAGES += \
     camera.msm8953 \
     libdng_sdk.vendor \
     libgui_vendor \
-    libstdc++.vendor
+    libstdc++_vendor
 
 # Cgroup and task_profiles
 PRODUCT_COPY_FILES += \
