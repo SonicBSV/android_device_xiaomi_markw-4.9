@@ -111,19 +111,23 @@ service vendor.qseecomd /vendor/bin/qseecomd
    task_profiles ServiceCapacityLow
 
 service thermal-engine /vendor/bin/thermal-engine
-   class main
-   user root
-   socket thermal-send-client stream 0666 system system
-   socket thermal-recv-client stream 0660 system system
-   socket thermal-recv-passive-client stream 0666 system system
-   socket thermal-send-rule stream 0660 system system
-   group root
+    class main
+    user root
+    group root
+    socket thermal-send-client stream 0660 system oem_2907
+    socket thermal-recv-client stream 0660 system oem_2907
+    socket thermal-recv-passive-client stream 0660 system oem_2907
+    socket thermal-send-rule stream 0660 system oem_2907
 
-service wcnss-service /vendor/bin/wcnss_service
+on property:sys.boot_completed=1
+    restart thermal-engine
+
+service vendor.wcnss-service /vendor/bin/wcnss_service
     class main
     user system
     group system wifi radio
     oneshot
+    task_profiles ServiceCapacityLow
 
 on property:init.svc.surfaceflinger=stopped
     stop ppd
@@ -197,14 +201,31 @@ service vendor.sensors.qti /vendor/bin/sensors.qti
     group system
     disabled
 
-service folio_daemon /system/bin/folio_daemon
-    class late_start
-    user system
-    group system uhid
-    disabled
+# UClamp tunings
+on boot
+    write /proc/sys/kernel/sched_util_clamp_min_rt_default 96
+    write /proc/sys/kernel/sched_util_clamp_min 128
 
-on property:init.svc.zygote=running
-    start folio_daemon
+    # top-app
+    write /dev/cpuset/top-app/uclamp.max max
+    write /dev/cpuset/top-app/uclamp.min 20
+    write /dev/cpuset/top-app/uclamp.boosted 1
+    write /dev/cpuset/top-app/uclamp.latency_sensitive 1
 
-on property:init.svc.zygote=stopped
-    stop folio_daemon
+    # foreground
+    write /dev/cpuset/foreground/uclamp.max 50
+    write /dev/cpuset/foreground/uclamp.min 20
+    write /dev/cpuset/foreground/uclamp.boosted 0
+    write /dev/cpuset/foreground/uclamp.latency_sensitive 0
+
+    # background
+    write /dev/cpuset/background/uclamp.max max
+    write /dev/cpuset/background/uclamp.min 20
+    write /dev/cpuset/background/uclamp.boosted 0
+    write /dev/cpuset/background/uclamp.latency_sensitive 0
+
+    # system-background
+    write /dev/cpuset/system-background/uclamp.max 50
+    write /dev/cpuset/system-background/uclamp.min 10
+    write /dev/cpuset/system-background/uclamp.boosted 0
+    write /dev/cpuset/system-background/uclamp.latency_sensitive 0

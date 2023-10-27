@@ -15,3 +15,7 @@ get_prop(hal_audio_default, vendor_audio_prop)
 
 allow hal_audio_default vendor_data_file:dir { create write add_name };
 allow hal_audio_default vendor_data_file:file { append create getattr open read };
+
+# Dolby
+allow hal_audio_default hal_dms_default:binder { transfer call };
+allow hal_audio_default hal_dms_hwservice:hwservice_manager find;

@@ -7,7 +7,6 @@ ro.config.media_vol_steps=25
 vendor.fastrpc.disable.adsprpcd_sensorspd.daemon=1
 
 # Charger
-ro.charger.disable_init_blank=true
 ro.charger.enable_suspend=true
 
 # Console
@@ -23,10 +22,12 @@ arm64.memtag.process.system_server=off
 
 # Dexopt
 dalvik.vm.dex2oat64.enabled=true
+pm.dexopt.shared=quicken
 
 # Display
 debug.egl.hw=0
 debug.enable.sglscale=1
+debug.hwui.renderer=vulkan
 debug.hwui.skia_atrace_enabled=false
 debug.mdpcomp.logs=0
 debug.renderengine.backend=skiaglthreaded
@@ -41,6 +42,16 @@ vendor.display.enable_default_color_mode=1
 # FM
 ro.fm.transmitter=false
 vendor.hw.fm.init=0
+
+# LMKD/PSI
+ro.lmk.use_psi=true
+ro.lmk.low=1001
+ro.lmk.medium=800
+ro.lmk.critical=0
+ro.lmk.critical_upgrade=true
+ro.lmk.upgrade_pressure=40
+ro.lmk.downgrade_pressure=60
+ro.lmk.kill_heaviest_task=false
 
 # Media
 av.debug.disable.pers.cache=1
@@ -89,11 +100,14 @@ vendor.display.disable_scaler=1
 ro.build.shutdown_timeout=2
 
 # SurfaceFlinger
+debug.sf.use_phase_offsets_as_durations=1
+debug.sf.late.sf.duration=10500000
+debug.sf.late.app.duration=16600000
+debug.sf.early.sf.duration=16600000
+debug.sf.early.app.duration=16600000
+debug.sf.earlyGl.sf.duration=16600000
+debug.sf.earlyGl.app.duration=16600000
 debug.sf.disable_client_composition_cache=1
-debug.sf.early_phase_offset_ns=1500000
-debug.sf.early_app_phase_offset_ns=1500000
-debug.sf.early_gl_phase_offset_ns=3000000
-debug.sf.early_gl_app_phase_offset_ns=15000000
 debug.sf.enable_transaction_tracing=false
 debug.sf.predict_hwc_composition_strategy=0
 ro.surface_flinger.enable_layer_caching=true
@@ -114,10 +128,8 @@ ro.telephony.call_ring.multiple=false
 service.qti.ims.enabled=1
 telephony.lteOnCdmaDevice=1
 vendor.service.qti.ims.enabled=1
-#
 # Set network mode to (T/L/G/W/1X/EVDO, T/L/G/W/1X/EVDO) for 7+7 mode device on DSDS mode
-#
-ro.telephony.default_network=22,22
+ro.telephony.default_network=20,20
 
 # Watchdog
 ro.hw_timeout_multiplier=3

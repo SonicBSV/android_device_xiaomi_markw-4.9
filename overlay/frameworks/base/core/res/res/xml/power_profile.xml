@@ -1,82 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-**
-** Copyright 2009, The Android Open Source Project
-**
-** Licensed under the Apache License, Version 2.0 (the "License")
-** you may not use this file except in compliance with the License.
-** You may obtain a copy of the License at
-**
-**     http://www.apache.org/licenses/LICENSE-2.0
-**
-** Unless required by applicable law or agreed to in writing, software
-** distributed under the License is distributed on an "AS IS" BASIS,
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-** See the License for the specific language governing permissions and
-** limitations under the License.
-*/
--->
-
-<device name="markw">
-  <!-- Most values are the incremental current used by a feature,
-       in mA (measured at nominal voltage).
-       The default values are deliberately incorrect dummy values.
-       OEM's must measure and provide actual values before
-       shipping a device.
-       Example real-world values are given in comments, but they
-       are totally dependent on the platform and can vary
-       significantly, so should be measured on the shipping platform
-       with a power meter. -->
-  <item name="none">0</item>
-  <item name="screen.on">35.28</item>  <!-- screen is turned on at minimum brightness, ~200mA -->
-  <item name="screen.full">314.29</item>  <!-- screen is at maximum brightness, compared to screen at minimum brightness, ~300mA -->
-  <item name="bluetooth.active">10</item> <!-- Bluetooth data transfer, ~10mA -->
-  <item name="bluetooth.on">0.78</item>  <!-- Bluetooth on & connectable, but not connected, ~0.1mA -->
-  <item name="wifi.on">0.65</item>  <!-- Wi-Fi is turned on but not receiving, transmitting, or scanning, ~2mA -->
-  <item name="wifi.active">180</item>  <!-- WIFI data transfer, ~200mA -->
-  <item name="wifi.scan">130</item>  <!-- WIFI network scanning, ~100mA -->
-  <item name="dsp.audio">11.9</item> <!-- audio decoding/encoding via DSP, ~14.1mA -->
-  <item name="dsp.video">56.87</item> <!-- video decoding via DSP, ~54mA -->
-  <item name="camera.flashlight">240</item> <!-- Avg. power for camera flash, ~200mA -->
-  <item name="camera.avg">521.8</item> <!-- Avg. power use of camera in standard usecases, ~550mA -->
-  <item name="radio.active">231.8</item> <!-- cellular radio is transmitting/receiving, ~100-300mA -->
-  <item name="radio.scanning">34.2</item> <!-- cellular radio scanning for signal, ~10mA -->
-  <item name="gps.on">68.84</item> <!-- GPS is acquiring a signal, ~50mA -->
-  <array name="radio.on">
-      <value>3</value>
-      <value>2</value>
-  </array>
-  <!-- Different CPU speeds as reported in
-       /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state -->
-  <array name="cpu.speeds">
-      <value>652800</value> <!-- 625 MHz CPU speed -->
-      <value>806400</value> <!-- 806 MHz CPU speed -->
-      <value>1036800</value> <!-- 1036 MHz CPU speed -->
-      <value>1209600</value> <!-- 1209 MHz CPU speed -->
-      <value>1401600</value> <!-- 1401 MHz CPU speed -->
-      <value>1689600</value> <!-- 1689 MHz CPU speed -->
-      <value>1804800</value> <!-- 1804 MHz CPU speed -->
-      <value>2016000</value> <!-- 2016 MHz CPU speed -->
-      <value>2208000</value> <!-- 2208 MHz CPU speed -->
-  </array>
-  <!-- Current at each CPU speed, as per 'cpu.speeds' -->
-  <array name="cpu.active">
-      <value>42.6</value>
-      <value>45.2</value>
-      <value>47.0</value>
-      <value>67.7</value>
-      <value>71.0</value>
-      <value>76.0</value>
-      <value>90.0</value>
-      <value>113.6</value>
-      <value>123.7</value>
-  </array>
-  <!-- Total power drawn by the system when CPUs (and the SoC) are in system suspend state. -->
-  <item name="cpu.idle">4.9</item>
-  <!-- CPUs are in scheduling idle state (kernel idle loop); system is not in system suspend state. -->
-  <item name="cpu.awake">8.1</item> 
-  <!-- This is the battery capacity in mAh (measured at nominal voltage) -->
-  <item name="battery.capacity">4100</item>
-  <allow-in-power-save package="com.google.android.gms" />
-  <allow-in-data-usage-save package="com.google.android.gms" />
+<device name="Android">
+    <item name="screen.on.display0">63</item>
+    <item name="screen.full.display0">261</item>
+    <item name="wifi.on">0.1</item>
+    <item name="wifi.active">0.1</item>
+    <item name="wifi.scan">0.1</item>
+    <array name="cpu.clusters.cores">
+        <value>8</value>
+    </array>
+    <array name="cpu.core_speeds.cluster0">
+        <value>652800</value> <!-- 653 MHz CPU speed -->
+        <value>1036800</value> <!-- 1036 MHz CPU speed -->
+        <value>1401600</value> <!-- 1401 MHz CPU speed -->
+        <value>1689600</value> <!-- 1689 MHz CPU speed -->
+        <value>1804800</value> <!-- 1804 MHz CPU speed -->
+        <value>1958400</value> <!-- 1958 MHz CPU speed -->
+        <value>2016000</value> <!-- 2016 MHz CPU speed -->
+        <value>2150400</value> <!-- 2150 MHz CPU speed -->
+        <value>2208000</value> <!-- 2208 MHz CPU speed -->
+    </array>
+    <array name="cpu.core_power.cluster0">
+        <value>8.24</value> <!-- 653 MHz CPU speed -->
+        <value>20.2</value> <!-- 1036 MHz CPU speed -->
+        <value>28.57</value> <!-- 1401 MHz CPU speed -->
+        <value>51.23</value> <!-- 1689 MHz CPU speed -->
+        <value>62.6</value> <!-- 1804 MHz CPU speed -->
+        <value>70.2</value> <!-- 1958 MHz CPU speed -->
+        <value>73.6</value> <!-- 2016 MHz CPU speed -->
+        <value>78.1</value> <!-- 2150 MHz CPU speed -->
+        <value>82.2</value> <!-- 2208 MHz CPU speed -->
+    </array>
+    <item name="cpu.suspend">1.6</item>
+    <item name="cpu.idle">1.6</item>
+    <item name="battery.capacity">4100</item>
+    <item name="bluetooth.controller.voltage">3300</item>
 </device>

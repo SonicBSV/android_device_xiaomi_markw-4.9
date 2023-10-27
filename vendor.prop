@@ -49,10 +49,12 @@ vendor.audio.feature.incall_music.enable=false
 vendor.audio.feature.kpi_optimize.enable=true
 vendor.audio.feature.multi_voice_session.enable=true
 vendor.audio.feature.snd_mon.enable=true
-vendor.audio.feature.spkr_prot.enable=false
+vendor.audio.feature.spkr_prot.enable=true
 vendor.audio.feature.src_trkn.enable=true
-vendor.audio.feature.vbat.enable=true
-vendor.audio.feature.wsa.enable=true
+
+# Audio (Dolby)
+persist.vendor.audio_fx.current=dolby
+ro.vendor.dolby.dax.version=DS1_2.2.0.0_r1
 
 # Bluetooth
 persist.vendor.qcom.bluetooth.soc=pronto
@@ -103,6 +105,7 @@ ro.crypto.volume.filenames_mode=aes-256-cts
 
 # Media
 debug.stagefright.omx_default_rank=0
+debug.stagefright.omx_default_rank.sw-audio=16
 vendor.vidc.disable.split.mode=1
 
 # Perf
@@ -111,6 +114,7 @@ ro.vendor.extension_library=libqti-perfd-client.so
 # Radio
 persist.radio.multisim.config=dsds
 persist.vendor.data.iwlan.enable=true
+persist.vendor.data.profile_update=true
 persist.vendor.radio.add_power_save=1
 persist.vendor.radio.apm_sim_not_pwdn=1
 persist.vendor.radio.custom_ecc=1
