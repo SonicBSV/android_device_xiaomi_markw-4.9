@@ -265,13 +265,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             <instance>default</instance>
         </interface>
     </hal>
-    <hal format="aidl" optional="true">
-        <name>vendor.lineage.health</name>
-        <interface>
-            <name>IChargingControl</name>
-            <instance>default</instance>
-        </interface>
-    </hal>
     <hal format="hidl">
         <name>vendor.dolby.hardware.dms</name>
         <transport>hwbinder</transport>
