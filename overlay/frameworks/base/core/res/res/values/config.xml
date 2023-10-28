@@ -511,6 +511,9 @@
     <!-- Whether Multiuser UI should be shown -->
     <bool name="config_enableMultiUserUI">true</bool>
 
+    <!-- Exempt ImsService from privacy (location) indicators -->
+    <string name="config_systemTelephonyPackage" translatable="false">com.qualcomm.qti.cne</string>
+
     <!-- When true, indicates that the vendor's IMS implementation requires a workaround when
      sending a request to enable or disable the camera while the video session is also
      paused. -->
