@@ -505,6 +505,9 @@
     <!-- Whether to cancel fingerprint operation if not idle -->
     <bool name="config_fpCancelIfNotIdle">true</bool>
 
+    <!-- If this is true, device supports Sustained Performance Mode. -->
+    <bool name="config_sustainedPerformanceModeSupported">true</bool>
+
     <!-- Exempt cne from privacy (location) indicators -->
     <string name="config_systemAudioIntelligence" translatable="false">com.qualcomm.qti.cne</string>
 
