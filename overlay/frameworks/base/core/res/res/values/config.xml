@@ -511,6 +511,9 @@
     <!-- Whether Multiuser UI should be shown -->
     <bool name="config_enableMultiUserUI">true</bool>
 
+    <!-- Whether or not to enable the lock screen entry point for the QR code scanner. -->
+   <bool name="config_enableQrCodeScannerOnLockScreen">false</bool>
+
     <!-- Feature flag to store TaskSnapshot in 16 bit pixel format to save memory. -->
     <bool name="config_use16BitTaskSnapshotPixelFormat">true</bool>
 
