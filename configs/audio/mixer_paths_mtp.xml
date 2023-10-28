@@ -1200,6 +1200,10 @@
         <ctl name="RX HPH Mode" value="HD2" />
     </path>
 
+    <path name="hph-lowpower-mode">
+        <ctl name="RX HPH Mode" value="NORMAL" />
+    </path>
+
     <path name="headset-mic">
         <path name="adc2" />
         <ctl name="ADC2 MUX" value="INP2" />
