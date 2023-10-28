@@ -514,6 +514,9 @@
     <!-- Feature flag to store TaskSnapshot in 16 bit pixel format to save memory. -->
     <bool name="config_use16BitTaskSnapshotPixelFormat">true</bool>
 
+    <!-- Default value for performant auth feature. -->
+    <bool name="config_performantAuthDefault">true</bool>
+
     <!-- Display low battery warning when battery level dips to this value -->
     <integer name="config_lowBatteryWarningLevel">15</integer>
  
