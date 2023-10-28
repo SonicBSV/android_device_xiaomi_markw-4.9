@@ -511,6 +511,55 @@
     <!-- Whether Multiuser UI should be shown -->
     <bool name="config_enableMultiUserUI">true</bool>
 
+    <!-- List of system apps that are allowed to be locked with app lock.
+         Use with extreme caution. -->
+    <string-array name="config_appLockAllowedSystemApps" translatable="false">
+        <!-- Google Camera -->
+        <item>com.google.android.GoogleCamera</item>
+        <!-- Files -->
+        <item>com.google.android.documentsui</item>
+        <!-- Play Store -->
+        <item>com.android.vending</item>
+        <!-- Google Photos -->
+        <item>com.google.android.apps.photos</item>
+        <!-- Gmail -->
+        <item>com.google.android.gm</item>
+        <!-- Youtube -->
+        <item>com.google.android.youtube</item>
+        <!-- Chrome -->
+        <item>com.android.chrome</item>
+        <!-- Google -->
+        <item>com.google.android.googlequicksearchbox</item>
+        <!-- GBoard -->
+        <item>com.google.android.inputmethod.latin</item>
+        <!-- Maps -->
+        <item>com.google.android.apps.maps</item>
+        <!-- Camera Go -->
+        <item>com.google.android.apps.cameralite</item>
+        <!-- Contacts -->
+        <item>com.google.android.contacts</item>
+        <!-- Files Go -->
+        <item>com.google.android.apps.nbu.files</item>
+        <!-- Drive -->
+        <item>com.google.android.apps.docs</item>
+        <!-- Dialer -->
+        <item>com.google.android.dialer</item>
+        <!-- Messages -->
+        <item>com.google.android.apps.messaging</item>
+        <!-- Keep -->
+        <item>com.google.android.keep</item>
+        <!-- Gallery Go -->
+        <item>com.google.android.apps.photosgo</item>
+        <!-- Docs -->
+        <item>com.google.android.apps.editors.docs</item>
+        <!-- Duo -->
+        <item>com.google.android.apps.tachyon</item>
+        <!-- Recorder -->
+        <item>com.google.android.apps.recorder</item>
+        <!-- Settings -->
+        <item>com.android.settings</item>
+    </string-array>
+
     <!-- Whether or not to enable the lock screen entry point for the QR code scanner. -->
    <bool name="config_enableQrCodeScannerOnLockScreen">false</bool>
 
