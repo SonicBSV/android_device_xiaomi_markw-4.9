@@ -511,9 +511,14 @@
     <!-- Whether Multiuser UI should be shown -->
     <bool name="config_enableMultiUserUI">true</bool>
 
+    <!-- List supported color modes. -->
+    <integer-array name="config_availableColorModes">
+        <item>0</item> <!-- COLOR_MODE_NATURAL -->
+        <item>1</item> <!-- COLOR_MODE_BOOSTED -->
+    </integer-array>
+
     <!-- Whether of not wallpaper scrolling should be on or not. It may cuz lag in some low-end devices -->
      <item name="config_wallpaperMaxScale" format="float" type="dimen">1.00</item>
-
 
     <!-- See AmbientSensor.AmbientColorTemperatureSensor.
          The ambient color temperature sensor name. -->
