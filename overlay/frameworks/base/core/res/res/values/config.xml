@@ -485,6 +485,9 @@
     <!-- The name of the package that will hold the assistant role by default. -->
     <string name="config_defaultAssistant" translatable="false">com.google.android.googlequicksearchbox</string>
     
+    <!--  Define Google play service package for FRP-->
+    <string name="config_persistentDataPackageName" translatable="false">com.google.android.gms</string>
+
     <string-array name="config_locationProviderPackageNames" translatable="false">
         <!-- The Google provider -->
         <item>com.google.android.gms</item>
