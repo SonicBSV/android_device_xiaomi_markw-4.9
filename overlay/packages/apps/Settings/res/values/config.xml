@@ -32,4 +32,7 @@
     <!-- Smart Charging -->
     <bool name="config_supportSmartCharging">true</bool>
 
+    <!-- Whether memory from app_info_settings is available or not. -->
+    <bool name="config_show_app_info_settings_memory">true</bool>
+
 </resources>
