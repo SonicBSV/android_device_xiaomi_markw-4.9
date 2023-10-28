@@ -71,7 +71,7 @@
             <libsw library="reverb" uuid="172cdf00-a3bc-11df-a72f-0002a5d5c51b"/>
             <libhw library="offload_bundle" uuid="aa2bebf6-47cf-4613-9bca-0002a5d5c51b"/>
         </effectProxy>
-        <effectProxy name="visualizer" library="proxy" uuid="1d0a1a53-7d5d-48f2-8e71-27fbd10d842c">
+        <effectProxy name="visualizer" library="proxy" uuid="ec7178ec-e5e1-4432-a3f4-4657e6795210">
             <libsw library="visualizer_sw" uuid="d069d9e0-8329-11df-9168-0002a5d5c51b"/>
             <libhw library="visualizer_hw" uuid="7a8044a0-1a71-11e3-a184-0002a5d5c51b"/>
         </effectProxy>
