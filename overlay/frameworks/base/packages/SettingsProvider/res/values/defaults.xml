@@ -30,4 +30,5 @@
     <fraction name="def_window_animation_scale">75%</fraction>
     <fraction name="def_window_transition_scale">75%</fraction>
 
+    <bool name="def_notification_bubbles">false</bool>
 </resources>
