@@ -18,9 +18,6 @@ on early-boot
     chown system system /sys/class/leds/lcd-backlight/brightness
     chown system system /sys/class/leds/lcd-backlight/max_brightness
 
-    # Buttons
-    chown system system /sys/class/leds/button-backlight/brightness
-
 service vendor.light-default /vendor/bin/hw/android.hardware.light-service.xiaomi_markw
     class hal
     user system
