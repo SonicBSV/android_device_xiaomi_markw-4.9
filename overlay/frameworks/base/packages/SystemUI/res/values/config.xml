@@ -30,4 +30,7 @@
          Possible values: 3, 3.1, 3.2, 4, 4.1, 4.2
     -->
     <string name="config_screenRecorderAVCProfileLevel" translatable="false">3.1</string>
+
+    <!-- Whether the combined qs shows in status bar -->
+    <bool name="flag_combined_qs_headers">false</bool>
 </resources>
