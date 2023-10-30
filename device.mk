@@ -20,6 +20,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
 TARGET_BOARD_PLATFORM := msm8953
 TARGET_BOARD_SUFFIX := _64
 
+PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := true
+
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
