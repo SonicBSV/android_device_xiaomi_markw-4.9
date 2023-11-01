@@ -65,16 +65,19 @@ ro.vendor.bluetooth.wipower=false
 persist.vendor.cne.feature=1
 
 # Camera
-vidc.enc.dcvs.extra-buff-count=2
-media.camera.ts.monotonic=1
-persist.vendor.camera.display.lmax=1280x720
-persist.vendor.camera.display.umax=1920x1080
-vendor.camera.lowpower.record.enable=1
-persist.vendor.qti.telephony.vt_cam_interface=2
-persist.vendor.camera.gyro.disable=0
+persist.vendor.camera.gyro.android=0
+persist.vendor.camera.gyro.disable=1
+persist.vendor.camera.iface.logs=0
+persist.vendor.camera.imglib.logs=0
 persist.vendor.camera.isp.clock.optmz=0
+persist.vendor.camera.isp.debug=0
+persist.vendor.camera.mct.debug=0
+persist.vendor.camera.sensor.debug=0
 persist.vendor.camera.stats.test=5
-persist.vendor.camera.perflock.enable=0
+persist.vendor.vendor.camera.display.lmax=1280x720
+persist.vendor.vendor.camera.display.umax=1920x1080
+vendor.camera.lowpower.record.enable=1
+vidc.enc.dcvs.extra-buff-count=2
 
 # Display
 ro.hardware.vulkan=adreno
