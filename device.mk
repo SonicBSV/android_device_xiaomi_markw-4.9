@@ -16,6 +16,7 @@
 
 $(call inherit-product, vendor/xiaomi/markw/markw-vendor.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
+$(call inherit-product, vendor/xiaomi/markw/google/google.mk)
 
 TARGET_BOARD_PLATFORM := msm8953
 TARGET_BOARD_SUFFIX := _64
