@@ -472,7 +472,7 @@ PRODUCT_COPY_FILES += \
 
 # Wifi
 PRODUCT_PACKAGES += \
-    android.hardware.wifi@1.0-service \
+    android.hardware.wifi@1.0-service.legacy \
     android.system.net.netd@1.1.vendor:64 \
     libcld80211:64 \
     libwpa_client:64 \
