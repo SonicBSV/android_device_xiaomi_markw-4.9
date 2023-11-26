@@ -1,0 +1,4 @@
+allow untrusted_app sysfs:dir { read open};
+allow untrusted_app sysfs:file { getattr };
+allow untrusted_app sysfs_battery_supply:dir { search };
+allow untrusted_app kcal_dev:dir { read open search };
