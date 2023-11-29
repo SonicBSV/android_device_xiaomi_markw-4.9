@@ -7,6 +7,9 @@ ro.config.media_vol_steps=25
 ro.config.vc_call_vol_steps=11
 vendor.fastrpc.disable.adsprpcd_sensorspd.daemon=1
 
+# Bluetooth
+bluetooth.sco.disable_enhanced_connection=true
+
 # Charger
 ro.charger.enable_suspend=true
 
