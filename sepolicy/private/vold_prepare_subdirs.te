@@ -1,2 +1,1 @@
-#============= vold_prepare_subdirs ==============
-allow vold_prepare_subdirs self:capability { kill sys_admin };
+allow vold_prepare_subdirs checkin_data_file:dir { relabelfrom };

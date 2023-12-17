@@ -26,3 +26,6 @@ allow system_app {
 
 # zram
 r_dir_file(system_app sysfs_zram)
+
+allow system_app sysfs:file { write open getattr};
+allow system_app vendor_default_prop:file { open getattr };
