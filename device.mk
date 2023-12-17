@@ -394,6 +394,7 @@ PRODUCT_PACKAGES += \
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.qcom \
+    fstab.qcom_ramdisk \
     init.class_main.sh \
     init.goodix.sh \
     init.xiaomi.device.rc \
