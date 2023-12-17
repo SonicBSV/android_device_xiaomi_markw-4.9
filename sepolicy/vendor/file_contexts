@@ -47,6 +47,10 @@
 # MMC
 /sys/devices/platform/soc/7824900.sdhci/mmc_host/mmc0/mmc0:0001/block/mmcblk0/queue/discard_max_bytes u:object_r:sysfs_mmc_host:s0
 
+# Partitions
+/dev/block/platform/soc/7824900\.sdhci/by-name/cust     u:object_r:system_block_device:s0
+/dev/block/platform/soc/7824900\.sdhci/by-name/system   u:object_r:system_block_device:s0
+
 # Rild
 /(vendor|system/vendor)/radio/qcril_database/qcril.db			   u:object_r:rild_file:s0
 
