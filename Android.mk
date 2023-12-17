@@ -14,12 +14,12 @@
 # limitations under the License.
 #
 
+LOCAL_PATH := $(call my-dir)
+
 ifeq ($(TARGET_DEVICE),markw)
 
   subdir_makefiles=$(call first-makefiles-under,$(LOCAL_PATH))
   $(foreach mk,$(subdir_makefiles),$(info including $(mk) ...)$(eval include $(mk)))
-
-include $(CLEAR_VARS)
 
 WCNSS_INI_SYMLINK := $(TARGET_OUT_VENDOR)/firmware/wlan/prima/WCNSS_qcom_cfg.ini
 $(WCNSS_INI_SYMLINK): $(LOCAL_INSTALLED_MODULE)
