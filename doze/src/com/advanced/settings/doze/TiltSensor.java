@@ -1,6 +1,7 @@
 /*
- * Copyright (c) 2015 The CyanogenMod Project
- *               2017-2018 The LineageOS Project
+ * Copyright (C) 2018-2020 The Xiaomi-SDM660 Project
+ *
+ *  https://github.com/xiaomi-sdm660
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,16 +13,18 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
+ * limitations under the License
  */
 
-package org.lineageos.settings.doze;
+package com.advanced.settings.doze;
 
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.os.SystemClock;
 import android.util.Log;
 
@@ -36,11 +39,18 @@ public class TiltSensor implements SensorEventListener {
 
     private static final int BATCH_LATENCY_IN_MS = 100;
     private static final int MIN_PULSE_INTERVAL_MS = 2500;
+    private static final int MIN_WAKEUP_INTERVAL_MS = 500;
+    private static final int WAKELOCK_TIMEOUT_MS = 150;
 
     private SensorManager mSensorManager;
     private Sensor mSensor;
     private Context mContext;
     private ExecutorService mExecutorService;
+    private PowerManager mPowerManager;
+    private Sensor mProximitySensor;
+    private WakeLock mWakeLock;
+
+    private boolean mInsidePocket = false;
 
     private long mEntryTimestamp;
 
@@ -48,6 +58,9 @@ public class TiltSensor implements SensorEventListener {
         mContext = context;
         mSensorManager = mContext.getSystemService(SensorManager.class);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_TILT_DETECTOR);
+        mPowerManager = (PowerManager) mContext.getSystemService(Context.POWER_SERVICE);
+        mProximitySensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY, false);
+        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         mExecutorService = Executors.newSingleThreadExecutor();
     }
 
@@ -58,16 +71,28 @@ public class TiltSensor implements SensorEventListener {
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (DEBUG) Log.d(TAG, "Got sensor event: " + event.values[0]);
+        boolean isRaiseToWake = Utils.isRaiseToWakeEnabled(mContext);
 
         long delta = SystemClock.elapsedRealtime() - mEntryTimestamp;
-        if (delta < MIN_PULSE_INTERVAL_MS) {
+        if (delta < (isRaiseToWake ? MIN_WAKEUP_INTERVAL_MS : MIN_PULSE_INTERVAL_MS)) {
             return;
         } else {
             mEntryTimestamp = SystemClock.elapsedRealtime();
         }
 
-        if (event.values[0] == 1) {
-            Utils.wakeOrLaunchDozePulse(mContext);
+        if (!isRaiseToWake && !Utils.isPocketGestureEnabled(mContext)) {
+            mInsidePocket = false;
+        }
+
+        if (event.values[0] == 1 && !mInsidePocket) {
+
+           if (isRaiseToWake) {
+                mWakeLock.acquire(WAKELOCK_TIMEOUT_MS);
+                mPowerManager.wakeUp(SystemClock.uptimeMillis(),
+                    PowerManager.WAKE_REASON_GESTURE, TAG);
+            } else {
+                Utils.launchDozePulse(mContext);
+            }
         }
     }
 
@@ -75,6 +100,18 @@ public class TiltSensor implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         /* Empty */
     }
+    
+    private SensorEventListener mProximityListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            mInsidePocket = event.values[0] < mProximitySensor.getMaximumRange();
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            // stub
+        }
+    };
 
     protected void enable() {
         if (DEBUG) Log.d(TAG, "Enabling");
@@ -82,6 +119,10 @@ public class TiltSensor implements SensorEventListener {
             mSensorManager.registerListener(this, mSensor,
                     SensorManager.SENSOR_DELAY_NORMAL, BATCH_LATENCY_IN_MS * 1000);
             mEntryTimestamp = SystemClock.elapsedRealtime();
+            if (Utils.isRaiseToWakeEnabled(mContext)) {
+                mSensorManager.registerListener(mProximityListener, mProximitySensor,
+                        SensorManager.SENSOR_DELAY_NORMAL);
+            }
         });
     }
 

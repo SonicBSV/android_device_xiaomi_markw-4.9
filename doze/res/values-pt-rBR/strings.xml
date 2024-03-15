@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2018-2020 The Xiaomi-SDM660 Project
+
+     https://github.com/xiaomi-sdm660
+     
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Label for feature switch [CHAR LIMIT=30] -->
+    <string name="switch_bar_on">Ativar</string>
+
+    <!-- Label for feature switch [CHAR LIMIT=30] -->
+    <string name="switch_bar_off">Desativar</string>
+
+    <!-- Device specific settings -->
+    <string name="device_settings_app_name">Configurações avançadas</string>
+
+    <!-- Ambient Display -->
+    <string name="ambient_display_title">Tela Ambiente</string>
+
+    <!-- Tilt sensor -->
+    <string name="tilt_sensor_title">Gestos do sensor de inclinação</string>
+
+    <!-- Proximity sensor -->
+    <string name="proximity_sensor_title">Gestos do sensor de proximidade</string>
+
+    <!-- Hand wave gesture -->
+    <string name="hand_wave_gesture_title">Acenar mão</string>
+    <string name="hand_wave_gesture_summary">Pulsar notificações ao acenar a mão</string>
+
+    <!-- Pick-up gesture -->
+    <string name="pick_up_gesture_title">Ao pegar o celular</string>
+    <string name="pick_up_gesture_summary">Pulsar notificações ao pegar o celular</string>
+
+    <!-- Pocket gesture -->
+    <string name="pocket_gesture_title">No bolso</string>
+    <string name="pocket_gesture_summary">Pulsar noticicações ao tirar do bolso</string>
+
+    <!-- Proximity wake -->
+    <string name="proximity_wake_title">Ao aproximar</string>
+    <string name="proximity_wake_enable_summary">A tela é ligada ao aproximar</string>
+
+    <!-- Dialog texts -->
+    <string name="dialog_ok">Confirmar</string>
+
+    <!-- Help texts -->
+    <string name="doze_settings_help_title">Ajuda</string>
+    <string name="doze_settings_help_text">Esses recursos usam os sensores do celular para identificar ações e mandar pulsos de notificações no modo Doze. Os sensores em questão são ativados apenas quando o celular receber alguma notificação, isso ajuda a reduzir o uso de bateria. Também há uma opção para ativar os sensores assim que a tela apagar, isso causará um consumo maior de bateria.</string>
+    
+    <!-- Doze Tile Service -->
+    <string name="ambient_display_gestures_title">Gestos na tela Ambiente</string>
+    
+    <!-- Raise to Wake Gesture -->
+    <string name="raise_to_wake_gesture_title">Levantar para ativar tela</string>
+    <string name="raise_to_wake_gesture_summary">O sensor de inclinação identifica quando você levanta o aparelho e ativa a tela.</string>
+</resources>
