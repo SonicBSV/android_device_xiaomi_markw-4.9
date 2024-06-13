@@ -218,7 +218,8 @@ USE_DEX2OAT_DEBUG := false
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey \
-    android.hardware.drm@1.4.vendor
+    android.hardware.drm@1.4.vendor \
+    libhidlmemory.vendor
 
 PRODUCT_COPY_FILES += \
         $(LOCAL_PATH)/configs/gpfspath_oem_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/gpfspath_oem_config.xml
@@ -247,7 +248,8 @@ PRODUCT_PACKAGES += \
 # Gatekeeper HAL
 PRODUCT_PACKAGES += \
     android.hardware.gatekeeper@1.0-impl:64 \
-    android.hardware.gatekeeper@1.0-service
+    android.hardware.gatekeeper@1.0-service \
+    libion.vendor
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -340,6 +342,8 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     libavservices_minijail.vendor \
+    libsqlite.vendor \
+    libsysutils.vendor \
     libnbaio
 
 # OMX
@@ -471,6 +475,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.wifi-service \
     android.system.net.netd@1.1.vendor:64 \
+    libnetutils.vendor \
     libcld80211:64 \
     libwpa_client:64 \
     hostapd \
