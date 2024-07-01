@@ -101,11 +101,6 @@ persist.vendor.mwqem.enable=1
 PRODUCT_PROPERTY_OVERRIDES += \
 drm.service.enabled=true
 
-# Fm
-PRODUCT_PROPERTY_OVERRIDES += \
-ro.fm.transmitter=false \
-vendor.hw.fm.init=0
-
 # Frp
 PRODUCT_PROPERTY_OVERRIDES += \
 ro.frp.pst=/dev/block/bootdevice/by-name/config

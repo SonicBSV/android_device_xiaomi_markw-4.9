@@ -49,6 +49,7 @@ persist.qfp=false
 
 # FM
 ro.fm.transmitter=false
+vendor.hw.fm.init=0
 
 # LMKD
 ro.lmk.log_stats=true
