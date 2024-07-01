@@ -49,6 +49,8 @@
 #include "mm_camera_interface.h"
 #include "mm_camera.h"
 
+int32_t (*mm_camera_shim_module_init)(mm_camera_shim_ops_t *shim_ops);
+
 static pthread_mutex_t g_intf_lock = PTHREAD_MUTEX_INITIALIZER;
 
 static mm_camera_ctrl_t g_cam_ctrl;
@@ -1784,6 +1786,9 @@ void sort_camera_info(int num_cam)
 uint8_t get_num_of_cameras()
 {
     int rc = 0;
+#ifdef DAEMON_PRESENT
+    int i = 0;
+#endif
     int dev_fd = -1;
     struct media_device_info mdev_info;
     int num_media_devices = 0;

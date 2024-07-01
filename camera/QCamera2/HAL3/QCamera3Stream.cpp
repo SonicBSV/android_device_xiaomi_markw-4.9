@@ -54,7 +54,8 @@ const char* QCamera3Stream::mStreamNames[] = {
         "CAM_RAW",
         "CAM_OFFLINE_PROC",
         "CAM_PARM",
-        "CAM_ANALYSIS" };
+        "CAM_ANALYSIS",
+        "CAM_MAX" };
 
 /*===========================================================================
  * FUNCTION   : get_bufs

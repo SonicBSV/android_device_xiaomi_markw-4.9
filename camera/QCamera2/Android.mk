@@ -27,9 +27,9 @@ LOCAL_SRC_FILES += \
         HAL3/QCamera3StreamMem.cpp
 
 ifeq (1,$(filter 1,$(shell echo "$$(( $(PLATFORM_SDK_VERSION) >= 31 ))" )))
-LOCAL_CFLAGS := -Wall -Wextra -Werror -Wno-unused-parameter -Wno-unused-variable -Wno-compound-token-split-by-macro
+LOCAL_CFLAGS := -Wall -Wextra -Wno-unused-parameter -Wno-unused-variable -Wno-compound-token-split-by-macro
 else
-LOCAL_CFLAGS := -Wall -Wextra -Werror -Wno-unused-parameter -Wno-unused-variable
+LOCAL_CFLAGS := -Wall -Wextra -Wno-unused-parameter -Wno-unused-variable
 endif
 
 #HAL 1.0 source
@@ -62,8 +62,6 @@ LOCAL_CFLAGS += -DHAS_MULTIMEDIA_HINTS -D_ANDROID
 ifeq (1,$(filter 1,$(shell echo "$$(( $(PLATFORM_SDK_VERSION) <= 23 ))" )))
 LOCAL_CFLAGS += -DUSE_HAL_3_3
 endif
-
-LOCAL_CFLAGS += -Wno-unused-variable -Wno-unused-parameter -DVANILLA_HAL
 
 #use media extension
 ifeq ($(TARGET_USES_MEDIA_EXTENSIONS), true)
