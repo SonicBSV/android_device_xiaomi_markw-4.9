@@ -6,7 +6,7 @@
 #
 
 # Default to BFQ I/O scheduler
-#PRODUCT_PRODUCT_PROPERTIES += \
+PRODUCT_PRODUCT_PROPERTIES += \
     persist.sys.io.scheduler=bfq
 
 # DPM

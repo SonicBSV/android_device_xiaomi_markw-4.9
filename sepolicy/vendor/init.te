@@ -17,5 +17,11 @@ allow init firmware_file:filesystem getattr;
 # LEDs
 allow init sysfs_leds:lnk_file read;
 
+# Power
+allow init sysfs_battery_supply:file setattr;
+
+# Wifi
+allow init wcnss_device:chr_file write;
+
 get_prop(vendor_init, vendor_fingerprint_prop);
 set_prop(vendor_init, vendor_fingerprint_prop);

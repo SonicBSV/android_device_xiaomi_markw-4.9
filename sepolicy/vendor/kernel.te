@@ -1,1 +1,2 @@
 allow kernel kernel:capability { kill };
+allow kernel dalvikcache_data_file:dir { read };
