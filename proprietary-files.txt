@@ -1042,6 +1042,3 @@ vendor/app/TimeService/TimeService.apk|258cf62182f96b07f04d053b8245f99ed2176f5d
 vendor/bin/time_daemon|3fdbe5c7aeee2fc7e8b699bedd7309f768aae5c7
 vendor/etc/init/init.time_daemon.rc|b253ca2a498757e14e1d7a051bf504ae09218f51
 vendor/lib64/libtime_genoff.so|5f9b4a016db1f2d96a6b8281b6cb88d87e4cdd63
-
-# Wi-Fi - from Fairphone/FP3/FP3:13/6.A.018.0/gms-1f4b2a90:user/release-keys
-vendor/bin/wcnss_service|18a234235418d01f7b6faa8a6bea78de5f4d346a
