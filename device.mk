@@ -362,18 +362,25 @@ PRODUCT_PACKAGES += \
 
 # OMX
 PRODUCT_PACKAGES += \
-    libc2dcolorconvert:32 \
-    libmm-omxcore:32 \
-    libOmxAacEnc:32 \
-    libOmxAmrEnc:32 \
-    libOmxCore:32 \
-    libOmxEvrcEnc:32 \
-    libOmxG711Enc:32 \
-    libOmxQcelp13Enc:32 \
-    libOmxVdec:32 \
-    libOmxVenc:32 \
+    libc2dcolorconvert \
+    libmm-omxcore \
+    libOmxAacEnc \
+    libOmxAmrEnc \
+    libOmxCore \
+    libOmxEvrcEnc \
+    libOmxG711Enc \
+    libOmxQcelp13Enc \
+    libOmxVdec \
+    libOmxVenc \
+    libopus.vendor \
+    libstagefright_amrnb_common.vendor \
+    libstagefright_enc_common \
+    libstagefright_enc_common.vendor \
     libstagefrighthw \
-    libstagefright_enc_common
+    libstagefright_softomx_plugin.vendor \
+    libstagefright_softomx.vendor \
+    libvorbisidec.vendor \
+    libvpx.vendor
 
 # Power
 PRODUCT_PACKAGES += \
