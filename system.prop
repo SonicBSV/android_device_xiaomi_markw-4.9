@@ -59,6 +59,7 @@ ro.lmk.kill_heaviest_task=false
 
 # Media
 av.debug.disable.pers.cache=1
+debug.stagefright.c2inputsurface=-1
 media.aac_51_output_enabled=true
 media.msm8956hw=0
 mmp.enable.3g2=true
