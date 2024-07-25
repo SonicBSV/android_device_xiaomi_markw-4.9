@@ -22,6 +22,8 @@ TARGET_BOARD_SUFFIX := _64
 
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := true
 
+PRODUCT_ENABLE_UFFD_GC := false
+
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
