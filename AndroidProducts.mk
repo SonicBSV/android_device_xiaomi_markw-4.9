@@ -17,6 +17,6 @@ PRODUCT_MAKEFILES := \
     $(LOCAL_DIR)/lineage_markw.mk
 
 COMMON_LUNCH_CHOICES := \
-    lineage_markw-ap1a-user \
-    lineage_markw-ap1a-userdebug \
-    lineage_markw-ap1a-eng
+    lineage_markw-ap2a-user \
+    lineage_markw-ap2a-userdebug \
+    lineage_markw-ap2a-eng
