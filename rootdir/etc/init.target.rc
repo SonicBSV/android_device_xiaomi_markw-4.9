@@ -130,7 +130,7 @@ service vendor.qseecomd /vendor/bin/qseecomd
    group root
    task_profiles ServiceCapacityLow
 
-service thermal-engine /vendor/bin/thermal-engine
+service vendor.thermal-engine /vendor/bin/thermal-engine
     class main
     user root
     group root
@@ -140,7 +140,7 @@ service thermal-engine /vendor/bin/thermal-engine
     socket thermal-send-rule stream 0660 system oem_2907
 
 on property:sys.boot_completed=1
-    restart thermal-engine
+    restart vendor.thermal-engine
 
 service vendor.wcnss-service /vendor/bin/wcnss_service
     class main
