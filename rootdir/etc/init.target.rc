@@ -95,14 +95,7 @@ on post-fs-data
 #Create folder for mm-qcamera-daemon
 mkdir /data/vendor/qcam/ 0770 camera camera
 
-#start camera server as daemon
-#service vendor.qcamerasvr /vendor/bin/mm-qcamera-daemon
-#    class late_start
-#    user camera
-#    group camera system inet input graphics
-#    task_profiles ServiceCapacityLow
-
-#Start up peripheral manager
+# Start up peripheral manager
 service vendor.per_mgr /vendor/bin/pm-service
     class core
     user system
@@ -130,7 +123,7 @@ service vendor.qseecomd /vendor/bin/qseecomd
    group root
    task_profiles ServiceCapacityLow
 
-service vendor.thermal-engine /vendor/bin/thermal-engine
+service thermal-engine /vendor/bin/thermal-engine
     class main
     user root
     group root
@@ -140,9 +133,9 @@ service vendor.thermal-engine /vendor/bin/thermal-engine
     socket thermal-send-rule stream 0660 system oem_2907
 
 on property:sys.boot_completed=1
-    restart vendor.thermal-engine
+    restart thermal-engine
 
-service vendor.wcnss-service /vendor/bin/wcnss_service
+service wcnss-service /vendor/bin/wcnss_service
     class main
     user system
     group system wifi radio

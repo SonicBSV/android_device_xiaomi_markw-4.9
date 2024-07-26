@@ -161,9 +161,9 @@ on post-fs-data
     chmod 2770 /dev/socket/wifihal
 
     # Create /data/vendor/time folder for time-services
-    mkdir /data/vendor/time/ 0700 system system
+    mkdir /data/vendor/time 0700 system system
 
-    mkdir /data/vendor/audio/ 0770 media audio
+    mkdir /data/vendor/audio 0770 media audio
 
     # Create a folder for audio delta files
     mkdir /data/vendor/audio/acdbdata 0770 media audio
@@ -238,7 +238,7 @@ on property:hw.fm.init=0
 on property:hw.fm.init=1
     write /sys/module/radio_iris_transport/parameters/fmsmd_set 1
 
-service vendor.qcom-c_main-sh /vendor/bin/init.class_main.sh
+service qcom-c_main-sh /vendor/bin/init.class_main.sh
     class main
     user root
     group root system
@@ -250,21 +250,21 @@ service vendor.qrtr-ns /vendor/bin/qrtr-ns -f
     group vendor_qrtr
     capabilities NET_BIND_SERVICE
 
-service vendor.irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
+service irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     class core
     user root
     oneshot
 
-service vendor.loc_launcher /vendor/bin/loc_launcher
+service loc_launcher /vendor/bin/loc_launcher
     class late_start
     user gps
     group gps
     task_profiles ServiceCapacityLow
 
 on property:persist.sys.xtra-daemon.enabled=*
-    restart vendor.loc_launcher
+    restart loc_launcher
 
-service vendor.qcom-sh /vendor/bin/init.qcom.sh
+service qcom-sh /vendor/bin/init.qcom.sh
     class late_start
     user root
     group root system radio
@@ -273,7 +273,7 @@ service vendor.qcom-sh /vendor/bin/init.qcom.sh
 on property:ro.vendor.ril.mbn_copy_completed=1
     write /data/vendor/radio/copy_complete 1
 
-service vendor.qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
+service qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
     class late_start
     user root
     group root system wakelock graphics
@@ -281,7 +281,7 @@ service vendor.qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
     oneshot
 
 on property:sys.boot_completed=1
-    start vendor.qcom-post-boot
+    start qcom-post-boot
     start vendor.camera-provider-2-4
 
 service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance.conf
@@ -291,7 +291,7 @@ service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqb
     task_profiles ServiceCapacityLow
 
 on charger
-    start vendor.qcom-post-boot
+    start qcom-post-boot
 
 service vendor.audio-hal /vendor/bin/hw/android.hardware.audio.service
     override
@@ -313,7 +313,7 @@ service vendor.power_off_alarm /vendor/bin/power_off_alarm
     oneshot
 
 # Override the AOSP sensor HAL service definition to add input group access
-service vendor.sensors-hal-1-0 /vendor/bin/hw/android.hardware.sensors@1.0-service
+service sensors-hal-1-0 /vendor/bin/hw/android.hardware.sensors@1.0-service
     override
     class hal
     user system
