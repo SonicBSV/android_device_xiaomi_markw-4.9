@@ -403,7 +403,7 @@ PRODUCT_PACKAGES += \
     libcodec2_hidl@1.2.vendor \
     libcodec2_soft_common.vendor \
     libcodec2_vndk.vendor \
-    libsfplugin_ccodec_utils.vendor
+    libsfplugin_ccodec_utils.vendor \
     libavservices_minijail.vendor \
     libsqlite.vendor:64 \
     libsysutils.vendor \
