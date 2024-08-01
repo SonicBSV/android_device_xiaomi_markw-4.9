@@ -34,16 +34,6 @@ $(DSP_MOUNT_POINT):
 
 ALL_DEFAULT_INSTALLED_MODULES += $(FIRMWARE_MOUNT_POINT) $(DSP_MOUNT_POINT)
 
-CNE_LIBS := libvndfwk_detect_jni.qti.so
-CNE_SYMLINKS := $(addprefix $(TARGET_OUT_VENDOR)/app/CneApp/lib/arm64/,$(notdir $(CNE_LIBS)))
-$(CNE_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
-	@echo "CneApp lib link: $@"
-	@mkdir -p $(dir $@)
-	@rm -rf $@
-	$(hide) ln -sf /vendor/lib64/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(CNE_SYMLINKS)
-
 GOODIX_IMAGES := \
 	      goodixfp.b00 goodixfp.b01 goodixfp.b02 goodixfp.b03 \
 	      goodixfp.b04 goodixfp.b05 goodixfp.b06 goodixfp.mdt
