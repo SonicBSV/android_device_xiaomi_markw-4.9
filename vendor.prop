@@ -94,10 +94,6 @@ persist.vendor.dpmhalservice.enable=1
 # DRM
 drm.service.enabled=true
 
-# EGL - Blobcache configuration
-ro.egl.blobcache.multifile=true
-ro.egl.blobcache.multifile_limit=33554432
-
 # Fingerprint
 persist.qfp=false
 
