@@ -421,7 +421,21 @@ PRODUCT_PACKAGES += \
     libOmxQcelp13Enc:32 \
     libOmxVdec:32 \
     libOmxVenc:32 \
+    libhypv_intercept \
+    libmedia_omx.vendor \
     libstagefrighthw \
+    libOmxVidcCommon \
+    libstagefright_amrnb_common.vendor \
+    libstagefright_bufferpool@2.0.1.vendor \
+    libstagefright_bufferqueue_helper.vendor \
+    libstagefright_enc_common.vendor \
+    libstagefright_flacdec.vendor \
+    libstagefright_foundation.vendor \
+    libstagefright_omx.vendor \
+    libstagefright_omx_utils.vendor \
+    libstagefright_softomx.vendor \
+    libstagefright_softomx_plugin.vendor \
+    libstagefright_xmlparser.vendor \
     libstagefright_enc_common
 
 # Power
