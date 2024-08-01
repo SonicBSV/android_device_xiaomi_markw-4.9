@@ -313,7 +313,6 @@ PRODUCT_PACKAGES += \
     ims_ext_common.xml
 
 PRODUCT_PACKAGES += \
-    CneApp.libvndfwk_detect_jni.qti_symlink \
     libimscamera_jni_libimscamera_jni_symlink64 \
     libimsmedia_jni_libimsmedia_jni_symlink64
 
