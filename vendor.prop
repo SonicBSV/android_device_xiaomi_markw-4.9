@@ -94,6 +94,10 @@ persist.vendor.dpmhalservice.enable=1
 # DRM
 drm.service.enabled=true
 
+# EGL - Blobcache configuration
+ro.egl.blobcache.multifile=true
+ro.egl.blobcache.multifile_limit=33554432
+
 # Fingerprint
 persist.qfp=false
 
@@ -104,7 +108,7 @@ ro.frp.pst=/dev/block/bootdevice/by-name/config
 #ro.crypto.volume.filenames_mode=aes-256-cts
 
 # Media
-debug.stagefright.omx_default_rank=0
+media.stagefright.thumbnail.prefer_hw_codecs=true
 vendor.vidc.disable.split.mode=1
 
 # Perf
