@@ -34,17 +34,4 @@ $(DSP_MOUNT_POINT):
 
 ALL_DEFAULT_INSTALLED_MODULES += $(FIRMWARE_MOUNT_POINT) $(DSP_MOUNT_POINT)
 
-GOODIX_IMAGES := \
-	      goodixfp.b00 goodixfp.b01 goodixfp.b02 goodixfp.b03 \
-	      goodixfp.b04 goodixfp.b05 goodixfp.b06 goodixfp.mdt
-
-GOODIX_SYMLINKS := $(addprefix $(TARGET_OUT_ETC)/firmware/,$(notdir $(GOODIX_IMAGES)))
-$(GOODIX_SYMLINKS): $(LOCAL_INSTALLED_MODULE)
-	      @echo "Goodix firmware link: $@"
-	      @mkdir -p $(dir $@)
-	      @rm -rf $@
-	      $(hide) ln -sf /firmware/image/$(notdir $@) $@
-
-ALL_DEFAULT_INSTALLED_MODULES += $(GOODIX_SYMLINKS)
-
 endif
