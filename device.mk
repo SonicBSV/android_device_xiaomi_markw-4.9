@@ -177,6 +177,9 @@ PRODUCT_PACKAGES += \
     vendor.qti.hardware.camera.device@1.0.vendor \
     camera.msm8953 \
     libdng_sdk.vendor \
+    liblz4.vendor \
+    libutilscallstack.vendor \
+    libpng.vendor:32 \
     libgui_vendor \
     libstdc++_vendor
 
@@ -223,7 +226,8 @@ USE_DEX2OAT_DEBUG := false
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey \
     android.hardware.drm@1.4.vendor \
-    libhidlmemory.vendor
+    libunwindstack.vendor \
+    libhidlmemory.vendor:64
 
 PRODUCT_COPY_FILES += \
         $(LOCAL_PATH)/configs/gpfspath_oem_config.xml:$(TARGET_COPY_OUT_VENDOR)/etc/gpfspath_oem_config.xml
@@ -274,6 +278,7 @@ PRODUCT_PACKAGES += \
     libbatching \
     libgeofencing \
     libloc_core \
+    libcurl.vendor \
     libgnss
 
 # Health
@@ -346,7 +351,7 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
     libavservices_minijail.vendor \
-    libsqlite.vendor \
+    libsqlite.vendor:64 \
     libsysutils.vendor \
     libnbaio
 
@@ -401,6 +406,8 @@ PRODUCT_COPY_FILES += \
 
 # QMI
 PRODUCT_PACKAGES += \
+    libcrypto_utils.vendor \
+    libjsoncpp.vendor \
     libjson
 
 # Ramdisk
@@ -448,7 +455,8 @@ PRODUCT_PACKAGES += \
     android.frameworks.sensorservice@1.0.vendor \
     android.hardware.sensors@1.0-impl:64 \
     android.hardware.sensors@1.0-service \
-    libsensorndkbridge
+    libsensorndkbridge \
+    libpower.vendor
     
 # Speed profile services and wifi-service to reduce RAM and storage
 PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
