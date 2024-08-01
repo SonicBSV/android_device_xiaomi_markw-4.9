@@ -26,6 +26,7 @@ dalvik.vm.dex2oat64.enabled=true
 pm.dexopt.shared=quicken
 
 # Display
+debug.cpurend.vsync=false
 debug.egl.hw=0
 debug.enable.sglscale=1
 debug.hwui.renderer=vulkan
