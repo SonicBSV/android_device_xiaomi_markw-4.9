@@ -42,6 +42,9 @@ ro.egl.blobcache.multifile=true
 ro.egl.blobcache.multifile_limit=33554432
 vendor.display.enable_default_color_mode=1
 
+# Filesystem
+fs_mgr.overlayfs.prefer_cache_backing_storage=true
+
 # FM
 ro.fm.transmitter=false
 vendor.hw.fm.init=0
