@@ -32,7 +32,6 @@ pm.dexopt.shared=quicken
 debug.cpurend.vsync=false
 debug.egl.hw=0
 debug.enable.sglscale=1
-debug.hwui.renderer=vulkan
 debug.hwui.skia_atrace_enabled=false
 debug.hwui.target_cpu_time_percent=30
 debug.hwui.use_hint_manager=true
