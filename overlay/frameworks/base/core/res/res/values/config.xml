@@ -471,7 +471,6 @@
         <item>"/vendor/lib64/hw/vulkan.adreno.so"</item>
         <item>"/vendor/lib64/libCB.so"</item>
         <item>"/vendor/lib64/libOpenCL.so"</item>
-        <item>"/vendor/lib64/libadreno_app_profiles.so"</item>
         <item>"/vendor/lib64/libadreno_utils.so"</item>
         <item>"/vendor/lib64/libgsl.so"</item>
         <item>"/vendor/lib64/libllvm-glnext.so"</item>
