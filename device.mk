@@ -22,8 +22,6 @@ TARGET_BOARD_SUFFIX := _64
 
 PRODUCT_OTA_ENFORCE_VINTF_KERNEL_REQUIREMENTS := true
 
-PRODUCT_ENABLE_UFFD_GC := false
-
 # Add common definitions for Qualcomm
 $(call inherit-product, hardware/qcom-caf/common/common.mk)
 
