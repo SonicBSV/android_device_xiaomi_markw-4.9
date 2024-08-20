@@ -28,3 +28,10 @@ r_dir_file(system_app sysfs_zram)
 
 allow system_app sysfs:file { write open getattr};
 allow system_app vendor_default_prop:file { open getattr };
+
+# Battery Health
+allow system_app sysfs_battery_supply:dir { search };
+allow system_app sysfs_battery_supply:file { read };
+allow system_app sysfs_battery_supply:file { open };
+allow system_app sysfs_battery_supply:file { getattr };
+r_dir_file(system_app, sysfs_battery_supply)
