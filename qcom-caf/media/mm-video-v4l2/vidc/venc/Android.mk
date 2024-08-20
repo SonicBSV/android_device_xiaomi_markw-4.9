@@ -140,13 +140,12 @@ LOCAL_VENDOR_MODULE             := true
 LOCAL_CFLAGS                    := $(libmm-venc-def)
 
 LOCAL_HEADER_LIBRARIES := \
-        display_headers \
         media_plugin_headers \
         libnativebase_headers \
         libcutils_headers \
         libutils_headers \
         libhardware_headers \
-        display_headers \
+        display_headers
 
 LOCAL_C_INCLUDES                := $(libmm-venc-inc)
 LOCAL_ADDITIONAL_DEPENDENCIES   := $(libmm-venc-add-dep)
@@ -184,12 +183,11 @@ LOCAL_VENDOR_MODULE             := true
 LOCAL_CFLAGS                    := $(libmm-venc-def)
 
 LOCAL_HEADER_LIBRARIES := \
-        display_headers \
         media_plugin_headers \
         libnativebase_headers \
         libutils_headers \
         libhardware_headers \
-        display_headers \
+        display_headers
 
 LOCAL_C_INCLUDES                := $(libmm-venc-inc)
 LOCAL_ADDITIONAL_DEPENDENCIES   := $(libmm-venc-add-dep)
