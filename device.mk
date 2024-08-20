@@ -232,7 +232,7 @@ USE_DEX2OAT_DEBUG := false
 # DRM
 PRODUCT_PACKAGES += \
     android.hardware.drm-service.clearkey \
-    android.hardware.drm@1.4.vendor \
+    android.hardware.drm-V1-ndk.vendor \
     libunwindstack.vendor \
     libhidlmemory.vendor:64
 
