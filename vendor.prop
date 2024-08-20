@@ -6,7 +6,8 @@
 audio.deep_buffer.media=true
 audio.offload.min.duration.secs=30
 audio.offload.video=true
-persist.vendor.audio.fluence.speaker=false
+persist.vendor.audio.fluence.voicecomm=true
+persist.vendor.audio.fluence.speaker=true
 persist.vendor.audio.fluence.voicecall=true
 persist.vendor.audio.fluence.voicerec=false
 persist.vendor.audio.hw.binder.size_kbyte=1024
@@ -49,8 +50,8 @@ vendor.audio.feature.multi_voice_session.enable=true
 vendor.audio.feature.snd_mon.enable=true
 vendor.audio.feature.spkr_prot.enable=false
 vendor.audio.feature.src_trkn.enable=true
-vendor.audio.feature.vbat.enable=true
-vendor.audio.feature.wsa.enable=true
+persist.vendor.audio.speaker.prot.enable=false
+
 # Bluetooth
 persist.vendor.qcom.bluetooth.soc=pronto
 persist.vendor.qcom.bluetooth.enable.splita2dp=false
@@ -102,7 +103,6 @@ ro.frp.pst=/dev/block/bootdevice/by-name/config
 #ro.crypto.volume.filenames_mode=aes-256-cts
 
 # Media
-media.stagefright.thumbnail.prefer_hw_codecs=true
 vendor.vidc.disable.split.mode=1
 
 # Perf
