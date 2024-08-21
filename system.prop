@@ -10,6 +10,21 @@ vendor.fastrpc.disable.adsprpcd_sensorspd.daemon=1
 # Bluetooth
 bluetooth.sco.disable_enhanced_connection=true
 
+# Camera
+persist.vendor.camera.gyro.android=0
+persist.vendor.camera.gyro.disable=1
+persist.vendor.camera.iface.logs=0
+persist.vendor.camera.imglib.logs=0
+persist.vendor.camera.isp.clock.optmz=0
+persist.vendor.camera.isp.debug=0
+persist.vendor.camera.mct.debug=0
+persist.vendor.camera.sensor.debug=0
+persist.vendor.camera.stats.test=5
+persist.vendor.vendor.camera.display.lmax=1280x720
+persist.vendor.vendor.camera.display.umax=1920x1080
+vendor.camera.lowpower.record.enable=1
+vidc.enc.dcvs.extra-buff-count=2
+
 # Charger
 ro.charger.enable_suspend=true
 
