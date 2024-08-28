@@ -1,6 +1,0 @@
-runtime_resource_overlay {
-    name: "CarrierConfigOverlay",
-    theme: "CarrierConfigOverlay",
-    vendor: true,
-    aaptflags: ["--keep-raw-values"],
-}

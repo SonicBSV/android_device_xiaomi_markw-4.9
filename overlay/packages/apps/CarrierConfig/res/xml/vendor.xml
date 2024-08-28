@@ -110,17 +110,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="carrier_call_composer_supported_bool" value="false"/>
         <!-- Config for explicit call transfer support for an IMS call -->
         <boolean name="carrier_allow_transfer_ims_call_bool" value="true" />
-
-        <!-- If this is true, the SIM card (through Customer Service Profile EF file) will be
-         able to prevent manual operator selection. If false, this SIM setting will be
-         ignored and manual operator selection will always be available. See
-         CPHS4_2.WW6, CPHS B.4.7.1 for more information -->
-        <boolean name="csp_enabled_bool" value="true" />
-
-        <!-- Config to show LTE+ icon if available -->
-        <boolean name="hide_lte_plus_data_icon_bool" value="false"/>
-
-        <int name="lte_plus_threshold_bandwidth_khz_int" value="0"/>
     </carrier_config>
 
     <carrier_config mcc="001" mnc="01">
@@ -625,6 +614,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
     <carrier_config mcc="405" mnc="840">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -647,13 +638,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="854">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -676,13 +669,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="855">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -705,13 +700,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="856">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -734,13 +731,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="857">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -763,13 +762,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="858">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -792,13 +793,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="859">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -821,13 +824,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="860">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -850,13 +855,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="861">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -879,13 +886,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="862">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -908,13 +917,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="863">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -937,13 +948,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="864">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -966,13 +979,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="865">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -995,13 +1010,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="866">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -1024,13 +1041,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="867">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -1053,13 +1072,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="868">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -1082,13 +1103,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="869">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -1111,13 +1134,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="870">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -1140,13 +1165,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="871">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -1169,13 +1196,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="872">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -1198,13 +1227,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="873">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -1227,13 +1258,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="405" mnc="874">
         <boolean name="carrier_vt_available_bool" value="true" />
         <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="false" />
+        <int name="carrier_default_wfc_ims_mode_int" value="2" />
         <boolean name="video_call_use_ext" value="false" />
         <boolean name="use_custom_video_ui" value="true" />
         <boolean name="config_hide_preview_in_vt_confcall" value="true" />
@@ -1256,8 +1289,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.-->
         <boolean name="show_video_quality_ui" value="true" />
         <boolean name="vowifi_call_quality" value="true" />
         <boolean name="config_retry_sms_over_ims" value="true"/>
-        <boolean name="config_update_service_status" value="false"/>
         <boolean name="carrier_supports_multianchor_conference" value="true"/>
+        <boolean name="config_update_service_status" value="false"/>
     </carrier_config>
 
     <carrier_config mcc="440" mnc="10">
