@@ -590,6 +590,10 @@
         <item>com.google.android.youtube</item>
         <!-- Chrome -->
         <item>com.android.chrome</item>
+        <!-- Clock -->
+        <item>com.google.android.deskclock</item>
+        <!-- Calendar -->
+        <item>com.google.android.calendar</item>
         <!-- Google -->
         <item>com.google.android.googlequicksearchbox</item>
         <!-- GBoard -->
@@ -608,6 +612,8 @@
         <item>com.google.android.dialer</item>
         <!-- Messages -->
         <item>com.google.android.apps.messaging</item>
+        <!-- Metro -->
+        <item>io.github.muntashirakon.Music</item>
         <!-- Keep -->
         <item>com.google.android.keep</item>
         <!-- Gallery Go -->
@@ -620,6 +626,8 @@
         <item>com.google.android.apps.recorder</item>
         <!-- Settings -->
         <item>com.android.settings</item>
+        <!-- Via Browser -->
+        <item>mark.via.gp</item>
     </string-array>
 
     <!-- Whether or not to enable the lock screen entry point for the QR code scanner. -->
