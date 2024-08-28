@@ -165,10 +165,10 @@ on boot
     write /sys/module/g_android/parameters/mtp_tx_req_len 131072
     write /sys/module/g_android/parameters/mtp_rx_req_len 131072
     write /sys/class/android_usb/android0/f_rndis_qc/rndis_transports BAM2BAM_IPA
-    setprop sys.usb.rndis.func.name "rndis_bam"
-    setprop sys.usb.rmnet.func.name "rmnet_bam"
-    setprop sys.usb.rmnet.inst.name "rmnet"
-    setprop sys.usb.dpl.inst.name "dpl"
+    setprop vendor.usb.rndis.func.name "rndis_bam"
+    setprop vendor.usb.rmnet.func.name "rmnet_bam"
+    setprop vendor.usb.rmnet.inst.name "rmnet"
+    setprop vendor.usb.dpl.inst.name "dpl"
 
 service ppd /vendor/bin/mm-pp-dpps
     class late_start
@@ -187,3 +187,7 @@ service vendor.sensors.qti /vendor/bin/sensors.qti
     user system
     group system
     disabled
+
+# USB
+on property:ro.product.vendor.model=*
+    setprop vendor.usb.product_string ${ro.product.vendor.model}
