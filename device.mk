@@ -487,10 +487,20 @@ PRODUCT_PACKAGES += \
     android.hardware.radio.deprecated@1.0.vendor:64 \
     android.hardware.secure_element@1.2.vendor:64 \
     librmnetctl:64 \
+    extphonelib \
+    extphonelib-product \
+    extphonelib.xml \
+    extphonelib_product.xml \
     qti-telephony-hidl-wrapper \
     qti_telephony_hidl_wrapper.xml \
+    qti-telephony-hidl-wrapper-prd \
+    qti_telephony_hidl_wrapper_prd.xml \
     qti-telephony-utils \
-    qti_telephony_utils.xml
+    qti_telephony_utils.xml \
+    telephony-ext
+
+PRODUCT_BOOT_JARS += \
+    telephony-ext
 
 PRODUCT_PACKAGES += \
     android.hardware.radio.c_shim@1.0 \
