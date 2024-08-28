@@ -32,57 +32,6 @@
     <string name="custom_seekbar_default_value_to_set">ڈیفالٹ قدر: <xliff:g id="v">%s</xliff:g>\nسیٹ کرنے کے لیے دیر تک دبائیں</string>
     <string name="custom_seekbar_default_value_is_set">پہلے سے طے شدہ قدر سیٹ ہے</string>
 
-    <!-- Dirac settings -->
-    <string name="dirac_title">Mi ساؤنڈ انہینسر</string>
-    <string name="dirac_summary">آڈیو کے معیار کو بہتر بنائيں</string>
-    <string name="dirac_headset_title">ہیڈفون ی؛قسم منتخب کریں</string>
-    <string name="dirac_preset_title">پری سیٹ منتخب کریں</string>
-    <!-- Dirac settings: Headset types -->
-    <string name="dirac_headset_default">ڈیفالٹ</string>
-    <string name="dirac_headset_earbuds">Mi ایربڈز</string>
-    <string name="dirac_headset_in_ear_2013">Mi ان-ایئر (2013)</string>
-    <string name="dirac_headset_piston_1">Mi پسٹن -1</string>
-    <string name="dirac_headset_general">عمومی</string>
-    <string name="dirac_headset_general_inear">عمومی ان-ایر</string>
-    <string name="dirac_headset_piston_basic">بنیادی ایڈیشن</string>
-    <string name="dirac_headset_piston_2">Mi پسٹن -2</string>
-    <string name="dirac_headset_piston_standard">معیاری ایڈیشن</string>
-    <string name="dirac_headset_headphone">Mi ہیڈ فونز</string>
-    <string name="dirac_headset_piston_youth">یوتھ ایڈیشن</string>
-    <string name="dirac_headset_piston_color">کلر ایڈشن</string>
-    <string name="dirac_headset_in_ear">Mi اِن-ایر</string>
-    <string name="dirac_headset_capsule">Mi کیپسول</string>
-    <string name="dirac_headset_in_ear_pro">Mi ان-ایر پرو</string>
-    <string name="dirac_headset_comfort">Mi Comfort</string>
-    <string name="dirac_headset_reduction_noise">Mi شور منسوخی ٹائپ-C</string>
-    <string name="dirac_headset_cancelling">Mi شور منسوخی 3.5mm</string>
-    <string name="dirac_headset_half_in_ear">Mi ہاف ان ایئر</string>
-    <string name="dirac_headset_in_ear2">Mi ان-ایئر 2</string>
-    <string name="dirac_headset_earphone_basic">Mi ایئرفون بیسک</string>
-    <string name="dirac_headset_earphone">Mi ایئر فونز</string>
-    <!-- Dirac settings: Equalizer presets -->
-    <string name="dirac_preset_default">ڈیفالٹ</string>
-    <string name="dirac_preset_rock">راک</string>
-    <string name="dirac_preset_jazz">جاز</string>
-    <string name="dirac_preset_pop">پاپ</string>
-    <string name="dirac_preset_classical">کلاسیکی</string>
-    <string name="dirac_preset_hiphop">ہِپ ہاپ</string>
-    <string name="dirac_preset_blues">بلیوز</string>
-    <string name="dirac_preset_electronic">الیکٹرونک</string>
-    <string name="dirac_preset_country">ملک</string>
-    <string name="dirac_preset_dance">رقص</string>
-    <string name="dirac_preset_metal">دھات</string>
-    <string name="dirac_preset_bass_booster">باس بوسٹر</string>
-    <string name="dirac_preset_live"> لائیو</string>
-    <string name="dirac_preset_balanced">متوازن</string>
-    <string name="dirac_preset_bass_reduction">باس کی کمی</string>
-    <string name="dirac_preset_treble_reduction"> تگنا کمی</string>
-    <string name="dirac_preset_soft_bass">سافٹ باس</string>
-    <string name="dirac_preset_soft_treble">سافٹ ٹریبل</string>
-
-     <!--QS Tile -->
-    <string name="dirac_qs_tile_title">Dirac آواز</string>
-
     <!-- Torch -->
     <string name="torch_title"> ٹارچ کی ترتیبات</string>
     <string name="torch_summary"> فلیش لائٹ سفید/پیلا کنٹرول</string>

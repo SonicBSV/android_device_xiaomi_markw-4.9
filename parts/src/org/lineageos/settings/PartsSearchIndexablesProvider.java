@@ -33,7 +33,6 @@ import static android.provider.SearchIndexablesContract.INDEXABLES_RAW_COLUMNS;
 import static android.provider.SearchIndexablesContract.INDEXABLES_XML_RES_COLUMNS;
 import static android.provider.SearchIndexablesContract.NON_INDEXABLES_KEYS_COLUMNS;
 
-import org.lineageos.settings.dirac.DiracActivity;
 import org.lineageos.settings.soundcontrol.SoundControlSettingsActivity;
 import org.lineageos.settings.torch.TorchSettingsActivity;
 import org.lineageos.settings.vibration.VibratorActivity;
@@ -48,8 +47,6 @@ public class PartsSearchIndexablesProvider extends SearchIndexablesProvider {
 
     static {
         final int rank = 1, iconResId = 0;
-        sResMap.add(new SearchIndexableResource(rank, R.xml.dirac_settings,
-                    DiracActivity.class.getName(), iconResId));
         sResMap.add(new SearchIndexableResource(rank, R.xml.soundcontrol_settings,
                     SoundControlSettingsActivity.class.getName(), iconResId));
         sResMap.add(new SearchIndexableResource(rank, R.xml.torch_settings,

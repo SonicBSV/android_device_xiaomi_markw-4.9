@@ -32,50 +32,6 @@
     <string name="custom_seekbar_default_value_to_set">Alapértelmezett érték: <xliff:g id="v">%s</xliff:g>\nHosszú lenyomás a beállításhoz</string>
     <string name="custom_seekbar_default_value_is_set">Az alapértelmezett érték beállítva</string>
 
-    <!-- Dirac settings -->
-    <string name="dirac_title">Mi Hangjavítás</string>
-    <string name="dirac_summary">Hangminőség optimalizálása</string>
-    <string name="dirac_headset_title">Fülhallgató típusa</string>
-    <string name="dirac_preset_title">Válasszon egy előbeállítást</string>
-    <!-- Dirac settings: Headset types -->
-    <string name="dirac_headset_default">Alapértelmezett</string>
-    <string name="dirac_headset_earbuds">Mi Earbuds</string>
-    <string name="dirac_headset_in_ear_2013">Mi In-Ear (2013)</string>
-    <string name="dirac_headset_piston_1">Mi Piston-1</string>
-    <string name="dirac_headset_general">Általános</string>
-    <string name="dirac_headset_general_inear">Általános fülhallgató</string>
-    <string name="dirac_headset_piston_basic">Basic kiadás</string>
-    <string name="dirac_headset_piston_2">Mi Piston-2</string>
-    <string name="dirac_headset_piston_standard">Standard kiadás</string>
-    <string name="dirac_headset_headphone">Mi fejhallgató</string>
-    <string name="dirac_headset_piston_youth">Youth kiadás</string>
-    <string name="dirac_headset_piston_color">Színes kiadás</string>
-    <string name="dirac_headset_in_ear">Mi fülhallgató</string>
-    <string name="dirac_headset_capsule">Mi Capsule</string>
-    <string name="dirac_headset_in_ear_pro">Mi In-Ear Pro</string>
-    <string name="dirac_headset_comfort">Mi Comfort</string>
-    <string name="dirac_headset_reduction_noise">Mi Zajcsökkentés Type-C</string>
-    <string name="dirac_headset_cancelling">Mi Zajcsökkentés 3.5mm</string>
-    <string name="dirac_headset_half_in_ear">Mi Half In-Ear</string>
-    <string name="dirac_headset_in_ear2">Mi In-Ear 2</string>
-    <string name="dirac_headset_earphone_basic">Mi Earphones Basic</string>
-    <string name="dirac_headset_earphone">Mi Earphones</string>
-    <!-- Dirac settings: Equalizer presets -->
-    <string name="dirac_preset_default">Alapértelmezett</string>
-    <string name="dirac_preset_rock">Rock</string>
-    <string name="dirac_preset_jazz">Jazz</string>
-    <string name="dirac_preset_pop">Pop</string>
-    <string name="dirac_preset_classical">Klasszikus</string>
-    <string name="dirac_preset_hiphop">Hip Hop</string>
-    <string name="dirac_preset_blues">Blues</string>
-    <string name="dirac_preset_electronic">Elektronikus</string>
-    <string name="dirac_preset_country">Country</string>
-    <string name="dirac_preset_dance">Dance</string>
-    <string name="dirac_preset_metal">Metál</string>
-
-    <!-- QS tile -->
-    <string name="dirac_qs_tile_title">Dirac hang</string>
-
     <!-- Torch -->
     <string name="torch_title">Zseblámpa</string>
     <string name="torch_summary">A sárga/fehér LED maximális fényerejének beállítása</string>

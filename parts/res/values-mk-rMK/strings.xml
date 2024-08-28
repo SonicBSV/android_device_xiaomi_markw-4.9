@@ -32,54 +32,6 @@
      <string name="custom_seekbar_default_value_to_set">Стандардна вредност: <xliff:g id="v">%s</xliff:g>\nДолго притиснете за поставување</string>
      <string name="custom_seekbar_default_value_is_set">Стандардната вредност е поставена</string>
 
-    <!-- Dirac settings -->
-    <string name="dirac_title">Mi Sound засилувач</string>
-    <string name="dirac_summary">Оптимизирај квалитет на звук</string>
-    <string name="dirac_headset_title">Избери вид слушалки</string>
-    <string name="dirac_preset_title">Изберете дефиниција</string>
-    <!-- Dirac settings: Headset types -->
-    <string name="dirac_headset_default">Стандардно</string>
-    <string name="dirac_headset_earbuds">Mi “Earbuds“</string>
-    <string name="dirac_headset_in_ear_2013">Mi “In-Ear“ (2013)</string>
-    <string name="dirac_headset_piston_1">Mi “Piston-1“</string>
-    <string name="dirac_headset_general">Обични</string>
-    <string name="dirac_headset_general_inear">Обични “in-ear“</string>
-    <string name="dirac_headset_piston_basic">Обични слушалки</string>
-    <string name="dirac_headset_piston_2">Mi “Piston-2“</string>
-    <string name="dirac_headset_piston_standard">Стандардни слушалки</string>
-    <string name="dirac_headset_headphone">Mi слушалки</string>
-    <string name="dirac_headset_piston_youth">Младешки слушалки</string>
-    <string name="dirac_headset_piston_color">Слушалки во боја</string>
-    <string name="dirac_headset_in_ear">Mi “In-Ear“</string>
-    <string name="dirac_headset_capsule">Mi “Capsule“</string>
-    <string name="dirac_headset_in_ear_pro">Mi “In-Ear Pro“</string>
-    <string name="dirac_headset_comfort">Mi “Comfort“</string>
-    <string name="dirac_headset_reduction_noise">Mi Noise откажување бучава тип-C</string>
-    <string name="dirac_headset_cancelling">Mi Noise откажување 3.5mm</string>
-    <string name="dirac_headset_half_in_ear">Слушалки Mi Half In-Ear</string>
-    <string name="dirac_headset_in_ear2">Mi In-Ear 2</string>
-    <string name="dirac_headset_earphone_basic">Mi основни слушалки</string>
-    <string name="dirac_headset_earphone">Mi слушалки</string>
-    <!-- Dirac settings: Equalizer presets -->
-    <string name="dirac_preset_default">Стандардно</string>
-    <string name="dirac_preset_rock">Рок</string>
-    <string name="dirac_preset_jazz">Џез</string>
-    <string name="dirac_preset_pop">Поп</string>
-    <string name="dirac_preset_classical">Класично</string>
-    <string name="dirac_preset_hiphop">Хип Хоп</string>
-    <string name="dirac_preset_blues">Блус</string>
-    <string name="dirac_preset_electronic">Електронска</string>
-    <string name="dirac_preset_country">Кантри</string>
-    <string name="dirac_preset_dance">Денс</string>
-    <string name="dirac_preset_metal">Метал</string>
-    <string name="dirac_preset_bass_booster">Засилувач на бас</string>
-    <string name="dirac_preset_live">Во живо</string>
-    <string name="dirac_preset_balanced">Балансиран</string>
-    <string name="dirac_preset_bass_reduction">Намалување на бас</string>
-    <string name="dirac_preset_treble_reduction">Намалување на високи тонови</string>
-    <string name="dirac_preset_soft_bass">Мек бас</string>
-    <string name="dirac_preset_soft_treble">Меки високи тонови</string>
-
      <!-- QS Tile -->
     <string name="dirac_qs_tile_title">Звук на Дирак</string>
 

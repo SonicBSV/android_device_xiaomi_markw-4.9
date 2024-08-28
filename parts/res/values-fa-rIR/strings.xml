@@ -32,57 +32,6 @@
     <string name="custom_seekbar_default_value_to_set">مقدار پیش‌فرض: <xliff:g id="v">%s</xliff:g>\nبرای تنظیم فشار طولانی دهید</string>
     <string name="custom_seekbar_default_value_is_set">مقدار پیش‌فرض تنظیم شده است</string>
 
-    <!-- Dirac settings -->
-    <string name="dirac_title">تقویت‌کننده صدای Mi</string>
-    <string name="dirac_summary">بهینه‌سازی کیفیت صدا</string>
-    <string name="dirac_headset_title">نوع هدفون‌ها را انتخاب کنید</string>
-    <string name="dirac_preset_title">یک مورد از پیش تعیین شده را انتخاب کنید</string>
-    <!-- Dirac settings: Headset types -->
-    <string name="dirac_headset_default">پیش‌فرض</string>
-    <string name="dirac_headset_earbuds">ریز هدفون Mi</string>
-    <string name="dirac_headset_in_ear_2013">درون گوشی Mi (۲۰۱۳)</string>
-    <string name="dirac_headset_piston_1">پیستون Mi-۱</string>
-    <string name="dirac_headset_general">عمومی</string>
-    <string name="dirac_headset_general_inear">درون گوشی عمومی</string>
-    <string name="dirac_headset_piston_basic">نسخه پایه</string>
-    <string name="dirac_headset_piston_2">پیستون Mi-۲</string>
-    <string name="dirac_headset_piston_standard">نسخه استاندارد</string>
-    <string name="dirac_headset_headphone">هدفون Mi</string>
-    <string name="dirac_headset_piston_youth">نسخه جوانان</string>
-    <string name="dirac_headset_piston_color">نسخه رنگی</string>
-    <string name="dirac_headset_in_ear">درون گوشی Mi</string>
-    <string name="dirac_headset_capsule">کپسول Mi</string>
-    <string name="dirac_headset_in_ear_pro">درون گوشی Mi حرفه‌ای</string>
-    <string name="dirac_headset_comfort">Mi آسوده</string>
-    <string name="dirac_headset_reduction_noise">کاهنده اختلال صدای Mi نوع C</string>
-    <string name="dirac_headset_cancelling">کاهنده اختلال صدای Mi ۳.۵ میلی‌متری</string>
-    <string name="dirac_headset_half_in_ear">نیم‌درون گوشی Mi</string>
-    <string name="dirac_headset_in_ear2">درون گوشی Mi ۲</string>
-    <string name="dirac_headset_earphone_basic">هندزفری‌های اصلی Mi</string>
-    <string name="dirac_headset_earphone">هندزفری‌های Mi</string>
-    <!-- Dirac settings: Equalizer presets -->
-    <string name="dirac_preset_default">پیش‌فرض</string>
-    <string name="dirac_preset_rock">راک</string>
-    <string name="dirac_preset_jazz">جاز</string>
-    <string name="dirac_preset_pop">پاپ</string>
-    <string name="dirac_preset_classical">کلاسیک</string>
-    <string name="dirac_preset_hiphop">هیپ هاپ</string>
-    <string name="dirac_preset_blues">بلوز</string>
-    <string name="dirac_preset_electronic">الکترونیک</string>
-    <string name="dirac_preset_country">روستایی</string>
-    <string name="dirac_preset_dance">رقص</string>
-    <string name="dirac_preset_metal">متال</string>
-    <string name="dirac_preset_bass_booster">تقویت کننده باس</string>
-    <string name="dirac_preset_live">زنده</string>
-    <string name="dirac_preset_balanced">متوازن</string>
-    <string name="dirac_preset_bass_reduction">کاهش باس</string>
-    <string name="dirac_preset_treble_reduction">کاهش سه برابر</string>
-    <string name="dirac_preset_soft_bass">باس نرم</string>
-    <string name="dirac_preset_soft_treble">تریبل نرم</string>
-
-    <!-- QS Tile -->
-    <string name="dirac_qs_tile_title">صدای دیراک</string>
-
     <!-- Torch -->
     <string name="torch_title">تنظیمات مشعل</string>
     <string name="torch_summary">کنترل چراغ قوه سفید/زرد</string>

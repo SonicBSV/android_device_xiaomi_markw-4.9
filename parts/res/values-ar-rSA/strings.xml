@@ -26,56 +26,6 @@
     <string name="custom_seekbar_default_value">افتراضي</string>
     <string name="custom_seekbar_default_value_to_set">القيمة الافتراضية: <xliff:g id="v">%s</xliff:g>\nاضغط لفترة طويلة لتعيين</string>
     <string name="custom_seekbar_default_value_is_set">تم تعيين القيمة الافتراضية</string>
-    <!-- Dirac settings -->
-    <string name="dirac_title">محسن صوت Mi</string>
-    <string name="dirac_summary">تحسين جودة الصوت</string>
-    <string name="dirac_headset_title">اختيار نوع سماعة الرأس</string>
-    <string name="dirac_preset_title">اختر إعداد</string>
-    <!-- Dirac settings: Headset types -->
-    <string name="dirac_headset_default">الافتراضي</string>
-    <string name="dirac_headset_earbuds">Mi Earbuds</string>
-    <string name="dirac_headset_in_ear_2013">Mi In-Ear (2013)</string>
-    <string name="dirac_headset_piston_1">Mi Piston-1</string>
-    <string name="dirac_headset_general">عام</string>
-    <string name="dirac_headset_general_inear">عامة In-Ear</string>
-    <string name="dirac_headset_piston_basic">إصدار رئيسي</string>
-    <string name="dirac_headset_piston_2">Mi Piston-2</string>
-    <string name="dirac_headset_piston_standard">إصدار قياسي</string>
-    <string name="dirac_headset_headphone">سماعات رأس Mi</string>
-    <string name="dirac_headset_piston_youth">إصدار شبابي</string>
-    <string name="dirac_headset_piston_color">إصدار اللون</string>
-    <string name="dirac_headset_in_ear">Mi In-Ear</string>
-    <string name="dirac_headset_capsule">Mi Capsule</string>
-    <string name="dirac_headset_in_ear_pro">Mi In-Ear Pro</string>
-    <string name="dirac_headset_comfort">Mi Comfort</string>
-    <string name="dirac_headset_reduction_noise">إلغاء الضوضاء Mi Type-C</string>
-    <string name="dirac_headset_cancelling">إلغاء الضوضاء Mi 3.5mm</string>
-    <string name="dirac_headset_half_in_ear">Mi Half In-Ear</string>
-    <string name="dirac_headset_in_ear2">Mi In-Ear 2</string>
-    <string name="dirac_headset_earphone_basic">Mi Earphones Basic</string>
-    <string name="dirac_headset_earphone">Mi Earphones</string>
-    <!-- Dirac settings: Equalizer presets -->
-    <string name="dirac_preset_default">الافتراضي</string>
-    <string name="dirac_preset_rock">روك</string>
-    <string name="dirac_preset_jazz">جاز</string>
-    <string name="dirac_preset_pop">بوب</string>
-    <string name="dirac_preset_classical">كلاسيك</string>
-    <string name="dirac_preset_hiphop">هيب هوب</string>
-    <string name="dirac_preset_blues">إيقاع</string>
-    <string name="dirac_preset_electronic">الكتروني</string>
-    <string name="dirac_preset_country">الريف</string>
-    <string name="dirac_preset_dance">رقص</string>
-    <string name="dirac_preset_metal">معدن</string>
-    <string name="dirac_preset_bass_booster">تحسين الجهير</string>
-    <string name="dirac_preset_live">حي</string>
-    <string name="dirac_preset_balanced">متوازن</string>
-    <string name="dirac_preset_bass_reduction">خفض الكتلة</string>
-    <string name="dirac_preset_treble_reduction">تقليل الترددات العالية</string>
-    <string name="dirac_preset_soft_bass">عميق ناعم</string>
-    <string name="dirac_preset_soft_treble">حاد ناعم</string>
-
-    <!-- Dirac QS Tile -->
-    <string name="dirac_qs_tile_title">صوت ديراك</string>
 
     <!-- Torch -->
     <string name="torch_title">إعدادات الشعلة</string>

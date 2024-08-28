@@ -32,57 +32,6 @@
     <string name="custom_seekbar_default_value_to_set">Valor per defecte: <xliff:g id="v">%s</xliff:g>\nPremeu llargament per configurar</string>
     <string name="custom_seekbar_default_value_is_set">El valor predeterminat està definit</string>
 
-    <!-- Dirac settings -->
-    <string name="dirac_title">Potenciador de so Mi</string>
-    <string name="dirac_summary">Optimitza la qualitat d\'àudio</string>
-    <string name="dirac_headset_title">Seleccioneu el tipus d\'auriculars</string>
-    <string name="dirac_preset_title">Trieu una configuració per defecte</string>
-    <!-- Dirac settings: Headset types -->
-    <string name="dirac_headset_default">Per defecte</string>
-    <string name="dirac_headset_earbuds">Mi</string>
-    <string name="dirac_headset_in_ear_2013">Mi In-Ear (2013)</string>
-    <string name="dirac_headset_piston_1">Mi Piston-1</string>
-    <string name="dirac_headset_general">Normals</string>
-    <string name="dirac_headset_general_inear">In-ear normals</string>
-    <string name="dirac_headset_piston_basic">Edició Bàsica</string>
-    <string name="dirac_headset_piston_2">Mi Piston-2</string>
-    <string name="dirac_headset_piston_standard">Edició Estàndard</string>
-    <string name="dirac_headset_headphone">Mi Auriculars</string>
-    <string name="dirac_headset_piston_youth">Edició Jove</string>
-    <string name="dirac_headset_piston_color">Edició de color</string>
-    <string name="dirac_headset_in_ear">Mi in-ear</string>
-    <string name="dirac_headset_capsule">Mi Capsule</string>
-    <string name="dirac_headset_in_ear_pro">Mi In-Ear Pro</string>
-    <string name="dirac_headset_comfort">Mi Comfort</string>
-    <string name="dirac_headset_reduction_noise">Cancel·la sorolls Mi Tipus C</string>
-    <string name="dirac_headset_cancelling">Cancel·la sorolls Mi 3.5mm</string>
-    <string name="dirac_headset_half_in_ear">Mi Half In-Ear</string>
-    <string name="dirac_headset_in_ear2">Mi In-Ear 2</string>
-    <string name="dirac_headset_earphone_basic">Auriculars Mi Bàsic</string>
-    <string name="dirac_headset_earphone">Mi Auriculars</string>
-    <!-- Dirac settings: Equalizer presets -->
-    <string name="dirac_preset_default">Per defecte</string>
-    <string name="dirac_preset_rock">Rock</string>
-    <string name="dirac_preset_jazz">Jazz</string>
-    <string name="dirac_preset_pop">Pop</string>
-    <string name="dirac_preset_classical">Clàssica</string>
-    <string name="dirac_preset_hiphop">Hip Hop</string>
-    <string name="dirac_preset_blues">Blues</string>
-    <string name="dirac_preset_electronic">Electrònica</string>
-    <string name="dirac_preset_country">Country</string>
-    <string name="dirac_preset_dance">Dance</string>
-    <string name="dirac_preset_metal">Metall</string>
-    <string name="dirac_preset_bass_booster">Amplificador de baix</string>
-    <string name="dirac_preset_live">En directe</string>
-    <string name="dirac_preset_balanced">Equilibrat</string>
-    <string name="dirac_preset_bass_reduction">Reducció de graves</string>
-    <string name="dirac_preset_treble_reduction">Reducció dels aguts</string>
-    <string name="dirac_preset_soft_bass">Baix suau</string>
-    <string name="dirac_preset_soft_treble">Aguts suaus</string>
-
-     <!-- QS Tile -->
-    <string name="dirac_qs_tile_title">So Dirac</string>
-
     <!-- Torch -->
     <string name="torch_title">Configuració de la torxa</string>
     <string name="torch_summary">Control de la llanterna blanc/groc</string>

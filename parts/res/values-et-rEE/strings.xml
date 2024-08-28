@@ -32,57 +32,6 @@
     <string name="custom_seekbar_default_value_to_set">Vaikeväärtus: <xliff:g id="v">%s</xliff:g>\nMääramiseks vajutage pikalt</string>
     <string name="custom_seekbar_default_value_is_set">Vaikeväärtus on määratud</string>
 
-    <!-- Dirac settings -->
-    <string name="dirac_title">Mi Heli Parandaja</string>
-    <string name="dirac_summary">Optimeerige heli kvaliteeti</string>
-    <string name="dirac_headset_title">Valige kõrvaklapitüüp</string>
-    <string name="dirac_preset_title">Valige eelsätestus</string>
-    <!-- Dirac settings: Headset types -->
-    <string name="dirac_headset_default">Vaikimisi</string>
-    <string name="dirac_headset_earbuds">Mi Nööpkuularid</string>
-    <string name="dirac_headset_in_ear_2013">Mi Kõrvasisesed (2013)</string>
-    <string name="dirac_headset_piston_1">Mi Piston-1</string>
-    <string name="dirac_headset_general">Üldidne</string>
-    <string name="dirac_headset_general_inear">Üldised kõrvasisesed</string>
-    <string name="dirac_headset_piston_basic">Põhiväljalase</string>
-    <string name="dirac_headset_piston_2">Mi Piston-2</string>
-    <string name="dirac_headset_piston_standard">Standardväljalase</string>
-    <string name="dirac_headset_headphone">Mi Kõrvaklapid</string>
-    <string name="dirac_headset_piston_youth">Noorte väljalase</string>
-    <string name="dirac_headset_piston_color">Värviline väljalase</string>
-    <string name="dirac_headset_in_ear">Mi Kõrvasisesed</string>
-    <string name="dirac_headset_capsule">Mi Kapsul</string>
-    <string name="dirac_headset_in_ear_pro">Mi Kõrvasisesed Pro</string>
-    <string name="dirac_headset_comfort">Mi Comfort</string>
-    <string name="dirac_headset_reduction_noise">Mi müra tühistamise C-tüüp</string>
-    <string name="dirac_headset_cancelling">Mi müra tühistamine 3.5mm</string>
-    <string name="dirac_headset_half_in_ear">Kõrvasisene Mi Half</string>
-    <string name="dirac_headset_in_ear2">Kõrvasisene Mi 2</string>
-    <string name="dirac_headset_earphone_basic">Mi Kõrvaklapid Basic</string>
-    <string name="dirac_headset_earphone">Mi Kõrvaklapid</string>
-    <!-- Dirac settings: Equalizer presets -->
-    <string name="dirac_preset_default">Vaikimisi</string>
-    <string name="dirac_preset_rock">Kivi</string>
-    <string name="dirac_preset_jazz">Džäss</string>
-    <string name="dirac_preset_pop">Pop</string>
-    <string name="dirac_preset_classical">Klassikaline</string>
-    <string name="dirac_preset_hiphop">Hip Hop</string>
-    <string name="dirac_preset_blues">Bluus</string>
-    <string name="dirac_preset_electronic">Elektrooniline</string>
-    <string name="dirac_preset_country">Riik</string>
-    <string name="dirac_preset_dance">Tants</string>
-    <string name="dirac_preset_metal">Metral</string>
-    <string name="dirac_preset_bass_booster">Bassivõimendi</string>
-    <string name="dirac_preset_live">Reaalajas</string>
-    <string name="dirac_preset_balanced">Tasakaalustatud</string>
-    <string name="dirac_preset_bass_reduction">Bassi vähendamine</string>
-    <string name="dirac_preset_treble_reduction">Kõrgete helide vähendamine</string>
-    <string name="dirac_preset_soft_bass">pehme bass</string>
-    <string name="dirac_preset_soft_treble">Pehmed kõrged helid</string>
-
-     <!-- QS-Tile -->
-    <string name="dirac_qs_tile_title">Diraci heli</string>
-
     <!-- Torch -->
     <string name="torch_title">Tõrviku seaded</string>
     <string name="torch_summary">Taskulambi valge/kollane juhtnupp</string>

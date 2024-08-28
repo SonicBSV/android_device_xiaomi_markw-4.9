@@ -1,10 +1,6 @@
 # Audio
 audio_hal.in_period_size        u:object_r:vendor_audio_prop:s0
 
-# Audio (Dirac)
-audio.dirac.                    u:object_r:vendor_dirac_prop:s0
-persist.audio.dirac             u:object_r:vendor_dirac_prop:s0
-
 # Bluetooth
 persist.vendor.bt.address       u:object_r:vendor_bluetooth_prop:s0
 

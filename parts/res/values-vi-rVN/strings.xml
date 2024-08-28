@@ -32,57 +32,6 @@
     <string name="custom_seekbar_default_value_to_set">Giá trị mặc định: <xliff:g id="v">%s</xliff:g>\n Nhấn và giữ để đặt</string>
     <string name="custom_seekbar_default_value_is_set">Giá trị mặc định được đặt</string>
 
-    <!-- Dirac settings -->
-    <string name="dirac_title">Tăng cường Mi Sound</string>
-    <string name="dirac_summary">Tối ưu chất lượng âm thanh</string>
-    <string name="dirac_headset_title">Chọn loại tai nghe</string>
-    <string name="dirac_preset_title">Chọn hiệu chỉnh sẵn có</string>
-    <!-- Dirac settings: Headset types -->
-    <string name="dirac_headset_default">Mặc định</string>
-    <string name="dirac_headset_earbuds">Mi Earbud</string>
-    <string name="dirac_headset_in_ear_2013">Mi In-Ear (2013)</string>
-    <string name="dirac_headset_piston_1">Mi Piston-1</string>
-    <string name="dirac_headset_general">Thường</string>
-    <string name="dirac_headset_general_inear">In-Ear thường</string>
-    <string name="dirac_headset_piston_basic">Cơ bản</string>
-    <string name="dirac_headset_piston_2">Mi piston-2</string>
-    <string name="dirac_headset_piston_standard">Tiêu chuẩn</string>
-    <string name="dirac_headset_headphone">Tai nghe Mi</string>
-    <string name="dirac_headset_piston_youth">Phiên bản trẻ</string>
-    <string name="dirac_headset_piston_color">Phiên bản sắc màu</string>
-    <string name="dirac_headset_in_ear">Mi In-Ear</string>
-    <string name="dirac_headset_capsule">Mi Capsule</string>
-    <string name="dirac_headset_in_ear_pro">Mi In-Ear Pro</string>
-    <string name="dirac_headset_comfort">Mi Comfort</string>
-    <string name="dirac_headset_reduction_noise">Khử tiếng ồn Mi Type-C</string>
-    <string name="dirac_headset_cancelling">Khử tiếng ồn Mi 3.5mm</string>
-    <string name="dirac_headset_half_in_ear">Mi Half In-Ear</string>
-    <string name="dirac_headset_in_ear2">Mi In-Ear 2</string>
-    <string name="dirac_headset_earphone_basic">Mi Earphones Basic</string>
-    <string name="dirac_headset_earphone">Tai nghe Mi</string>
-    <!-- Dirac settings: Equalizer presets -->
-    <string name="dirac_preset_default">Mặc định</string>
-    <string name="dirac_preset_rock">Rock</string>
-    <string name="dirac_preset_jazz">Jazz</string>
-    <string name="dirac_preset_pop">Pop</string>
-    <string name="dirac_preset_classical">Cổ điển</string>
-    <string name="dirac_preset_hiphop">Hip Hop</string>
-    <string name="dirac_preset_blues">Blue</string>
-    <string name="dirac_preset_electronic">Điện tử</string>
-    <string name="dirac_preset_country">Quê hương</string>
-    <string name="dirac_preset_dance">Khiêu vũ</string>
-    <string name="dirac_preset_metal">Kim loại</string>
-    <string name="dirac_preset_bass_booster">Tăng Bass</string>
-    <string name="dirac_preset_live">Trực tiếp</string>
-    <string name="dirac_preset_balanced">Cân bằng</string>
-    <string name="dirac_preset_bass_reduction">Giảm âm Bass</string>
-    <string name="dirac_preset_treble_reduction">Giảm âm Treble</string>
-    <string name="dirac_preset_soft_bass">Bass nhẹ</string>
-    <string name="dirac_preset_soft_treble">Treble nhẹ</string>
-
-    <!-- QS tile title -->
-    <string name="dirac_qs_tile_title">Âm thanh Dirac</string>
-
     <!-- Torch -->
     <string name="torch_title">Đèn pin</string>
     <string name="torch_summary">Led trắng với độ sáng tối đa</string>

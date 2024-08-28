@@ -26,7 +26,6 @@ import android.provider.Settings;
 
 import androidx.preference.PreferenceManager;
 
-import org.lineageos.settings.dirac.DiracUtils;
 import org.lineageos.settings.preferences.FileUtils;
 import org.lineageos.settings.soundcontrol.SoundControlSettings;
 import org.lineageos.settings.torch.TorchSettings;
@@ -72,8 +71,5 @@ public class BootCompletedReceiver extends BroadcastReceiver {
                 SoundControlSettings.PREF_MICROPHONE_GAIN, 0));
         FileUtils.setValue(SoundControlSettings.SPEAKER_GAIN_PATH, Settings.Secure.getInt(context.getContentResolver(),
                 SoundControlSettings.PREF_SPEAKER_GAIN, 0));
-
-        // Dirac
-        new DiracUtils(context).onBootCompleted();
     }
 }

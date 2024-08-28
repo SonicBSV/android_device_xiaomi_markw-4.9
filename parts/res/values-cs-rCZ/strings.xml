@@ -32,57 +32,6 @@
     <string name="custom_seekbar_default_value_to_set">Výchozí hodnota: <xliff:g id="v">%s</xliff:g>\nNastavíte dlouhým stisknutím</string>
     <string name="custom_seekbar_default_value_is_set">Výchozí hodnota je nastavena</string>
 
-    <!-- Dirac settings -->
-    <string name="dirac_title">Vylepšení Mi Sound</string>
-    <string name="dirac_summary">Optimalizovat kvalitu zvuku</string>
-    <string name="dirac_headset_title">Typ sluchátek</string>
-    <string name="dirac_preset_title">Zvolit přednastavené</string>
-    <!-- Dirac settings: Headset types -->
-    <string name="dirac_headset_default">Výchozí</string>
-    <string name="dirac_headset_earbuds">Mi pecky</string>
-    <string name="dirac_headset_in_ear_2013">Mi špunty (2013)</string>
-    <string name="dirac_headset_piston_1">Mi Piston-1</string>
-    <string name="dirac_headset_general">Obyčejná</string>
-    <string name="dirac_headset_general_inear">Běžné špunty</string>
-    <string name="dirac_headset_piston_basic">Základní edice</string>
-    <string name="dirac_headset_piston_2">Mi Piston-2</string>
-    <string name="dirac_headset_piston_standard">Standardní edice</string>
-    <string name="dirac_headset_headphone">Mi sluchátka</string>
-    <string name="dirac_headset_piston_youth">Pro mladé</string>
-    <string name="dirac_headset_piston_color">Barevná edice</string>
-    <string name="dirac_headset_in_ear">Mi špunty</string>
-    <string name="dirac_headset_capsule">Mi kapsle</string>
-    <string name="dirac_headset_in_ear_pro">Mi špunty Pro</string>
-    <string name="dirac_headset_comfort">Mi Komfort</string>
-    <string name="dirac_headset_reduction_noise">Mi Rušení hluku Typ-C</string>
-    <string name="dirac_headset_cancelling">Mi Rušení hluku 3,5 mm</string>
-    <string name="dirac_headset_half_in_ear">Mi Half In-Ear</string>
-    <string name="dirac_headset_in_ear2">Mi In-Ear 2</string>
-    <string name="dirac_headset_earphone_basic">Mi Earphones Basic</string>
-    <string name="dirac_headset_earphone">Mi Earphones</string>
-    <!-- Dirac settings: Equalizer presets -->
-    <string name="dirac_preset_default">Výchozí</string>
-    <string name="dirac_preset_rock">Rock</string>
-    <string name="dirac_preset_jazz">Jazz</string>
-    <string name="dirac_preset_pop">Pop</string>
-    <string name="dirac_preset_classical">Klasická</string>
-    <string name="dirac_preset_hiphop">Hip Hop</string>
-    <string name="dirac_preset_blues">Blues</string>
-    <string name="dirac_preset_electronic">Elektronická</string>
-    <string name="dirac_preset_country">Country</string>
-    <string name="dirac_preset_dance">Taneční</string>
-    <string name="dirac_preset_metal">Metal</string>
-    <string name="dirac_preset_bass_booster">Zvýraznění basů</string>
-    <string name="dirac_preset_live">Živá</string>
-    <string name="dirac_preset_balanced">Vyvážená</string>
-    <string name="dirac_preset_bass_reduction">Potlačení basů</string>
-    <string name="dirac_preset_treble_reduction">Potlačení výšek</string>
-    <string name="dirac_preset_soft_bass">Jemné basy</string>
-    <string name="dirac_preset_soft_treble">Jemné výšky</string>
-
-    <!-- QS Tile -->
-    <string name="dirac_qs_tile_title">Zvuk Dirac</string>
-
     <!-- Torch -->
     <string name="torch_title">Nastavení pochodně</string>
     <string name="torch_summary">Ovládání bílé/žluté baterky</string>
