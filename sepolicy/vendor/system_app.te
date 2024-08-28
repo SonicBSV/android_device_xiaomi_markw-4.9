@@ -10,7 +10,6 @@ allow system_app fm_radio_device:chr_file { ioctl open read };
 
 # XiaomiParts
 allow system_app {
-    kcal_dev
     sysfs_hgain
     sysfs_mgain
     sysfs_sgain
@@ -19,15 +18,11 @@ allow system_app {
 }:file rw_file_perms;
 
 allow system_app {
-    kcal_dev
     sysfs_leds
 }:dir search;
 
 # zram
 r_dir_file(system_app sysfs_zram)
-
-allow system_app sysfs:file { write open getattr};
-allow system_app vendor_default_prop:file { open getattr };
 
 # Battery Health
 allow system_app sysfs_battery_supply:dir { search };

@@ -11,5 +11,3 @@ allow system_server sysfs_keys_atmel:file { open read getattr };
 
 # zygote
 allow system_server app_zygote:process getpgid;
-
-allow system_server sysfs:file r_file_perms;
