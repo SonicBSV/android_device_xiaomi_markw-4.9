@@ -142,7 +142,6 @@ persist.timed.enable=true
 
 # Telephony
 ril.subscription.types=NV,RUIM
-ro.telephony.call_ring.multiple=false
 service.qti.ims.enabled=1
 telephony.lteOnCdmaDevice=1
 vendor.service.qti.ims.enabled=1
