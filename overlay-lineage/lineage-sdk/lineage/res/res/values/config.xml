@@ -97,4 +97,7 @@
         <item>restart_recovery</item>
 	<item>restart_systemui</item>
     </string-array>
+
+    <!-- Default values for LiveDisplay -->
+    <bool name="config_enableLiveDisplay">false</bool>
 </resources>
