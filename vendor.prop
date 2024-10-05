@@ -56,6 +56,7 @@ persist.vendor.audio.speaker.prot.enable=false
 persist.vendor.qcom.bluetooth.soc=pronto
 persist.vendor.qcom.bluetooth.enable.splita2dp=false
 ro.vendor.bluetooth.wipower=false
+persist.vendor.bluetooth.modem_nv_support=true
 
 # Camera
 persist.vendor.camera.gyro.android=0
@@ -105,9 +106,6 @@ persist.qfp=false
 
 # Frp
 ro.frp.pst=/dev/block/bootdevice/by-name/config
-
-# HEH filename encryption is being dropped
-#ro.crypto.volume.filenames_mode=aes-256-cts
 
 # Media
 vendor.vidc.disable.split.mode=1
