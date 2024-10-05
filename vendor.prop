@@ -97,10 +97,6 @@ drm.service.enabled=true
 # Fingerprint
 persist.qfp=false
 
-# Fling
-ro.min.fling_velocity=160
-ro.max.fling_velocity=20000
-
 # Frp
 ro.frp.pst=/dev/block/bootdevice/by-name/config
 

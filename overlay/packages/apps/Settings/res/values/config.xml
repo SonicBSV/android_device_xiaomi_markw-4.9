@@ -25,4 +25,7 @@
     <!-- Whether to show a preference item for mobile plan -->
     <bool name="config_show_mobile_plan">false</bool>
 
+    <!-- Battery Health -->
+    <bool name="config_supportBatteryHealth">true</bool>
+
 </resources>
