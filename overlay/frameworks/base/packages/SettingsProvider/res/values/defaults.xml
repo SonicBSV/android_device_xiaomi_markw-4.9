@@ -22,7 +22,7 @@
     <bool name="def_screen_brightness_automatic_mode">true</bool>
 
     <!-- Disable bluetooth by default -->
-    <bool name="def_bluetooth_on">true</bool>
+    <bool name="def_bluetooth_on">false</bool>
 
     <!-- Default for UI touch sounds enabled -->
     <bool name="def_sound_effects_enabled">false</bool>
