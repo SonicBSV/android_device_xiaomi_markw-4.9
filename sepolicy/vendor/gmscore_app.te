@@ -1,0 +1,4 @@
+#gms core app
+allow gmscore_app system_data_file:file r_file_perms;
+allow gmscore_app system_data_file:dir r_dir_perms;
+dontaudit gmscore_app hal_memtrack_hwservice:hwservice_manager { find };
