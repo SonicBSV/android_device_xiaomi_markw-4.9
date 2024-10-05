@@ -94,13 +94,15 @@ GnssAdapter::GnssAdapter() :
                    LocContext::getLocContext(LocContext::mLocationHalName),
                    true, nullptr, true),
     mEngHubProxy(new EngineHubProxyBase()),
+    mQDgnssListenerHDL(nullptr),
+    mCdfwInterface(nullptr),
+    mDGnssNeedReport(false),
+    mDGnssDataUsage(false),
+    mLocPositionMode(),
     mNHzNeeded(false),
     mSPEAlreadyRunningAtHighestInterval(false),
-    mLocPositionMode(),
     mGnssSvIdUsedInPosition(),
     mGnssSvIdUsedInPosAvail(false),
-    mGnssMbSvIdUsedInPosition{},
-    mGnssMbSvIdUsedInPosAvail(false),
     mControlCallbacks(),
     mAfwControlId(0),
     mNmeaMask(0),
@@ -108,39 +110,37 @@ GnssAdapter::GnssAdapter() :
     mGnssSeconaryBandConfig(),
     mGnssSvTypeConfig(),
     mGnssSvTypeConfigCb(nullptr),
-    mSupportNfwControl(true),
     mLocConfigInfo{},
     mNiData(),
     mAgpsManager(),
-    mNfwCb(NULL),
-    mIsE911Session(NULL),
-    mIsMeasCorrInterfaceOpen(false),
-    mIsAntennaInfoInterfaceOpened(false),
-    mQDgnssListenerHDL(nullptr),
-    mCdfwInterface(nullptr),
-    mDGnssNeedReport(false),
-    mDGnssDataUsage(false),
     mOdcpiRequestCb(nullptr),
     mOdcpiRequestActive(false),
-    mCallbackPriority(OdcpiPrioritytype::ODCPI_HANDLER_PRIORITY_LOW),
     mOdcpiTimer(this),
     mOdcpiRequest(),
-    mLastDeleteAidingDataTime(0),
+    mCallbackPriority(OdcpiPrioritytype::ODCPI_HANDLER_PRIORITY_LOW),
     mSystemStatus(SystemStatus::getInstance(mMsgTask)),
     mServerUrl(":"),
     mXtraObserver(mSystemStatus->getOsObserver(), mMsgTask),
-    mLocSystemInfo{},
-    mSystemPowerState(POWER_STATE_UNKNOWN),
     mBlockCPIInfo{},
+    mDreIntEnabled(false),
+    mLocSystemInfo{},
+    mNfwCb(NULL),
     mPowerOn(false),
     mAllowFlpNetworkFixes(0),
-    mDreIntEnabled(false),
-    mNativeAgpsHandler(mSystemStatus->getOsObserver(), *this),
     mGnssEnergyConsumedCb(nullptr),
     mPowerStateCb(nullptr),
-    mSendNmeaConsent(false),
+    mIsE911Session(NULL),
+    mGnssMbSvIdUsedInPosition{},
+    mGnssMbSvIdUsedInPosAvail(false),
+    mSupportNfwControl(true),
+    mSystemPowerState(POWER_STATE_UNKNOWN),
+    mIsMeasCorrInterfaceOpen(false),
+    mIsAntennaInfoInterfaceOpened(false),
+    mLastDeleteAidingDataTime(0),
     mDgnssState(0),
-    mDgnssLastNmeaBootTimeMilli(0)
+    mSendNmeaConsent(false),
+    mDgnssLastNmeaBootTimeMilli(0),
+    mNativeAgpsHandler(mSystemStatus->getOsObserver(), *this)
 {
     LOC_LOGD("%s]: Constructor %p", __func__, this);
     mLocPositionMode.mode = LOC_POSITION_MODE_INVALID;
@@ -1569,8 +1569,8 @@ GnssAdapter::gnssGetConfigCommand(GnssConfigFlagsMask configMask) {
             mAdapter(adapter),
             mApi(api),
             mConfigMask(configMask),
-            mIds(nullptr),
-            mCount(count) {
+            mCount(count),
+            mIds(nullptr) {
                 if (mCount > 0) {
                     mIds = new uint32_t[count];
                     if (mIds) {
@@ -3928,7 +3928,7 @@ bool GnssAdapter::needToGenerateNmeaReport(const uint32_t &gpsTimeOfWeekMs,
              * Send when gpsTimeOfWeekMs is closely aligned with integer boundary
              */
             if ((0 == mPrevNmeaRptTimeNsec) ||
-                ((0 != gpsTimeOfWeekMs) && (NMEA_MIN_THRESHOLD_MSEC >= (gpsTimeOfWeekMs % 1000)))) {
+                (0 != gpsTimeOfWeekMs) && (NMEA_MIN_THRESHOLD_MSEC >= (gpsTimeOfWeekMs % 1000))) {
                 retVal = true;
             } else {
                 uint64_t timeDiffMsec = ((currentTimeNsec - mPrevNmeaRptTimeNsec) / 1000000);
@@ -4108,8 +4108,8 @@ GnssAdapter::reportLatencyInfoEvent(const GnssLatencyInfo& gnssLatencyInfo)
         GnssLatencyInfo mGnssLatencyInfo;
         inline MsgReportLatencyInfo(GnssAdapter& adapter,
             const GnssLatencyInfo& gnssLatencyInfo) :
-            mAdapter(adapter),
-            mGnssLatencyInfo(gnssLatencyInfo) {}
+            mGnssLatencyInfo(gnssLatencyInfo),
+            mAdapter(adapter) {}
         inline virtual void proc() const {
             mAdapter.mGnssLatencyInfoQueue.push(mGnssLatencyInfo);
             LOC_LOGv("mGnssLatencyInfoQueue.size after push=%zu",
@@ -5282,9 +5282,9 @@ void GnssAdapter::reportPdnTypeFromWds(int pdnType, AGpsExtType agpsType, std::s
         inline MsgReportAtlPdn(GnssAdapter& adapter, int pdnType,
                 AgpsManager* agpsManager, AGpsExtType agpsType,
                 const string& apnName, AGpsBearerType bearerType) :
-            LocMsg(), mAdapter(adapter), mPdnType(pdnType),
-            mAgpsManager(agpsManager), mAgpsType(agpsType),
-            mApnName(apnName), mBearerType(bearerType) {}
+            LocMsg(), mAgpsManager(agpsManager), mAgpsType(agpsType),
+            mApnName(apnName), mBearerType(bearerType),
+            mAdapter(adapter), mPdnType(pdnType) {}
         inline virtual void proc() const {
             mAgpsManager->reportAtlOpenSuccess(mAgpsType,
                     const_cast<char*>(mApnName.c_str()),
@@ -5313,8 +5313,8 @@ void GnssAdapter::dataConnOpenCommand(
 
         inline AgpsMsgAtlOpenSuccess(GnssAdapter& adapter, AgpsManager* agpsManager,
                 AGpsExtType agpsType, const char* apnName, int apnLen, AGpsBearerType bearerType) :
-                LocMsg(), mAdapter(adapter), mAgpsManager(agpsManager), mAgpsType(agpsType),
-                        mApnName(new char[apnLen + 1]), mBearerType(bearerType) {
+                LocMsg(), mAgpsManager(agpsManager), mAgpsType(agpsType), mApnName(
+                        new char[apnLen + 1]), mBearerType(bearerType), mAdapter(adapter) {
 
             LOC_LOGV("AgpsMsgAtlOpenSuccess");
             if (mApnName == nullptr) {
