@@ -75,27 +75,20 @@ on post-fs-data
 #Create folder for mm-qcamera-daemon
 mkdir /data/vendor/qcam/ 0770 camera camera
 
-#start camera server as daemon
-#service vendor.qcamerasvr /vendor/bin/mm-qcamera-daemon
-#    class late_start
-#    user camera
-#    group camera system inet input graphics
-#    task_profiles ServiceCapacityLow
-
-#Start up peripheral manager
+# Start up peripheral manager
 service vendor.per_mgr /vendor/bin/pm-service
     class core
     user system
     group system net_raw
     ioprio rt 4
-    task_profiles ServiceCapacityLow
+    writepid /dev/cpuset/system-background/tasks
 
 service vendor.per_proxy /vendor/bin/pm-proxy
     class core
     user system
     group system
     disabled
-    task_profiles ServiceCapacityLow
+    writepid /dev/cpuset/system-background/tasks
 
 on property:init.svc.vendor.per_mgr=running
     start vendor.per_proxy
@@ -108,7 +101,7 @@ service vendor.qseecomd /vendor/bin/qseecomd
    class core
    user root
    group root
-   task_profiles ServiceCapacityLow
+   writepid /dev/cpuset/system-background/tasks
 
 service thermal-engine /vendor/bin/thermal-engine
    class main
@@ -159,14 +152,6 @@ on charger
     restart thermal-engine
 
 on boot
-    # Add a cpuset for the camera daemon
-    mkdir /dev/cpuset/camera-daemon 0750 cameraserver cameraserver
-    write /dev/cpuset/camera-daemon/cpus 0-7
-    write /dev/cpuset/camera-daemon/mems 0
-    chown cameraserver cameraserver /dev/cpuset/camera-daemon/tasks
-    chmod 0660 /dev/cpuset/camera-daemon/tasks
-    chown system system /sys/kernel/hbtp/display_pwr
-
 # access permission for wlan
     chown system system /mnt/vendor/persist/WCNSS_qcom_wlan_nv.bin
 

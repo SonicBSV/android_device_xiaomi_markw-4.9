@@ -70,8 +70,13 @@ ifneq ($(filter msmnile sdmshrike,$(TARGET_BOARD_PLATFORM)),)
   LOCAL_CFLAGS += -DINCALL_MUSIC_ENABLED
   LOCAL_CFLAGS += -DINCALL_STEREO_CAPTURE_ENABLED
 endif
-ifneq ($(filter kona lahaina,$(TARGET_BOARD_PLATFORM)),)
+ifneq ($(filter kona,$(TARGET_BOARD_PLATFORM)),)
   LOCAL_CFLAGS := -DPLATFORM_KONA
+  LOCAL_CFLAGS += -DMAX_TARGET_SPECIFIC_CHANNEL_CNT="4"
+  LOCAL_CFLAGS += -DINCALL_STEREO_CAPTURE_ENABLED
+endif
+ifneq ($(filter lahaina,$(TARGET_BOARD_PLATFORM)),)
+  LOCAL_CFLAGS := -DPLATFORM_LAHAINA
   LOCAL_CFLAGS += -DMAX_TARGET_SPECIFIC_CHANNEL_CNT="4"
   LOCAL_CFLAGS += -DINCALL_STEREO_CAPTURE_ENABLED
 endif
@@ -121,6 +126,14 @@ ifeq ($(TARGET_BOARD_AUTO),true)
   LOCAL_CFLAGS += -DPLATFORM_AUTO
 endif
 
+ifeq ($(TARGET_SUPPORTS_WEARABLES),true)
+   LOCAL_CFLAGS += -DENABLE_HFP_CALIBRATION
+endif
+
+ifeq ($(strip $(AUDIO_FEATURE_ENABLED_DAEMON_SUPPORT)), true)
+  LOCAL_CFLAGS += -DDAEMON_SUPPORT_AUTO
+endif
+
 LOCAL_CFLAGS += -Wno-macro-redefined
 
 LOCAL_HEADER_LIBRARIES := libhardware_headers
@@ -163,7 +176,7 @@ LOCAL_C_INCLUDES += \
     external/tinycompress/include \
     system/media/audio_utils/include \
     external/expat/lib \
-    vendor/qcom/opensource/core-utils/fwk-detect \
+    hardware/qcom-caf/common/fwk-detect \
     $(call include-path-for, audio-route) \
     $(call include-path-for, audio-effects) \
     $(LOCAL_PATH)/$(AUDIO_PLATFORM) \
@@ -361,6 +374,7 @@ endif
 
 LOCAL_CFLAGS += -D_GNU_SOURCE
 LOCAL_CFLAGS += -Wall -Werror
+
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)
 
 ifeq ($(strip $(AUDIO_FEATURE_ENABLED_GCOV)),true)
@@ -369,7 +383,11 @@ ifeq ($(strip $(AUDIO_FEATURE_ENABLED_GCOV)),true)
     LOCAL_STATIC_LIBRARIES += libprofile_rt
 endif
 
-LOCAL_SHARED_LIBRARIES += libbase libhidlbase libutils android.hardware.power@1.2 liblog
+LOCAL_SHARED_LIBRARIES += libbase libhidlbase libutils android.hardware.power@1.3 liblog
+
+LOCAL_SHARED_LIBRARIES += android.hardware.power-ndk_platform
+LOCAL_SHARED_LIBRARIES += libbinder_ndk
+
 LOCAL_SRC_FILES += audio_perf.cpp
 
 ifeq ($(strip $(AUDIO_FEATURE_ENABLED_FM_TUNER_EXT)),true)

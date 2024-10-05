@@ -1,2 +1,0 @@
-#============= vold_prepare_subdirs ==============
-allow vold_prepare_subdirs self:capability { kill sys_admin };

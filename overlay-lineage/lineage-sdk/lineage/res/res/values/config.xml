@@ -65,6 +65,10 @@
          pulsating and RGB control would set this config to 75. -->
     <integer name="config_deviceLightCapabilities">232</integer>
 
+    <!-- Whether device needs to wait for Qualcomm MPCTL service to start
+         before setting power profiles on boot. -->
+    <bool name="config_waitForMpctlOnBoot">true</bool>
+
     <!-- Whether device has screen with higher aspect ratio -->
     <bool name="config_haveHigherAspectRatioScreen">true</bool>
 
@@ -91,29 +95,10 @@
         <item>com.google.android.gms/.stats.service.DropBoxEntryAddedReceiver</item>
     </string-array>
     
-    <!-- The list of package IDs that are allowed to use aux cameras.
-         NOTE: If this list is empty then all apps will be able to use aux cameras. -->
-    <string-array name="config_cameraAuxPackageAllowList" translatable="false">
-        <item>com.android.camera</item>
-        <item>com.google.android.apps.cameralite</item>
-        <item>com.google.android.GoogleCamera</item>
-        <item>org.codeaurora.snapcam</item>
-    </string-array>
-    
-    <!-- The list of package IDs that are not allowed to use aux cameras. -->
-    <string-array name="config_cameraAuxPackageExcludeList" translatable="false">
-        <item>org.telegram.messenger</item>
-        <item>com.microsoft.teams</item>
-        <item>com.discord</item>
-	<item>org.thunderdog.challegram</item>
-        <item>us.zoom.videomeetings</item>
-    </string-array> 
-    
     <!-- Defines the actions shown in advanced reboot submenu -->
     <string-array name="config_restartActionsList">
         <item>restart</item>
         <item>restart_recovery</item>
-        <item>restart_fastboot</item>
 	<item>restart_systemui</item>
     </string-array>
 </resources>

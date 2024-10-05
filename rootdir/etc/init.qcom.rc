@@ -91,9 +91,21 @@ on boot
     mkdir /persist/drm 0770 system system
     mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
     mkdir /persist/misc 0770 system system
-    mkdir /mnt/vendor/persist/alarm 0770 system system
+    mkdir /persist/alarm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
     mkdir /mnt/vendor/persist/secnvm 0770 system system
+
+    setprop wifi.interface wlan0
+
+    setprop ro.telephony.call_ring.multiple false
+
+    #Remove SUID bit for iproute2 ip tool
+    chmod 0755 /system/bin/ip
+
+
+    chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
+
+    setprop net.tcp.2g_init_rwnd 10
 
     # To prevent out of order acknowledgements from making
     # connection tracking to treat them as not belonging to
@@ -164,9 +176,10 @@ on post-fs-data
     chmod 2770 /dev/socket/wifihal
 
     # Create /data/vendor/time folder for time-services
-    mkdir /data/vendor/time/ 0700 system system
+    mkdir /data/vendor/time 0700 system system
 
-    mkdir /data/vendor/audio/ 0770 media audio
+    # Create directory used by audio subsystem
+    mkdir /data/vendor/audio 0770 media audio
 
     # Create a folder for audio delta files
     mkdir /data/vendor/audio/acdbdata 0770 media audio
@@ -226,12 +239,6 @@ on property:sys.boot_completed=1
     #Reinit lmkd to reconfigure lmkd properties
     setprop lmkd.reinit 1
 
-on property:persist.vendor.radio.atfwd.start=false
-    stop vendor.atfwd
-
-on property:vendor.radio.atfwd.start=false
-    stop vendor.atfwd
-
 # DSDS - Restart qcrild on data switch
 on property:persist.sys.radio.mobile_data_swap=1
     restart vendor.qcrild
@@ -262,17 +269,11 @@ service vendor.irsc_util /vendor/bin/irsc_util "/vendor/etc/sec_config"
     user root
     oneshot
 
-service vendor.atfwd /vendor/bin/ATFWD-daemon
-    class late_start
-    user system
-    group system radio
-    task_profiles ServiceCapacityLow
-
 service loc_launcher /vendor/bin/loc_launcher
     class late_start
     user gps
     group gps
-    task_profiles ServiceCapacityLow
+    writepid /dev/cpuset/system-background/tasks
 
 service qcom-sh /vendor/bin/init.qcom.sh
     class late_start
@@ -294,7 +295,7 @@ on property:sys.boot_completed=1
     start vendor.qcom-post-boot
     start vendor.camera-provider-2-4
 
-service vendor.charger /system/bin/chargeonlymode
+service vendor.charger /system/bin/charger
     class charger
     user system
     group system graphics input
@@ -317,7 +318,7 @@ service vendor.audio-hal /vendor/bin/hw/android.hardware.audio.service
     group audio camera drmrpc inet media mediadrm net_bt net_bt_admin net_bw_acct oem_2901 wakelock system
     capabilities BLOCK_SUSPEND SYS_NICE
     ioprio rt 4
-    task_profiles ProcessCapacityHigh HighPerformance
+    writepid /dev/cpuset/foreground/tasks /dev/stune/foreground/tasks
     onrestart restart audioserver
 
 service vendor.power_off_alarm /vendor/bin/power_off_alarm

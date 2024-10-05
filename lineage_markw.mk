@@ -36,7 +36,17 @@ BOARD_VENDOR := Xiaomi
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRODUCT_DEVICE=markw \
+    PRODUCT_NAME=markw
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
     PRIVATE_BUILD_DESC="markw-user 6.0.1 MMB29M V10.2.2.0.MBEMIXM release-keys"
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
 BUILD_FINGERPRINT := Xiaomi/markw/markw:6.0.1/MMB29M/V10.2.2.0.MBEMIXM:user/release-keys
+
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    ro.vendor.build.fingerprint=$(BUILD_FINGERPRINT) \
+    ro.system.build.fingerprint=$(BUILD_FINGERPRINT) \
+    ro.product.build.fingerprint=$(BUILD_FINGERPRINT) \
+    ro.system_ext.build.fingerprint=$(BUILD_FINGERPRINT)
