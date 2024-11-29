@@ -48,6 +48,7 @@
 </hal>
 <hal format="aidl" optional="true">
     <name>android.hardware.health</name>
+    <version>3</version>
     <interface>
         <name>IHealth</name>
         <instance>default</instance>
@@ -63,7 +64,7 @@
 </hal>
 <hal format="aidl" optional="true">
     <name>android.hardware.power</name>
-    <version>3</version>
+    <version>4</version>
     <interface>
         <name>IPower</name>
         <instance>default</instance>
@@ -462,6 +463,14 @@
     <version>2.0</version>
     <interface>
         <name>IDms</name>
+        <instance>default</instance>
+    </interface>
+</hal>
+<hal format="aidl" optional="true">
+    <name>android.hardware.usb.gadget</name>
+    <version>1</version>
+    <interface>
+        <name>IUsbGadget</name>
         <instance>default</instance>
     </interface>
 </hal>
