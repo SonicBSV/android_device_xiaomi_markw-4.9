@@ -58,6 +58,10 @@ TARGET_KERNEL_VERSION := 4.9
 TARGET_KERNEL_BUILD_HOST := beastmachine
 TARGET_KERNEL_BUILD_USER := "SonicBSV"
 
+# Kernel Clang Flags
+KERNEL_CC := CC=clang
+override KERNEL_TOOLCHAIN_PREFIX_arm := arm-linux-android-
+
 # ART
 ART_BUILD_TARGET_NDEBUG := true
 ART_BUILD_TARGET_DEBUG := false
