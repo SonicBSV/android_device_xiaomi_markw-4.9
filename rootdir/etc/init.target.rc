@@ -154,11 +154,9 @@ on charger
     write /sys/devices/system/cpu/cpu2/online 0
     write /sys/devices/system/cpu/cpu3/online 0
     write /sys/module/lpm_levels/parameters/sleep_disabled 0
-    setprop sys.usb.configfs 1
-    setprop persist.sys.usb.config mass_storage
     start vendor.hvdcp_opti
     start vendor.power_off_alarm
-    restart thermal-engine
+    start thermal-engine
 
 on boot
 # access permission for wlan
@@ -189,7 +187,7 @@ service vendor.sensors.qti /vendor/bin/sensors.qti
     class core
     user system
     group system
-    disabled
+    task_profiles ServiceCapacityLow
 
 # USB
 on property:ro.product.vendor.model=*

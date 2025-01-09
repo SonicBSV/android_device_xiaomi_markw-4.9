@@ -25,6 +25,11 @@ $(call inherit-product, device/xiaomi/markw/device.mk)
 # Inherit some common LineageOS stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
+# Inherit some common crDroid stuff
+TARGET_SUPPORTS_QUICK_TAP  := true
+TARGET_SUPPORTS_CALL_RECORDING := true
+TARGET_INCLUDE_PIXEL_CHARGER := true
+
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := markw
 PRODUCT_NAME := lineage_markw
