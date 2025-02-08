@@ -1,0 +1,37 @@
+//
+// SPDX-FileCopyrightText: 2025 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_shared {
+    name: "libqcomfmjni",
+
+    srcs: [
+        "FmIoctlsInterface.cpp",
+        "ConfigFmThs.cpp",
+        "FmPerformanceParams.cpp",
+        "ConfFileParser.cpp",
+        "FmRadioController.cpp",
+        "LibfmJni.cpp",
+    ],
+
+    include_dirs: [
+        "frameworks/base/core/jni/include",
+    ],
+
+    shared_libs: [
+        "libcutils",
+        "libdl",
+        "liblog",
+        "libmedia",
+        "libnativehelper",
+    ],
+
+    cflags: [
+        "-DQCOM_NO_FM_FIRMWARE",
+    ],
+
+    header_libs: [
+        "jni_headers",
+    ],
+}
