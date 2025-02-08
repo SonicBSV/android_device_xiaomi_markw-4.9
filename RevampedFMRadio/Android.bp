@@ -26,7 +26,7 @@ android_app {
     jni_libs: ["libqcomfmjni"],
 
     required: [
-        "privapp_whitelist_com.android.fmradio.xml",
+        "privapp_whitelist_com.android.fmradio_revamped.xml",
         "RevampedFmRecordingsProvider",
     ],
     static_libs: ["androidx.cardview_cardview"],
@@ -42,6 +42,6 @@ android_app {
 prebuilt_etc {
     name: "privapp_whitelist_com.android.fmradio_revamped.xml",
 
-    src: "privapp_whitelist_com.android.fmradio.xml",
+    src: "privapp_whitelist_com.android.fmradio_revamped.xml",
     relative_install_path: "permissions",
 }
