@@ -255,8 +255,7 @@ PRODUCT_COPY_FILES += \
 
 # FM
 PRODUCT_PACKAGES += \
-    RevampedFMRadio \
-    libqcomfmjni:64
+    RevampedFMRadio
 
 # Fwk-detect
 PRODUCT_PACKAGES += \
