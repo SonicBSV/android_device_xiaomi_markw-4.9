@@ -7,6 +7,7 @@ binder_call(system_app vold)
 
 # aosp fm
 allow system_app fm_radio_device:chr_file { ioctl open read };
+get_prop(system_app, vendor_bluetooth_prop)
 
 # XiaomiParts
 allow system_app {
