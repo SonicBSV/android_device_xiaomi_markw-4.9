@@ -22,6 +22,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -56,7 +57,7 @@ import com.android.fmradio.FmService.OnExitListener;
 import com.android.fmradio.FmStation.Station;
 import com.android.fmradio.Utils;
 
-import android.support.v7.widget.CardView;
+import androidx.cardview.widget.CardView;
 
 /**
  * This class interact with user, provider edit station information, such as add
@@ -174,42 +175,38 @@ public class FmFavoriteActivity extends Activity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-            case R.id.fm_station_list_refresh:
-                if (null != mService) {
-                    refreshMenuItem(false);
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+        } else if (itemId == R.id.fm_station_list_refresh) {
+            if (null != mService) {
+                refreshMenuItem(false);
 
-                    mMyAdapter.swipResult(null);
-                    mGridView.setEmptyView(mSearchTips);
-                    mSearchProgress.setIndeterminate(true);
+                mMyAdapter.swipResult(null);
+                mGridView.setEmptyView(mSearchTips);
+                mSearchProgress.setIndeterminate(true);
 
-                    // If current location and last location exceed defined distance, delete the RDS database
-                    if (isGpsOpen()) {
-                        mCurLocation = mLocationManager
-                                .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        if (mCurLocation != null) {
-                            double[] lastLocations = FmUtils.getLastSearchedLocation(mContext);
-                            float distance[] = new float[2];
-                            Location.distanceBetween(lastLocations[0], lastLocations[1],
-                                    mCurLocation.getLatitude(), mCurLocation.getLongitude(),
-                                    distance);
-                            float searchedDistance = distance[0];
-                            boolean exceed =
-                                    searchedDistance > FmUtils.LOCATION_DISTANCE_EXCEED;
-                            mService.setDistanceExceed(exceed);
-                            FmUtils.setLastSearchedLocation(mContext, mCurLocation.getLatitude(),
-                                    mCurLocation.getLongitude());
-                        }
+                // If current location and last location exceed defined distance, delete the RDS database
+                if (isGpsOpen()) {
+                    mCurLocation = mLocationManager
+                            .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    if (mCurLocation != null) {
+                        double[] lastLocations = FmUtils.getLastSearchedLocation(mContext);
+                        float distance[] = new float[2];
+                        Location.distanceBetween(lastLocations[0], lastLocations[1],
+                                mCurLocation.getLatitude(), mCurLocation.getLongitude(),
+                                distance);
+                        float searchedDistance = distance[0];
+                        boolean exceed =
+                                searchedDistance > FmUtils.LOCATION_DISTANCE_EXCEED;
+                        mService.setDistanceExceed(exceed);
+                        FmUtils.setLastSearchedLocation(mContext, mCurLocation.getLatitude(),
+                                mCurLocation.getLongitude());
                     }
-
-                    mService.startScanAsync();
                 }
-                break;
-            default:
-                break;
+
+                mService.startScanAsync();
+            }
         }
         return super.onOptionsItemSelected(item);
     }
@@ -655,6 +652,9 @@ public class FmFavoriteActivity extends Activity {
      * @return true is open
      */
     private boolean isGpsOpen() {
-        return mLocationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
+        return checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED
+                && mLocationManager.isProviderEnabled(
+                        android.location.LocationManager.GPS_PROVIDER);
     }
 }

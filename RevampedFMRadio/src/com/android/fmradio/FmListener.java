@@ -86,6 +86,7 @@ public interface FmListener {
     int MSGID_SET_RDS_FINISHED = 5;
     int MSGID_SET_CHANNEL_FINISHED = 6;
     int MSGID_SET_MUTE_FINISHED = 7;
+    int MSGID_VOLUME_CHANGED = 8;
     // Fm main
     int MSGID_POWERUP_FINISHED = 9;
     int MSGID_POWERDOWN_FINISHED = 10;
@@ -116,6 +117,10 @@ public interface FmListener {
     // Headset events
     int MSGID_HEADSET_HOOK_EVENT = 102;
     int MSGID_HEADSET_HOOK_MULTI_CLICK_TIMEOUT = 103;
+
+    int MSGID_SWITCH_LOW_POWER_MODE = 104;
+
+    int MSGID_BLUETOOTH_ACTIVE_DEVICE_CHANGED = 105;
 
     /**
      * Call back method to activity from service

@@ -19,18 +19,21 @@
     package="com.android.fmradio"
     android:sharedUserId="android.uid.system"
     android:versionCode="4"
-    android:versionName="4.0-qcom" >
+    android:versionName="3.1-qcom" >
 
     <uses-sdk
-        android:minSdkVersion="33"
-        android:targetSdkVersion="23"
+        android:minSdkVersion="31"
+        android:targetSdkVersion="24"
         android:usesCleartextTraffic="false" />
 
+    <uses-permission android:name="android.permission.ACCESS_BROADCAST_RADIO" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FM_RADIO" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
+    <uses-permission android:name="android.permission.CAPTURE_TUNER_AUDIO_INPUT" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_ROUTING" />
@@ -39,7 +42,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.fmradio.recordings.permission.PLAY_RECORDING" />
 
     <application
         android:hardwareAccelerated="true"
@@ -51,6 +54,7 @@
             android:label="@string/app_name"
             android:launchMode="standard"
             android:theme="@style/AppThemeMain"
+            android:exported="true"
             android:usesCleartextTraffic="false" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

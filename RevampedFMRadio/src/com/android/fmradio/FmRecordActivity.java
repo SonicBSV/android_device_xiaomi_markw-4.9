@@ -33,7 +33,6 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -66,7 +65,7 @@ public class FmRecordActivity extends Activity implements
     private static final int MSG_UPDATE_NOTIFICATION = 1000;
     private static final int TIME_BASE = 60;
     private Context mContext;
-    private TextView mMintues;
+    private TextView mMinutes;
     private TextView mSeconds;
     private TextView mFsize;
     private TextView mFrequency;
@@ -94,7 +93,7 @@ public class FmRecordActivity extends Activity implements
         mFragmentManager = getFragmentManager();
         setContentView(R.layout.fm_record_activity);
 
-        mMintues = (TextView) findViewById(R.id.minutes);
+        mMinutes = (TextView) findViewById(R.id.minutes);
         mSeconds = (TextView) findViewById(R.id.seconds);
 
         mFsize = (TextView) findViewById(R.id.file_size);
@@ -419,25 +418,28 @@ public class FmRecordActivity extends Activity implements
     private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
+            long recordTimeInMillis = 0;
             switch (msg.what) {
                 case FmListener.MSGID_REFRESH:
                     if (mService != null) {
-                        long recordTimeInMillis = mService.getRecordTime();
+                        recordTimeInMillis = mService.getRecordTime();
+                        recordTimeInMillis = mService.getRecordTime();
                         long recordTimeInSec = recordTimeInMillis / 1000L;
-                        mMintues.setText(addPaddingForString(recordTimeInSec / TIME_BASE));
+                        mMinutes.setText(addPaddingForString(recordTimeInSec / TIME_BASE));
                         mSeconds.setText(addPaddingForString(recordTimeInSec % TIME_BASE));
                         mFsize.setText(Utils.getHumanReadableSize(mService.getFileSize()));
-                        checkStorageSpaceAndStop();
                     }
-                    mHandler.sendEmptyMessageDelayed(FmListener.MSGID_REFRESH, 1000);
+                    mHandler.sendEmptyMessageDelayed(FmListener.MSGID_REFRESH,
+                            1000 - (recordTimeInMillis % 1000));
                     break;
 
                 case MSG_UPDATE_NOTIFICATION:
                     if (mService != null) {
-                        updateRecordingNotification(mService.getRecordTime());
-                        checkStorageSpaceAndStop();
+                        recordTimeInMillis = mService.getRecordTime();
+                        updateRecordingNotification(recordTimeInMillis);
                     }
-                    mHandler.sendEmptyMessageDelayed(MSG_UPDATE_NOTIFICATION, 1000);
+                    mHandler.sendEmptyMessageDelayed(MSG_UPDATE_NOTIFICATION,
+                            1000 - (recordTimeInMillis % 1000));
                     break;
 
                 case FmListener.LISTEN_RECORDSTATE_CHANGED:
@@ -470,24 +472,6 @@ public class FmRecordActivity extends Activity implements
             }
         };
     };
-
-    private void checkStorageSpaceAndStop() {
-        long recordTimeInMillis = mService.getRecordTime();
-        long recordTimeInSec = recordTimeInMillis / 1000L;
-        // Check storage free space
-        String recordingSdcard = FmUtils.getDefaultStoragePath();
-        if (!FmUtils.hasEnoughSpace(recordingSdcard)) {
-            // Need to record more than 1s.
-            // Avoid calling MediaRecorder.stop() before native record starts.
-            if (recordTimeInSec >= 1) {
-                // Insufficient storage
-                mService.stopRecordingAsync();
-                Toast.makeText(FmRecordActivity.this,
-                        R.string.toast_sdcard_insufficient_space,
-                        Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     private void handleRecordError(int errorType) {
         Log.d(TAG, "handleRecordError, errorType = " + errorType);
@@ -527,9 +511,9 @@ public class FmRecordActivity extends Activity implements
         intent.putExtra(FmMainActivity.EXTRA_RESULT_STRING, resultString);
         if (recordName != null) {
             intent.setData(Uri.parse("file://" + FmService.getRecordingSdcard()
-                    + File.separator + Environment.DIRECTORY_RECORDINGS
-                    + File.separator + FmRecorder.getFmRecordFolder(mContext) + File.separator
-                    + Uri.encode(recordName) + FmRecorder.RECORDING_FILE_EXTENSION));
+                    + File.separator + Uri.encode(FmRecorder.getFmRecordFolder(mContext))
+                    + File.separator + Uri.encode(recordName)
+                    + FmRecorder.RECORDING_FILE_EXTENSION));
         }
         setResult(RESULT_OK, intent);
     }
