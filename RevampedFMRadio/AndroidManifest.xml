@@ -22,8 +22,8 @@
     android:versionName="3.1.1-qcom" >
 
     <uses-sdk
-        android:minSdkVersion="31"
-        android:targetSdkVersion="24"
+        android:minSdkVersion="26"
+        android:targetSdkVersion="30"
         android:usesCleartextTraffic="false" />
 
     <uses-permission android:name="android.permission.ACCESS_BROADCAST_RADIO" />
