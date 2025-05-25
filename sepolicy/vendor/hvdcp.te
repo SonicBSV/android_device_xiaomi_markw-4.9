@@ -1,0 +1,5 @@
+allow hvdcp sysfs:dir r_dir_perms;
+
+recovery_only(`
+    domain_trans(init, rootfs, hvdcp)
+')

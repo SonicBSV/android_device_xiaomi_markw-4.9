@@ -1,5 +1,14 @@
+typeattribute wcnss_service data_between_core_and_vendor_violators;
+
 allow wcnss_service init:unix_stream_socket connectto;
+allow wcnss_service wifi_data_file:dir search;
 
 dontaudit wcnss_service serialno_prop:file read;
 
+allow wcnss_service kmsg_device:chr_file w_file_perms;
+
+allow wcnss_service wifi_vendor_wpa_socket:dir create_dir_perms;
+allow wcnss_service wifi_vendor_wpa_socket:sock_file create_file_perms;
+
+allow wcnss_service vendor_shell_exec:file rx_file_perms;
 set_prop(wcnss_service, vendor_wifi_prop);
