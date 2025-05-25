@@ -159,6 +159,9 @@ TARGET_RECOVERY_DEVICE_MODULES := libinit_markw
 USE_DEVICE_SPECIFIC_DATA_IPA_CFG_MGR := true
 PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/data-ipa-cfg-mgr-legacy-um
 
+# Lineage Health
+$(call soong_config_set,lineage_health,charging_control_charging_path,/sys/class/power_supply/battery/battery_charging_enabled)
+
 # Media
 USE_DEVICE_SPECIFIC_MEDIA := true
 DEVICE_SPECIFIC_MEDIA_PATH := $(DEVICE_PATH)/qcom-caf/media

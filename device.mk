@@ -313,9 +313,6 @@ PRODUCT_PACKAGES += \
     android.hardware.health-service.qti \
     android.hardware.health-service.qti_recovery
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/org.lineageos.health.excluded.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/org.lineageos.health.excluded.xml
-
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
@@ -358,6 +355,10 @@ PRODUCT_PACKAGES += \
 # Lights
 PRODUCT_PACKAGES += \
     android.hardware.light-service.xiaomi_markw
+
+# Lineage Health
+PRODUCT_PACKAGES += \
+    vendor.lineage.health-service.default
 
 # Media
 PRODUCT_COPY_FILES += \
