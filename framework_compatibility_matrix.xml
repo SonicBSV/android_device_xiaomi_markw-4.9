@@ -71,8 +71,8 @@
     </interface>
 </hal>
 <hal format="hidl" optional="true">
-    <name>lineage.hardware.radio.config</name>
-    <version>1.0-1</version>
+    <name>android.hardware.radio.config</name>
+    <version>1.0-2</version>
     <interface>
         <name>IRadioConfig</name>
         <instance>default</instance>
@@ -378,7 +378,7 @@
 </hal>
 <hal format="hidl" optional="true">
     <name>vendor.qti.hardware.radio.uim_remote_client</name>
-    <version>1.0</version>
+    <version>1.0-2</version>
     <interface>
         <name>IUimRemoteServiceClient</name>
         <instance>uimRemoteClient0</instance>
