@@ -32,6 +32,7 @@ PRODUCT_CHARACTERISTICS := nosdcard
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-lineage
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-translates
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
@@ -223,10 +224,6 @@ PRODUCT_PACKAGES += \
     libGLESv2_adreno_libGLESv2_adreno_symlink32 \
     libEGL_adreno_libEGL_adreno_symlink64 \
     libGLESv2_adreno_libGLESv2_adreno_symlink64
-
-# Display Device Config
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/displayconfig/display_id_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig/display_id_0.xml
 
 # Device-specific settings
 PRODUCT_PACKAGES += \
