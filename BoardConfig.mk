@@ -152,7 +152,7 @@ DEVICE_MATRIX_FILE   := $(DEVICE_PATH)/compatibility_matrix.xml
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := $(DEVICE_PATH)/framework_compatibility_matrix.xml
 
 # Init
-TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_markw
+$(call soong_config_set,libinit,vendor_init_lib,//$(DEVICE_PATH):libinit_markw)
 TARGET_RECOVERY_DEVICE_MODULES := libinit_markw
 
 # IPA
