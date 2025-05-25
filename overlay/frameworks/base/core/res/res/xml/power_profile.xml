@@ -33,5 +33,40 @@
     <item name="cpu.suspend">1.6</item>
     <item name="cpu.idle">1.6</item>
     <item name="battery.capacity">4100</item>
+    <item name="wifi.on">0.1</item>
+    <item name="wifi.active">95</item>
+    <item name="wifi.scan">1</item>
+    <item name="dsp.audio">24</item>
+    <item name="dsp.video">69</item>
+    <item name="camera.flashlight">716</item>
+    <item name="camera.avg">386</item>
+    <item name="gps.on">11</item>
+    <item name="radio.active">143</item>
+    <item name="radio.scanning">5</item>
+    <array name="radio.on">
+        <value>40</value>
+        <value>12</value>
+    </array>
+    <item name="modem.controller.idle">5</item>
+    <item name="modem.controller.rx">130</item>
+    <item name="modem.controller.tx">160</item>
+    <item name="modem.controller.voltage">3300</item>
+    <array name="memory.bandwidths">
+        <value>20</value>
+    </array>
+    <item name="wifi.controller.idle">1</item>
+    <item name="wifi.controller.rx">95</item>
+    <item name="wifi.controller.tx">105</item>
+    <array name="wifi.controller.tx_levels">1 </array>
+    <item name="wifi.controller.voltage">3300</item>
+    <array name="wifi.batchedscan">
+        <value>.0001</value>
+        <value>.001</value>
+        <value>.01</value>
+        <value>.1</value>
+        <value>1</value>
+    </array>
+    <item name="bluetooth.active">137</item>
+    <item name="bluetooth.on">0.6</item>
     <item name="bluetooth.controller.voltage">3300</item>
 </device>
