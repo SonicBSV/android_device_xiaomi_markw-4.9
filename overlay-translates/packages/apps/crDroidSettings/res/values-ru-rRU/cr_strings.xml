@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2016-2024 crDroid Android Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Three-fingers-swipe to screenshot -->
+    <string name="three_finger_gesture">Проведите пальцем, чтобы сделать снимок экрана</string>
+    <string name="three_finger_gesture_summary">Проведите тремя пальцами, чтобы сделать снимок экрана</string>
+
+    <!-- Application downgrade -->
+    <string name="app_downgrade_title">Разрешить понижение версии приложения</string>
+    <string name="app_downgrade_summary">Это позволяет вам понизить версию приложений. Обратите внимание, что это может привести к сбоям и повреждению данных.</string>
+
+    <!-- Heads-up -->
+    <string name="compact_heads_up_notifications_enabled_title">Компактные всплывающие уведомления</string>
+    <string name="compact_heads_up_notifications_enabled_summary">Отображение уведомлений в компактном размере</string>
+
+    <!-- Hide screen capture status -->
+    <string name="hide_screen_capture_status_title">Скрыть статус захвата экрана</string>
+    <string name="hide_screen_capture_status_summary">Скрыть захват экрана и статус записи экрана от всех приложений. Может быть удобно в некоторых случаях, но может привести к утечкам конфиденциальной информации.</string>
+
+    <!-- PIF spoofing -->
+    <string name="pif_spoofing_title">Выбрать PIF JSON файл</string>
+    <string name="pif_spoofing_summary">Выберите файл PIF JSON для подмены Play Integrity (использование модуля PIF может привести к поломке этой реализации)</string>
+    <string name="show_pif_properties_title">Параметры для исправления Play Integrity</string>
+    <string name="show_pif_properties_summary">Показать все текущие заданные параметры PIF</string>
+    <string name="error_loading_properties">Ошибка загрузки параметров PIF</string>
+
+    <!-- Per-app spoofing -->
+    <string name="gameprops_title">Включить Game Prop подмену</string>
+    <string name="gameprops_summary">Включает опции подмены для каждого приложения в PixelProps</string>
+    <string name="gameprops_load_json_title">Выберите Game Props JSON файл</string>
+    <string name="gameprops_load_json_summary">Выберите файл Game Prop JSON, который будет использоваться (его также можно использовать для подделки других приложений)</string>
+</resources>

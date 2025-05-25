@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2016-2024 crDroid Android Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Ignore window secure -->
+    <string name="laboratory_ignore_window_secure_title">Игнорировать флаги безопасности окна</string>
+    <string name="laboratory_ignore_window_secure_summary">Это снимает ограничения на скриншоты и запись экрана для всех приложений. Обычно специальные приложения заменяются черными областями в записях. Это может быть удобно в некоторых случаях, но может привести к утечкам конфиденциальной информации. После изменения этого переключателя вам может потребоваться перезапустить приложения, чтобы изменения вступили в силу.</string>
+
+     <string name="gaming_category">Гейминг</string>
+     <string name="spoofing_category">Подмена</string>
+     <string name="security_category">Безопасность</string>
+     <string name="other_category">Разное</string>
+
+    <!-- Dashboard style -->
+    <string name="quick_summary">Стиль панели быстрых настроек и кастомизация</string>
+    <string name="bottom_summary">Меню питания и другие различные опции</string>
+    <string name="lockscreen_summary">Настройте часы и шрифт на заблокированном экране</string>
+    <string name="mice_summary">Некоторые специальные возможности для изучения</string>
+    <string name="navigation_summary">Настроить нижнюю часть навигации</string>
+    <string name="notification_summary">Ретикер уведомлений и прочая кастомизация</string>
+    <string name="status_summary">Настройте часы и значки в строке состояния</string>
+    <string name="sound_summary">Настройки звука, вибрации и другие настройки громкости</string>
+    <string name="user_summary">Различные настройки пользовательского интерфейса</string>
+    <string name="about_summary">Узнать об этом проекте</string>
+
+    <!-- Volume Haptic feedback -->
+    <string name="haptic_feedback_category">Настройки тактильной обратной связи</string>
+    <string name="volume_panel_haptic_feedback_title">Вибрация при изменении громкости</string>
+
+     <!-- QS Tiles haptic -->
+    <string name="qs_tiles_haptic_feedback_title">Вибрация при касании плиток на панели быстрых настроек</string>
+
+    <!-- Split Shade -->
+    <string name="qs_split_shade_enabled_title">Улучшенный ландшафт на панели быстрых настроек (ЭКСПЕРИМЕНТАЛЬНО)</string>
+    <string name="qs_split_shade_enabled_summary">Включить новый экспериментальный функционал разделения оттенков (градиента) на панели быстрых настроек,\nотключает уведомления в ландшафтном режиме</string>
+
+    <!-- Compact QS Media Player-->
+    <string name="qs_compact_media_player_mode_title">Компактный Медиаплеер на панели быстрых настроек</string>
+    <string name="qs_compact_media_player_mode_summary">Включить компактный режим для медиаплеера на панели быстрых настроек (перезапустить systemui)</string>
+
+    <!-- Notification Styles -->
+    <string name="notif_style_title">Прозрачный стиль уведомлений (ЭКСПЕРИМЕНТАЛЬНО)</string>
+    <string name="notif_style_summary">Сделать уведомления на панели быстрых настроек/заблокированном экране прозрачными (перезапустить systemui)</string>
+</resources>
