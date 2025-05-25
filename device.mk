@@ -289,10 +289,8 @@ PRODUCT_PACKAGES += \
     liblocation_api_headers \
     libgps.utils_headers \
     liblocation_api \
-    libgps.utils \
     libbatching \
     libgeofencing \
-    libloc_core \
     libcurl.vendor \
     libgnss
 
