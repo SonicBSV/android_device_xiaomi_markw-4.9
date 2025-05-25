@@ -1,7 +1,0 @@
-#
-# system_ext.prop for markw
-#
-
-# DPM
-persist.vendor.dpm.feature=11
-persist.vendor.dpm.loglevel=0
