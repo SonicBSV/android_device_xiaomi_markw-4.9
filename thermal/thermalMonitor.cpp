@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020, The Linux Foundation. All rights reserved.
+ * Copyright (c) 2020,2023, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,6 +27,11 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
+/* Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear */
 
 #include <unistd.h>
 #include <poll.h>
@@ -59,11 +64,10 @@
 	TRIP=%d\n\
 	EVENT=%d\n"\
 
+namespace aidl {
 namespace android {
 namespace hardware {
 namespace thermal {
-namespace V2_0 {
-namespace implementation {
 
 using parseCB = std::function<void(char *inp_buf, ssize_t len)>;
 using pollCB = std::function<bool()>;
@@ -185,8 +189,7 @@ void ThermalMonitor::parse_and_notify(char *inp_buf, ssize_t len)
 	cb(sensor_name, temp);
 }
 
-}  // namespace implementation
-}  // namespace V2_0
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
+}  // namespace aidl

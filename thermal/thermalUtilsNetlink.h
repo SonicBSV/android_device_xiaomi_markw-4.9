@@ -29,22 +29,26 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/* Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear */
+
 #ifndef THERMAL_THERMAL_UTILS_H__
 #define THERMAL_THERMAL_UTILS_H__
 
 #include <unordered_map>
 #include <mutex>
-#include <android/hardware/thermal/2.0/IThermal.h>
+#include <aidl/android/hardware/thermal/BnThermal.h>
 #include "thermalConfig.h"
 #include "thermalMonitorNetlink.h"
 #include "thermalCommon.h"
 #include "thermalData.h"
 
+namespace aidl {
 namespace android {
 namespace hardware {
 namespace thermal {
-namespace V2_0 {
-namespace implementation {
 
 using ueventCB = std::function<void(Temperature &t)>;
 
@@ -60,14 +64,15 @@ class ThermalUtils {
 		{
 			return is_cdev_init;
 		};
-		int readTemperatures(hidl_vec<Temperature_1_0>& temp);
-		int readTemperatures(bool filterType, TemperatureType type,
-                                            hidl_vec<Temperature>& temperatures);
-		int readTemperatureThreshold(bool filterType, TemperatureType type,
-                                            hidl_vec<TemperatureThreshold>& thresh);
-		int readCdevStates(bool filterType, cdevType type,
-                                            hidl_vec<CoolingDevice>& cdev);
-		int fetchCpuUsages(hidl_vec<CpuUsage>& cpu_usages);
+		int readTemperatures(std::vector<Temperature>& temp);
+		int readTemperatures(TemperatureType type,
+                                            std::vector<Temperature>& temperatures);
+		int readTemperatureThreshold(std::vector<TemperatureThreshold>& thresh);
+		int readTemperatureThreshold(TemperatureType type,
+                                            std::vector<TemperatureThreshold>& thresh);
+		int readCdevStates(std::vector<CoolingDevice>& cdev);
+		int readCdevStates(cdevType type,
+                                            std::vector<CoolingDevice>& cdev);
 	private:
 		bool is_sensor_init;
 		bool is_cdev_init;
@@ -86,10 +91,9 @@ class ThermalUtils {
 		void Notify(struct therm_sensor& sens);
 };
 
-}  // namespace implementation
-}  // namespace V2_0
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
+}  // namespace aidl
 
 #endif  // THERMAL_THERMAL_UTILS_H__

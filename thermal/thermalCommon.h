@@ -33,11 +33,10 @@
 
 #include "thermalData.h"
 
+namespace aidl {
 namespace android {
 namespace hardware {
 namespace thermal {
-namespace V2_0 {
-namespace implementation {
 
 #define RETRY_CT 3
 
@@ -54,7 +53,6 @@ class ThermalCommon {
 		int read_cdev_state(struct therm_cdev& cdev);
 		int read_temperature(struct therm_sensor& sensor);
 		int estimateSeverity(struct therm_sensor& sensor);
-		int get_cpu_usages(hidl_vec<CpuUsage>& list);
 
 		std::vector<struct therm_sensor> fetch_sensor_list()
 		{
@@ -76,10 +74,8 @@ class ThermalCommon {
 					int sens_idx);
 };
 
-}  // namespace implementation
-}  // namespace V2_0
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
-
+}  // namespace aidl
 #endif  // THERMAL_THERMAL_COMMON_H__

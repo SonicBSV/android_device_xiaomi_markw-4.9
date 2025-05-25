@@ -29,21 +29,24 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/* Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear */
+
 #include <android-base/file.h>
 #include <android-base/logging.h>
 #include <android-base/properties.h>
 #include <android-base/stringprintf.h>
 #include <android-base/strings.h>
-#include <hidl/HidlTransportSupport.h>
 
 #include "thermalConfig.h"
 #include "thermalUtilsNetlink.h"
 
+namespace aidl {
 namespace android {
 namespace hardware {
 namespace thermal {
-namespace V2_0 {
-namespace implementation {
 
 ThermalUtils::ThermalUtils(const ueventCB &inp_cb):
 	cfg(),
@@ -164,44 +167,7 @@ void ThermalUtils::eventCreateParse(int tzn, const char *name)
 	}
 }
 
-int ThermalUtils::readTemperatures(hidl_vec<Temperature_1_0>& temp)
-{
-	std::unordered_map<int, struct therm_sensor>::iterator it;
-	int ret = 0, idx = 0;
-	std::vector<Temperature_1_0> _temp_v;
-
-	if (!is_sensor_init)
-		return 0;
-	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
-	for (it = thermalConfig.begin(); it != thermalConfig.end();
-			it++, idx++) {
-		struct therm_sensor& sens = it->second;
-		Temperature_1_0 _temp;
-
-		/* v1 supports only CPU, GPU, Battery and SKIN */
-		if (sens.t.type > TemperatureType::SKIN)
-			continue;
-		ret = cmnInst.read_temperature(sens);
-		if (ret < 0)
-			return ret;
-		Notify(sens);
-		_temp.currentValue = sens.t.value;
-		_temp.name = sens.t.name;
-		_temp.type = (TemperatureType_1_0)sens.t.type;
-		_temp.throttlingThreshold = sens.thresh.hotThrottlingThresholds[
-					(size_t)sens.throt_severity];
-		_temp.shutdownThreshold = sens.thresh.hotThrottlingThresholds[
-					(size_t)ThrottlingSeverity::SHUTDOWN];
-		_temp.vrThrottlingThreshold = sens.thresh.vrThrottlingThreshold;
-		_temp_v.push_back(_temp);
-	}
-
-	temp = _temp_v;
-	return temp.size();
-}
-
-int ThermalUtils::readTemperatures(bool filterType, TemperatureType type,
-                                            hidl_vec<Temperature>& temp)
+int ThermalUtils::readTemperatures(std::vector<Temperature>& temp)
 {
 	std::unordered_map<int, struct therm_sensor>::iterator it;
 	int ret = 0;
@@ -211,7 +177,29 @@ int ThermalUtils::readTemperatures(bool filterType, TemperatureType type,
 	for (it = thermalConfig.begin(); it != thermalConfig.end(); it++) {
 		struct therm_sensor& sens = it->second;
 
-		if (filterType && sens.t.type != type)
+		ret = cmnInst.read_temperature(sens);
+		if (ret < 0)
+			return ret;
+		Notify(sens);
+		_temp.push_back(sens.t);
+	}
+
+	temp = _temp;
+	return temp.size();
+}
+
+int ThermalUtils::readTemperatures(TemperatureType type,
+                                            std::vector<Temperature>& temp)
+{
+	std::unordered_map<int, struct therm_sensor>::iterator it;
+	int ret = 0;
+	std::vector<Temperature> _temp;
+
+	std::lock_guard<std::mutex> _lock(sens_cb_mutex);
+	for (it = thermalConfig.begin(); it != thermalConfig.end(); it++) {
+		struct therm_sensor& sens = it->second;
+
+		if (sens.t.type != type)
 			continue;
 		ret = cmnInst.read_temperature(sens);
 		if (ret < 0)
@@ -224,8 +212,7 @@ int ThermalUtils::readTemperatures(bool filterType, TemperatureType type,
 	return temp.size();
 }
 
-int ThermalUtils::readTemperatureThreshold(bool filterType, TemperatureType type,
-                                            hidl_vec<TemperatureThreshold>& thresh)
+int ThermalUtils::readTemperatureThreshold(std::vector<TemperatureThreshold>& thresh)
 {
 	std::unordered_map<int, struct therm_sensor>::iterator it;
 	std::vector<TemperatureThreshold> _thresh;
@@ -233,7 +220,23 @@ int ThermalUtils::readTemperatureThreshold(bool filterType, TemperatureType type
 	for (it = thermalConfig.begin(); it != thermalConfig.end(); it++) {
 		struct therm_sensor& sens = it->second;
 
-		if (filterType && sens.t.type != type)
+		_thresh.push_back(sens.thresh);
+	}
+
+	thresh = _thresh;
+	return thresh.size();
+}
+
+int ThermalUtils::readTemperatureThreshold(TemperatureType type,
+                                            std::vector<TemperatureThreshold>& thresh)
+{
+	std::unordered_map<int, struct therm_sensor>::iterator it;
+	std::vector<TemperatureThreshold> _thresh;
+
+	for (it = thermalConfig.begin(); it != thermalConfig.end(); it++) {
+		struct therm_sensor& sens = it->second;
+
+		if (sens.t.type != type)
 			continue;
 		_thresh.push_back(sens.thresh);
 	}
@@ -242,15 +245,33 @@ int ThermalUtils::readTemperatureThreshold(bool filterType, TemperatureType type
 	return thresh.size();
 }
 
-int ThermalUtils::readCdevStates(bool filterType, cdevType type,
-                                            hidl_vec<CoolingDevice>& cdev_out)
+int ThermalUtils::readCdevStates(std::vector<CoolingDevice>& cdev_out)
 {
 	int ret = 0;
 	std::vector<CoolingDevice> _cdev;
 
 	for (struct therm_cdev cdev: cdevList) {
 
-		if (filterType && cdev.c.type != type)
+		ret = cmnInst.read_cdev_state(cdev);
+		if (ret < 0)
+			return ret;
+		_cdev.push_back(cdev.c);
+	}
+
+	cdev_out = _cdev;
+
+	return cdev_out.size();
+}
+
+int ThermalUtils::readCdevStates(cdevType type,
+                                            std::vector<CoolingDevice>& cdev_out)
+{
+	int ret = 0;
+	std::vector<CoolingDevice> _cdev;
+
+	for (struct therm_cdev cdev: cdevList) {
+
+		if (cdev.c.type != type)
 			continue;
 		ret = cmnInst.read_cdev_state(cdev);
 		if (ret < 0)
@@ -263,13 +284,7 @@ int ThermalUtils::readCdevStates(bool filterType, cdevType type,
 	return cdev_out.size();
 }
 
-int ThermalUtils::fetchCpuUsages(hidl_vec<CpuUsage>& cpu_usages)
-{
-	return cmnInst.get_cpu_usages(cpu_usages);
-}
-
-}  // namespace implementation
-}  // namespace V2_0
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
+}  // namespace aidl

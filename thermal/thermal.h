@@ -1,4 +1,4 @@
-/*
+	/*
  * Copyright (c) 2020, The Linux Foundation. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,17 +28,20 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/* Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear */
+
 #ifndef ANDROID_QTI_VENDOR_THERMAL_H
 #define ANDROID_QTI_VENDOR_THERMAL_H
 
 #include <mutex>
 #include <thread>
+#include <set>
 
-#include <android/hardware/thermal/2.0/IThermal.h>
-#include <hidl/MQDescriptor.h>
-#include <android/hardware/thermal/2.0/IThermalChangedCallback.h>
-
-#include <hidl/Status.h>
+#include <aidl/android/hardware/thermal/BnThermal.h>
+#include <aidl/android/hardware/thermal/IThermalChangedCallback.h>
 
 #ifdef ENABLE_THERMAL_NETLINK
 #include "thermalUtilsNetlink.h"
@@ -48,72 +51,62 @@
 
 #include "thermalData.h"
 
+namespace aidl {
 namespace android {
 namespace hardware {
 namespace thermal {
-namespace V2_0 {
-namespace implementation {
 
 struct CallbackSetting {
-	sp<IThermalChangedCallback> callback;
-	bool is_filter_type;
-	TemperatureType type;
+ 	std::shared_ptr<IThermalChangedCallback> callback;
+ 	TemperatureType type;
 
-	CallbackSetting(sp<IThermalChangedCallback> callback,
-			bool is_filter_type, TemperatureType type)
-			: callback(callback),
-			is_filter_type(is_filter_type), type(type) {}
+ 	CallbackSetting(std::shared_ptr<IThermalChangedCallback> callback,
+ 			TemperatureType type)
+ 			: callback(callback), type(type) {}
+ };
+
+class Thermal : public BnThermal {
+  public:
+    Thermal();
+    ~Thermal() = default;
+
+    Thermal(const Thermal &) = delete;
+    void operator=(const Thermal &) = delete;
+    ndk::ScopedAStatus getCoolingDevices(std::vector<CoolingDevice>* out_devices) override;
+    ndk::ScopedAStatus getCoolingDevicesWithType(CoolingType in_type,
+                                                 std::vector<CoolingDevice>* out_devices) override;
+
+    ndk::ScopedAStatus getTemperatures(std::vector<Temperature>* out_temperatures) override;
+    ndk::ScopedAStatus getTemperaturesWithType(TemperatureType in_type,
+                                               std::vector<Temperature>* out_temperatures) override;
+
+    ndk::ScopedAStatus getTemperatureThresholds(
+            std::vector<TemperatureThreshold>* out_temperatureThresholds) override;
+
+    ndk::ScopedAStatus getTemperatureThresholdsWithType(
+            TemperatureType in_type,
+            std::vector<TemperatureThreshold>* out_temperatureThresholds) override;
+
+    ndk::ScopedAStatus registerThermalChangedCallback(
+            const std::shared_ptr<IThermalChangedCallback>& in_callback) override;
+    ndk::ScopedAStatus registerThermalChangedCallbackWithType(
+            const std::shared_ptr<IThermalChangedCallback>& in_callback,
+            TemperatureType in_type) override;
+
+    ndk::ScopedAStatus unregisterThermalChangedCallback(
+            const std::shared_ptr<IThermalChangedCallback>& in_callback) override;
+
+    void sendThrottlingChangeCB(const Temperature &t);
+
+  private:
+    std::mutex thermal_callback_mutex_;
+    std::vector<CallbackSetting> cb;
+    ThermalUtils utils;
 };
 
-class Thermal : public IThermal {
-	public:
-		Thermal();
-		~Thermal() = default;
-
-		Thermal(const Thermal &) = delete;
-		void operator=(const Thermal &) = delete;
-
-		Return<void> getTemperatures(
-				getTemperatures_cb _hidl_cb) override;
-		Return<void> getCpuUsages(getCpuUsages_cb _hidl_cb) override;
-		Return<void> getCoolingDevices(
-				getCoolingDevices_cb _hidl_cb) override;
-
-		Return<void> getCurrentTemperatures(
-				bool filterType,
-				TemperatureType type,
-				getCurrentTemperatures_cb _hidl_cb) override;
-		Return<void> getTemperatureThresholds(
-				bool filterType,
-				TemperatureType type,
-				getTemperatureThresholds_cb _hidl_cb) override;
-		Return<void> registerThermalChangedCallback(
-				const sp<IThermalChangedCallback> &callback,
-				bool filterType,
-				TemperatureType type,
-				registerThermalChangedCallback_cb _hidl_cb)
-				override;
-		Return<void> unregisterThermalChangedCallback(
-				const sp<IThermalChangedCallback> &callback,
-				unregisterThermalChangedCallback_cb _hidl_cb)
-				override;
-		Return<void> getCurrentCoolingDevices(
-				bool filterType,
-				CoolingType type,
-				getCurrentCoolingDevices_cb _hidl_cb) override;
-
-		void sendThrottlingChangeCB(const Temperature &t);
-
-	private:
-		std::mutex thermal_cb_mutex;
-		std::vector<CallbackSetting> cb;
-		ThermalUtils utils;
-};
-
-}  // namespace implementation
-}  // namespace V2_0
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
+}  // namespace aidl
 
 #endif  // ANDROID_QTI_VENDOR_THERMAL_H

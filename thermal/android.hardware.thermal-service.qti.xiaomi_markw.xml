@@ -28,15 +28,16 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<!-- Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear -->
+
 <manifest version="1.0" type="device">
-    <hal format="hidl">
+    <hal format="aidl">
         <name>android.hardware.thermal</name>
-        <transport>hwbinder</transport>
-        <version>1.0</version>
-        <version>2.0</version>
-        <interface>
-            <name>IThermal</name>
-            <instance>default</instance>
-        </interface>
+        <version>1</version>
+        <fqname>IThermal/default</fqname>
     </hal>
 </manifest>
+

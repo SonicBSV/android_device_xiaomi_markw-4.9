@@ -27,13 +27,17 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-service android.thermal-hal /vendor/bin/hw/android.hardware.thermal@2.0-service.qti-v2
-	interface android.hardware.thermal@1.0::IThermal default
-	interface android.hardware.thermal@2.0::IThermal default
+#Changes from Qualcomm Innovation Center are provided under the following license:
+
+#Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+#SPDX-License-Identifier: BSD-3-Clause-Clear
+
+service vendor.thermal-hal /vendor/bin/hw/android.hardware.thermal-service.qti.xiaomi_markw
+	interface aidl android.hardware.thermal.IThermal/default
 	class hal
 	user root
 	group root
 
 on boot
     wait /sys/kernel/boot_adsp/boot
-    restart android.thermal-hal
+    restart vendor.thermal-hal

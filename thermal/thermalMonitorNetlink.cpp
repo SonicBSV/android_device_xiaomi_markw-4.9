@@ -29,6 +29,11 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+ /* Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear */
+
 #include <unistd.h>
 #include <linux/thermal.h>
 #include <android-base/logging.h>
@@ -37,11 +42,10 @@
 
 #include "thermalMonitorNetlink.h"
 
+namespace aidl {
 namespace android {
 namespace hardware {
 namespace thermal {
-namespace V2_0 {
-namespace implementation {
 
 using pollCB = std::function<bool()>;
 using familyCB = std::function<int(struct nl_msg *, void *)>;
@@ -151,7 +155,7 @@ int ThermalMonitor::sample_parse(struct nl_msg *n, void *data)
 		if (attrs[THERMAL_GENL_ATTR_TZ_TEMP])
 			temp = nla_get_u32(attrs[THERMAL_GENL_ATTR_TZ_TEMP]);
 
-		LOG(INFO) << "thermal_sample_event: TZ:" << tzn << " temp:"
+		LOG(DEBUG) << "thermal_sample_event: TZ:" << tzn << " temp:"
 			<< temp << std::endl;
 		sample_cb(tzn, temp);
 		break;
@@ -237,17 +241,17 @@ int ThermalMonitor::fetch_group_id(void)
 	nlmsg_free(msg);
 
 	if (event_group != -1 && sample_group != -1) {
-		LOG(DEBUG) << "Event: " << event_group <<
+		LOG(DEBUG) << "Netlink event: " << event_group <<
 			" Sample:" << sample_group << std::endl;
 		ret = nl_socket_add_membership(event_soc, event_group);
 		if (ret) {
-			LOG(ERROR) << "Event Socket membership add error\n";
+			LOG(ERROR) << "Netlink event Socket membership add error\n";
 			return ret;
 		}
 
 		ret = nl_socket_add_membership(sample_soc, sample_group);
 		if (ret) {
-			LOG(ERROR) << "sample Socket membership add error\n";
+			LOG(ERROR) << "Netlink sample Socket membership add error\n";
 			return ret;
 		}
 	}
@@ -260,26 +264,27 @@ void ThermalMonitor::start()
 
 	event_soc = nl_socket_alloc();
 	if (!event_soc) {
-		LOG(ERROR) << "Event socket alloc failed\n";
+		LOG(ERROR) << "Netlink Event socket alloc failed\n";
 		return;
 	}
 
 	if (genl_connect(event_soc)) {
-		LOG(ERROR) << "Event socket connect failed\n";
+		LOG(ERROR) << "Netlink Event socket connect failed\n";
 		nl_socket_free(event_soc);
 		event_soc = nullptr;
 		return;
 	}
+
 	sample_soc = nl_socket_alloc();
 	if (!sample_soc) {
-		LOG(ERROR) << "Sample socket alloc failed\n";
+		LOG(ERROR) << "Netlink Sample socket alloc failed\n";
 		nl_socket_free(event_soc);
 		event_soc = nullptr;
 		return;
 	}
 
 	if (genl_connect(sample_soc)) {
-		LOG(ERROR) << "Sample socket connect failed\n";
+		LOG(ERROR) << "Netlink Sample socket connect failed\n";
 		nl_socket_free(sample_soc);
 		nl_socket_free(event_soc);
 		event_soc = nullptr;
@@ -288,6 +293,7 @@ void ThermalMonitor::start()
 	}
 	if (fetch_group_id())
 		return;
+	LOG(DEBUG) << "Netlink connection established.\n";
 	nl_socket_disable_seq_check(sample_soc);
 	nl_socket_modify_cb(sample_soc, NL_CB_VALID, NL_CB_CUSTOM,
 			thermal_sample_cb, this);
@@ -301,8 +307,7 @@ void ThermalMonitor::start()
 		std::bind(&ThermalMonitor::stopPolling, this));
 }
 
-}  // namespace implementation
-}  // namespace V2_0
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
+}  // namespace aidl

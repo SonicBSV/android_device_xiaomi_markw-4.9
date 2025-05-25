@@ -475,6 +475,14 @@
     </interface>
 </hal>
 <hal format="aidl" optional="true">
+    <name>android.hardware.thermal</name>
+    <version>1</version>
+    <interface>
+        <name>IThermal</name>
+        <instance>default</instance>
+    </interface>
+</hal>
+<hal format="aidl" optional="true">
     <name>vendor.lineage.health</name>
     <version>1</version>
     <interface>

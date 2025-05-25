@@ -16,50 +16,39 @@
  * limitations under the License.
  */
 
+/* Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear */
+
 #define LOG_TAG "thermal_hal"
 
-#include <android-base/logging.h>
-#include <hidl/HidlTransportSupport.h>
 #include "thermal.h"
+#include <android-base/logging.h>
+#include <android/binder_manager.h>
+#include <android/binder_process.h>
 
 using ::android::OK;
 using ::android::status_t;
+using aidl::android::hardware::thermal::Thermal;
 
-// libhwbinder:
-using ::android::hardware::configureRpcThreadpool;
-using ::android::hardware::joinRpcThreadpool;
+int main() {
 
-// Generated HIDL files:
-using ::android::hardware::thermal::V2_0::IThermal;
-using ::android::hardware::thermal::V2_0::implementation::Thermal;
+	LOG(INFO) << "Thermal HAL Service AIDL starting...";
 
-static int shutdown() {
-	LOG(ERROR) << "Thermal HAL Service is shutting down.";
-	return 1;
-}
+	ABinderProcess_setThreadPoolMaxThreadCount(0);
+	std::shared_ptr<Thermal> therm = ndk::SharedRefBase::make<Thermal>();
 
-int main(int /* argc */, char ** /* argv */) {
-	status_t status;
-	android::sp<IThermal> service = nullptr;
+	const std::string instance = std::string() + Thermal::descriptor + "/default";
 
-	LOG(INFO) << "Thermal HAL Service 2.0 starting...";
+	if(therm){
+		binder_status_t status =
+		AServiceManager_addService(therm->asBinder().get(), instance.c_str());
 
-	service = new Thermal();
-	if (service == nullptr) {
-		LOG(ERROR) << "Error creating an instance of Thermal HAL. Exiting...";
-		return shutdown();
+		CHECK(status == STATUS_OK);
 	}
 
-	configureRpcThreadpool(1, true /* callerWillJoin */);
-
-	status = service->registerAsService();
-	if (status != OK) {
-		LOG(ERROR) << "Could not register service for ThermalHAL (" << status << ")";
-		return shutdown();
-	}
-
-	LOG(INFO) << "Thermal HAL Service 2.0 started successfully.";
-	joinRpcThreadpool();
-	// We should not get past the joinRpcThreadpool().
-	return shutdown();
+	LOG(INFO) << "Thermal HAL Service AIDL started successfully.";
+	ABinderProcess_joinThreadPool();
+	return EXIT_FAILURE;  // should not reach
 }

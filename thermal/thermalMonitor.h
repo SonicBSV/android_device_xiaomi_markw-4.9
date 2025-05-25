@@ -28,18 +28,21 @@
  * IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/* Changes from Qualcomm Innovation Center are provided under the following license:
+
+Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+SPDX-License-Identifier: BSD-3-Clause-Clear */
 
 #ifndef THERMAL_THERMAL_MONITOR_H__
 #define THERMAL_THERMAL_MONITOR_H__
 
 #include <thread>
-#include <android/hardware/thermal/2.0/IThermal.h>
+#include <aidl/android/hardware/thermal/BnThermal.h>
 
+namespace aidl {
 namespace android {
 namespace hardware {
 namespace thermal {
-namespace V2_0 {
-namespace implementation {
 
 using ueventMonitorCB = std::function<void(std::string sensor_name, int temp)>;
 
@@ -60,10 +63,9 @@ class ThermalMonitor {
 		ueventMonitorCB cb;
 };
 
-}  // namespace implementation
-}  // namespace V2_0
 }  // namespace thermal
 }  // namespace hardware
 }  // namespace android
+}  // namespace aidl
 
 #endif  // THERMAL_THERMAL_MONITOR_H__
