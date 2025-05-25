@@ -32,9 +32,6 @@
      <string name="custom_seekbar_default_value_to_set">Стандардна вредност: <xliff:g id="v">%s</xliff:g>\nДолго притиснете за поставување</string>
      <string name="custom_seekbar_default_value_is_set">Стандардната вредност е поставена</string>
 
-     <!-- QS Tile -->
-    <string name="dirac_qs_tile_title">Звук на Дирак</string>
-
     <!-- Torch -->
     <string name="torch_title">Поставки за факелот</string>
     <string name="torch_summary">Контрола со фенер бела/жолта</string>
