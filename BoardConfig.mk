@@ -186,7 +186,7 @@ TARGET_PER_MGR_ENABLED := true
 
 # Power
 TARGET_TAP_TO_WAKE_NODE := "/proc/gesture/onoff"
-TARGET_HAS_NO_POWER_STATS := true
+TARGET_USES_INTERACTION_BOOST := true
 
 # Qualcomm
 BOARD_USES_QCOM_HARDWARE := true
