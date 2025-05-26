@@ -9,9 +9,6 @@ ro.config.vc_call_vol_steps=11
 # Bluetooth
 bluetooth.sco.disable_enhanced_connection=true
 
-# Charger
-ro.charger.enable_suspend=true
-
 # Console
 persist.vendor.console.silent.config=1
 

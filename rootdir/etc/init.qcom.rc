@@ -104,7 +104,7 @@ on boot
     #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
 
-    setprop net.tcp.2g_init_rwnd 10
+    chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
 
     # To prevent out of order acknowledgements from making
     # connection tracking to treat them as not belonging to
@@ -323,7 +323,7 @@ service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqb
     group root
     task_profiles ServiceCapacityLow
 
-on charger
+on property:init.svc.vendor.charger=running
     start qcom-post-boot
 
 service vendor.audio-hal /vendor/bin/hw/android.hardware.audio.service
