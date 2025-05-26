@@ -47,6 +47,9 @@ vendor.display.enable_default_color_mode=1
 ro.fm.transmitter=false
 vendor.hw.fm.init=0
 
+# Filesystem
+fs_mgr.overlayfs.prefer_cache_backing_storage=true
+
 # HWUI
 ro.hwui.texture_cache_size=72
 ro.hwui.layer_cache_size=48
@@ -59,12 +62,14 @@ ro.hwui.text_small_cache_height=1024
 ro.hwui.text_large_cache_width=2048
 ro.hwui.text_large_cache_height=2048
 
-
-# LMKD/PSI
+# LMK
+ro.lmk.filecache_min_kb=153600
+ro.lmk.kill_timeout_ms=50
+ro.lmk.stall_limit_critical=40
+ro.lmk.use_psi=false
 ro.lmk.critical_upgrade=true
-ro.lmk.upgrade_pressure=40
-ro.lmk.downgrade_pressure=60
-ro.lmk.kill_heaviest_task=false
+ro.lmk.upgrade_pressure=50
+ro.lmk.downgrade_pressure=50
 
 # Media
 av.debug.disable.pers.cache=1
@@ -138,6 +143,7 @@ persist.timed.enable=true
 
 # Telephony
 ril.subscription.types=NV,RUIM
+ro.telephony.call_ring.multiple=false
 service.qti.ims.enabled=1
 telephony.lteOnCdmaDevice=1
 vendor.service.qti.ims.enabled=1
