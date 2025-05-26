@@ -120,27 +120,6 @@ service wcnss-service /vendor/bin/wcnss_service
     oneshot
     task_profiles ServiceCapacityLow
 
-on property:init.svc.surfaceflinger=stopped
-    stop ppd
-
-on property:init.svc.surfaceflinger=running
-    start ppd
-
-on property:init.svc.surfaceflinger=restarting
-    stop ppd
-
-on property:init.svc.zygote=stopped
-    stop ppd
-
-on property:init.svc.zygote=running
-    start ppd
-
-on property:init.svc.zygote=restarting
-    stop ppd
-
-on property:init.svc.vendor.qcrild=stopped
-    stop vendor.radio-config-1-1-wrapper
-
 service vendor.hvdcp_opti /vendor/bin/hvdcp_opti
     class main
     user root
