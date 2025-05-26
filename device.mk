@@ -172,7 +172,8 @@ PRODUCT_PACKAGES += \
     libutilscallstack.vendor \
     libpng.vendor:32 \
     libgui_vendor \
-    libstdc++_vendor
+    libstdc++_vendor \
+    Aperture
 
 # Cgroup and task_profiles
 PRODUCT_COPY_FILES += \
