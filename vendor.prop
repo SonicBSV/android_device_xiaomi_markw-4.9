@@ -126,7 +126,7 @@ drm.service.enabled=true
 persist.qfp=false
 
 # Frp
-ro.frp.pst=/dev/block/bootdevice/by-name/config
+#ro.frp.pst=/dev/block/bootdevice/by-name/config
 
 # Media
 vendor.vidc.disable.split.mode=1
