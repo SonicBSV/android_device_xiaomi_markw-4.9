@@ -737,14 +737,6 @@ vendor/lib64/libhdr_tm.so|a1b9bbad12217e6b79951774801aa54be6460fd6
 vendor/lib64/libllvm-glnext.so|8b96ab94cd535c163d0548a5802fae9af4930fb7
 vendor/lib64/libmm-hdcpmgr.so|faf9491a8b15b9ca98a71e216ed94a61eca87540
 
-# Graphics - Postprocessing - from FP3-REL-6.A.028.1-gms-fb581341-user
-vendor/bin/hw/vendor.display.color@1.0-service|815cc36f3722fbfb5fdd52f6678309d207888038
-vendor/bin/mm-pp-dpps|c04b41c500b1bcf81cb605b3ef0b3b1d5e8320c3
-vendor/etc/init/vendor.display.color@1.0-service.rc|5ad673f879b3685a0e79b5633437e5499cb94f48
-vendor/lib64/libdisp-aba.so|4d364bb0699346a1fa57b9033f28d2a25c80ec0c
-vendor/lib64/vendor.display.color@1.0.so|f80b69b96c3ff6a1eb865740de95f67c67be785a
-vendor/lib64/vendor.display.postproc@1.0.so|8ec8b1c4764eda08ed1154f3487ef0a8f0ad5345
-
 # Graphics - SDM - from FP3-REL-6.A.028.1-gms-fb581341-user
 vendor/lib/libscalar.so|c78e4b32170501fd85daa8804aaa54afbcb40dd2
 vendor/lib64/libscalar.so|fb38a16b3c082a8cb861905c32dff71187dca2b7
