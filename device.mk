@@ -427,13 +427,13 @@ PRODUCT_PACKAGES += \
     init.class_main.sh \
     init.goodix.sh \
     init.xiaomi.device.rc \
+    init.msm.usb.configfs.rc \
     init.qcom.early_boot.sh \
     init.qcom.post_boot.sh \
     init.qcom.sensors.sh \
     init.qcom.rc \
     init.qcom.sh \
     init.qcom.usb.rc \
-    init.qcom.usb.sh \
     init.recovery.qcom.rc \
     init.recovery.qcom.usb.rc \
     init.parts.rc \
