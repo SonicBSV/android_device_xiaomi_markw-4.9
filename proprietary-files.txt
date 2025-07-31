@@ -17,7 +17,7 @@ vendor/lib64/libfastcvopt.so|b68d2ce2a17193a5c91cadb1291fa9ea69ee80b2
 vendor/lib64/libmdsprpc.so|f2cf241d1ea01ad13da6232717abceee138347a6
 vendor/lib64/vendor.qti.hardware.dsp@1.0.so|b6fa958d634eed5748c8f359b9104e2edf5aa20f
 
-# ADSP modules - from FP3-REL-6.A.028.1-gms-fb581341-user
+# ADSP modules - from FP3-REL-6.A.031.5-gms-fa7632b5-user
 vendor/lib/rfsa/adsp/libadsp_fd_skel.so|677d2932dac248049f031fc5893163e22b49439a
 vendor/lib/rfsa/adsp/libapps_mem_heap.so|5c82ad9cfe3f30105d899e2a4e90cc7566f81252
 vendor/lib/rfsa/adsp/libdspCV_skel.so|628985174b0088bed21c866d7984d23855e5e150
@@ -30,7 +30,7 @@ vendor/lib/rfsa/adsp/libscveT2T_skel.so|91b9200dbb982abf0d6b440668252d892a616f66
 system_ext/lib64/com.qualcomm.qti.ant@1.0.so|2bad2579ce576c46af6a50ee6687bd92fa7f76cd
 vendor/lib64/hw/com.dsi.ant@1.0-impl.so|6e2b594b44552b42000164c091af5cf7a4c508f5
 
-# Audio - from FP3-REL-6.A.028.1-gms-fb581341-user
+# Audio - from FP3-REL-6.A.031.5-gms-fa7632b5-user
 vendor/lib/libacdb-fts.so|458980ecf3ba88c4e6d4862af727ac8b52a8c943
 vendor/lib/libacdbloader.so|8e5758fbaa7a1c717d7ff15851972951697a0ee2
 vendor/lib/libacdbrtac.so|2bfe2d2c49833b37dee10d2776d97bb368d5a1a5
@@ -39,21 +39,17 @@ vendor/lib/libadm.so|0c12ba8a37d5c01f49d58c36b9fb84354ae568a9
 vendor/lib/libaudcal.so|ea9f62700c66d8dbaf4575e567fa67046ee66a49
 vendor/lib/libaudioalsa.so|50d2e0a9599e3a6c44345956d672cc5f222e3653
 vendor/lib/libdrc.so|7dbd6cef13d7e8ad18b1a49aa92a7d83da24c96a
-vendor/lib64/libacdb-fts.so|05760bb66071dbe10c10f105901710c18e4b20ce
-vendor/lib64/libacdbloader.so|cf69f69f856ea26adfcee9b4a60d6c72bb9e4b2b
-vendor/lib64/libacdbrtac.so|7e3c1165cc2290446eb5fe198011e652f7ac6d29
-vendor/lib64/libadiertac.so|bf301460c27cb2f78bfb7f0821c1c103da321ff8
-vendor/lib64/libaudcal.so|82e7f821044492fa42dcad1e1ace91561cc8e463
-vendor/lib64/libaudioalsa.so|686766d57db36b00710973872e40f614bb2fe11f
+vendor/lib/libaudioparsers.so|654d1f4d1a8916192ba5a3ee5591ad168bcd220a
+vendor/lib/libqtigef.so|b38ae7f8880f5dd90b306e1c96283da1d11f8862
 
 # Audio ACDB - from stock 6.0.1 MMB29M V10.2.2.0.MBEMIXM
-vendor/etc/acdbdata/MTP/MTP_Bluetooth_cal.acdb
-vendor/etc/acdbdata/MTP/MTP_General_cal.acdb
-vendor/etc/acdbdata/MTP/MTP_Global_cal.acdb
-vendor/etc/acdbdata/MTP/MTP_Handset_cal.acdb
-vendor/etc/acdbdata/MTP/MTP_Hdmi_cal.acdb
-vendor/etc/acdbdata/MTP/MTP_Headset_cal.acdb
-vendor/etc/acdbdata/MTP/MTP_Speaker_cal.acdb
+vendor/etc/acdbdata/MTP/MTP_Bluetooth_cal.acdb|29615755ca9bd07dd7bdac498aeeea2a834129f1
+vendor/etc/acdbdata/MTP/MTP_General_cal.acdb|8d83c8afbac724db4fcf380ca2c712c95e0da8c2
+vendor/etc/acdbdata/MTP/MTP_Global_cal.acdb|f0a2570e5fbe34f76b05bf49378f1e37bdbbfee8
+vendor/etc/acdbdata/MTP/MTP_Handset_cal.acdb|8e2c0148b1d80eb2abf434ee7aeb103c8fef928a
+vendor/etc/acdbdata/MTP/MTP_Hdmi_cal.acdb|887ea5c9baebf7238bca0b26e13cbea68d3a375c
+vendor/etc/acdbdata/MTP/MTP_Headset_cal.acdb|c934cddae83cd3734802557298f8cf90f43dd781
+vendor/etc/acdbdata/MTP/MTP_Speaker_cal.acdb|82cb4f340f25ba5f1e19800eca9dbd777b64670d
 
 # Bluetooth - from FP3-REL-6.A.028.1-gms-fb581341-user
 vendor/bin/hw/android.hardware.bluetooth@1.0-service-qti|73d7132773572d87bdac6b5e454573e79d35316c

@@ -38,6 +38,9 @@
         <library name="proxy" path="libeffectproxy.so"/>
         <library name="offload_bundle" path="libqcompostprocbundle.so"/>
         <library name="audio_pre_processing" path="libqcomvoiceprocessing.so"/>
+        <!--Spatial Audio-->
+        <library name="spatializer" path="libspatialaudio.so"/>
+	<!--Spatial Audio-->
         <!--DOLBY DAP-->
         <library name="dap" path="libswdap.so"/>
         <!--DOLBY END-->
@@ -96,6 +99,9 @@
         <!--DOLBY VQE-->
         <effect name="vqe" library="vqe" uuid="64a0f614-7fa4-48b8-b081-d59dc954616f"/>
         <!--DOLBY END-->
+        <!--Spatial Audio-->
+        <effect name="spatializer" library="spatializer" uuid="cc4677de-ff72-11eb-9a03-0242ac130003"/>
+	<!--Spatial Audio-->
     </effects>
     <preprocess>
         <stream type="voice_communication">

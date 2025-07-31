@@ -1952,7 +1952,7 @@ static void spkr_calib_thread_create()
     }
 
     result = pthread_create(&handle.spkr_calibration_thread,
-               (const pthread_attr_t *) NULL, spkr_calibration_thread, &handle);
+               (const pthread_attr_t *) NULL, (void *)spkr_calibration_thread, &handle);
     if (result == 0) {
         handle.cal_thrd_created = true;
     } else {
@@ -1978,7 +1978,7 @@ static void spkr_v_vali_thread_create()
         handle.v_vali_thrd_created = false;
     }
     result = pthread_create(&handle.spkr_v_vali_thread,
-               (const pthread_attr_t *) NULL, spkr_v_vali_thread, &handle);
+               (const pthread_attr_t *) NULL, (void *)spkr_v_vali_thread, &handle);
     if (result == 0) {
         handle.v_vali_thrd_created = true;
     } else {
@@ -2309,7 +2309,7 @@ void spkr_prot_init(void *adev, spkr_prot_init_config_t spkr_prot_init_config_va
     if (handle.thermal_client_request) {
         ALOGD("%s: Create calibration thread", __func__);
         result = pthread_create(&handle.spkr_calibration_thread,
-        (const pthread_attr_t *) NULL, spkr_calibration_thread, &handle);
+        (const pthread_attr_t *) NULL, (void *)spkr_calibration_thread, &handle);
         if (result == 0) {
             handle.cal_thrd_created = true;
         } else {

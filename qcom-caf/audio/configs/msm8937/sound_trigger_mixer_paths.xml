@@ -33,9 +33,6 @@
     <ctl name="LSM3 Mixer TERT_MI2S_TX" value="0" />
     <ctl name="LSM4 Mixer TERT_MI2S_TX" value="0" />
     <ctl name="LSM5 Mixer TERT_MI2S_TX" value="0" />
-    <ctl name="LSM6 Mixer TERT_MI2S_TX" value="0" />
-    <ctl name="LSM7 Mixer TERT_MI2S_TX" value="0" />
-    <ctl name="LSM8 Mixer TERT_MI2S_TX" value="0" />
     <ctl name="LSM1 Port" value="None" />
     <ctl name="LSM2 Port" value="None" />
     <ctl name="LSM3 Port" value="None" />
@@ -76,24 +73,6 @@
         <ctl name="LSM5 Mixer TERT_MI2S_TX" value="1" />
     </path>
 
-    <path name="listen-voice-wakeup-6">
-        <ctl name="TERT_MI2S_TX LSM Function" value="SWAUDIO" />
-        <ctl name="LSM6 Port" value="TERT_MI2S_TX" />
-        <ctl name="LSM6 Mixer TERT_MI2S_TX" value="1" />
-    </path>
-
-    <path name="listen-voice-wakeup-7">
-        <ctl name="TERT_MI2S_TX LSM Function" value="SWAUDIO" />
-        <ctl name="LSM7 Port" value="TERT_MI2S_TX" />
-        <ctl name="LSM7 Mixer TERT_MI2S_TX" value="1" />
-    </path>
-
-    <path name="listen-voice-wakeup-8">
-        <ctl name="TERT_MI2S_TX LSM Function" value="SWAUDIO" />
-        <ctl name="LSM8 Port" value="TERT_MI2S_TX" />
-        <ctl name="LSM8 Mixer TERT_MI2S_TX" value="1" />
-    </path>
-
     <path name="listen-voice-wakeup-1 preproc">
         <ctl name="TERT_MI2S_TX LSM Function" value="SWAUDIO" />
         <ctl name="LSM1 Port" value="ADM_LSM_TX" />
@@ -124,34 +103,15 @@
         <ctl name="LSM5 Mixer TERT_MI2S_TX" value="1" />
     </path>
 
-    <path name="listen-voice-wakeup-6 preproc">
-        <ctl name="TERT_MI2S_TX LSM Function" value="SWAUDIO" />
-        <ctl name="LSM6 Port" value="ADM_LSM_TX" />
-        <ctl name="LSM6 Mixer TERT_MI2S_TX" value="1" />
-    </path>
-
-    <path name="listen-voice-wakeup-7 preproc">
-        <ctl name="TERT_MI2S_TX LSM Function" value="SWAUDIO" />
-        <ctl name="LSM7 Port" value="ADM_LSM_TX" />
-        <ctl name="LSM7 Mixer TERT_MI2S_TX" value="1" />
-    </path>
-
-    <path name="listen-voice-wakeup-8 preproc">
-        <ctl name="TERT_MI2S_TX LSM Function" value="SWAUDIO" />
-        <ctl name="LSM8 Port" value="ADM_LSM_TX" />
-        <ctl name="LSM8 Mixer TERT_MI2S_TX" value="1" />
-    </path>
-
     <path name="listen-ape-handset-mic">
-        <!-- this is to avoid codec mute when device is not enabled first -->
-        <ctl name="LOOPBACK Mode" value="ENABLE" />
         <!-- actual device ebable sequence -->
         <ctl name="DEC1 MUX" value="ADC2" />
         <ctl name="ADC2 MUX" value="INP3" />
     </path>
 
     <path name="listen-ape-handset-mic-preproc">
-        <path name="listen-ape-handset-mic"/>
+        <ctl name="DEC1 MUX" value="ADC2" />
+        <ctl name="ADC2 MUX" value="INP3" />
     </path>
 
     <path name="listen-ape-handset-dmic">

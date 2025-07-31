@@ -65,16 +65,22 @@
                     <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
                              samplingRates="48000" channelMasks="AUDIO_CHANNEL_OUT_STEREO"/>
                 </mixPort>
+                <!--Spatial Audio-->
+                <mixPort name="immersive_out" role="source" flags="AUDIO_OUTPUT_FLAG_SPATIALIZER">
+                    <profile name="" format="AUDIO_FORMAT_PCM_FLOAT"
+                             samplingRates="48000" channelMasks="AUDIO_CHANNEL_OUT_STEREO"/>
+                <!--Spatial Audio-->
+                </mixPort>
                 <mixPort name="direct_pcm" role="source"
                         flags="AUDIO_OUTPUT_FLAG_DIRECT">
                     <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
                              samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000 128000 176400 192000"
                              channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1 AUDIO_CHANNEL_OUT_6POINT1 AUDIO_CHANNEL_OUT_7POINT1"/>
                     <profile name="" format="AUDIO_FORMAT_PCM_8_24_BIT"
-                             samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000 128000 176400 192000"
+                             samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000 128000 176400 192000 352800 384000"
                              channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1 AUDIO_CHANNEL_OUT_6POINT1 AUDIO_CHANNEL_OUT_7POINT1"/>
                     <profile name="" format="AUDIO_FORMAT_PCM_24_BIT_PACKED"
-                             samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000 128000 176400 192000"
+                             samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000 128000 176400 192000 352800 384000"
                              channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1 AUDIO_CHANNEL_OUT_6POINT1 AUDIO_CHANNEL_OUT_7POINT1"/>
                 </mixPort>
                 <mixPort name="compressed_offload" role="source"
@@ -85,6 +91,9 @@
                     <profile name="" format="AUDIO_FORMAT_FLAC"
                              samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000 128000 176400 192000"
                              channelMasks="AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_MONO"/>
+                    <profile name="" format="AUDIO_FORMAT_ALAC"
+                             samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000 128000 176400 192000"
+                             channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1 AUDIO_CHANNEL_OUT_6POINT1 AUDIO_CHANNEL_OUT_7POINT1"/>
                     <profile name="" format="AUDIO_FORMAT_APE"
                              samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000 128000 176400 192000"
                              channelMasks="AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_MONO"/>
@@ -97,6 +106,12 @@
                     <profile name="" format="AUDIO_FORMAT_AAC_HE_V2"
                              samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000"
                              channelMasks="AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_MONO"/>
+                    <profile name="" format="AUDIO_FORMAT_DTS"
+                             samplingRates="32000 44100 48000"
+                             channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1"/>
+                    <profile name="" format="AUDIO_FORMAT_DTS_HD"
+                             samplingRates="32000 44100 48000 64000 88200 96000 128000 176400 192000"
+                             channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1 AUDIO_CHANNEL_OUT_6POINT1 AUDIO_CHANNEL_OUT_7POINT1"/>
                     <profile name="" format="AUDIO_FORMAT_WMA"
                              samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000"
                              channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1 AUDIO_CHANNEL_OUT_6POINT1 AUDIO_CHANNEL_OUT_7POINT1"/>
@@ -112,6 +127,15 @@
                     <profile name="" format="AUDIO_FORMAT_AAC_ADTS_HE_V2"
                              samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 64000 88200 96000"
                              channelMasks="AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_MONO"/>
+                    <profile name="" format="AUDIO_FORMAT_AC3"
+                             samplingRates="32000 44100 48000"
+                              channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1"/>
+                    <profile name="" format="AUDIO_FORMAT_E_AC3"
+                             samplingRates="32000 44100 48000"
+                             channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1 AUDIO_CHANNEL_OUT_6POINT1 AUDIO_CHANNEL_OUT_7POINT1"/>
+                    <profile name="" format="AUDIO_FORMAT_E_AC3_JOC"
+                             samplingRates="32000 4410048000"
+                             channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1 AUDIO_CHANNEL_OUT_6POINT1 AUDIO_CHANNEL_OUT_7POINT1"/>
                 </mixPort>
                 <mixPort name="voice_tx" role="source">
                     <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
@@ -133,10 +157,16 @@
                              samplingRates="8000 16000 48000"
                             channelMasks="AUDIO_CHANNEL_OUT_STEREO"/>
                 </mixPort>
-                <mixPort name="surround_sound" role="sink">
-                    <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
-                             samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000"
-                             channelMasks="AUDIO_CHANNEL_IN_MONO AUDIO_CHANNEL_IN_STEREO AUDIO_CHANNEL_IN_FRONT_BACK AUDIO_CHANNEL_INDEX_MASK_3 AUDIO_CHANNEL_INDEX_MASK_4 AUDIO_CHANNEL_IN_5POINT1 AUDIO_CHANNEL_INDEX_MASK_6"/>
+                <mixPort name="record_24" role="sink">
+                    <profile name="" format="AUDIO_FORMAT_PCM_24_BIT_PACKED"
+                             samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 96000 192000"
+                             channelMasks="AUDIO_CHANNEL_IN_MONO AUDIO_CHANNEL_IN_STEREO AUDIO_CHANNEL_IN_FRONT_BACK AUDIO_CHANNEL_INDEX_MASK_3 AUDIO_CHANNEL_INDEX_MASK_4"/>
+                    <profile name="" format="AUDIO_FORMAT_PCM_8_24_BIT"
+                             samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 96000 192000"
+                             channelMasks="AUDIO_CHANNEL_IN_MONO AUDIO_CHANNEL_IN_STEREO AUDIO_CHANNEL_IN_FRONT_BACK AUDIO_CHANNEL_INDEX_MASK_3 AUDIO_CHANNEL_INDEX_MASK_4"/>
+                    <profile name="" format="AUDIO_FORMAT_PCM_FLOAT"
+                             samplingRates="8000 11025 12000 16000 22050 24000 32000 44100 48000 96000 192000"
+                             channelMasks="AUDIO_CHANNEL_IN_MONO AUDIO_CHANNEL_IN_STEREO AUDIO_CHANNEL_IN_FRONT_BACK AUDIO_CHANNEL_INDEX_MASK_3 AUDIO_CHANNEL_INDEX_MASK_4"/>
                 </mixPort>
                 <mixPort name="voice_rx" role="sink">
                     <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
@@ -229,11 +259,11 @@
                 <route type="mix" sink="Earpiece"
                        sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
                 <route type="mix" sink="Speaker"
-                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
+                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx,immersive_out"/>
                 <route type="mix" sink="Wired Headset"
-                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
+                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx,immersive_out"/>
                 <route type="mix" sink="Wired Headphones"
-                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
+                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx,immersive_out"/>
                 <route type="mix" sink="Line"
                        sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
                 <route type="mix" sink="HDMI"
@@ -245,39 +275,37 @@
                 <route type="mix" sink="FM"
                        sources="primary output"/>
                 <route type="mix" sink="BT SCO"
-                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
+                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx,immersive_out"/>
                 <route type="mix" sink="BT SCO Headset"
-                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
+                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx,immersive_out"/>
                 <route type="mix" sink="BT SCO Car Kit"
-                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
-                <route type="mix" sink="Telephony Tx"
-                       sources="voice_tx"/>
+                       sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx,immersive_out"/>
                 <route type="mix" sink="primary input"
                        sources="Built-In Mic,Built-In Back Mic,Wired Headset Mic,BT SCO Headset Mic,FM Tuner"/>
-                <route type="mix" sink="surround_sound"
-                       sources="Built-In Mic,Built-In Back Mic"/>
+                <route type="mix" sink="record_24"
+                       sources="Built-In Mic,Built-In Back Mic,Wired Headset Mic"/>
                 <route type="mix" sink="voice_rx"
                        sources="Telephony Rx"/>
             </routes>
 
         </module>
 
-        <!-- Usb Audio HAL -->
-        <xi:include href="/vendor/etc/usb_audio_policy_configuration.xml"/>
+        <!-- A2DP Audio HAL -->
+        <xi:include href="a2dp_in_audio_policy_configuration_7_0.xml"/>
 
         <!-- Remote Submix Audio HAL -->
-        <xi:include href="/vendor/etc/r_submix_audio_policy_configuration.xml"/>
+        <xi:include href="r_submix_audio_policy_configuration.xml"/>
 
         <!-- Bluetooth Audio HAL -->
-        <xi:include href="/vendor/etc/bluetooth_audio_policy_configuration_7_0.xml"/>
+        <xi:include href="bluetooth_audio_policy_configuration_7_0.xml"/>
 
     </modules>
     <!-- End of Modules section -->
 
     <!-- Volume section -->
 
-    <xi:include href="/vendor/etc/audio_policy_volumes.xml"/>
-    <xi:include href="/vendor/etc/default_volume_tables.xml"/>
+    <xi:include href="audio_policy_volumes.xml"/>
+    <xi:include href="default_volume_tables.xml"/>
 
     <!-- End of Volume section -->
 
