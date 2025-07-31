@@ -96,6 +96,7 @@ class DolbySettingsFragment : PreferenceFragment(),
         switchBar.setChecked(dsOn)
 
         profilePref.onPreferenceChangeListener = this
+        updateProfileIcon(profile)
         profilePref.setEnabled(dsOn)
         profilePref.apply {
             if (entryValues.contains(profile.toString())) {
@@ -147,6 +148,7 @@ class DolbySettingsFragment : PreferenceFragment(),
                 val profile = newValue.toString().toInt()
                 dolbyController.profile = profile
                 (preferenceManager.preferenceDataStore as DolbyPreferenceStore).profile = profile
+                updateProfileIcon(profile)
                 updateProfileSpecificPrefs()
             }
 
@@ -207,10 +209,10 @@ class DolbySettingsFragment : PreferenceFragment(),
         spkVirtPref.setEnabled(enable)
         dialoguePref.setEnabled(enable)
         volumePref.setEnabled(enable)
+        bassPref.setEnabled(enable)
         resetPref.setEnabled(enable)
         hpVirtPref.setEnabled(enable && !isOnSpeaker)
         stereoPref.setEnabled(enable && !isOnSpeaker)
-        bassPref.setEnabled(enable && !isOnSpeaker)
 
         if (!enable) return
 
@@ -228,11 +230,11 @@ class DolbySettingsFragment : PreferenceFragment(),
 
         spkVirtPref.setChecked(dolbyController.getSpeakerVirtEnabled(currentProfile))
         volumePref.setChecked(dolbyController.getVolumeLevelerEnabled(currentProfile))
+        bassPref.setChecked(dolbyController.getBassEnhancerEnabled(currentProfile))
 
         // below prefs are not enabled on loudspeaker
         if (isOnSpeaker) {
             stereoPref.summary = headphoneRes
-            bassPref.summary = headphoneRes
             hpVirtPref.summary = headphoneRes
             return
         }
@@ -247,14 +249,19 @@ class DolbySettingsFragment : PreferenceFragment(),
             }
         }
 
-        bassPref.apply {
-            setChecked(dolbyController.getBassEnhancerEnabled(currentProfile))
-            summary = null
-        }
-
         hpVirtPref.apply {
             setChecked(dolbyController.getHeadphoneVirtEnabled(currentProfile))
             summary = null
+        }
+    }
+
+    private fun updateProfileIcon(profile: Int) {
+        when (profile) {
+            0 -> profilePref.setIcon(R.drawable.ic_profile_dynamic)
+            1 -> profilePref.setIcon(R.drawable.ic_profile_movie)
+            2 -> profilePref.setIcon(R.drawable.ic_profile_music)
+            3 -> profilePref.setIcon(R.drawable.ic_profile_custom)
+            else -> profilePref.setIcon(R.drawable.ic_dolby)
         }
     }
 
