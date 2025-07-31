@@ -1,3 +1,8 @@
+//
+// Copyright (C) 2018-2024 The LineageOS Project
+// SPDX-License-Identifier: Apache-2.0
+//
+
 soong_namespace {
 }
 
@@ -19,47 +24,5 @@ install_symlink {
     name: "firmware_WCNSS_wlan_dictionary.dat_symlink",
     vendor: true,
     installed_location: "firmware/wlan/prima/WCNSS_wlan_dictionary.dat",
-    symlink_target: "/mnt/vendor/persist/WCNSS_wlan_dictionary.dat",
-}
-
-install_symlink {
-	name: "libimscamera_jni_libimscamera_jni_symlink64",
-	system_ext_specific: true,
-	installed_location: "priv-app/ims/lib/arm64/libimscamera_jni.so",
-	symlink_target: "/system_ext/lib64/libimscamera_jni.so",
-}
-
-install_symlink {
-	name: "libimsmedia_jni_libimsmedia_jni_symlink64",
-	system_ext_specific: true,
-	installed_location: "priv-app/ims/lib/arm64/libimsmedia_jni.so",
-	symlink_target: "/system_ext/lib64/libimsmedia_jni.so",
-}
-
-install_symlink {
-	name: "libEGL_adreno_libEGL_adreno_symlink32",
-	soc_specific: true,
-	installed_location: "lib/libEGL_adreno.so",
-	symlink_target: "/vendor/lib/egl/libEGL_adreno.so",
-}
-
-install_symlink {
-	name: "libGLESv2_adreno_libGLESv2_adreno_symlink32",
-	soc_specific: true,
-	installed_location: "lib/libGLESv2_adreno.so",
-	symlink_target: "/vendor/lib/egl/libGLESv2_adreno.so",
-}
-
-install_symlink {
-	name: "libEGL_adreno_libEGL_adreno_symlink64",
-	soc_specific: true,
-	installed_location: "lib64/libEGL_adreno.so",
-	symlink_target: "/vendor/lib64/egl/libEGL_adreno.so",
-}
-
-install_symlink {
-	name: "libGLESv2_adreno_libGLESv2_adreno_symlink64",
-	soc_specific: true,
-	installed_location: "lib64/libGLESv2_adreno.so",
-	symlink_target: "/vendor/lib64/egl/libGLESv2_adreno.so",
+    symlink_target: "/vendor/etc/wifi/WCNSS_wlan_dictionary.dat",
 }
