@@ -22,13 +22,17 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/non_ab_device.mk)
 # Inherit from markw device
 $(call inherit-product, device/xiaomi/markw/device.mk)
 
-# Inherit some common LineageOS stuff.
+# Inherit some common crDroid stuff.
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
-# Inherit some common crDroid stuff
-TARGET_SUPPORTS_QUICK_TAP  := true
-TARGET_SUPPORTS_CALL_RECORDING := true
-TARGET_INCLUDE_PIXEL_CHARGER := true
+# Inherit some common device props
+WITH_GMS := false
+TARGET_HAS_UDFPS := false
+TARGET_ENABLE_BLUR := false
+TARGET_FACE_UNLOCK_SUPPORTED := true
+SYSTEM_OPTIMIZE_JAVA := true
+SYSTEMUI_OPTIMIZE_JAVA := true
+TARGET_SUPPORTS_QUICK_TAP := true
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := markw
