@@ -14,6 +14,23 @@
 // limitations under the License.
 //
 
+cc_library_shared {
+    name: "libshims_binder",
+    shared_libs: ["libbinder", "libutils"],
+    srcs: [
+        "libbinder/IServiceManager.cpp",
+        "libbinder/PermissionCache.cpp",
+    ],
+    vendor: true
+}
+
+cc_library_shared {
+    name: "libppeiscore_shim",
+    srcs: ["GraphicBuffer.cpp"],
+    shared_libs: ["libui"],
+    vendor: true
+}
+
 // Goodix
 cc_library_shared {
     name: "fakelogprint",
@@ -28,4 +45,16 @@ cc_library_shared {
     srcs: ["gxfpd_shim.cpp"],
     compile_multilib: "64",
     vendor: true
+}
+
+cc_library_shared {
+    name: "libshim_imscamera",
+    system_ext_specific: true,
+    shared_libs: [
+        "libgui",
+        "libutils",
+    ],
+    srcs: [
+        "ims/libgui.cpp"
+    ],
 }

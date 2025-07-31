@@ -167,6 +167,7 @@ PRODUCT_PACKAGES += \
     camera.device@3.2-impl \
     vendor.qti.hardware.camera.device@1.0.vendor \
     camera.msm8953 \
+    libppeiscore_shim \
     libdng_sdk.vendor \
     liblz4.vendor \
     libutilscallstack.vendor \
@@ -241,6 +242,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.xiaomi_markw \
     fakelogprint \
+    libshims_binder \
     liblzma.vendor:64 \
     gx_fpd_shim
 
@@ -304,6 +306,7 @@ PRODUCT_PACKAGES += \
 
 # IMS
 PRODUCT_PACKAGES += \
+    libshim_imscamera \
     ims-ext-common \
     ims_ext_common.xml
 
