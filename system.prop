@@ -22,6 +22,10 @@ persist.vendor.data.mode=concurrent
 # Disable MTE Async for system server
 arm64.memtag.process.system_server=off
 
+# Deep Sleep
+pm.sleep_mode=1
+vendor.post_boot.parsed=1s
+
 # Dexopt
 dalvik.vm.dex2oat64.enabled=true
 pm.dexopt.shared=quicken
