@@ -27,6 +27,11 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-if [ ! -f /data/system/users/0/settings_fingerprint.xml ]; then
-    rm -rf /mnt/vendor/persist/data/gxfp/0_0
+fpdb=/data/system/users/0/settings_fingerprint.xml
+gxdb=/mnt/vendor/persist/data/gxfp/0_0
+
+if [ ! -f $fpdb ]; then
+    # group must be root to avoid dac_override
+    chown -hR system.root $gxdb
+    rm -rf $gxdb
 fi
