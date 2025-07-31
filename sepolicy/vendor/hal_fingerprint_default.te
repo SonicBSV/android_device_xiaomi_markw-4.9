@@ -3,8 +3,10 @@ typeattribute hal_fingerprint_default data_between_core_and_vendor_violators;
 type_transition hal_fingerprint_default system_data_file:{ dir file } gx_fpd_data_file;
 
 add_service(hal_fingerprint_default, goodix_fingerprint_vndservice);
-hwbinder_use(hal_fingerprint_default);
+binder_use(hal_fingerprint_default);
 r_dir_file(hal_fingerprint_default, firmware_file);
+get_prop(hal_fingerprint_default, bootloader_prop);
+get_prop(hal_fingerprint_default, boot_status_prop);
 get_prop(hal_fingerprint_default, vendor_fingerprint_prop);
 set_prop(hal_fingerprint_default, vendor_fingerprint_prop);
 vndbinder_use(hal_fingerprint_default);
@@ -21,6 +23,8 @@ allow hal_fingerprint_default init:unix_stream_socket connectto;
 allow hal_fingerprint_default self:netlink_socket create_socket_perms_no_ioctl;
 allow hal_fingerprint_default vndbinder_device:chr_file rw_file_perms;
 allow hal_fingerprint_default uhid_device:chr_file rw_file_perms;
+allow hal_fingerprint_default sysfs_wakeup:dir r_dir_perms;
+allow hal_fingerprint_default sysfs_wakeup:file rw_file_perms;
 
 allow hal_fingerprint_default gx_fpd_data_file:dir create_dir_perms;
 allow hal_fingerprint_default system_data_file:dir create_dir_perms;
