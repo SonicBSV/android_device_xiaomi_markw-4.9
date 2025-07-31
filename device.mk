@@ -47,7 +47,8 @@ PRODUCT_ENFORCE_RRO_TARGETS := *
 
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    $(LOCAL_PATH)
+    $(LOCAL_PATH) \
+    device/xiaomi/markw/libqti-perfd-client
     
 QCOM_SOONG_NAMESPACE := \
     $(LOCAL_PATH)/qcom-caf
@@ -395,6 +396,7 @@ PRODUCT_PACKAGES += \
 
 # Perf
 PRODUCT_PACKAGES += \
+   libqti-perfd-client \
    libtflite \
    libtextclassifier_hash \
    vendor.qti.hardware.perf@2.2.vendor
