@@ -109,17 +109,6 @@
             ],
             "DefaultIndex": 0,
             "ResetOnInit": true
-        },
-        {
-            "Name": "TASchedtuneBoost",
-            "Path": "/dev/stune/top-app/schedtune.boost",
-            "Values": [
-                "10",
-                "5",
-                "1",
-                "0"
-            ],
-            "ResetOnInit": true
         }
     ],
     "Actions": [
@@ -134,12 +123,6 @@
             "Node": "CPUBWMinFreq",
             "Duration": 700,
             "Value": "2124"
-        },
-        {
-            "PowerHint": "INTERACTION",
-            "Node": "TASchedtuneBoost",
-            "Duration": 700,
-            "Value": "5"
         },
         {
             "PowerHint": "LAUNCH",
@@ -172,12 +155,6 @@
             "Value": "4248"
         },
         {
-            "PowerHint": "LAUNCH",
-            "Node": "TASchedtuneBoost",
-            "Duration": 1800,
-            "Value": "10"
-        },
-        {
             "PowerHint": "EXPENSIVE_RENDERING",
             "Node": "CPUFreqMin",
             "Duration": 0,
@@ -200,12 +177,6 @@
             "Node": "CPUBWMinFreq",
             "Duration": 0,
             "Value": "2929"
-        },
-        {
-            "PowerHint": "EXPENSIVE_RENDERING",
-            "Node": "TASchedtuneBoost",
-            "Duration": 0,
-            "Value": "5"
         },
         {
             "PowerHint": "SUSTAINED_PERFORMANCE",
@@ -356,12 +327,6 @@
             "Node": "GPUBWMinFreq",
             "Duration": 1200,
             "Value": "4248"
-        },
-        {
-            "PowerHint": "CAMERA_SHOT",
-            "Node": "TASchedtuneBoost",
-            "Duration": 1200,
-            "Value": "10"
         }
     ]
 }
