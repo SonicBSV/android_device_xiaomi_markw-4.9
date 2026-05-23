@@ -37,22 +37,23 @@ on early-init
     chmod 0620 /dev/kmsg
 
 on init
-    # Create cgroup mount point for memory
+    # Memory cgroup for background tasks
     mkdir /sys/fs/cgroup/memory/bg 0750 root system
-    write /sys/fs/cgroup/memory/bg/memory.swappiness 140
+    write /sys/fs/cgroup/memory/bg/memory.swappiness 100
     write /sys/fs/cgroup/memory/bg/memory.move_charge_at_immigrate 1
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
-    
-    # Setup all the sub-system as related
+
+    # Subsystem restart policy
     write /sys/bus/msm_subsys/devices/subsys0/restart_level RELATED
     write /sys/bus/msm_subsys/devices/subsys1/restart_level RELATED
     write /sys/bus/msm_subsys/devices/subsys2/restart_level RELATED
     write /sys/bus/msm_subsys/devices/subsys3/restart_level RELATED
     write /sys/bus/msm_subsys/devices/subsys4/restart_level RELATED
 
-    # ZRAM setup
+    # ZRAM base config (swapon in post-fs-data)
     write /sys/block/zram0/comp_algorithm lz4
+    write /sys/block/zram0/max_comp_streams 4
     write /proc/sys/vm/page-cluster 0
 
 on early-boot
@@ -80,65 +81,68 @@ on boot
     chmod 0660 /sys/bus/i2c/devices/3-0038/set_cover_mode
     chown system system /sys/kernel/boot_slpi/ssr
     chown system system /sys/kernel/boot_adsp/ssr
-    chmod 0666 /proc/gesture/onoff
+
+    write /proc/sys/kernel/random/read_wakeup_threshold 64
+    write /proc/sys/kernel/random/write_wakeup_threshold 128
+
+    # Power HAL / libperfmgr node permissions
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
+    chown system system /sys/class/kgsl/kgsl-3d0/devfreq/max_freq
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/devfreq/max_freq
+
+    chown system system /sys/class/devfreq/soc:qcom,cpubw/min_freq
+    chmod 0664 /sys/class/devfreq/soc:qcom,cpubw/min_freq
+    chown system system /sys/class/devfreq/soc:qcom,gpubw/min_freq
+    chmod 0664 /sys/class/devfreq/soc:qcom,gpubw/min_freq
+
+    chown system system /dev/stune/top-app/schedtune.boost
+    chmod 0664 /dev/stune/top-app/schedtune.boost
+
+    # DT2W gesture
+    chmod 0660 /proc/gesture/onoff
     chown system system /proc/gesture/onoff
 
-    # This location is used by QCRIL to host UNIX domain
-    # socket files used for internal IPC within QCRIL
-    # modules
+    # QCRIL IPC sockets
     mkdir /dev/socket/qmux_radio 0770 radio radio
     chmod 2770 /dev/socket/qmux_radio
 
     mkdir /persist/drm 0770 system system
     mkdir /mnt/vendor/persist/bluetooth 0770 bluetooth bluetooth
     mkdir /persist/misc 0770 system system
-    mkdir /persist/alarm 0777 system system
-    chmod 0666 /persist/alarm/data
+    mkdir /persist/alarm 0770 system system
     mkdir /mnt/vendor/persist/time 0770 system system
     mkdir /mnt/vendor/persist/secnvm 0770 system system
 
     setprop wifi.interface wlan0
 
-    #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
-
     chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
 
-    # To prevent out of order acknowledgements from making
-    # connection tracking to treat them as not belonging to
-    # the connection they belong to.
-    # Otherwise, a weird issue happens in which some long
-    # connections on high-throughput links get dropped when
-    # an ack packet comes out of order
+    # Prevent OOO acks from breaking conntrack
     write /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 1
 
     chown wifi wifi /sys/module/wlan/parameters/fwpath
 
-    # Create hvdcp_opti directory
     mkdir /mnt/vendor/persist/hvdcp_opti 0770 root system
 
-# msm specific files that need to be created on /data
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system
-
-    # Create directory used for dump collection
     mkdir /data/vendor/ssrdump 0770 root system
-
-    # Create directory used by display clients
     mkdir /data/vendor/display 0770 system graphics
-
-    # Create directory used by media clients
     mkdir /data/vendor/media 0770 mediacodec media
-
     mkdir /data/vendor/ramdump 0771 root system
     mkdir /data/vendor/bluetooth 0770 bluetooth bluetooth
     mkdir /data/vendor/ramdump/bluetooth 0770 bluetooth bluetooth
-
-    # Create directory for tftp
     mkdir /data/vendor/tombstones 0771 system system
     mkdir /data/vendor/tombstones/rfs 0771 system system
 
-    # Create the directories used by the Wireless subsystem
+    # WiFi directories
     mkdir /data/vendor/wifi 0771 wifi wifi
     mkdir /data/vendor/wifi/wpa 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa/sockets 0770 wifi wifi
@@ -147,19 +151,17 @@ on post-fs-data
     mkdir /data/vendor/wifi/hostapd/ctrl 0770 wifi wifi
     mkdir /data/vendor/wifi/wpa_supplicant 0770 wifi wifi
 
-    # Create the directories used by CnE subsystem
+    # CnE
     mkdir /data/vendor/connectivity 0771 radio radio
     chown radio radio /data/vendor/connectivity
 
-    # Create directory for radio
+    # Radio
     mkdir /data/vendor/radio 0770 system radio
-
-    # Create directory for modem_config
     mkdir /data/vendor/modem_config 0570 radio root
 
     chown system system /persist/WCNSS_qcom_wlan_nv.bin
 
-    #Create directories for Location services
+    # Location
     mkdir /data/vendor/location 0770 gps gps
     mkdir /data/vendor/location/mq 0770 gps gps
     mkdir /data/vendor/location/xtwifi 0770 gps gps
@@ -169,45 +171,39 @@ on post-fs-data
     mkdir /dev/socket/location/ehub 0770 gps gps
     mkdir /dev/socket/location/dgnss 0770 gps gps
 
-    #Create directories for wifihal services
+    # WiFi HAL
     mkdir /dev/socket/wifihal 0770 wifi wifi
     chmod 2770 /dev/socket/wifihal
 
-    # Create /data/vendor/time folder for time-services
     mkdir /data/vendor/time 0700 system system
 
-    # Create directory used by audio subsystem
+    # Audio
     mkdir /data/vendor/audio 0770 audio audio
-
-    # Create a folder for audio delta files
     mkdir /data/vendor/audio/acdbdata 0770 media audio
     mkdir /data/vendor/audio/acdbdata/delta 0770 media audio
 
-    #Create FM dir for patchdownloader
+    # FM
     mkdir /data/vendor/fm 0770 system system
     chmod 0770 /data/vendor/fm
 
-    # Create PERFD daemon related dirs
+    # PERFD (disabled but dir needed for compat)
     mkdir /data/vendor/perfd 0770 root system
     chmod 2770 /data/vendor/perfd
     rm /data/vendor/perfd/default_values
 
-    # Secure Element directory for loader service functionality
+    # Secure Element
     mkdir /data/vendor/secure_element 0770 secure_element secure_element
 
-    # Create dir for TUI
+    # TUI
     mkdir /data/vendor/tui 0700 system drmrpc
 
-    # Mark the copy complete flag to not completed
+    # Radio DB
     write /data/vendor/radio/copy_complete 0
     chown radio radio /data/vendor/radio/copy_complete
     chmod 0660 /data/vendor/radio/copy_complete
-
-    # copy prebuilt qcril.db files always
     copy /vendor/radio/qcril_database/qcril.db /data/vendor/radio/qcril_prebuilt.db
     chown radio radio /data/vendor/radio/qcril_prebuilt.db
     chmod 0660 /data/vendor/radio/qcril_prebuilt.db
-    # File flags for prebuilt ril db file
     write /data/vendor/radio/prebuilt_db_support 1
     chown radio radio /data/vendor/radio/prebuilt_db_support
     chmod 0400 /data/vendor/radio/prebuilt_db_support
@@ -215,10 +211,14 @@ on post-fs-data
     chown radio radio /data/vendor/radio/db_check_done
     chmod 0660 /data/vendor/radio/db_check_done
 
-    # keep that at the end of on post-fs-data
-    # Set indication (checked by vold) that we have finished this action
+    # Enable ZRAM swap early
+    swapon_all /vendor/etc/fstab.zram
+    write /proc/sys/vm/swappiness 100
+
+    # Must be last
     setprop vold.post_fs_data_done 1
 
+# blkio cgroup for IO priority
 on property:ro.vendor.iocgrp.config=1
     mkdir /dev/blkio
     mount cgroup none /dev/blkio blkio
@@ -231,19 +231,16 @@ on property:ro.vendor.iocgrp.config=1
     write /dev/blkio/blkio.weight 1000
     write /dev/blkio/bg/blkio.weight 100
 
+# Start post_boot governor/memory tuning early
+on property:vold.post_fs_data_done=1
+    start qcom-post-boot
+
+# Boot completed — minimal actions only
 on property:sys.boot_completed=1
-    setprop vendor.post_boot.parsed 1
     write /dev/kmsg "Boot completed "
-    #Reset read ahead for dm-0 and dm-1 to 512kb
-    write /sys/block/dm-0/queue/read_ahead_kb 512
-    write /sys/block/dm-1/queue/read_ahead_kb 512
-    #Reinit lmkd to reconfigure lmkd properties
-    setprop lmkd.reinit 1
+    start vendor.camera.provider
 
-    swapon_all /vendor/etc/fstab.zram
-    write /proc/sys/vm/swappiness 100
-
-# DSDS - Restart qcrild on data switch
+# DSDS — Restart qcrild on data switch
 on property:persist.sys.radio.mobile_data_swap=1
     exec /bin/sleep 3s
     restart vendor.qcrild
@@ -261,6 +258,10 @@ on property:vendor.media.target.version=*
 
 on property:vendor.netflix.bsp_rev=*
     setprop ro.netflix.bsp_rev ${vendor.netflix.bsp_rev}
+
+# ========================
+# SERVICES
+# ========================
 
 service qcom-c_main-sh /vendor/bin/init.class_main.sh
     class main
@@ -295,15 +296,11 @@ on property:ro.vendor.ril.mbn_copy_completed=1
     write /data/vendor/radio/copy_complete 1
 
 service qcom-post-boot /vendor/bin/init.qcom.post_boot.sh
-    class late_start
+    class main
     user root
     group root system wakelock graphics
     disabled
     oneshot
-
-on property:sys.boot_completed=1
-    start qcom-post-boot
-    start vendor.camera-provider-2-4
 
 service vendor.msm_irqbalance /vendor/bin/msm_irqbalance -f /vendor/etc/msm_irqbalance.conf
     class core
@@ -318,7 +315,6 @@ service vendor.audio-hal /vendor/bin/hw/android.hardware.audio.service
     override
     class hal
     user audioserver
-    # media gid needed for /dev/fm (radio) and for /data/misc/media (tee)
     group audio camera drmrpc inet media mediadrm net_bt net_bt_admin net_bw_acct oem_2901 wakelock context_hub
     capabilities BLOCK_SUSPEND
     ioprio rt 4
@@ -332,7 +328,6 @@ service vendor.power_off_alarm /vendor/bin/power_off_alarm
     disabled
     oneshot
 
-# Override the AOSP sensor HAL service definition to add input group access
 service sensors-hal-1-0 /vendor/bin/hw/android.hardware.sensors@1.0-service
     override
     class hal
