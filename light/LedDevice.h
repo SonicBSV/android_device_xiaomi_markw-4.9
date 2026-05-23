@@ -6,74 +6,43 @@
 
 #pragma once
 
+#include "IDumpable.h"
+#include "Utils.h"
+
 #include <cstdint>
 #include <string>
-#include "IDumpable.h"
 
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace light {
 
-enum LightMode {
-    STATIC,
-    BREATH,
-};
-
-/**
- * A Linux LED device.
- * @see https://docs.kernel.org/leds/leds-class.html
- */
 class LedDevice : public IDumpable {
   public:
     LedDevice() = delete;
+    explicit LedDevice(const std::string& name);
 
-    /**
-     * Constructor.
-     *
-     * @param name The name of the LED device
-     */
-    LedDevice(std::string name);
-
-    /**
-     * Get the name of the LED device.
-     *
-     * @return std::string The name of the LED device
-     */
     std::string getName() const;
 
-    /**
-     * Return whether this LED device exists.
-     *
-     * @return bool true if the LED device exists, false otherwise
-     */
     bool exists() const;
-
-    /**
-     * Return whether this LED device supports breathing.
-     * When it doesn't, calling setBrightness with LightMode::BREATH will behave like
-     * LightMode::STATIC.
-     *
-     * @return bool true if the LED device supports breathing, false otherwise
-     */
     bool supportsBreath() const;
+    bool supportsOnOffMs() const;
 
-    /**
-     * Set the brightness of the LED device.
-     *
-     * @param value The brightness value to set
-     * @param mode The light mode to use
-     * @return bool true if the brightness was set successfully, false otherwise
-     */
-    bool setBrightness(uint8_t value, LightMode mode = LightMode::STATIC);
+    bool setBrightness(uint8_t value, LightMode mode = LightMode::STATIC,
+                       const BlinkConfig& blink = {});
+
+    bool setRawBrightness(uint8_t value);
+    bool setBreathEnabled(bool enabled);
+    bool setBreathTiming(const BlinkConfig& blink);
 
     void dump(int fd) const override;
 
   private:
     std::string mName;
     std::string mBasePath;
-    uint32_t mMaxBrightness;
     std::string mBreathNode;
+    uint32_t mMaxBrightness;
+    bool mHasOnOffMs;
 };
 
 }  // namespace light

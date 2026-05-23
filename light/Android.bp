@@ -6,23 +6,33 @@
 
 cc_binary {
     name: "android.hardware.light-service.xiaomi_markw",
-    defaults: ["hidl_defaults"],
     vendor: true,
     relative_install_path: "hw",
+
     init_rc: ["android.hardware.light-service.xiaomi_markw.rc"],
     vintf_fragments: ["android.hardware.light-service.xiaomi_markw.xml"],
+
     srcs: [
-        "BacklightDevice.cpp",
+        "main.cpp",
+        "Lights.cpp",
         "Devices.cpp",
         "LedDevice.cpp",
-        "Lights.cpp",
         "RgbLedDevice.cpp",
+        "BacklightDevice.cpp",
         "Utils.cpp",
-        "service.cpp",
     ],
+
     shared_libs: [
         "libbase",
+        "liblog",
         "libbinder_ndk",
         "android.hardware.light-V2-ndk",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wno-unused-parameter",
     ],
 }

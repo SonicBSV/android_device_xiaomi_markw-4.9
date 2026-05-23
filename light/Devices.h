@@ -6,12 +6,13 @@
 
 #pragma once
 
-#include <vector>
 #include "BacklightDevice.h"
-#include "IDumpable.h"
 #include "LedDevice.h"
 #include "RgbLedDevice.h"
+#include "IDumpable.h"
 #include "Utils.h"
+
+#include <vector>
 
 namespace aidl {
 namespace android {
@@ -23,26 +24,17 @@ class Devices : public IDumpable {
     Devices();
 
     bool hasBacklightDevices() const;
-    bool hasButtonDevices() const;
     bool hasNotificationDevices() const;
 
-    void setBacklightColor(rgb color);
-    void setButtonsColor(rgb color);
-    void setNotificationColor(rgb color, LightMode mode = LightMode::STATIC);
+    void setBacklightColor(const rgb& color);
+    void setNotificationColor(const rgb& color, LightMode mode, const BlinkConfig& blink);
 
     void dump(int fd) const override;
 
   private:
-    // Backlight
-    std::vector<BacklightDevice> mBacklightDevices;
-    std::vector<LedDevice> mBacklightLedDevices;
-
-    // Buttons
-    std::vector<LedDevice> mButtonLedDevices;
-
-    // Notifications
-    std::vector<RgbLedDevice> mNotificationRgbLedDevices;
-    std::vector<LedDevice> mNotificationLedDevices;
+    std::vector<BacklightDevice> mBacklights;
+    std::vector<LedDevice> mBacklightLeds;
+    std::vector<RgbLedDevice> mRgbNotifications;
 };
 
 }  // namespace light

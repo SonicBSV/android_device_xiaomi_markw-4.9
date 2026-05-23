@@ -6,123 +6,189 @@
 
 #include "Lights.h"
 
-#define LOG_TAG "Lights"
-
 #include <android-base/logging.h>
-#include "Utils.h"
+#include <chrono>
 
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace light {
 
-#define AutoHwLight(light) \
-    { .id = static_cast<int32_t>(light), .ordinal = 0, .type = light }
+static inline int64_t nowMs() {
+    auto n = std::chrono::steady_clock::now();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(n.time_since_epoch()).count();
+}
 
-Lights::Lights() {
+static constexpr int64_t kDebounceMs = 50;
+
+#define AutoLight(t) HwLight{ .id = static_cast<int32_t>(t), .ordinal = 0, .type = (t) }
+
+Lights::Lights() : mLastApplyMs(0) {
     if (mDevices.hasBacklightDevices()) {
-        mLights.push_back(AutoHwLight(LightType::BACKLIGHT));
-    }
-
-    if (mDevices.hasButtonDevices()) {
-        mLights.push_back(AutoHwLight(LightType::BUTTONS));
+        mLights.push_back(AutoLight(LightType::BACKLIGHT));
     }
 
     if (mDevices.hasNotificationDevices()) {
-        mLights.push_back(AutoHwLight(LightType::BATTERY));
-        mLights.push_back(AutoHwLight(LightType::NOTIFICATIONS));
-        mLights.push_back(AutoHwLight(LightType::ATTENTION));
+        mLights.push_back(AutoLight(LightType::BATTERY));
+        mLights.push_back(AutoLight(LightType::NOTIFICATIONS));
+        mLights.push_back(AutoLight(LightType::ATTENTION));
     }
+
+    mBlinkRunning.store(true);
+    mBlinkThread = std::thread([this]() { this->blinkWorker(); });
+
+    LOG(INFO) << "Lights HAL init, lights=" << mLights.size();
 }
 
-ndk::ScopedAStatus Lights::setLightState(int32_t id, const HwLightState& state) {
-    rgb color(state.color);
-
-    LightType type = static_cast<LightType>(id);
-    switch (type) {
-        case LightType::BACKLIGHT:
-            mDevices.setBacklightColor(color);
-            break;
-        case LightType::BUTTONS:
-            mDevices.setButtonsColor(color);
-            break;
-        case LightType::BATTERY:
-            mLastBatteryState = state;
-            updateNotificationColor();
-            break;
-        case LightType::NOTIFICATIONS:
-            mLastNotificationsState = state;
-            updateNotificationColor();
-            break;
-        case LightType::ATTENTION:
-            mLastAttentionState = state;
-            updateNotificationColor();
-            break;
-        default:
-            return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
-            break;
-    }
-
-    return ndk::ScopedAStatus::ok();
+Lights::~Lights() {
+    mBlinkRunning.store(false);
+    if (mBlinkThread.joinable()) mBlinkThread.join();
 }
 
 ndk::ScopedAStatus Lights::getLights(std::vector<HwLight>* _aidl_return) {
-    for (const auto& light : mLights) {
-        _aidl_return->push_back(light);
-    }
-
+    *_aidl_return = mLights;
     return ndk::ScopedAStatus::ok();
 }
 
-binder_status_t Lights::dump(int fd, const char** /*args*/, uint32_t /*numArgs*/) {
-    dprintf(fd, "Lights AIDL:\n");
-    dprintf(fd, "\n");
+ndk::ScopedAStatus Lights::setLightState(int32_t id, const HwLightState& state) {
+    const LightType type = static_cast<LightType>(id);
 
-    dprintf(fd, "Lights:\n");
-    for (const auto& light : mLights) {
-        dprintf(fd, "- %d: LightType::%s\n", light.id, toString(light.type).c_str());
+    if (type == LightType::BACKLIGHT) {
+        mDevices.setBacklightColor(rgb(state.color));
+        return ndk::ScopedAStatus::ok();
     }
-    dprintf(fd, "\n");
 
-    dprintf(fd, "Devices:\n");
-    mDevices.dump(fd);
-    dprintf(fd, "\n");
+    std::lock_guard<std::mutex> lk(mMutex);
 
-    return STATUS_OK;
-}
-
-void Lights::updateNotificationColor() {
-    std::lock_guard<std::mutex> lock(mLedMutex);
-
-    bool isBatteryLit = rgb(mLastBatteryState.color).isLit();
-    bool isAttentionLit = rgb(mLastAttentionState.color).isLit();
-    bool isNotificationsLit = rgb(mLastNotificationsState.color).isLit();
-
-    const HwLightState state = isNotificationsLit ? mLastNotificationsState
-                               : isAttentionLit   ? mLastAttentionState
-                               : isBatteryLit     ? mLastBatteryState
-                                                  : HwLightState();
-
-    rgb color(state.color);
-
-    LightMode lightMode;
-    switch (state.flashMode) {
-        case FlashMode::NONE:
-            lightMode = LightMode::STATIC;
+    switch (type) {
+        case LightType::BATTERY:
+            mLastBattery = state;
             break;
-        case FlashMode::TIMED:
-        case FlashMode::HARDWARE:
-            lightMode = LightMode::BREATH;
+        case LightType::NOTIFICATIONS:
+            mLastNotification = state;
+            break;
+        case LightType::ATTENTION:
+            mLastAttention = state;
             break;
         default:
-            LOG(ERROR) << "Unknown flash mode: " << static_cast<int>(state.flashMode);
-            lightMode = LightMode::STATIC;
-            break;
+            return ndk::ScopedAStatus::fromExceptionCode(EX_UNSUPPORTED_OPERATION);
     }
 
-    mDevices.setNotificationColor(color, lightMode);
+    updateCompositeLedLocked();
+    return ndk::ScopedAStatus::ok();
+}
 
-    return;
+void Lights::updateCompositeLedLocked() {
+    const bool allOff = ((mLastBattery.color & 0x00FFFFFF) == 0) &&
+                        ((mLastNotification.color & 0x00FFFFFF) == 0) &&
+                        ((mLastAttention.color & 0x00FFFFFF) == 0);
+
+    const int64_t t = nowMs();
+    if (!allOff && (t - mLastApplyMs) < kDebounceMs) {
+        return;
+    }
+    mLastApplyMs = t;
+
+    HwLightState chosen{};
+    if ((mLastNotification.color & 0x00FFFFFF) != 0) {
+        chosen = mLastNotification;
+    } else if ((mLastAttention.color & 0x00FFFFFF) != 0) {
+        chosen = mLastAttention;
+    } else if ((mLastBattery.color & 0x00FFFFFF) != 0) {
+        chosen = mLastBattery;
+    } else {
+        chosen = HwLightState{};
+    }
+
+    rgb c(chosen.color);
+
+    bool wantBlink = (chosen.flashMode == FlashMode::TIMED || 
+                      chosen.flashMode == FlashMode::HARDWARE) &&
+                     ((chosen.color & 0x00FFFFFF) != 0);
+
+    int32_t onMs = chosen.flashOnMs;
+    int32_t offMs = chosen.flashOffMs;
+
+    if (wantBlink) {
+        if (onMs < 50) onMs = 1000;
+        if (offMs < 50) offMs = 1000;
+    }
+
+    mBlinkEnabled = wantBlink;
+    mBlinkColor = c;
+    mBlinkOnMs = onMs;
+    mBlinkOffMs = offMs;
+
+    if (!mBlinkEnabled) {
+        mDevices.setNotificationColor(c, LightMode::STATIC, BlinkConfig{});
+    }
+
+    LOG(INFO) << "Apply LED: rgb=(" << int(c.red) << "," << int(c.green) << "," << int(c.blue)
+              << ") swBlink=" << (mBlinkEnabled ? "yes" : "no")
+              << " on=" << mBlinkOnMs << " off=" << mBlinkOffMs;
+}
+
+void Lights::blinkWorker() {
+    bool phaseOn = false;
+    int32_t lastOn = 0;
+    int32_t lastOff = 0;
+    rgb lastColor;
+
+    while (mBlinkRunning.load()) {
+        bool enabled;
+        int32_t onMs, offMs;
+        rgb color;
+
+        {
+            std::lock_guard<std::mutex> lk(mMutex);
+            enabled = mBlinkEnabled;
+            onMs = mBlinkOnMs;
+            offMs = mBlinkOffMs;
+            color = mBlinkColor;
+        }
+
+        if (!enabled) {
+            phaseOn = false;
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            continue;
+        }
+
+        if (onMs != lastOn || offMs != lastOff ||
+            color.red != lastColor.red || 
+            color.green != lastColor.green || 
+            color.blue != lastColor.blue) {
+            phaseOn = true;
+            lastOn = onMs;
+            lastOff = offMs;
+            lastColor = color;
+        }
+
+        if (phaseOn) {
+            mDevices.setNotificationColor(color, LightMode::STATIC, BlinkConfig{});
+            std::this_thread::sleep_for(std::chrono::milliseconds(onMs));
+        } else {
+            mDevices.setNotificationColor(rgb(0x00000000), LightMode::STATIC, BlinkConfig{});
+            std::this_thread::sleep_for(std::chrono::milliseconds(offMs));
+        }
+
+        phaseOn = !phaseOn;
+    }
+}
+
+binder_status_t Lights::dump(int fd, const char** /*args*/, uint32_t /*numArgs*/) {
+    dprintf(fd, "AIDL Lights HAL (markw)\n\n");
+    dprintf(fd, "Registered lights:\n");
+    for (const auto& l : mLights) {
+        dprintf(fd, "  - id=%d type=%d\n", l.id, static_cast<int>(l.type));
+    }
+    dprintf(fd, "\nDevices:\n");
+    mDevices.dump(fd);
+    dprintf(fd, "\n");
+    dprintf(fd, "Blink:\n");
+    dprintf(fd, "  enabled=%d on=%d off=%d rgb=(%d,%d,%d)\n",
+            mBlinkEnabled ? 1 : 0, mBlinkOnMs, mBlinkOffMs,
+            int(mBlinkColor.red), int(mBlinkColor.green), int(mBlinkColor.blue));
+    return STATUS_OK;
 }
 
 }  // namespace light

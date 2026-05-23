@@ -6,101 +6,55 @@
 
 #include "RgbLedDevice.h"
 
-#define LOG_TAG "RgbLedDevice"
-
 #include <android-base/logging.h>
+
+#define LOG_TAG "RgbLedDevice"
 
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace light {
 
-RgbLedDevice::RgbLedDevice(LedDevice red, LedDevice green, LedDevice blue)
-    : mRed(red), mGreen(green), mBlue(blue), mColors(Color::NONE) {
-    if (mRed.exists()) {
-        mColors |= Color::RED;
-    }
-    if (mGreen.exists()) {
-        mColors |= Color::GREEN;
-    }
-    if (mBlue.exists()) {
-        mColors |= Color::BLUE;
-    }
-}
+RgbLedDevice::RgbLedDevice(LedDevice r, LedDevice g, LedDevice b)
+    : mR(r), mG(g), mB(b),
+      mHasR(r.exists()), mHasG(g.exists()), mHasB(b.exists()) {}
 
 bool RgbLedDevice::exists() const {
-    return mColors != Color::NONE;
+    return mHasR || mHasG || mHasB;
 }
 
 bool RgbLedDevice::supportsBreath() const {
-    return (!mRed.exists() || mRed.supportsBreath()) &&
-           (!mGreen.exists() || mGreen.supportsBreath()) &&
-           (!mBlue.exists() || mBlue.supportsBreath());
+    if (mHasR && !mR.supportsBreath()) return false;
+    if (mHasG && !mG.supportsBreath()) return false;
+    if (mHasB && !mB.supportsBreath()) return false;
+    return true;
 }
 
-bool RgbLedDevice::setBrightness(rgb color, LightMode mode) {
-    bool rc = true;
+bool RgbLedDevice::setBrightness(const rgb& color, LightMode mode, const BlinkConfig& blink) {
+    // Force STATIC to avoid rainbow effect on AW2013
+    (void)mode;
+    (void)blink;
 
-    if (mColors == Color::NONE) {
-        LOG(ERROR) << "No LEDs found";
-        return false;
-    }
+    bool ok = true;
 
-    if (mode == LightMode::BREATH && !supportsBreath()) {
-        // Not all LEDs support breathing, force static mode
-        mode = LightMode::STATIC;
-    }
+    // Disable breath on all channels
+    if (mHasR) ok &= mR.setBreathEnabled(false);
+    if (mHasG) ok &= mG.setBreathEnabled(false);
+    if (mHasB) ok &= mB.setBreathEnabled(false);
 
-    if (mColors == Color::ALL) {
-        rc &= mRed.setBrightness(color.red, mode);
-        rc &= mGreen.setBrightness(color.green, mode);
-        rc &= mBlue.setBrightness(color.blue, mode);
-    } else {
-        // Check if we have only one LED
-        if (mColors == Color::RED) {
-            rc &= mRed.setBrightness(color.toBrightness(), mode);
-        } else if (mColors == Color::GREEN) {
-            rc &= mGreen.setBrightness(color.toBrightness(), mode);
-        } else if (mColors == Color::BLUE) {
-            rc &= mBlue.setBrightness(color.toBrightness(), mode);
-        } else {
-            // We only have two LEDs, blend the missing color in the other two
-            if ((mColors & Color::RED) == Color::NONE) {
-                rc &= mBlue.setBrightness((color.blue + color.red) / 2, mode);
-                rc &= mGreen.setBrightness((color.green + color.red) / 2, mode);
-            } else if ((mColors & Color::GREEN) == Color::NONE) {
-                rc &= mRed.setBrightness((color.red + color.green) / 2, mode);
-                rc &= mBlue.setBrightness((color.blue + color.green) / 2, mode);
-            } else if ((mColors & Color::BLUE) == Color::NONE) {
-                rc &= mRed.setBrightness((color.red + color.blue) / 2, mode);
-                rc &= mGreen.setBrightness((color.green + color.blue) / 2, mode);
-            }
-        }
-    }
+    // Set brightness (STATIC only)
+    if (mHasR) ok &= mR.setRawBrightness(color.red);
+    if (mHasG) ok &= mG.setRawBrightness(color.green);
+    if (mHasB) ok &= mB.setRawBrightness(color.blue);
 
-    return rc;
+    return ok;
 }
 
 void RgbLedDevice::dump(int fd) const {
-    dprintf(fd, "Exists: %d", exists());
-    dprintf(fd, ", supports breath: %d", supportsBreath());
-    dprintf(fd, ", colors:");
-    if (mColors != Color::NONE) {
-        if (mColors & Color::RED) {
-            dprintf(fd, "\nRed: ");
-            mRed.dump(fd);
-        }
-        if (mColors & Color::GREEN) {
-            dprintf(fd, "\nGreen: ");
-            mGreen.dump(fd);
-        }
-        if (mColors & Color::BLUE) {
-            dprintf(fd, "\nBlue: ");
-            mBlue.dump(fd);
-        }
-    } else {
-        dprintf(fd, " None");
-    }
+    dprintf(fd, "exists=%d, supportsBreath=%d\n", exists(), supportsBreath());
+    if (mHasR) { dprintf(fd, "  R: "); mR.dump(fd); dprintf(fd, "\n"); }
+    if (mHasG) { dprintf(fd, "  G: "); mG.dump(fd); dprintf(fd, "\n"); }
+    if (mHasB) { dprintf(fd, "  B: "); mB.dump(fd); dprintf(fd, "\n"); }
 }
 
 }  // namespace light

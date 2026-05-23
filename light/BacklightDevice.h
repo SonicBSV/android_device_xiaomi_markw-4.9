@@ -15,41 +15,13 @@ namespace android {
 namespace hardware {
 namespace light {
 
-/**
- * A Linux backlight device.
- * @see https://www.kernel.org/doc/Documentation/ABI/stable/sysfs-class-backlight
- */
 class BacklightDevice : public IDumpable {
   public:
     BacklightDevice() = delete;
+    explicit BacklightDevice(const std::string& name);
 
-    /**
-     * Constructor.
-     *
-     * @param name The name of the backlight device
-     */
-    BacklightDevice(std::string name);
-
-    /**
-     * Get the name of the backlight device.
-     *
-     * @return std::string The name of the backlight device
-     */
     std::string getName() const;
-
-    /**
-     * Return whether this backlight device exists.
-     *
-     * @return bool true if the backlight device exists, false otherwise
-     */
     bool exists() const;
-
-    /**
-     * Set the brightness of this backlight device.
-     *
-     * @param value The brightness value to set
-     * @return bool true if the brightness was set successfully, false otherwise
-     */
     bool setBrightness(uint8_t value);
 
     void dump(int fd) const override;

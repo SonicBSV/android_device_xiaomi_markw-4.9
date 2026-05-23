@@ -6,86 +6,104 @@
 
 #include "LedDevice.h"
 
-#define LOG_TAG "LedDevice"
-
 #include <android-base/logging.h>
 #include <fstream>
-#include "Utils.h"
+#include <sstream>
+
+#define LOG_TAG "LedDevice"
 
 namespace aidl {
 namespace android {
 namespace hardware {
 namespace light {
 
-static const uint32_t kDefaultMaxBrightness = 255;
-
 static const std::string kBaseLedsPath = "/sys/class/leds/";
+static const uint32_t kDefaultMaxBrightness = 255;
 
 static const std::string kBrightnessNode = "brightness";
 static const std::string kMaxBrightnessNode = "max_brightness";
+static const std::string kOnOffMsNode = "on_off_ms";
 
-static const std::string kBreathNodes[] = {
-        "breath",
-        "blink",
-};
+static const char* kBreathCandidates[] = { "breath", "blink" };
 
-LedDevice::LedDevice(std::string name) : mName(name), mBasePath(kBaseLedsPath + name + "/") {
-    if (!readFromFile(mBasePath + kMaxBrightnessNode, mMaxBrightness)) {
-        mMaxBrightness = kDefaultMaxBrightness;
-    }
+LedDevice::LedDevice(const std::string& name)
+    : mName(name),
+      mBasePath(kBaseLedsPath + name + "/"),
+      mMaxBrightness(kDefaultMaxBrightness),
+      mHasOnOffMs(false) {
+    readFromFile(mBasePath + kMaxBrightnessNode, mMaxBrightness);
 
-    for (const auto& node : kBreathNodes) {
-        if (std::ifstream(mBasePath + node).good()) {
-            mBreathNode = node;
+    for (const char* n : kBreathCandidates) {
+        if (std::ifstream(mBasePath + n).good()) {
+            mBreathNode = n;
             break;
         }
     }
+
+    mHasOnOffMs = std::ifstream(mBasePath + kOnOffMsNode).good();
 }
 
 std::string LedDevice::getName() const {
     return mName;
 }
 
-bool LedDevice::supportsBreath() const {
-    return !mBreathNode.empty();
-}
-
 bool LedDevice::exists() const {
     return std::ifstream(mBasePath + kBrightnessNode).good();
 }
 
-bool LedDevice::setBrightness(uint8_t value, LightMode mode) {
-    // Disable current blinking
+bool LedDevice::supportsBreath() const {
+    return !mBreathNode.empty();
+}
+
+bool LedDevice::supportsOnOffMs() const {
+    return mHasOnOffMs;
+}
+
+bool LedDevice::setBrightness(uint8_t value, LightMode mode, const BlinkConfig& blink) {
     if (supportsBreath()) {
-        writeToFile(mBasePath + mBreathNode, 0);
+        (void)writeToFile(mBasePath + mBreathNode, 0);
     }
 
-    switch (mode) {
-        case LightMode::BREATH:
-            if (supportsBreath()) {
-                return writeToFile(mBasePath + mBreathNode, value > 0 ? 1 : 0);
-                break;
-            }
-
-            // Fallthrough to static mode if breath is not supported
-            FALLTHROUGH_INTENDED;
-        case LightMode::STATIC:
-            return writeToFile(mBasePath + kBrightnessNode, scaleBrightness(value, mMaxBrightness));
-            break;
-        default:
-            LOG(ERROR) << "Unknown mode: " << mode;
-            return false;
-            break;
+    if (!writeToFile(mBasePath + kBrightnessNode, scaleBrightness(value, mMaxBrightness))) {
+        return false;
     }
+
+    if (mode == LightMode::BREATH) {
+        if (!supportsBreath()) return true;
+
+        if (mHasOnOffMs && blink.valid()) {
+            std::stringstream ss;
+            ss << blink.onMs << " " << blink.offMs;
+            (void)writeToFile(mBasePath + kOnOffMsNode, ss.str());
+        }
+
+        return writeToFile(mBasePath + mBreathNode, value > 0 ? 1 : 0);
+    }
+
+    return true;
+}
+
+bool LedDevice::setRawBrightness(uint8_t value) {
+    return writeToFile(mBasePath + kBrightnessNode, scaleBrightness(value, mMaxBrightness));
+}
+
+bool LedDevice::setBreathEnabled(bool enabled) {
+    if (!supportsBreath()) return true;
+    return writeToFile(mBasePath + mBreathNode, enabled ? 1 : 0);
+}
+
+bool LedDevice::setBreathTiming(const BlinkConfig& blink) {
+    if (!mHasOnOffMs || !blink.valid()) return true;
+
+    std::stringstream ss;
+    ss << blink.onMs << " " << blink.offMs;
+    return writeToFile(mBasePath + kOnOffMsNode, ss.str());
 }
 
 void LedDevice::dump(int fd) const {
-    dprintf(fd, "Name: %s", mName.c_str());
-    dprintf(fd, ", exists: %d", exists());
-    dprintf(fd, ", base path: %s", mBasePath.c_str());
-    dprintf(fd, ", max brightness: %u", mMaxBrightness);
-    dprintf(fd, ", supports breath: %d", supportsBreath());
-    dprintf(fd, ", breath node: %s", mBreathNode.c_str());
+    dprintf(fd, "Name: %s, exists: %d, base: %s, max: %u, breathNode: %s, on_off_ms: %d",
+            mName.c_str(), exists(), mBasePath.c_str(), mMaxBrightness,
+            mBreathNode.c_str(), mHasOnOffMs);
 }
 
 }  // namespace light
