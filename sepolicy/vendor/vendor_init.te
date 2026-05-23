@@ -30,3 +30,6 @@ set_prop(vendor_init, vendor_dataqdp_prop)
 dontaudit vendor_init default_prop:property_service { set };
 dontaudit vendor_init default_prop:file { read open };
 allow vendor_init { fpc_data_file gx_fpd_data_file }:dir create_dir_perms;
+
+allow vendor_init gx_fpd_data_file:dir search;
+allow vendor_init gx_fpd_data_file:file getattr;
