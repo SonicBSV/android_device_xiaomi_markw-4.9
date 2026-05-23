@@ -1,5 +1,6 @@
 /*
    Copyright (c) 2016, The CyanogenMod Project
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions are
    met:
@@ -12,6 +13,7 @@
     * Neither the name of The Linux Foundation nor the names of its
       contributors may be used to endorse or promote products derived
       from this software without specific prior written permission.
+
    THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
    WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
@@ -25,9 +27,7 @@
    IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <fcntl.h>
-#include <stdlib.h>
-#include <sys/sysinfo.h>
+#include <string.h>
 
 #include "vendor_init.h"
 #include "property_service.h"
@@ -36,33 +36,10 @@
 #define _REALLY_INCLUDE_SYS__SYSTEM_PROPERTIES_H_
 #include <sys/_system_properties.h>
 
-char const *heaptargetutilization;
-char const *heapminfree;
-char const *heapmaxfree;
+namespace {
 
-void check_device()
-{
-    struct sysinfo sys;
-
-    sysinfo(&sys);
-
-    if (sys.totalram > 2048ull * 1024 * 1024) {
-        // from phone-xhdpi-4096-dalvik-heap.mk
-        heaptargetutilization = "0.6";
-        heapminfree = "8m";
-        heapmaxfree = "16m";
-    } else {
-        // from phone-xhdpi-2048-dalvik-heap.mk
-        heaptargetutilization = "0.75";
-        heapminfree = "512k";
-        heapmaxfree = "8m";
-   }
-}
-
-void property_override(char const prop[], char const value[], bool add = true)
-{
-    auto pi = (prop_info *) __system_property_find(prop);
-
+static void property_override(const char prop[], const char value[], bool add = true) {
+    auto pi = (prop_info*)__system_property_find(prop);
     if (pi != nullptr) {
         __system_property_update(pi, value, strlen(value));
     } else if (add) {
@@ -70,25 +47,23 @@ void property_override(char const prop[], char const value[], bool add = true)
     }
 }
 
-void set_avoid_gfxaccel_config() {
-    struct sysinfo sys;
-    sysinfo(&sys);
-
-    if (sys.totalram <= 3072ull * 1024 * 1024) {
-        // Reduce memory footprint
-        property_override("ro.config.avoid_gfx_accel", "true");
-    }
+static void load_dalvik_properties() {
+    /*
+     * markw: only SKU is 3GB RAM / 32GB eMMC
+     * Display: 5.0" 1920x1080
+     * Balanced ART heap for 3GB + 1080p + Android 15
+     */
+    property_override("dalvik.vm.heapstartsize", "8m");
+    property_override("dalvik.vm.heapgrowthlimit", "256m");
+    property_override("dalvik.vm.heapsize", "512m");
+    property_override("dalvik.vm.heaptargetutilization", "0.70");
+    property_override("dalvik.vm.heapminfree", "2m");
+    property_override("dalvik.vm.heapmaxfree", "8m");
 }
 
-void vendor_load_properties()
-{
-    check_device();
-    set_avoid_gfxaccel_config();
+}  // namespace
 
-    property_override("dalvik.vm.heapstartsize", "8m");
-    property_override("dalvik.vm.heapgrowthlimit", "192m");
-    property_override("dalvik.vm.heapsize", "512m");
-    property_override("dalvik.vm.heaptargetutilization", heaptargetutilization);
-    property_override("dalvik.vm.heapminfree", heapminfree);
-    property_override("dalvik.vm.heapmaxfree", heapmaxfree);
+void vendor_load_properties() {
+    ALOGI("Loading vendor properties for markw 3/32");
+    load_dalvik_properties();
 }
