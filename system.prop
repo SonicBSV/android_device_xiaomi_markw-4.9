@@ -6,125 +6,62 @@
 ro.config.media_vol_steps=25
 ro.config.vc_call_vol_steps=11
 ro.config.alarm_vol_steps=25
-vendor.fastrpc.disable.adsprpcd_sensorspd.daemon=1
-
-# Bluetooth
-bluetooth.sco.disable_enhanced_connection=true
-
-# Console
-persist.vendor.console.silent.config=1
-
-# Data
-ro.vendor.use_data_netmgrd=true
-persist.data.netmgrd.qos.enable=true
-persist.vendor.data.mode=concurrent
-
-# Disable MTE Async for system server
-arm64.memtag.process.system_server=off
-
-# Deep Sleep
-pm.sleep_mode=1
-vendor.post_boot.parsed=1s
 
 # Dexopt
 dalvik.vm.dex2oat64.enabled=true
-pm.dexopt.shared=quicken
+pm.dexopt.shared=speed
+
+# MTE
+arm64.memtag.process.system_server=off
+
+# Sleep
+pm.sleep_mode=1
+
+# Filesystem
+fs_mgr.overlayfs.prefer_cache_backing_storage=true
+
+# FM
+ro.fm.transmitter=false
+
+# HWUI (tuned for 3GB / 1080p / Adreno 506)
+ro.hwui.texture_cache_size=48
+ro.hwui.layer_cache_size=32
+ro.hwui.r_buffer_cache_size=6
+ro.hwui.path_cache_size=24
+ro.hwui.drop_shadow_cache_size=4
+ro.hwui.texture_cache_flushrate=0.5
+ro.hwui.text_small_cache_width=1024
+ro.hwui.text_small_cache_height=1024
+ro.hwui.text_large_cache_width=2048
+ro.hwui.text_large_cache_height=2048
 
 # Display
-debug.cpurend.vsync=false
-debug.egl.hw=0
-debug.enable.sglscale=1
-debug.hwui.skia_atrace_enabled=false
-debug.hwui.target_cpu_time_percent=30
 debug.hwui.use_hint_manager=true
 debug.mdpcomp.logs=0
-debug.renderengine.backend=skiaglthreaded
-debug.sf.hw=0
+debug.sf.enable_transaction_tracing=false
 debug.sf.latch_unsignaled=1
-debug.sf.recomputecrop=0
 dev.pm.dyn_samplingrate=1
 persist.demo.hdmirotationlock=false
 persist.hwc.mdpcomp.enable=true
 ro.egl.blobcache.multifile=true
 ro.egl.blobcache.multifile_limit=33554432
-vendor.display.enable_default_color_mode=1
-
-# FM
-ro.fm.transmitter=false
-vendor.hw.fm.init=0
-
-# Filesystem
-fs_mgr.overlayfs.prefer_cache_backing_storage=true
-
-# HWUI
-ro.hwui.texture_cache_size=72
-ro.hwui.layer_cache_size=48
-ro.hwui.r_buffer_cache_size=8
-ro.hwui.path_cache_size=32
-ro.hwui.drop_shadow_cache_size=6
-ro.hwui.texture_cache_flushrate=0.4
-ro.hwui.text_small_cache_width=1024
-ro.hwui.text_small_cache_height=1024
-ro.hwui.text_large_cache_width=2048
-ro.hwui.text_large_cache_height=2048
 
 # Media
 av.debug.disable.pers.cache=1
 media.aac_51_output_enabled=true
 media.settings.xml=/vendor/etc/media_profiles_vendor.xml
 media.stagefright.thumbnail.prefer_hw_codecs=true
-media.msm8956hw=0
 mmp.enable.3g2=true
-vendor.vidc.debug.level=0
-vendor.vidc.dec.downscalar_height=1088
-vendor.vidc.dec.downscalar_width=1920
-vendor.vidc.disable.split.mode=1
-vendor.vidc.enc.disable_bframes=1
-vendor.vidc.enc.disable.pq=true
-vendor.video.disable.ubwc=1
 
-# Disable media transcoding
+# Transcoding
 persist.sys.fuse.transcode_user_control=true
 persist.sys.fuse.transcode_enabled=false
 
-# Perf
-ro.vendor.qti.sys.fw.bservice_enable=true
-
-# Qualcomm
-ro.vendor.qti.va_aosp.support=1
-
-# Radio (IMS)
-persist.dbg.volte_avail_ovr=1
-persist.dbg.vt_avail_ovr=1
-persist.dbg.wfc_avail_ovr=1
-persist.vendor.ims.disableIMSLogs=1
-persist.vendor.ims.disableADBLogs=1
-persist.vendor.ims.disableDebugDataPathLogs=1
-persist.vendor.ims.disableDebugLogs=1
-persist.vendor.ims.disableSigHandler=1
-persist.vendor.ims.disableQXDMLogs=1
-
-# Recovery
-persist.vendor.recovery_update=false
-
-# ScalarConfig
-vendor.display.disable_scaler=1
-
 # Shutdown
-ro.build.shutdown_timeout=2
+ro.build.shutdown_timeout=5
+ro.hw_timeout_multiplier=2
 
 # SurfaceFlinger
-debug.sf.disable_client_composition_cache=1
-debug.sf.use_phase_offsets_as_durations=1
-debug.sf.enable_transaction_tracing=false
-debug.sf.predict_hwc_composition_strategy=0
-debug.sf.late.sf.duration=30000000
-debug.sf.late.app.duration=24000000
-debug.sf.early.sf.duration=30000000
-debug.sf.early.app.duration=24000000
-debug.sf.earlyGl.sf.duration=30000000
-debug.sf.earlyGl.app.duration=24000000
-debug.sf.hwc.min.duration=210000000
 ro.surface_flinger.enable_frame_rate_override=false
 ro.surface_flinger.force_hwc_copy_for_virtual_displays=true
 ro.surface_flinger.max_frame_buffer_acquired_buffers=3
@@ -138,17 +75,9 @@ persist.backup.ntpServer=0.pool.ntp.org
 persist.timed.enable=true
 
 # Telephony
-ril.subscription.types=NV,RUIM
 ro.telephony.call_ring.multiple=false
-service.qti.ims.enabled=1
-telephony.lteOnCdmaDevice=1
-vendor.service.qti.ims.enabled=1
-#
-# Set network mode to (T/L/G/W/1X/EVDO, T/L/G/W/1X/EVDO) for 7+7 mode device on DSDS mode
 ro.telephony.default_network=20,20
-
-# Watchdog
-ro.hw_timeout_multiplier=3
+service.qti.ims.enabled=1
 
 # WiFi
 persist.mm.sta.enable=0
