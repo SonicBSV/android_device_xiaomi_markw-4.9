@@ -1,70 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-
-Copyright (c) 2014, The Linux Foundation. All rights reserved.
-
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are
-met:
-    * Redistributions of source code must retain the above copyright
-      notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above
-      copyright notice, this list of conditions and the following
-      disclaimer in the documentation and/or other materials provided
-      with the distribution.
-    * Neither the name of The Linux Foundation nor the names of its
-      contributors may be used to endorse or promote products derived
-      from this software without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
-WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
-ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
-BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
-BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
-OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
-IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+  Overlay for Xiaomi Redmi 4 Prime (markw)
+  LineageOS 22.2 / Android 15
 -->
 <resources>
-    <!-- Enable doze mode -->
-    <bool name="doze_display_state_supported">false</bool>
+    <!-- Навигация (аппаратные кнопки) -->
+    <bool name="config_useDeadZone">false</bool>
+    <integer name="navigation_bar_deadzone_hold">0</integer>
+    <integer name="navigation_bar_deadzone_decay">0</integer>
+    <bool name="config_dead_zone_flash">false</bool>
+    <bool name="config_navigation_bar_enable_auto_dim_no_visible_wallpaper">false</bool>
 
-    <!-- Doze: should the pickup sensor be used as a pulse signal? -->
-    <bool name="doze_pulse_on_pick_up">true</bool>
+    <!-- Биометрия: отключаем подэкранный и боковой дактилоскоп -->
+    <string name="config_udfpsIcon" translatable="false"></string>
+    <integer name="config_udfpsDeviceEntryIconLongPress">0</integer>
+    <bool name="config_show_sidefps_hint_on_bouncer">false</bool>
+    <integer name="config_sfpsSensorWidth">0</integer>
+    <bool name="config_restToUnlockSupported">false</bool>
+    <integer name="config_restToUnlockDurationScreenOff">0</integer>
+    <integer name="config_restToUnlockDurationDefault">0</integer>
 
-    <!-- Doze: when to pulse after a buzzworthy notification arrives -->
-    <string name="doze_pulse_schedule" translatable="false">10s,30s,60s,180s</string>
+    <!-- Face Unlock: не используется -->
+    <integer-array name="config_face_auth_props" translatable="false">
+        <item>0</item><item>0</item><item>0</item>
+    </integer-array>
+    <integer-array name="config_inner_face_auth_props" translatable="false">
+        <item>0</item><item>0</item><item>0</item>
+    </integer-array>
 
-    <!-- Doze: check proximity sensor before pulsing from intent? -->
-    <bool name="doze_proximity_check_before_pulse_intent">true</bool>
+    <!-- Защита выреза камеры — экран без вырезов -->
+    <bool name="config_enableDisplayCutoutProtection">false</bool>
+    <string translatable="false" name="config_frontBuiltInDisplayCutoutProtection"></string>
+    <string translatable="false" name="config_innerBuiltInDisplayCutoutProtection"></string>
+    <string translatable="false" name="config_protectedCameraId"></string>
+    <string translatable="false" name="config_protectedInnerCameraId"></string>
+    <string translatable="false" name="config_protectedPhysicalCameraId"></string>
+    <string translatable="false" name="config_protectedInnerPhysicalCameraId"></string>
+    <string translatable="false" name="config_protectedScreenUniqueId"></string>
+    <string translatable="false" name="config_protectedInnerScreenUniqueId"></string>
+    <string translatable="false" name="config_cameraProtectionExcludedPackages"></string>
 
-    <!-- Doze: pulse parameter - delay to wait for the screen to wake up after an intent -->
-    <integer name="doze_pulse_delay_in_intent">0</integer>
+    <!-- Скругление углов: плоский экран, радиус 0 -->
+    <string name="config_rounded_mask" translatable="false">M0,0 C0,0 0,0 0,0 Z</string>
 
-    <!-- If not zero, limits the internal screen recorder's framerate to the set value. -->
-    <integer name="config_screenRecorderMaxFramerate">60</integer>
+    <!-- Быстрые настройки под 5" FHD -->
+    <integer name="quick_qs_panel_max_tiles">4</integer>
+    <integer name="quick_qs_panel_max_rows">2</integer>
+    <integer name="quick_settings_num_columns">2</integer>
+    <integer name="quick_settings_max_rows">4</integer>
+    <bool name="config_use_split_notification_shade">false</bool>
+    <bool name="force_config_use_split_notification_shade">false</bool>
+    <bool name="config_use_large_screen_shade_header">false</bool>
 
-    <!-- System icon area layout weight -->
-    <item name="system_icon_area_weight" format="float" type="integer">1.25</item>
- 
-    <!-- Max visible notification icons -->
-    <integer name="config_maxVisibleNotificationIcons">6</integer>
-    <integer name="config_maxVisibleNotificationIconsWhenDark">7</integer>
-    
-    <!-- Tiles to auto add to Quick Settings upon first change of a given secure setting.
-         The syntax is setting-name:spec. If the tile is a TileService, the spec should be specified
-         as custom(package/class). Relative class name is supported. -->
-    <string-array name="config_quickSettingsAutoAdd" translatable="false">
-        <item>accessibility_display_inversion_enabled:inversion</item>
-        <item>wind_down_first_time_setup:custom(com.google.android.apps.wellbeing/.screen.ui.GrayscaleTileService)</item>
-        <item>focus_mode_first_time_setup:custom(com.google.android.apps.wellbeing/.focusmode.quicksettings.FocusModeTileService)</item>
-    </string-array>
+    <!-- Отключаем функции для больших экранов -->
+    <bool name="config_enableDesktopFeatureSet">false</bool>
+    <bool name="config_userSwitchingMustGoThroughLoginScreen">false</bool>
 
-    <!-- Should we vibrate on an icon animation of the shelf. This should only be active if the
-     vibrator is capable of subtle vibrations -->
-    <bool name="config_vibrateOnIconAnimation">true</bool>
+    <!-- Положение кнопки поворота (по вкусу) -->
+    <bool name="floating_rotation_button_position_left">true</bool>
+
+    <!-- Сетка панели управления / Power Menu Lite -->
+    <integer name="controls_max_columns">2</integer>
+    <integer name="power_menu_lite_max_columns">2</integer>
+    <integer name="power_menu_lite_max_rows">4</integer>
 </resources>

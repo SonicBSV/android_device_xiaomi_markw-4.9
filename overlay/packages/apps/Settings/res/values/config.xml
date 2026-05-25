@@ -1,38 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2007 The Android Open Source Project
-     Licensed under the Apache License, Version 2.0 (the "License");
-     you may not use this file except in compliance with the License.
-     You may obtain a copy of the License at
-          http://www.apache.org/licenses/LICENSE-2.0
-     Unless required by applicable law or agreed to in writing, software
-     distributed under the License is distributed on an "AS IS" BASIS,
-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-     See the License for the specific language governing permissions and
-     limitations under the License.
+<!--
+  Overlay for Xiaomi Redmi 4 Prime (markw)
+  LineageOS 22.2 / Android 15
 -->
-
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- The number of vibration intensity levels supported by the device.
-         Note that this should correspond to the ability to vary the vibration amplitude, with
-         enough dynamic range to have at least as many distinct intensity levels as defined here.
-         Supported values are 1, 2, 3. If '1', the settings app will use a toggle for the settings,
-         otherwise a slider. If '3', the settings app maps intensities directly to the levels
-         supported by the Vibrator HAL APIs. If '2', then the levels will be mapped to
-         VIBRATION_INTENSITY_LOW and VIBRATION_INTENSITY_HIGH, which gives the most range for
-         scaling vibrations. The medium intensity will be skipped.
-         The default intensity values are configured at
-         frameworks/base/core/res/res/values/config.xml's config_default[type]VibrationIntensity.
-         Make sure that each default intensity value is consistent with the supported levels set
-         here. If this settings supports only 2 levels, for example, then the default intensity
-         should be either LOW (1) or HIGH (3).
-    -->
+    <!-- Вибрация: два уровня интенсивности (низкий/высокий) — соответствует линейному вибромотору? -->
     <integer name="config_vibration_supported_intensity_levels">2</integer>
 
-    <!-- Whether memory from app_info_settings is available or not. -->
+    <!-- Показываем использование памяти в настройках приложений (ОЗУ) -->
     <bool name="config_show_app_info_settings_memory">true</bool>
 
-    <!-- Whether to show a preference item for mobile plan -->
+    <!-- Скрываем настройки мобильного плана (не актуально) -->
     <bool name="config_show_mobile_plan">false</bool>
 
+    <!-- Нет подэкранного сканера отпечатков (UDFPS) -->
+    <string name="config_udfpsIcon" translatable="false"></string>
+    <integer name="config_udfpsEnrollProgressBar">0</integer>
+
+    <!-- Нет поддержки Face Unlock (нет ИК-камеры) -->
+    <string name="config_face_enroll" translatable="false"></string>
+    <string name="config_face_enroll_guidance_page" translatable="false"></string>
+    <bool name="config_face_intro_show_less_secure">false</bool>
+    <bool name="config_face_intro_show_require_eyes">false</bool>
+    <bool name="config_suw_support_face_enroll">false</bool>
+    <bool name="config_face_education_use_lottie">false</bool>
+
+    <!-- Экран IPS 60 Гц, плавное изменение частоты не поддерживается -->
+    <bool name="config_show_smooth_display">false</bool>
+
+    <!-- Адаптивная связь отсутствует -->
+    <bool name="config_show_adaptive_connectivity">false</bool>
+
+    <!-- Нет регулировки цветовой температуры -->
+    <bool name="config_enableColorTemperature">false</bool>
+
+    <!-- Нет док-станции (и нет соответствующих настроек) -->
+    <bool name="has_dock_settings">false</bool>
+
+    <!-- Датчик двойного поворота запястья отсутствует -->
+    <string name="gesture_double_twist_sensor_type" translatable="false"></string>
+    <string name="gesture_double_twist_sensor_vendor" translatable="false"></string>
+
+    <!-- Лазерный датчик камеры отсутствует -->
+    <bool name="config_show_camera_laser_sensor">false</bool>
+
+    <!-- NFC отсутствует, точка детектирования не нужна -->
+    <bool name="config_nfc_detection_point">false</bool>
+
+    <!-- Никаких складных состояний (моноблок) -->
+    <string-array name="config_settableAutoRotationDeviceStatesDescriptions" translatable="false">
+    </string-array>
+
+    <!-- Отключаем неиспользуемые функции -->
+    <bool name="config_storage_manager_settings_enabled">false</bool>
+    <bool name="config_support_enabled">false</bool>
+    <bool name="config_app_battery_usage_list_enabled">false</bool>
+    <bool name="config_battery_manager_consider_ac">false</bool>
+    <bool name="config_auto_data_switch_enables_cross_sim_calling">false</bool>
+    <bool name="config_cloned_apps_page_enabled">false</bool>
+    <bool name="config_privatespace_account_login_enabled">false</bool>
+    <bool name="config_show_communal_settings">false</bool>
+    <bool name="config_psim_conversion_menu_enabled">false</bool>
+    <bool name="config_advanced_vpn_enabled">false</bool>
+
+    <!-- Принудительно отключаем скрытие меню Testing на пользовательских сборках
+         (можно оставить false, чтобы меню было доступно) -->
+    <bool name="config_hide_testing_settings_menu_for_user_builds">false</bool>
+
+    <!-- Двухпанельный режим не нужен на 5" экране, завышаем пороги -->
+    <integer name="config_activity_embed_split_min_sw_dp">1200</integer>
+    <integer name="config_activity_embed_split_min_cur_dp">1200</integer>
 </resources>
