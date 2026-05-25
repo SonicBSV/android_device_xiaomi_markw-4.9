@@ -237,6 +237,7 @@ on property:vold.post_fs_data_done=1
 
 # Boot completed — minimal actions only
 on property:sys.boot_completed=1
+    setprop vendor.powerhal.init 1
     write /dev/kmsg "Boot completed "
     start vendor.camera.provider
 

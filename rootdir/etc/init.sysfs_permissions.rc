@@ -1,0 +1,49 @@
+on boot
+    # ========== CPU FREQUENCY ==========
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+
+    # ========== GPU DEVFREQ (правильные пути для markw) ==========
+    chown system system /sys/class/devfreq/1c00000.qcom,kgsl-3d0/min_freq
+    chown system system /sys/class/devfreq/1c00000.qcom,kgsl-3d0/max_freq
+    chmod 0664 /sys/class/devfreq/1c00000.qcom,kgsl-3d0/min_freq
+    chmod 0664 /sys/class/devfreq/1c00000.qcom,kgsl-3d0/max_freq
+
+    # ========== GPU POWER LEVELS ==========
+    chown system system /sys/class/kgsl/kgsl-3d0/min_pwrlevel
+    chown system system /sys/class/kgsl/kgsl-3d0/max_pwrlevel
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/min_pwrlevel
+    chmod 0664 /sys/class/kgsl/kgsl-3d0/max_pwrlevel
+
+    # ========== DEVFREQ BW (правильные пути для markw) ==========
+    chown system system /sys/class/devfreq/soc:qcom,cpubw/min_freq
+    chown system system /sys/class/devfreq/soc:qcom,cpubw/max_freq
+    chown system system /sys/class/devfreq/soc:qcom,gpubw/min_freq
+    chown system system /sys/class/devfreq/soc:qcom,gpubw/max_freq
+    chmod 0664 /sys/class/devfreq/soc:qcom,cpubw/min_freq
+    chmod 0664 /sys/class/devfreq/soc:qcom,cpubw/max_freq
+    chmod 0664 /sys/class/devfreq/soc:qcom,gpubw/min_freq
+    chmod 0664 /sys/class/devfreq/soc:qcom,gpubw/max_freq
+
+    # ========== THERMAL ZONES (отключаем проблемный zone47) ==========
+    chown system system /sys/class/thermal/thermal_zone47/mode
+    chmod 0664 /sys/class/thermal/thermal_zone47/mode
+    write /sys/class/thermal/thermal_zone47/mode disabled
+
+    # ========== CPU BOOST ==========
+    chown system system /sys/devices/system/cpu/cpu_boost/input_boost_freq
+    chown system system /sys/devices/system/cpu/cpu_boost/input_boost_ms
+    chmod 0664 /sys/devices/system/cpu/cpu_boost/input_boost_freq
+    chmod 0664 /sys/devices/system/cpu/cpu_boost/input_boost_ms
+
+    # ========== CORE CTL ==========
+    chown system system /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
+    chown system system /sys/devices/system/cpu/cpu0/core_ctl/max_cpus
+    chown system system /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
+    chown system system /sys/devices/system/cpu/cpu4/core_ctl/max_cpus
+    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
+    chmod 0664 /sys/devices/system/cpu/cpu0/core_ctl/max_cpus
+    chmod 0664 /sys/devices/system/cpu/cpu4/core_ctl/min_cpus
+    chmod 0664 /sys/devices/system/cpu/cpu4/core_ctl/max_cpus

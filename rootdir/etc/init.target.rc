@@ -55,13 +55,6 @@ on early-boot
     chmod 0664 /mnt/vendor/persist/sensors/sensors_settings
 
 on init
-    # schedtune — keep conservative, post_boot handles fine-tuning
-    write /dev/stune/foreground/schedtune.sched_boost_no_override 1
-    write /dev/stune/top-app/schedtune.sched_boost_no_override 1
-    write /dev/stune/schedtune.colocate 0
-    write /dev/stune/background/schedtune.colocate 0
-    write /dev/stune/foreground/schedtune.colocate 0
-    write /dev/stune/top-app/schedtune.colocate 1
     write /sys/module/qpnp_rtc/parameters/poweron_alarm 1
 
 on post-fs
@@ -143,6 +136,19 @@ on property:init.svc.vendor.charger=running
     start thermal-engine
 
 on boot
+    # Разрешаем изменять инпут буст системе
+    chown system system /sys/module/cpu_boost/parameters/input_boost_freq
+    chown system system /sys/module/cpu_boost/parameters/input_boost_ms
+    chmod 0664 /sys/module/cpu_boost/parameters/input_boost_freq
+    chown system system /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+    chmod 0664 /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+    
+    # Права для cpuset
+    mkdir /dev/cpuset/top-app
+    chown system system /dev/cpuset/top-app
+    chown system system /dev/cpuset/top-app/tasks
+    chmod 0664 /dev/cpuset/top-app/tasks
+    
     chown system system /mnt/vendor/persist/WCNSS_qcom_wlan_nv.bin
 
     # USB controller configuration

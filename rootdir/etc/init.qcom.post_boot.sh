@@ -205,4 +205,10 @@ misc_link="$(ls -l /dev/block/bootdevice/by-name/misc 2>/dev/null)"
 real_path="${misc_link##*>}"
 [ -n "$real_path" ] && setprop persist.vendor.mmi.misc_dev_path "$real_path"
 
-log -t "$LOGTAG" -p i "post_boot complete"
+# Включаем Power HAL (запускаем NodeLooperThread)
+setprop vendor.powerhal.init 1
+
+# Сигнал о завершении парсинга пост-бута
+setprop vendor.post_boot.parsed 1
+
+log -t "$LOGTAG" -p i "post_boot complete, Power HAL initiated"

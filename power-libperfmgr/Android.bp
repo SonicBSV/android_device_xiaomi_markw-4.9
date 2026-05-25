@@ -1,0 +1,76 @@
+//
+// Copyright (C) 2021 The LineageOS Project
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+soong_namespace {
+    imports: [
+        "hardware/google/interfaces",
+        "hardware/google/pixel",
+    ],
+}
+
+cc_binary {
+    name: "android.hardware.power-service.markw-libperfmgr",
+    defaults: ["android.hardware.power-ndk_shared"],
+    relative_install_path: "hw",
+    init_rc: ["aidl/android.hardware.power-service.markw-libperfmgr.rc"],
+    vintf_fragments: ["aidl/android.hardware.power-service.markw.xml"],
+    vendor: true,
+    cflags: [
+        "-Wno-unused-variable",
+        "-Wno-unused-parameter",
+        "-Wthread-safety",
+    ],
+    shared_libs: [
+        "libbase",
+        "libbinder_ndk",
+        "libcutils",
+        "libdl",
+        "liblog",
+        "libperfmgr",
+        "libprocessgroup",
+        "libutils",
+        "pixel-power-ext-V1-ndk",
+        "android.hardware.common.fmq-V1-ndk",
+        "libfmq",
+    ],
+    static_libs: [
+        "libgmock",
+        "libgtest",
+    ],
+    whole_static_libs: select(soong_config_variable("power_libperfmgr", "mode_extension_lib"), {
+        any @ flag_val: [flag_val],
+        default: ["libperfmgr-ext"],
+    }),
+    srcs: [
+        "aidl/BackgroundWorker.cpp",
+        "aidl/ChannelGroup.cpp",
+        "aidl/ChannelManager.cpp",
+        "aidl/GpuCalculationHelpers.cpp",
+        "aidl/GpuCapacityNode.cpp",
+        "aidl/service.cpp",
+        "aidl/InteractionHandler.cpp",
+        "aidl/Power.cpp",
+        "aidl/PowerExt.cpp",
+        "aidl/PowerHintSession.cpp",
+        "aidl/PowerSessionManager.cpp",
+        "aidl/SupportManager.cpp",
+        "aidl/UClampVoter.cpp",
+        "aidl/SessionRecords.cpp",
+        "aidl/SessionChannel.cpp",
+        "aidl/SessionTaskMap.cpp",
+        "aidl/SessionValueEntry.cpp",
+    ],
+    cpp_std: "gnu++20",
+}
+
+cc_library_static {
+    name: "libperfmgr-ext",
+    defaults: ["android.hardware.power-ndk_shared"],
+    vendor: true,
+    srcs: [
+        "aidl/PowerModeExtension.cpp",
+    ],
+}

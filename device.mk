@@ -50,8 +50,8 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     hardware/google/interfaces \
     hardware/google/pixel \
-    hardware/lineage/interfaces/power-libperfmgr \
-    device/xiaomi/markw/libqti-perfd-client
+    device/xiaomi/markw/power-libperfmgr \
+    hardware/qcom-caf/common/libqti-perfd-client
 
 QCOM_SOONG_NAMESPACE := \
     $(LOCAL_PATH)/qcom-caf
@@ -119,7 +119,8 @@ PRODUCT_PACKAGES += \
     libqcomvisualizer:32 \
     libqcomvoiceprocessing:32 \
     libqcompostprocbundle:32 \
-    sound_trigger.primary.msm8953:32
+    sound_trigger.primary.msm8953:32 \
+    tinymix
 
 # Audio features
 PRODUCT_PACKAGES += \
@@ -179,8 +180,8 @@ PRODUCT_PACKAGES += \
 
 # Cgroup and task_profiles
 PRODUCT_COPY_FILES += \
-    system/core/libprocessgroup/profiles/cgroups_28.json:$(TARGET_COPY_OUT_VENDOR)/etc/cgroups.json \
-    system/core/libprocessgroup/profiles/task_profiles_28.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
+    device/xiaomi/markw/configs/cgroups.json:$(TARGET_COPY_OUT_VENDOR)/etc/cgroups.json \
+    device/xiaomi/markw/configs/task_profiles.json:$(TARGET_COPY_OUT_VENDOR)/etc/task_profiles.json
 
 # ConfigStore
 PRODUCT_PACKAGES += \
@@ -384,7 +385,7 @@ PRODUCT_PACKAGES += \
 # ============================================================
 
 PRODUCT_PACKAGES += \
-    android.hardware.power-service.lineage-libperfmgr \
+    android.hardware.power-service.markw-libperfmgr \
     libqti-perfd-client
 
 PRODUCT_COPY_FILES += \
@@ -421,6 +422,7 @@ PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
     init.recovery.qcom.rc \
     init.recovery.qcom.usb.rc \
+    init.sysfs_permissions.rc \
     init.parts.rc \
     init.target.rc \
     ueventd.qcom.rc

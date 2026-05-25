@@ -3,3 +3,11 @@ allow hal_power_default sysfs_graphics:file r_file_perms;
 # Allow writing to files in /proc/gesture
 allow hal_power_default proc_gesture:dir search;
 allow hal_power_default proc_gesture:file rw_file_perms;
+
+# Разрешаем запись в ноды cpufreq и cpu_boost
+allow hal_power_default sysfs_devices_system_cpu:file rw_file_perms;
+allow hal_power_default sysfs:file rw_file_perms; # Если input_boost лежит в sysfs
+
+# Разрешаем работу с cpuset cgroups
+allow hal_power_default cgroup:dir r_dir_perms;
+allow hal_power_default cgroup:file rw_file_perms;
