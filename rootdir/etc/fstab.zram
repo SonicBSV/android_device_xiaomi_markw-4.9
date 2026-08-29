@@ -1,2 +1,3 @@
-# zram
+# ZRAM для 3GB LPDDR3, ядро 4.9
+# max_comp_streams задаётся через sysfs в init.qcom.rc, не через fstab
 /dev/block/zram0 none swap defaults zramsize=1610612736,swapprio=32758

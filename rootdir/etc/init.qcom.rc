@@ -12,14 +12,14 @@
 #       products derived from this software without specific prior written
 #       permission.
 #
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-# NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
-# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
+# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
+# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
@@ -37,12 +37,41 @@ on early-init
     chmod 0620 /dev/kmsg
 
 on init
-    # Memory cgroup for background tasks
-    mkdir /sys/fs/cgroup/memory/bg 0750 root system
-    write /sys/fs/cgroup/memory/bg/memory.swappiness 100
-    write /sys/fs/cgroup/memory/bg/memory.move_charge_at_immigrate 1
-    chown root system /sys/fs/cgroup/memory/bg/tasks
-    chmod 0660 /sys/fs/cgroup/memory/bg/tasks
+    # ═══════════════════════════════════════════════════════════════
+    # Memory cgroup v1 — путь ДОЛЖЕН совпадать с cgroups.json!
+    # cgroups.json указывает Path: "/dev/memcg" → создаём здесь.
+    # ═══════════════════════════════════════════════════════════════
+    mkdir /dev/memcg 0700 root system
+    mount cgroup none /dev/memcg memory
+    mkdir /dev/memcg/bg 0750 root system
+    write /dev/memcg/bg/memory.swappiness 100
+    write /dev/memcg/bg/memory.move_charge_at_immigrate 1
+    chown root system /dev/memcg/bg/tasks
+    chmod 0660 /dev/memcg/bg/tasks
+
+    # ═══════════════════════════════════════════════════════════════
+    # CPU cgroup v1 подкаталоги — task_profiles.json ссылается на них!
+    # Без этих mkdir профили HighPerformance/Background и т.д. не работают.
+    # ═══════════════════════════════════════════════════════════════
+    mkdir /dev/cpuctl/top-app 0755 system system
+    chown system system /dev/cpuctl/top-app/tasks
+    chmod 0664 /dev/cpuctl/top-app/tasks
+    write /dev/cpuctl/top-app/cpu.shares 1024
+
+    mkdir /dev/cpuctl/foreground 0755 system system
+    chown system system /dev/cpuctl/foreground/tasks
+    chmod 0664 /dev/cpuctl/foreground/tasks
+    write /dev/cpuctl/foreground/cpu.shares 512
+
+    mkdir /dev/cpuctl/background 0755 system system
+    chown system system /dev/cpuctl/background/tasks
+    chmod 0664 /dev/cpuctl/background/tasks
+    write /dev/cpuctl/background/cpu.shares 128
+
+    mkdir /dev/cpuctl/rt 0755 system system
+    chown system system /dev/cpuctl/rt/tasks
+    chmod 0664 /dev/cpuctl/rt/tasks
+    write /dev/cpuctl/rt/cpu.shares 1024
 
     # Subsystem restart policy
     write /sys/bus/msm_subsys/devices/subsys0/restart_level RELATED
@@ -51,10 +80,15 @@ on init
     write /sys/bus/msm_subsys/devices/subsys3/restart_level RELATED
     write /sys/bus/msm_subsys/devices/subsys4/restart_level RELATED
 
-    # ZRAM base config (swapon in post-fs-data)
+    # ZRAM base config (swapon происходит в post-fs-data)
     write /sys/block/zram0/comp_algorithm lz4
+    # 4 потока для A53 ядер (8 потоков на LPDDR3 задушат шину)
     write /sys/block/zram0/max_comp_streams 4
     write /proc/sys/vm/page-cluster 0
+
+    # Блокируем ZRAM Writeback (даже если есть бэкпорт в ядре)
+    write /sys/block/zram0/writeback_limit_enable 0
+    write /sys/block/zram0/writeback_limit 0
 
 on early-boot
     # Allow subsystem (modem etc) debugging
@@ -85,7 +119,7 @@ on boot
     write /proc/sys/kernel/random/read_wakeup_threshold 64
     write /proc/sys/kernel/random/write_wakeup_threshold 128
 
-    # Power HAL / libperfmgr node permissions
+    # Power HAL / libperfmgr permissions
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chmod 0664 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
     chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
@@ -186,7 +220,7 @@ on post-fs-data
     mkdir /data/vendor/fm 0770 system system
     chmod 0770 /data/vendor/fm
 
-    # PERFD (disabled but dir needed for compat)
+    # PERFD compat
     mkdir /data/vendor/perfd 0770 root system
     chmod 2770 /data/vendor/perfd
     rm /data/vendor/perfd/default_values
@@ -211,16 +245,16 @@ on post-fs-data
     chown radio radio /data/vendor/radio/db_check_done
     chmod 0660 /data/vendor/radio/db_check_done
 
-    # Enable ZRAM swap early
+    # Включение ZRAM свопа в самом начале post-fs-data
     swapon_all /vendor/etc/fstab.zram
     write /proc/sys/vm/swappiness 100
 
     # Must be last
     setprop vold.post_fs_data_done 1
 
-# blkio cgroup for IO priority
-on property:ro.vendor.iocgrp.config=1
-    mkdir /dev/blkio
+# blkio cgroup v1 — создаём безусловно (не ждём property)
+on init
+    mkdir /dev/blkio 0755 root system
     mount cgroup none /dev/blkio blkio
     chown system system /dev/blkio
     chown system system /dev/blkio/tasks
@@ -231,17 +265,17 @@ on property:ro.vendor.iocgrp.config=1
     write /dev/blkio/blkio.weight 1000
     write /dev/blkio/bg/blkio.weight 100
 
-# Start post_boot governor/memory tuning early
+# Ранний запуск qcom-post-boot (настройка процессора и планировщика I/O)
 on property:vold.post_fs_data_done=1
     start qcom-post-boot
 
-# Boot completed — minimal actions only
+# Boot completed — минимальные действия
 on property:sys.boot_completed=1
     setprop vendor.powerhal.init 1
     write /dev/kmsg "Boot completed "
     start vendor.camera.provider
 
-# DSDS — Restart qcrild on data switch
+# DSDS — Перезапуск qcrild при смене активной карты
 on property:persist.sys.radio.mobile_data_swap=1
     exec /bin/sleep 3s
     restart vendor.qcrild

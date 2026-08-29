@@ -27,7 +27,7 @@
 #
 
 on early-init
-    # Brief sched boost during boot only — post_boot will reset to 0
+    # Кратковременный sched boost только на время загрузки
     write /proc/sys/kernel/sched_boost 1
 
 on fs
@@ -59,18 +59,40 @@ on init
 
 on post-fs
     setrlimit 8 67108864 67108864
+
+    # ═══════════════════════════════════════════════════════════════
+    # СТАРТ КРИПТОГРАФИИ ДЛЯ FBE V1 (ДО post-fs-data!)
+    # ═══════════════════════════════════════════════════════════════
+    # 1. Запускаем демон доверенной зоны (QSEECOM)
     start vendor.qseecomd
+    
+    # 2. Блокируем дальнейший init, пока QSEECOMD не зарегистрирует слушателей ключей
     wait_for_prop vendor.sys.listeners.registered true
+    
+    # 3. Принудительно стартуем Keymaster 3.0 и Gatekeeper 1.0 на этапе post-fs.
+    #    Это гарантирует, что к моменту старта vold (в post-fs-data) они будут
+    #    полностью готовы отдавать ключи FBE.
+    start vendor.keymaster-3-0
+    start vendor.gatekeeper-1-0
+
     write /dev/ipa 1
 
-    # VM tuning — здесь контекст init, не vendor_init
+    # ═══════════════════════════════════════════════════════════════
+    # VM TUNING — Ядро 4.9, 3GB ОЗУ (без параметров из будущих ядер)
+    # ═══════════════════════════════════════════════════════════════
     write /proc/sys/vm/page-cluster 0
-    write /proc/sys/vm/dirty_background_ratio 3
-    write /proc/sys/vm/dirty_ratio 10
-    write /proc/sys/vm/dirty_expire_centisecs 2000
-    write /proc/sys/vm/dirty_writeback_centisecs 1000
-    write /proc/sys/vm/vfs_cache_pressure 100
-    write /proc/sys/vm/min_free_kbytes 8192
+    write /proc/sys/vm/dirty_background_ratio 5
+    write /proc/sys/vm/dirty_ratio 15
+    write /proc/sys/vm/dirty_expire_centisecs 3000
+    write /proc/sys/vm/dirty_writeback_centisecs 1500
+    write /proc/sys/vm/vfs_cache_pressure 80
+    write /proc/sys/vm/min_free_kbytes 12288
+    write /proc/sys/vm/extra_free_kbytes 4096
+    write /proc/sys/vm/watermark_scale_factor 50
+    write /proc/sys/vm/laptop_mode 0
+    
+    # Отключение автоматической дефрагментации ОЗУ (сохраняет ядра A53)
+    write /proc/sys/vm/compaction_proactiveness 0
 
 on post-fs-data
     mkdir /data/vendor/qcam/ 0770 camera camera
