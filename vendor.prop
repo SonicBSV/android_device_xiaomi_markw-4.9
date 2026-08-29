@@ -1,8 +1,11 @@
 #
-# vendor.prop for markw
+# vendor.prop for markw (MSM8953, 3GB/32GB)
+# crDroid 11.x (Android 15) | Kernel 4.9
 #
 
+# ═══════════════════════════════════════════════════════════════
 # Audio
+# ═══════════════════════════════════════════════════════════════
 audio.deep_buffer.media=true
 audio.offload.min.duration.secs=30
 audio.offload.video=true
@@ -35,7 +38,9 @@ vendor.voice.playback.conc.disabled=true
 vendor.voice.record.conc.disabled=false
 vendor.voice.voip.conc.disabled=true
 
+# ═══════════════════════════════════════════════════════════════
 # Audio features
+# ═══════════════════════════════════════════════════════════════
 vendor.audio.feature.anc_headset.enable=true
 vendor.audio.feature.compress_meta_data.enable=false
 vendor.audio.feature.compr_voip.enable=true
@@ -53,7 +58,9 @@ vendor.audio.feature.src_trkn.enable=true
 persist.vendor.audio.speaker.prot.enable=false
 vendor.fastrpc.disable.adsprpcd_sensorspd.daemon=1
 
+# ═══════════════════════════════════════════════════════════════
 # Bluetooth
+# ═══════════════════════════════════════════════════════════════
 persist.bluetooth.absvol.feature=false
 persist.bluetooth.a2dp_offload.cap=sbc-aac
 persist.bluetooth.a2dp_offload.disabled=true
@@ -66,7 +73,9 @@ persist.vendor.qcom.bluetooth.enable.splita2dp=false
 ro.vendor.bluetooth.wipower=false
 persist.vendor.bluetooth.modem_nv_support=true
 
+# ═══════════════════════════════════════════════════════════════
 # Camera
+# ═══════════════════════════════════════════════════════════════
 persist.vendor.camera.gyro.android=0
 persist.vendor.camera.gyro.disable=1
 persist.vendor.camera.iface.logs=0
@@ -81,7 +90,9 @@ persist.vendor.camera.display.umax=1920x1080
 vendor.camera.lowpower.record.enable=1
 vidc.enc.dcvs.extra-buff-count=2
 
+# ═══════════════════════════════════════════════════════════════
 # CNE / Data
+# ═══════════════════════════════════════════════════════════════
 persist.vendor.cne.feature=1
 ro.vendor.use_data_netmgrd=true
 persist.data.netmgrd.qos.enable=true
@@ -89,10 +100,14 @@ persist.vendor.data.mode=concurrent
 persist.vendor.data.iwlan.enable=true
 persist.vendor.data.profile_update=true
 
+# ═══════════════════════════════════════════════════════════════
 # Console
+# ═══════════════════════════════════════════════════════════════
 persist.vendor.console.silent.config=1
 
+# ═══════════════════════════════════════════════════════════════
 # Display
+# ═══════════════════════════════════════════════════════════════
 ro.hardware.vulkan=adreno
 ro.hardware.egl=adreno
 ro.opengles.version=196610
@@ -101,24 +116,33 @@ vendor.display.enable_default_color_mode=1
 vendor.display.disable_metadata_dynamic_fps=1
 vendor.display.disable_partial_split=1
 vendor.display.disable_rotator_downscale=1
-vendor.display.disable_skip_validate=1
 vendor.display.disable_scaler=1
 vendor.display.perf_hint_window=50
 vendor.gralloc.enable_fb_ubwc=1
 
+# ═══════════════════════════════════════════════════════════════
 # DPM
+# ═══════════════════════════════════════════════════════════════
 persist.vendor.dpmhalservice.enable=1
 
+# ═══════════════════════════════════════════════════════════════
 # DRM
+# ═══════════════════════════════════════════════════════════════
 drm.service.enabled=true
 
+# ═══════════════════════════════════════════════════════════════
 # FM
+# ═══════════════════════════════════════════════════════════════
 vendor.hw.fm.init=0
 
+# ═══════════════════════════════════════════════════════════════
 # Fingerprint
+# ═══════════════════════════════════════════════════════════════
 persist.qfp=false
 
+# ═══════════════════════════════════════════════════════════════
 # Media
+# ═══════════════════════════════════════════════════════════════
 vendor.vidc.debug.level=0
 vendor.vidc.dec.downscalar_height=1088
 vendor.vidc.dec.downscalar_width=1920
@@ -128,16 +152,22 @@ vendor.vidc.enc.disable.pq=true
 vendor.video.disable.ubwc=1
 media.msm8956hw=0
 
+# ═══════════════════════════════════════════════════════════════
 # Perf
+# ═══════════════════════════════════════════════════════════════
 ro.vendor.extension_library=libqti-perfd-client.so
 ro.vendor.qti.sys.fw.bservice_enable=true
-ro.vendor.qti.sys.fw.bservice_limit=5
+ro.vendor.qti.sys.fw.bservice_limit=3
 ro.vendor.qti.sys.fw.bservice_age=5000
 
+# ═══════════════════════════════════════════════════════════════
 # Qualcomm
+# ═══════════════════════════════════════════════════════════════
 ro.vendor.qti.va_aosp.support=1
 
+# ═══════════════════════════════════════════════════════════════
 # Radio / IMS
+# ═══════════════════════════════════════════════════════════════
 persist.radio.multisim.config=dsds
 persist.dbg.ims_volte_enable=1
 persist.dbg.volte_avail_ovr=1
@@ -160,17 +190,25 @@ persist.vendor.radio.procedure_bytes=SKIP
 persist.vendor.radio.rat_on=combine
 persist.vendor.radio.sib16_support=1
 
+# ═══════════════════════════════════════════════════════════════
 # Recovery
+# ═══════════════════════════════════════════════════════════════
 persist.vendor.recovery_update=false
 
+# ═══════════════════════════════════════════════════════════════
 # SoC
+# ═══════════════════════════════════════════════════════════════
 ro.soc.manufacturer=Qualcomm
 ro.soc.model=MSM8953
 
+# ═══════════════════════════════════════════════════════════════
 # TCP
+# ═══════════════════════════════════════════════════════════════
 net.tcp.2g_init_rwnd=10
 
+# ═══════════════════════════════════════════════════════════════
 # USB
+# ═══════════════════════════════════════════════════════════════
 vendor.usb.diag.func.name=diag
 vendor.usb.use_ffs_mtp=0
 vendor.usb.use_gadget_hal=0

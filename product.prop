@@ -1,20 +1,27 @@
 #
-# product.prop for markw
+# product.prop for markw (Redmi 4 Prime, 3GB/32GB)
+# crDroid 11.x (Android 15) | Kernel 4.9 (PSI=y)
 #
 
+# ═══════════════════════════════════════════════════════════════
 # Device
+# ═══════════════════════════════════════════════════════════════
 ro.sf.lcd_density=420
 qemu.hw.mainkeys=1
 ro.config.avoid_gfx_accel=false
 
+# ═══════════════════════════════════════════════════════════════
 # Bluetooth hardware
+# ═══════════════════════════════════════════════════════════════
 bluetooth.device.class_of_device=90,2,12
 bluetooth.device.default_name=Redmi 4 Prime
 bluetooth.hardware.power.operating_voltage_mv=3300
 bluetooth.le.disable_apcf_extended_features=1
 bluetooth.sco.disable_enhanced_connection=true
 
-# Bluetooth profiles — supported
+# ═══════════════════════════════════════════════════════════════
+# Bluetooth profiles — supported (WCN Pronto)
+# ═══════════════════════════════════════════════════════════════
 bluetooth.profile.a2dp.source.enabled=true
 bluetooth.profile.avrcp.target.enabled=true
 bluetooth.profile.gatt.enabled=true
@@ -28,7 +35,9 @@ bluetooth.profile.pan.panu.enabled=true
 bluetooth.profile.pbap.server.enabled=true
 bluetooth.profile.sap.server.enabled=true
 
+# ═══════════════════════════════════════════════════════════════
 # Bluetooth profiles — unsupported on Pronto BT
+# ═══════════════════════════════════════════════════════════════
 bluetooth.profile.asha.central.enabled=false
 bluetooth.profile.bap.broadcast.assist.enabled=false
 bluetooth.profile.bap.unicast.client.enabled=false
@@ -39,13 +48,37 @@ bluetooth.profile.mcp.server.enabled=false
 bluetooth.profile.ccp.server.enabled=false
 bluetooth.profile.vcp.controller.enabled=false
 
+# ═══════════════════════════════════════════════════════════════
 # IMS
+# ═══════════════════════════════════════════════════════════════
 ro.telephony.block_binder_thread_on_incoming_calls=false
 
-# LMKD
+# ═══════════════════════════════════════════════════════════════
+# LMKD — оптимизировано для 3GB LPDDR3 + eMMC
+# Ядро 4.9: CONFIG_PSI=y → используем PSI-based LMKD
+# ═══════════════════════════════════════════════════════════════
 ro.lmk.use_psi=true
+ro.lmk.use_minfree_levels=false
 ro.lmk.kill_heaviest_task=true
-ro.lmk.kill_timeout_ms=100
+ro.lmk.kill_timeout_ms=50
+ro.lmk.psi_partial_stall_ms=70
+ro.lmk.psi_complete_stall_ms=500
+ro.lmk.thrashing_limit=30
+ro.lmk.thrashing_limit_decay=10
+ro.lmk.swap_util_max=100
+ro.lmk.swap_free_low_percentage=10
+ro.lmk.upgrade_pressure=100
+ro.lmk.downgrade_pressure=30
+ro.lmk.filecache_min_kb=51200
+ro.lmk.critical_upgrade=false
+ro.lmk.stall_limit_critical=50
+
+# low_ram для 3GB — упрощает GMS, анимации, SystemUI
+ro.lmk.low_ram=true
+ro.config.low_ram=true
+
+ro.lmk.debug=false
+ro.lmk.log_stats=false
 
 # ═══════════════════════════════════════════════════════════════
 # FBE v1 — File-Based Encryption
