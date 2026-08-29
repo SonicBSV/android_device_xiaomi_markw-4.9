@@ -28,6 +28,7 @@
  */
 
 #include <string.h>
+#include <fstream>
 
 #include "vendor_init.h"
 #include "property_service.h"
@@ -47,23 +48,101 @@ static void property_override(const char prop[], const char value[], bool add = 
     }
 }
 
+static bool is_psi_available() {
+    std::ifstream psi_file("/proc/pressure/memory");
+    return psi_file.good();
+}
+
 static void load_dalvik_properties() {
     /*
-     * markw: only SKU is 3GB RAM / 32GB eMMC
-     * Display: 5.0" 1920x1080
-     * Balanced ART heap for 3GB + 1080p + Android 15
+     * markw: 3GB RAM / 32GB eMMC / 1080p
+     * Kernel 4.9, crDroid 11.x (Android 15)
+     * Ужатые лимиты кучи для LPDDR3 + eMMC
      */
     property_override("dalvik.vm.heapstartsize", "8m");
-    property_override("dalvik.vm.heapgrowthlimit", "256m");
-    property_override("dalvik.vm.heapsize", "512m");
-    property_override("dalvik.vm.heaptargetutilization", "0.70");
+    property_override("dalvik.vm.heapgrowthlimit", "192m");
+    property_override("dalvik.vm.heapsize", "384m");
+    property_override("dalvik.vm.heaptargetutilization", "0.75");
     property_override("dalvik.vm.heapminfree", "2m");
     property_override("dalvik.vm.heapmaxfree", "8m");
+
+    property_override("dalvik.vm.dex2oat-threads", "4");
+    property_override("dalvik.vm.dex2oat64.enabled", "true");
+    property_override("dalvik.vm.usejit", "true");
+    property_override("dalvik.vm.usejitprofiles", "true");
+    property_override("dalvik.vm.dex2oat-minidebuginfo", "false");
+    property_override("dalvik.vm.minidebuginfo", "false");
+}
+
+static void load_lmk_properties() {
+    /*
+     * LMKD для 3GB LPDDR3 + eMMC
+     * Ядро 4.9: CONFIG_PSI=y → PSI-based LMKD
+     */
+    bool psi_enabled = is_psi_available();
+
+    if (psi_enabled) {
+        property_override("ro.lmk.use_psi", "true");
+        property_override("ro.lmk.use_minfree_levels", "false");
+        ALOGI("LMKD: PSI enabled (kernel 4.9)");
+    } else {
+        property_override("ro.lmk.use_psi", "false");
+        property_override("ro.lmk.use_minfree_levels", "true");
+        ALOGW("LMKD: PSI not available, fallback to minfree");
+    }
+
+    property_override("ro.lmk.psi_partial_stall_ms", "70");
+    property_override("ro.lmk.psi_complete_stall_ms", "500");
+    property_override("ro.lmk.thrashing_limit", "30");
+    property_override("ro.lmk.thrashing_limit_decay", "10");
+    property_override("ro.lmk.swap_util_max", "100");
+    property_override("ro.lmk.swap_free_low_percentage", "10");
+    property_override("ro.lmk.kill_heaviest_task", "true");
+    property_override("ro.lmk.kill_timeout_ms", "50");
+    property_override("ro.lmk.upgrade_pressure", "100");
+    property_override("ro.lmk.downgrade_pressure", "30");
+    property_override("ro.lmk.filecache_min_kb", "51200");
+    property_override("ro.lmk.critical_upgrade", "false");
+    property_override("ro.lmk.stall_limit_critical", "50");
+
+    property_override("ro.lmk.low_ram", "true");
+    property_override("ro.config.low_ram", "true");
+
+    property_override("ro.lmk.debug", "false");
+    property_override("ro.lmk.log_stats", "false");
+}
+
+static void load_zram_properties() {
+    /*
+     * ZRAM для 3GB + eMMC, ядро 4.9
+     * lz4 — единственный разумный выбор на A53 (zstd слишком тяжёл)
+     * В 4.9 НЕТ zram writeback, поэтому writeback-свойства не задаём.
+     */
+    property_override("vendor.zram.size", "1610612736");
+    property_override("vendor.zram.streams", "4");
+    property_override("vendor.zram.swappiness", "100");
+    property_override("vendor.zram.comp_algorithm", "lz4");
+    property_override("vendor.zram.enabled", "true");
+}
+
+static void load_performance_properties() {
+    property_override("debug.sf.latch_unsignaled", "0");
+    property_override("debug.sf.disable_backpressure", "0");
+    property_override("debug.sf.enable_gl_backpressure", "1");
+    property_override("debug.hwui.renderer", "skiagl");
+    property_override("renderthread.skia.reduceopstasksplitting", "true");
+    property_override("persist.traced.enable", "0");
 }
 
 }  // namespace
 
 void vendor_load_properties() {
-    ALOGI("Loading vendor properties for markw 3/32");
+    ALOGI("Loading markw vendor properties (3GB/32GB, kernel 4.9, crDroid 15)");
+
     load_dalvik_properties();
+    load_lmk_properties();
+    load_zram_properties();
+    load_performance_properties();
+
+    ALOGI("markw: vendor properties loaded");
 }
