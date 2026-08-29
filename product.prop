@@ -46,3 +46,11 @@ ro.telephony.block_binder_thread_on_incoming_calls=false
 ro.lmk.use_psi=true
 ro.lmk.kill_heaviest_task=true
 ro.lmk.kill_timeout_ms=100
+
+# ═══════════════════════════════════════════════════════════════
+# FBE v1 — File-Based Encryption
+# ═══════════════════════════════════════════════════════════════
+ro.crypto.type=file
+ro.crypto.volume.filenames_mode=aes-256-cts
+# FBE v1 без metadata encryption (нет inline crypto в 4.9)
+ro.crypto.volume.metadata_encryption=none
