@@ -7,6 +7,16 @@ ro.config.media_vol_steps=25
 ro.config.vc_call_vol_steps=11
 ro.config.alarm_vol_steps=25
 
+# ═══════════════════════════════════════════════════════════════
+# Bluetooth Audio Volume
+# ═══════════════════════════════════════════════════════════════
+# Отключить Absolute Volume на уровне framework
+bluetooth.audio.absolute.volume=false
+
+# Безопасная громкость — отключить лимит для наушников
+ro.config.safe_media_volume=false
+ro.config.media_vol_default=15
+
 # Dexopt
 dalvik.vm.dex2oat64.enabled=true
 pm.dexopt.shared=speed

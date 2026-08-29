@@ -15,33 +15,9 @@
 -->
 
 <audioPolicyConfiguration version="7.0" xmlns:xi="http://www.w3.org/2001/XInclude">
-    <!-- version section contains a “version” tag in the form “major.minor” e.g version=”1.0” -->
 
-    <!-- Global configuration Decalaration -->
     <globalConfiguration speaker_drc_enabled="true" call_screen_mode_supported="true"/>
 
-
-    <!-- Modules section:
-        There is one section per audio HW module present on the platform.
-        Each module section will contains two mandatory tags for audio HAL “halVersion” and “name”.
-        The module names are the same as in current .conf file:
-                “primary”, “A2DP”, “remote_submix”, “USB”
-        Each module will contain the following sections:
-        “devicePorts”: a list of device descriptors for all input and output devices accessible via this
-        module.
-        This contains both permanently attached devices and removable devices.
-        “mixPorts”: listing all output and input streams exposed by the audio HAL
-        “routes”: list of possible connections between input and output devices or between stream and
-        devices.
-            "route": is defined by an attribute:
-                -"type": <mux|mix> means all sources are mutual exclusive (mux) or can be mixed (mix)
-                -"sink": the sink involved in this route
-                -"sources": all the sources than can be connected to the sink via vis route
-        “attachedDevices”: permanently attached devices.
-        The attachedDevices section is a list of devices names. The names correspond to device names
-        defined in <devicePorts> section.
-        “defaultOutputDevice”: device to be used by default when no policy rule applies
-    -->
     <modules>
         <!-- Primary Audio HAL -->
         <module name="primary" halVersion="2.0">
@@ -69,7 +45,6 @@
                 <mixPort name="immersive_out" role="source" flags="AUDIO_OUTPUT_FLAG_SPATIALIZER">
                     <profile name="" format="AUDIO_FORMAT_PCM_FLOAT"
                              samplingRates="48000" channelMasks="AUDIO_CHANNEL_OUT_STEREO"/>
-                <!--Spatial Audio-->
                 </mixPort>
                 <mixPort name="direct_pcm" role="source"
                         flags="AUDIO_OUTPUT_FLAG_DIRECT">
@@ -134,7 +109,7 @@
                              samplingRates="32000 44100 48000"
                              channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1 AUDIO_CHANNEL_OUT_6POINT1 AUDIO_CHANNEL_OUT_7POINT1"/>
                     <profile name="" format="AUDIO_FORMAT_E_AC3_JOC"
-                             samplingRates="32000 4410048000"
+                             samplingRates="32000 44100 48000"
                              channelMasks="AUDIO_CHANNEL_OUT_MONO AUDIO_CHANNEL_OUT_STEREO AUDIO_CHANNEL_OUT_2POINT1 AUDIO_CHANNEL_OUT_QUAD AUDIO_CHANNEL_OUT_PENTA AUDIO_CHANNEL_OUT_5POINT1 AUDIO_CHANNEL_OUT_6POINT1 AUDIO_CHANNEL_OUT_7POINT1"/>
                 </mixPort>
                 <mixPort name="voice_tx" role="source">
@@ -175,7 +150,6 @@
             </mixPorts>
 
             <devicePorts>
-                <!-- Output devices declaration, i.e. Sink DEVICE PORT -->
                 <devicePort tagName="Earpiece" type="AUDIO_DEVICE_OUT_EARPIECE" role="sink">
                     <profile name="" format="AUDIO_FORMAT_PCM_16_BIT"
                              samplingRates="48000" channelMasks="AUDIO_CHANNEL_OUT_MONO"/>
@@ -254,7 +228,7 @@
                              samplingRates="8000 16000 48000" channelMasks="AUDIO_CHANNEL_IN_MONO"/>
                 </devicePort>
             </devicePorts>
-            <!-- route declaration, i.e. list all available sources for a given sink -->
+
             <routes>
                 <route type="mix" sink="Earpiece"
                        sources="primary output,deep_buffer,direct_pcm,compressed_offload,voip_rx"/>
@@ -300,13 +274,9 @@
         <xi:include href="bluetooth_audio_policy_configuration_7_0.xml"/>
 
     </modules>
-    <!-- End of Modules section -->
 
     <!-- Volume section -->
-
     <xi:include href="audio_policy_volumes.xml"/>
     <xi:include href="default_volume_tables.xml"/>
-
-    <!-- End of Volume section -->
 
 </audioPolicyConfiguration>

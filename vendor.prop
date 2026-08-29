@@ -54,6 +54,13 @@ persist.vendor.audio.speaker.prot.enable=false
 vendor.fastrpc.disable.adsprpcd_sensorspd.daemon=1
 
 # Bluetooth
+persist.bluetooth.absvol.feature=false
+persist.bluetooth.a2dp_offload.cap=sbc-aac
+persist.bluetooth.a2dp_offload.disabled=true
+vendor.audio.feature.a2dp_offload.enable=false
+persist.vendor.audio.a2dp.volume.boost=6
+ro.config.safe_media_volume=false
+ro.config.media_vol_default=15
 persist.vendor.qcom.bluetooth.soc=pronto
 persist.vendor.qcom.bluetooth.enable.splita2dp=false
 ro.vendor.bluetooth.wipower=false
