@@ -38,55 +38,113 @@ on early-init
 
 on init
     # ═══════════════════════════════════════════════════════════════
-    # Memory cgroup v1 — путь ДОЛЖЕН совпадать с cgroups.json!
-    # cgroups.json указывает Path: "/dev/memcg" → создаём здесь.
+    # CGROUPS V1 — Инициализация и исправление прав (Kernel 4.9)
     # ═══════════════════════════════════════════════════════════════
-    mkdir /dev/memcg 0700 root system
+
+    # 1. Freezer v1 (Заморозка фоновых процессов)
+    mkdir /sys/fs/cgroup/freezer 0750 root system
+    mount cgroup none /sys/fs/cgroup/freezer freezer
+    # Исправление прав после монтирования
+    chown system system /sys/fs/cgroup/freezer
+    chmod 0755 /sys/fs/cgroup/freezer
+    chown system system /sys/fs/cgroup/freezer/tasks
+    chmod 0660 /sys/fs/cgroup/freezer/tasks
+    chown system system /sys/fs/cgroup/freezer/cgroup.procs
+    chmod 0660 /sys/fs/cgroup/freezer/cgroup.procs
+
+    # 2. Memory cgroup v1 (memcg — КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ)
+    mkdir /dev/memcg 0700 system system
     mount cgroup none /dev/memcg memory
-    mkdir /dev/memcg/bg 0750 root system
+    # Назначаем владельцем "system", чтобы system_server мог создавать/удалять папки внутри
+    chown system system /dev/memcg
+    chmod 0755 /dev/memcg
+    chown system system /dev/memcg/tasks
+    chmod 0660 /dev/memcg/tasks
+    chown system system /dev/memcg/cgroup.procs
+    chmod 0660 /dev/dev/memcg/cgroup.procs
+
+    # Создаем подкаталог для фоновых служб (bg)
+    mkdir /dev/memcg/bg 0750 system system
+    chown system system /dev/memcg/bg
+    chown system system /dev/memcg/bg/tasks
+    chmod 0660 /dev/memcg/bg/tasks
+    chown system system /dev/memcg/bg/cgroup.procs
+    chmod 0660 /dev/memcg/bg/cgroup.procs
     write /dev/memcg/bg/memory.swappiness 100
     write /dev/memcg/bg/memory.move_charge_at_immigrate 1
-    chown root system /dev/memcg/bg/tasks
-    chmod 0660 /dev/memcg/bg/tasks
 
-    # ═══════════════════════════════════════════════════════════════
-    # CPU cgroup v1 подкаталоги — task_profiles.json ссылается на них!
-    # Без этих mkdir профили HighPerformance/Background и т.д. не работают.
-    # ═══════════════════════════════════════════════════════════════
+    # 3. CPU cgroup v1 подкаталоги (синхронизировано с task_profiles.json)
+    #    Каждому подкаталогу и его файлам выдаются права на запись для system
     mkdir /dev/cpuctl/top-app 0755 system system
+    chown system system /dev/cpuctl/top-app
     chown system system /dev/cpuctl/top-app/tasks
+    chown system system /dev/cpuctl/top-app/cgroup.procs
     chmod 0664 /dev/cpuctl/top-app/tasks
+    chmod 0664 /dev/cpuctl/top-app/cgroup.procs
     write /dev/cpuctl/top-app/cpu.shares 1024
 
     mkdir /dev/cpuctl/foreground 0755 system system
+    chown system system /dev/cpuctl/foreground
     chown system system /dev/cpuctl/foreground/tasks
+    chown system system /dev/cpuctl/foreground/cgroup.procs
     chmod 0664 /dev/cpuctl/foreground/tasks
+    chmod 0664 /dev/cpuctl/foreground/cgroup.procs
     write /dev/cpuctl/foreground/cpu.shares 512
 
     mkdir /dev/cpuctl/background 0755 system system
+    chown system system /dev/cpuctl/background
     chown system system /dev/cpuctl/background/tasks
+    chown system system /dev/cpuctl/background/cgroup.procs
     chmod 0664 /dev/cpuctl/background/tasks
+    chmod 0664 /dev/cpuctl/background/cgroup.procs
     write /dev/cpuctl/background/cpu.shares 128
 
     mkdir /dev/cpuctl/rt 0755 system system
+    chown system system /dev/cpuctl/rt
     chown system system /dev/cpuctl/rt/tasks
+    chown system system /dev/cpuctl/rt/cgroup.procs
     chmod 0664 /dev/cpuctl/rt/tasks
+    chmod 0664 /dev/cpuctl/rt/cgroup.procs
     write /dev/cpuctl/rt/cpu.shares 1024
 
+    # 4. BLKIO cgroup v1 (Приоритезация диска eMMC)
+    mkdir /dev/blkio 0755 root system
+    mount cgroup none /dev/blkio blkio
+    # Назначаем права после монтирования
+    chown system system /dev/blkio
+    chmod 0755 /dev/blkio
+    chown system system /dev/blkio/tasks
+    chmod 0664 /dev/blkio/tasks
+    chown system system /dev/blkio/cgroup.procs
+    chmod 0664 /dev/blkio/cgroup.procs
+
+    # Фоновая группа ввода-вывода (bg)
+    mkdir /dev/blkio/bg 0755 system system
+    chown system system /dev/blkio/bg
+    chown system system /dev/blkio/bg/tasks
+    chown system system /dev/blkio/bg/cgroup.procs
+    chmod 0664 /dev/blkio/bg/tasks
+    chmod 0664 /dev/blkio/bg/cgroup.procs
+    write /dev/blkio/blkio.weight 1000
+    write /dev/blkio/bg/blkio.weight 100
+
+    # ═══════════════════════════════════════════════════════════════
     # Subsystem restart policy
+    # ═══════════════════════════════════════════════════════════════
     write /sys/bus/msm_subsys/devices/subsys0/restart_level RELATED
     write /sys/bus/msm_subsys/devices/subsys1/restart_level RELATED
     write /sys/bus/msm_subsys/devices/subsys2/restart_level RELATED
     write /sys/bus/msm_subsys/devices/subsys3/restart_level RELATED
     write /sys/bus/msm_subsys/devices/subsys4/restart_level RELATED
 
-    # ZRAM base config (swapon происходит в post-fs-data)
+    # ═══════════════════════════════════════════════════════════════
+    # ZRAM Base Config (swapon в post-fs-data)
+    # ═══════════════════════════════════════════════════════════════
     write /sys/block/zram0/comp_algorithm lz4
-    # 4 потока для A53 ядер (8 потоков на LPDDR3 задушат шину)
     write /sys/block/zram0/max_comp_streams 4
     write /proc/sys/vm/page-cluster 0
 
-    # Блокируем ZRAM Writeback (даже если есть бэкпорт в ядре)
+    # Блокируем ZRAM Writeback на eMMC
     write /sys/block/zram0/writeback_limit_enable 0
     write /sys/block/zram0/writeback_limit 0
 
@@ -251,19 +309,6 @@ on post-fs-data
 
     # Must be last
     setprop vold.post_fs_data_done 1
-
-# blkio cgroup v1 — создаём безусловно (не ждём property)
-on init
-    mkdir /dev/blkio 0755 root system
-    mount cgroup none /dev/blkio blkio
-    chown system system /dev/blkio
-    chown system system /dev/blkio/tasks
-    chmod 0664 /dev/blkio/tasks
-    mkdir /dev/blkio/bg 0755 system system
-    chown system system /dev/blkio/bg/tasks
-    chmod 0664 /dev/blkio/bg/tasks
-    write /dev/blkio/blkio.weight 1000
-    write /dev/blkio/bg/blkio.weight 100
 
 # Ранний запуск qcom-post-boot (настройка процессора и планировщика I/O)
 on property:vold.post_fs_data_done=1
