@@ -216,5 +216,4 @@ vendor.usb.use_gadget_hal=0
 # ═══════════════════════════════════════════════════════════════
 # FBE v1 Crypto
 # ═══════════════════════════════════════════════════════════════
-ro.crypto.state=encrypted
-ro.crypto.type=file
+ro.crypto.volume.filenames_mode=aes-256-cts

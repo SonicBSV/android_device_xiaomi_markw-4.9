@@ -79,11 +79,3 @@ ro.config.low_ram=true
 
 ro.lmk.debug=false
 ro.lmk.log_stats=false
-
-# ═══════════════════════════════════════════════════════════════
-# FBE v1 — File-Based Encryption
-# ═══════════════════════════════════════════════════════════════
-ro.crypto.type=file
-ro.crypto.volume.filenames_mode=aes-256-cts
-# FBE v1 без metadata encryption (нет inline crypto в 4.9)
-ro.crypto.volume.metadata_encryption=none

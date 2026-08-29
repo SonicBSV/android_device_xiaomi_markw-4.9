@@ -1,27 +1,28 @@
 #
 # system.prop for markw (3GB/32GB, MSM8953)
 # crDroid 11.x (Android 15) | Kernel 4.9
+# Optimized for eMMC 5.1 & LPDDR3
 #
 
 # ═══════════════════════════════════════════════════════════════
-# Audio
+# Audio & Volume Steps
 # ═══════════════════════════════════════════════════════════════
 ro.config.media_vol_steps=25
 ro.config.vc_call_vol_steps=11
 ro.config.alarm_vol_steps=25
 
 # ═══════════════════════════════════════════════════════════════
-# Bluetooth Audio Volume
+# Bluetooth Audio Volume (Устранение тихого звука)
 # ═══════════════════════════════════════════════════════════════
-# Отключить Absolute Volume на уровне framework
+# Отключить Absolute Volume на уровне Android Framework
 bluetooth.audio.absolute.volume=false
 
-# Безопасная громкость — отключить лимит для наушников
+# Отключить принудительное ограничение громкости (EU safe volume limit)
 ro.config.safe_media_volume=false
 ro.config.media_vol_default=15
 
 # ═══════════════════════════════════════════════════════════════
-# Dexopt — speed-profile для eMMC (не speed!)
+# Dexopt — speed-profile для eMMC (Ограничение износа диска)
 # ═══════════════════════════════════════════════════════════════
 dalvik.vm.dex2oat64.enabled=true
 pm.dexopt.shared=speed
@@ -34,13 +35,27 @@ pm.dexopt.install-fast=skip
 pm.dexopt.install-bulk=quicken
 pm.dexopt.install-bulk-secondary=verify
 
+# Лимиты потоков компиляции (синхронизировано с vendor_init.cpp)
+# Выделяем под компиляцию 4 ядра, оставляя остальные 4 ядра A53 для UI
+dalvik.vm.boot-dex2oat-threads=8
+dalvik.vm.dex2oat-threads=4
+dalvik.vm.image-dex2oat-threads=8
+dalvik.vm.dex2oat-filter=speed-profile
+
+# Настройки JIT-компилятора
+dalvik.vm.usejit=true
+dalvik.vm.usejitprofiles=true
+dalvik.vm.jitinitialsize=64k
+dalvik.vm.jitmaxsize=2m
+dalvik.vm.jitthreshold=10000
+
 # ═══════════════════════════════════════════════════════════════
-# MTE
+# MTE (Memory Tagging Extension — отключено для экономии ОЗУ)
 # ═══════════════════════════════════════════════════════════════
 arm64.memtag.process.system_server=off
 
 # ═══════════════════════════════════════════════════════════════
-# Sleep
+# Sleep & Power
 # ═══════════════════════════════════════════════════════════════
 pm.sleep_mode=1
 
@@ -50,12 +65,12 @@ pm.sleep_mode=1
 fs_mgr.overlayfs.prefer_cache_backing_storage=true
 
 # ═══════════════════════════════════════════════════════════════
-# FM
+# FM Radio
 # ═══════════════════════════════════════════════════════════════
 ro.fm.transmitter=false
 
 # ═══════════════════════════════════════════════════════════════
-# HWUI (tuned for 3GB / 1080p / Adreno 506)
+# HWUI (Оптимизация кэшей под Adreno 506 и 3GB RAM на 1080p)
 # ═══════════════════════════════════════════════════════════════
 ro.hwui.texture_cache_size=48
 ro.hwui.layer_cache_size=32
@@ -69,7 +84,7 @@ ro.hwui.text_large_cache_width=2048
 ro.hwui.text_large_cache_height=2048
 
 # ═══════════════════════════════════════════════════════════════
-# Display
+# Display & EGL
 # ═══════════════════════════════════════════════════════════════
 debug.hwui.use_hint_manager=true
 debug.mdpcomp.logs=0
@@ -107,8 +122,11 @@ ro.hw_timeout_multiplier=2
 # ═══════════════════════════════════════════════════════════════
 ro.surface_flinger.enable_frame_rate_override=false
 ro.surface_flinger.force_hwc_copy_for_virtual_displays=true
+# 2 буфера вместо 3 сберегают до 20 МБ ОЗУ на разрешении 1080p
 ro.surface_flinger.max_frame_buffer_acquired_buffers=2
 ro.surface_flinger.max_virtual_display_dimension=4096
+
+# Таймеры простоя дисплея (HWC быстрее сбрасывает частоту в простое)
 ro.surface_flinger.set_idle_timer_ms=80
 ro.surface_flinger.set_touch_timer_ms=200
 ro.surface_flinger.set_display_power_timer_ms=1000
@@ -137,7 +155,7 @@ service.qti.ims.enabled=1
 persist.mm.sta.enable=0
 
 # ═══════════════════════════════════════════════════════════════
-# WFD
+# WFD (Wireless display)
 # ═══════════════════════════════════════════════════════════════
 persist.hwc.enable_vds=1
 
@@ -147,7 +165,7 @@ persist.hwc.enable_vds=1
 zygote.critical_window.minute=10
 
 # ═══════════════════════════════════════════════════════════════
-# Background services — жёстко для 3GB
+# Background Services & Memory Trim (Жёсткие лимиты для 3GB ОЗУ)
 # ═══════════════════════════════════════════════════════════════
 ro.sys.fw.bservice_limit=3
 ro.sys.fw.bservice_age=5000
@@ -157,14 +175,20 @@ ro.sys.fw.trim_cache_percent=100
 ro.sys.fw.trim_enable_memory=1073741824
 
 # ═══════════════════════════════════════════════════════════════
-# App Freezer (Android 15)
+# Disable App Freezer & FHA (CONFIG_CGROUP_FREEZER v1 fallback)
+# Полностью отключаем попытки заморозки фоновых задач.
+# Устраняет спам ошибками "Cannot open freezer path" в logcat
+# и предотвращает лаги ядер A53 при пробуждении приложений.
 # ═══════════════════════════════════════════════════════════════
-ro.config.fha_enable=true
+ro.config.fha_enable=false
+ro.config.freezer.enable=false
+cached_apps_freezer=disabled
 ro.sys.fw.use_trim_settings=true
 
 # ═══════════════════════════════════════════════════════════════
-# eMMC optimization
+# eMMC I/O Optimization
 # ═══════════════════════════════════════════════════════════════
+# FUSE passthrough убирает оверхед FUSE-слоя при чтении/записи
 persist.sys.fuse.passthrough.enable=true
 persist.sys.fstrim.enable=true
 persist.sys.enable_iop=false
