@@ -39,6 +39,14 @@
       "Optional": true
     },
     {
+      "Controller": "freezer",
+      "Path": "/sys/fs/cgroup/freezer",
+      "Mode": "0755",
+      "UID": "system",
+      "GID": "system",
+      "Optional": true
+    },
+    {
       "Controller": "blkio",
       "Path": "/dev/blkio",
       "Mode": "0755",
@@ -51,16 +59,6 @@
     "Path": "/sys/fs/cgroup",
     "Mode": "0755",
     "UID": "system",
-    "GID": "system",
-    "Controllers": [
-      {
-        "Controller": "freezer",
-        "Path": "freezer",
-        "Mode": "0755",
-        "UID": "system",
-        "GID": "system",
-        "Optional": true
-      }
-    ]
+    "GID": "system"
   }
 }
